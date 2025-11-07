@@ -12,7 +12,9 @@ create table ordine (
   id int not null,
   ritiro datetime,
   numero int,
-  primary key(id)
+  persona varchar(60) not null,
+  primary key(id),
+  FOREIGN KEY (persona) REFERENCES persona(Email)
 );
 
 create table allergene (
