@@ -43,7 +43,21 @@ create table item_allergico (
   primary key(item)
 );
 
+CREATE TABLE Persona(
+	Email VARCHAR(60) PRIMARY KEY,
+	Nome VARCHAR(20) NOT NULL,
+	Cognome VARCHAR(20) NOT NULL,
+	Sesso CHAR NOT NULL,
+  Ruolo CHAR NOT NULL,
+  Username VARCHAR(20) NOT NULL,
+  Password VARCHAR(20) NOT NULL,
+);
+
 delete from item;
+
+INSERT INTO Persona (‘Email’, ‘Nome’, ‘Cognome’, ‘Username’, ‘Password’, ‘Ruolo’, ‘Sesso’) VALUES
+(‘user@gmail.com’,’user’,’user’,’user’, ‘user’, ‘U’, ‘N’),
+(‘admin@gmail.com, ‘admin’, ‘admin’, ‘admin’, ‘admin’, ‘A’,’N’),
 
 INSERT INTO item (id, nome, icona, descrizione, prezzo, immagine) VALUES 
 (1, 'Red Velvet', NULL, 'La red velvet è una torta morbida al cacao, dal colore rosso intenso, ricoperta con crema al formaggio.', 5.00, NULL),
