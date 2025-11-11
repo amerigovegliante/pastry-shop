@@ -163,6 +163,7 @@ SEZIONE MAIN
 main{
     display: grid;
     grid-area: c;
+    margin-top: 1em;
 }
 #presentazionePasticceria{
     background-color: var(--contentbgcolorscuro);
@@ -177,7 +178,8 @@ main{
 SEZIONE FOOTER
 ====================================================================================================================================
 */
-footer{
+footer {
+    margin-top: 1em;
     background-color: var(--breadcolor);
     color: var(--breadtxtcolor);
     display: grid;

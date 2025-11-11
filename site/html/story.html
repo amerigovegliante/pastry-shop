@@ -7,46 +7,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="pasticceria, chi siamo, storia, team, artigianale, Padova">
     <meta name="description" content="Conosci storia, valori e team di Pasticceria Padovana: tradizione artigianale, ingredienti selezionati e attenzione ai dettagli.">
-    <!-- link ai futuri fogli di stile giá pronti -->
     <link rel="stylesheet" href="../css/style.css" media="screen">
     <link rel="stylesheet" href="../css/mini.css" media="screen and (max-width:800px)">
     <link rel="stylesheet" href="../css/print.css" media="print">
-    <!-- da capire se serve -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
 </head>
 
 <body>
     <header>
-        <a href="../../index.html">
-            <img src="../img/logo_no_scritta_compresso.png" alt="Logo Pasticceria Padovana" height="280"> <!-- sistemare (1024 × 1024) -->
-        </a>
-        <h1>Pasticceria Padovana</h1>
-        <p>La pasticceria tradizionale su misura per i tuoi eventi</p>
+        <div class="contenuto">
+            <button type="button" class="bottoneMenu" aria-label="Apri il menu principale">Menu</button>
+
+            <div id="logo">
+                <h1>Pasticceria Padovana</h1>
+                <p>La pasticceria tradizionale su misura per i tuoi eventi</p>
+            </div>
+
+            <div id="pulsantiMenu">
+                <a href="login.html" class="bottoneProfilo" aria-label="Accedi alla tua area personale">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                </a>
+
+                <a href="carrello.html" class="bottoneCarrello" aria-label="Vai al carrello">
+                    <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16.5" cy="18.5" r="1.5" />
+                        <circle cx="9.5" cy="18.5" r="1.5" />
+                        <path d="M18 16H8a1 1 0 0 1-.958-.713L4.256 6H3a1 1 0 0 1 0-2h2
+                     a1 1 0 0 1 .958.713L6.344 6H21a1 1 0 0 1 .937 1.352l-3 8
+                     A1 1 0 0 1 18 16zm-9.256-2h8.563l2.25-6H6.944z" />
+                    </svg>
+                </a>
+            </div>
+
+        </div>
     </header>
 
-
     <nav id="menu" aria-label="Menu principale">
-        <ul>
+        <ul class="contenuto">
             <li><a href="../../index.html"><span lang="en">Home</span></a></li>
             <li id="currentlink">Chi siamo</li>
-            <!-- preparati link ad altre due pagine html -->
-            <li><a href="torte.html">Le nostre torte</a></li>
-            <li><a href="paste.html">Le nostre paste</a></li>
+            <li><a href="contattaci.html">Contattaci</a></li>
         </ul>
     </nav>
 
     <nav id="breadcrumb" aria-label="Percorso di navigazione">
-        <p>Ti trovi in: <a href="../../index.html"><span lang="en">Home</span></a> &gt; Chi siamo</p>
+        <p class="contenuto">Ti trovi in: <a href="../../index.html"><span lang="en">Home</span></a> &gt; Chi siamo</p>
     </nav>
 
     <main id="contenuto">
         <section aria-labelledby="introduzione">
             <h2 id="introduzione">La nostra pasticceria</h2>
             <p>
-                In <strong>Pasticceria Padovana</strong> uniamo la tradizione artigianale alla cura per gli ingredienti, per offrire dolci dal gusto autentico e una produzione attenta ai dettagli.
+                In <strong>Pasticceria Padovana</strong> uniamo la tradizione artigianale alla cura per gli ingredienti,
+                per offrire dolci dal gusto autentico e una produzione attenta ai dettagli.
             </p>
             <p>
-                Lavoriamo su ordinazione per torte personalizzate e vassoi di pasticcini, pensati per compleanni, matrimoni ed eventi. Ogni creazione nasce in laboratorio, con tecniche classiche e un’attenzione costante alla qualità.
+                Lavoriamo su ordinazione per torte personalizzate e vassoi di pasticcini, pensati per compleanni,
+                matrimoni
+                ed eventi. Ogni creazione nasce in laboratorio, con tecniche classiche e un’attenzione costante alla
+                qualità.
             </p>
         </section>
 
@@ -57,8 +79,7 @@
                 Cresciamo ascoltando i clienti e collaborando con produttori locali per selezionare materie prime affidabili.
             </p>
             <p>
-                Tra le specialità che ci rappresentano: la <em>Pazientina</em>, il <em>Dolce del Santo</em> e i grandi
-                classici della pasticceria, preparati quotidianamente.
+                Tra le specialità che ci rappresentano: la <em>Pazientina</em>, il <em>Dolce del Santo</em> e i grandi classici della pasticceria, preparati quotidianamente.
             </p>
         </section>
 
@@ -75,23 +96,23 @@
 
         <section aria-labelledby="team">
             <h2 id="team">Il nostro team</h2>
-
             <p>Un piccolo gruppo di persone appassionate che ogni giorno dà forma alle vostre idee.</p>
 
             <ul class="griglia-team">
                 <li>
                     <figure>
-                        <img src="../img/maestro.jpg" alt="Ritratto del maestro pasticcere" loading="lazy" height="280"> <!-- sistemare (1024 × 1536)-->
+                        <img src="../img/maestro.jpg" alt="Ritratto del maestro pasticcere" loading="lazy" height="280">
                         <figcaption>
                             <p><strong>Maestro Pasticcere</strong></p>
-                            <p>Ricerca ricette, supervisione qualità e sviluppo prodotti.</p> 
+                            <p>Ricerca ricette, supervisione qualità e sviluppo prodotti.</p>
                         </figcaption>
                     </figure>
                 </li>
 
                 <li>
                     <figure>
-                        <img src="../img/decoratrice.jpg" alt="Ritratto della decoratrice di torte" loading="lazy" height="280"> <!-- sistemare -->
+                        <img src="../img/decoratrice.jpg" alt="Ritratto della decoratrice di torte" loading="lazy"
+                            height="280">
                         <figcaption>
                             <p><strong>Decorazione &amp; Cake Design</strong></p>
                             <p>Personalizzazioni, finiture artistiche e torte su misura.</p>
@@ -101,7 +122,8 @@
 
                 <li>
                     <figure>
-                        <img src="../img/addetto_vendite.jpg" alt="Ritratto dell'addetto al banco e alle vendite" loading="lazy" height="280"> <!-- sistemare -->
+                        <img src="../img/addetto_vendite.jpg" alt="Ritratto dell'addetto al banco e alle vendite"
+                            loading="lazy" height="280">
                         <figcaption>
                             <p><strong>Accoglienza &amp; Vendite</strong></p>
                             <p>Consulenza, ordini e ritiro in negozio.</p>
@@ -111,14 +133,13 @@
             </ul>
         </section>
 
-
         <aside aria-labelledby="info-visita">
             <h2 id="info-visita">Vuoi venirci a trovare?</h2>
             <p>
                 Passa in negozio o contattaci per un preventivo: saremo felici di aiutarti a creare il tuo momento più dolce.
             </p>
             <p>
-                Vai a: <a href="torte.html">Le nostre torte</a> · <a href="paste.html">Le nostre paste</a>
+                Vai a: <a href="torte.html">Le nostre torte</a> · <a href="pasticcini.html">I nostri pasticcini</a>
             </p>
         </aside>
     </main>

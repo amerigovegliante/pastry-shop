@@ -5,65 +5,53 @@
     <meta charset="utf-8">
     <title>Pasticceria Padovana</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords" content="paticceria padovana, pasticceria, dolci, torta, pasticcini, padova, dolce, ">
-    <meta name="description" content="Pagina dedicata alla presentazione, promozione e vendita dolciaria di Pasticceria Padovana">
+    <meta name="keywords" content="pasticceria padovana, pasticceria, dolci, torta, pasticcini, padova, dolce">
+    <meta name="description"
+        content="Pagina dedicata alla presentazione, promozione e vendita dolciaria di Pasticceria Padovana">
 
-    <link rel="stylesheet" href="../pastry-shop/site/css/style.css" media="screen">
-<!--
-    <link rel="stylesheet" href="site/css/mini.css" media="screen and (max-width:800px)">
-    <link rel="stylesheet" href="site/css/print.css" media="print">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
--->
+    <link rel="stylesheet" href="site/css/style.css" media="screen">
 </head>
 
 <body>
     <header>
         <div class="contenuto">
-        <button type="button" class="bottoneMenu">
-            Menu</span>
-        </button>
-        <div id="logo">
-        <h1>Pasticceria Padovana</h1>
-        <p>La pasticceria tradizionale su misura per i tuoi eventi</p>
-        </div>
-        
-        <div id="pulsantiMenu">
-        <button type="button" class="bottoneAccedi">
-            Accedi</span>
-        </button>
-        <button type="button" class="bottoneCarrello">
-            Carrello</span>
-        </button>
-        </div>
+            <button type="button" class="bottoneMenu" aria-label="Apri il menu principale">Menu</button>
+
+            <div id="logo">
+                <h1>Pasticceria Padovana</h1>
+                <p>La pasticceria tradizionale su misura per i tuoi eventi</p>
+            </div>
+
+            <div id="pulsantiMenu">
+                <a href="site/html/login.html" class="bottoneProfilo" aria-label="Accedi alla tua area personale">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                </a>
+
+                <a href="site/html/carrello.html" class="bottoneCarrello" aria-label="Vai al carrello">
+                    <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16.5" cy="18.5" r="1.5" />
+                        <circle cx="9.5" cy="18.5" r="1.5" />
+                        <path d="M18 16H8a1 1 0 0 1-.958-.713L4.256 6H3a1 1 0 0 1 0-2h2
+                     a1 1 0 0 1 .958.713L6.344 6H21a1 1 0 0 1 .937 1.352l-3 8
+                     A1 1 0 0 1 18 16zm-9.256-2h8.563l2.25-6H6.944z" />
+                    </svg>
+                </a>
+            </div>
+
         </div>
     </header>
+
     <nav id="menu">
         <ul class="contenuto">
             <li lang="en" id="currentlink"><span lang="en">Home</span></li>
             <li><a href="site/html/story.html">Chi siamo</a></li>
-            <li><a href="site/html/torte.html">Le nostre torte</a></li>
-            <li><a href="site/html/pasticcini.html">I nostri pasticcini</a></li>
             <li><a href="site/html/contattaci.html">Contattaci</a></li>
         </ul>
     </nav>
-    <!--
-<header>
-        <img src="site/img/logo_no_scritta_compresso.png" alt="Logo Pasticceria Padovana" height="280">
-        <h1>Pasticceria Padovana</h1>
-        <p>La pasticceria tradizionale su misura per i tuoi eventi</p>
-    </header>
-
-    <nav id="menu">
-        <ul>
-            <li lang="en" id="currentlink"><span lang="en">Home</span></li>
-            <li><a href="site/html/story.html">Chi siamo</a></li>
-            <li><a href="site/html/torte.html">Le nostre torte</a></li>
-            <li><a href="site/html/pasticcini.html">I nostri pasticcini</a></li>
-            <li><a href="site/html/contattaci.html">Contattaci</a></li>
-        </ul>
-    </nav>
-    -->
 
     <nav id="breadcrumb">
         <p class="contenuto">Ti trovi in: <span lang="en">Home</span></p>
@@ -71,78 +59,81 @@
 
     <main>
         <section id="presentazionePasticceria" aria-labelledby="La nostra pasticceria">
-            <div  class="contenuto">
-            <h2>La nostra pasticceria</h2>
-            <p>Benvenuto a <strong>Pasticceria Padovana</strong>, dove la tradizione artigianale incontra
-                la passione per la <strong>pasticcera</strong> di qualità.</p>
-            <p>Proponiamo i sapori autentici dei dolci tradizionali di Padova.</p>
-            <p>Ogni creazione è frutto di ingredienti genuini e di un’attenzione unica ai dettagli.</p>
-            <p>Che sia per una festa di compleanno, un matrimonio o una semplice colazione speciale,
-                i nostri maestri pasticceri sono pronti a preparare la tua <strong>torta</strong> personalizzata
-                e <strong>pasticcini</strong> su ordinazione, pensati su misura per ogni occasione.</p>
-            <p>Passa a trovarci in negozio o contattaci per creare insieme il tuo momento più <strong>dolce</strong>.
-            </p>
+            <div class="contenuto">
+                <h2>La nostra pasticceria</h2>
+                <p>Benvenuto a <strong>Pasticceria Padovana</strong>, dove la tradizione artigianale incontra
+                    la passione per la <strong>pasticcera</strong> di qualità.</p>
+                <p>Proponiamo i sapori autentici dei dolci tradizionali di Padova.</p>
+                <p>Ogni creazione è frutto di ingredienti genuini e di un’attenzione unica ai dettagli.</p>
+                <p>Che sia per una festa di compleanno, un matrimonio o una semplice colazione speciale,
+                    i nostri maestri pasticceri sono pronti a preparare la tua <strong>torta</strong> personalizzata
+                    e <strong>pasticcini</strong> su ordinazione, pensati su misura per ogni occasione.</p>
+                <p>Passa a trovarci in negozio o contattaci per creare insieme il tuo momento più
+                    <strong>dolce</strong>.
+                </p>
             </div>
         </section>
 
         <section id="prodottiPrincipali" aria-labelledby="I nostri dolci piú famosi">
-            <div  class="contenuto">
+            <div class="contenuto">
 
-            <h2>La nostra pasticceria</h2>
-            <p>Benvenuto a <strong>Pasticceria Padovana</strong>, dove la tradizione artigianale incontra
-                la passione per la <strong>pasticcera</strong> di qualità.</p>
-            <p>Proponiamo i sapori autentici dei dolci tradizionali di Padova.</p>
-            <p>Ogni creazione è frutto di ingredienti genuini e di un’attenzione unica ai dettagli.</p>
-            <p>Che sia per una festa di compleanno, un matrimonio o una semplice colazione speciale,
-                i nostri maestri pasticceri sono pronti a preparare la tua <strong>torta</strong> personalizzata
-                e <strong>pasticcini</strong> su ordinazione, pensati su misura per ogni occasione.</p>
-            <p>Passa a trovarci in negozio o contattaci per creare insieme il tuo momento più <strong>dolce</strong>.
-            </p>
+                <h2>La nostra pasticceria</h2>
+                <p>Benvenuto a <strong>Pasticceria Padovana</strong>, dove la tradizione artigianale incontra
+                    la passione per la <strong>pasticcera</strong> di qualità.</p>
+                <p>Proponiamo i sapori autentici dei dolci tradizionali di Padova.</p>
+                <p>Ogni creazione è frutto di ingredienti genuini e di un’attenzione unica ai dettagli.</p>
+                <p>Che sia per una festa di compleanno, un matrimonio o una semplice colazione speciale,
+                    i nostri maestri pasticceri sono pronti a preparare la tua <strong>torta</strong> personalizzata
+                    e <strong>pasticcini</strong> su ordinazione, pensati su misura per ogni occasione.</p>
+                <p>Passa a trovarci in negozio o contattaci per creare insieme il tuo momento più
+                    <strong>dolce</strong>.
+                </p>
 
-            <h2>I nostri dolci più famosi</h2>
-            <dl class="dolciFamosi">
+                <h2>I nostri dolci più famosi</h2>
+                <dl class="dolciFamosi">
 
-                <dt>Torta Pazientina</dt>
-                <dd>una torta a strati ricca e raffinata.
-                    Una base di pan di Spagna, uno strato di zabaione e uno di crema di mandorle;
-                    racchiusa da una copertura di cioccolato fondente.
-                    Nata nel Settecento, è considerata la &ldquo;torta ufficiale&rdquo; della città di
-                    Padova.
-                    Il dolce delle grandi occasioni, era servito alle famiglie nobili e ai canonici della città.</dd>
+                    <dt>Torta Pazientina</dt>
+                    <dd>una torta a strati ricca e raffinata.
+                        Una base di pan di Spagna, uno strato di zabaione e uno di crema di mandorle;
+                        racchiusa da una copertura di cioccolato fondente.
+                        Nata nel Settecento, è considerata la &ldquo;torta ufficiale&rdquo; della città di
+                        Padova.
+                        Il dolce delle grandi occasioni, era servito alle famiglie nobili e ai canonici della città.
+                    </dd>
 
-                <dt>Dolce del Santo</dt>
-                <dd>Un dolce lievitato, simile al panettone ma con una personalità tutta padovana.
-                    L’impasto è a base di farina, uova, burro, zucchero e miele.
-                    Profumato con liquore all’amaretto, vaniglia o scorza d’arancia.
-                    Dedicato a Sant’Antonio di Padova, patrono della città.
-                    Un dolce semplice ma ricco di significato, legato alla devozione popolare e
-                    alla condivisione.</dd>
+                    <dt>Dolce del Santo</dt>
+                    <dd>Un dolce lievitato, simile al panettone ma con una personalità tutta padovana.
+                        L’impasto è a base di farina, uova, burro, zucchero e miele.
+                        Profumato con liquore all’amaretto, vaniglia o scorza d’arancia.
+                        Dedicato a Sant’Antonio di Padova, patrono della città.
+                        Un dolce semplice ma ricco di significato, legato alla devozione popolare e
+                        alla condivisione.</dd>
 
-                <dt>Millefoglie</dt>
-                <dd>Tre strati di pasta sfoglia cotta al forno fino a diventare dorata e croccante,
-                    alternati con due strati di crema.
-                    Una combinazione di croccantezza e cremosità, resa possibile dal
-                    contrasto tra la pasta sfoglia friabile e la crema morbida.</dd>
-            </dl>
+                    <dt>Millefoglie</dt>
+                    <dd>Tre strati di pasta sfoglia cotta al forno fino a diventare dorata e croccante,
+                        alternati con due strati di crema.
+                        Una combinazione di croccantezza e cremosità, resa possibile dal
+                        contrasto tra la pasta sfoglia friabile e la crema morbida.</dd>
+                </dl>
 
-            <dl class="pasticcininFamosi">
+                <dl class="pasticcininFamosi">
 
-                <dt>Bussolà padovano</dt>
-                <dd>Un biscotto a forma di anello, friabile e profumato al burro.
-                    Tipico delle colazioni padovane, deriva dalla tradizione veneziana dei "bussolai".
-                    Ottimo da gustare con il caffè o con un bicchiere di vino dolce.</dd>
+                    <dt>Bussolà padovano</dt>
+                    <dd>Un biscotto a forma di anello, friabile e profumato al burro.
+                        Tipico delle colazioni padovane, deriva dalla tradizione veneziana dei "bussolai".
+                        Ottimo da gustare con il caffè o con un bicchiere di vino dolce.</dd>
 
-                <dt>Frollino al Mandorlato</dt>
-                <dd>Pasta frolla croccante arricchita da pezzetti di mandorlato di Cologna Veneta,
-                    dolce natalizio veneto a base di mandorle e miele.
-                    Una specialità locale che unisce due tradizioni: quella padovana e quella veronese.
-                </dd>
+                    <dt>Frollino al Mandorlato</dt>
+                    <dd>Pasta frolla croccante arricchita da pezzetti di mandorlato di Cologna Veneta,
+                        dolce natalizio veneto a base di mandorle e miele.
+                        Una specialità locale che unisce due tradizioni: quella padovana e quella veronese.
+                    </dd>
 
-                <dt>Bigné alla crema</dt>
-                <dd>Classico della pasticceria: bignè gonfi e dorati,
-                    ripieni di crema pasticcera o chantilly e spolverati di zucchero a velo.
-                    Immancabili in ogni vassoio.</dd>
-            </dl>
+                    <dt>Bigné alla crema</dt>
+                    <dd>Classico della pasticceria: bignè gonfi e dorati,
+                        ripieni di crema pasticcera o chantilly e spolverati di zucchero a velo.
+                        Immancabili in ogni vassoio.</dd>
+                </dl>
             </div>
         </section>
 
@@ -150,20 +141,28 @@
             Ordina <span lang="en">online</span>
         </button>
     </main>
+
     <footer>
         <dl class="contenuto">
-            <dt><h2 id="Contatti">Contatti</h2></dt>
+            <dt>
+                <h2 id="Contatti">Contatti</h2>
+            </dt>
             <dd>
                 <address>
                     <p>Pasticceria Padovana</p>
                     <p>Via Roma 42<br>35100 Padova (PD)</p>
                     <p>Tel: <a href="tel:+390498765432">+39 049 8765432</a></p>
                     <p>Email: <a href="mailto:info@pasticceriapadovana.it">info@pasticceriapadovana.it</a></p>
-                 </address>
+                </address>
             </dd>
-            <dt><h2 id="Assistenza clienti">Assistenza clienti shop online</h2></dt>
-            <dd><p>Lun\Ven 8:30-13:00  14:00-17:30</p>
-                <p>Email: <a href="mailto:gestioneclienti@pasticceriapadovana.it">gestioneclienti@pasticceriapadovana.it</a></p>
+            <dt>
+                <h2 id="Assistenza clienti">Assistenza clienti shop online</h2>
+            </dt>
+            <dd>
+                <p>Lun\Ven 8:30-13:00 14:00-17:30</p>
+                <p>Email: <a
+                        href="mailto:gestioneclienti@pasticceriapadovana.it">gestioneclienti@pasticceriapadovana.it</a>
+                </p>
                 <p id="copyright">&copy; 2025 Pasticceria Padovana - Tutti i diritti riservati</p>
             </dd>
         </dl>
