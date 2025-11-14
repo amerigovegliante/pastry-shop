@@ -15,6 +15,7 @@
     --contenttxtcolorscuro:#1c0101;
     --contentbgcolorchiaro:#ffe09a;
     --contenttxtcolorchiaro:#fffdd0;
+    --visitedcolor: #3455db;
     /*
     --linkcolor: #fff;
     --visitedcolor: #f3c42b;
@@ -33,7 +34,7 @@ html, body{
 body{
     background-color: var(--bgcolor);
     color: var(--txtcolor);
-    margin: auto;
+    margin: 0em;
     grid-template-columns: auto auto auto;
     grid-template-areas: 
     "t l p" /*tendina menu(per telefono)  logo  bottoni(accedi carrello)*/
@@ -62,9 +63,7 @@ header .contenuto{
     grid-template-columns: auto auto auto;
     grid-template-areas: "t l p";
     align-items: center;
-    padding: 0em 1em;
     text-align: center;
-    margin: 0em auto;
     align-items: center;
 }
 #logo{
@@ -115,6 +114,19 @@ SEZIONE MENU'
     color:var(--menutextcolor)
 }
 
+#menu a:visited{
+    color:var(--visitedcolor)
+}
+#menu a:hover{
+    color:var(--menutextcurrentpage);
+    background-color: var(--menubgcurrentpage);
+    padding: 0.3em; 
+    -webkit-border-radius:0.3em;
+    -moz-border-radius:0.3em;
+    border-radius:0.3em;
+}
+
+
 #menu ul{
     list-style-type: none;
     text-align: center;
@@ -147,7 +159,7 @@ SEZIONE BREADCRUMB
     background-color: var(--breadcolor);
     color: var(--breadtxtcolor);
     font-size: 1.1em;
-    /*border: 1px solid #000;*/
+    border: 1px solid var(--menutextcolor);
     padding: 0.5em 0em 0.5em 1.0em;
 }
 #breadcrumb .contenuto{
@@ -160,10 +172,10 @@ SEZIONE BREADCRUMB
 SEZIONE MAIN
 ====================================================================================================================================
 */
-main{
+main .contenuto{
     display: grid;
     grid-area: c;
-    margin-top: 1em;
+    padding-top: 1.5em;
 }
 #presentazionePasticceria{
     background-color: var(--contentbgcolorscuro);

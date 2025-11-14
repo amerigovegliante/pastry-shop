@@ -1,0 +1,19 @@
+.contenuto{
+    width: 100%;
+}
+
+#logo{
+    display: grid;
+    grid-area: l;
+    align-items: left;
+}
+#logo p{
+    display: none;
+}
+.bottoneMenu{
+    display: grid;
+    grid-area: t;
+}
+#menu{
+    display: none;
+}
