@@ -62,7 +62,6 @@ header .contenuto{
     width: 100%;
     grid-template-columns: auto auto auto;
     grid-template-areas: "t l p";
-    align-items: center;
     text-align: center;
     align-items: center;
 }
@@ -172,28 +171,68 @@ SEZIONE BREADCRUMB
 SEZIONE MAIN
 ====================================================================================================================================
 */
-main .contenuto{
+#presentazionePasticceria .contenuto{
     display: grid;
     grid-area: c;
-    padding-top: 1.5em;
+    grid-template-columns: 1fr 2fr; /* colonna immagine + colonna testo */
+    padding: 1.5em;
 }
 #presentazionePasticceria{
     background-color: var(--contentbgcolorscuro);
     color:var(--contenttxtcolorchiaro);
+    padding: 1.5em;
+}
+#presentazionePasticceria img{
+    max-width: 100%;
+    width: 20em;
+    background-color: white;
+    border: solid 1px black;
+    justify-self: start; /* forza l'immagine a sinistra */
+}
+#presentazionePasticceria .testo{
+    align-content: center;
+    padding: 1.5em;
+}
+
+#prodottiPrincipali img{
+    max-width: 100%;
+    width: 20em;
+    background-color: white;
+    border: solid 1px black;
+    justify-self: start; /* forza l'immagine a sinistra */
 }
 #prodottiPrincipali{
     background-color: var(--contentbgcolorchiaro);
     color: var(--contenttxtcolorscuro);
+}
+#prodottiPrincipali .contenuto{
+    display: grid;
+    grid-area: c;
+    grid-template-columns: 2fr 1fr; /* colonna testo + colonna immagine */
+    align-content: center;
+    padding: 1.5em;
 }
 /*
 ====================================================================================================================================
 SEZIONE FOOTER
 ====================================================================================================================================
 */
-footer {
-    margin-top: 1em;
+footer{
+    margin: 1em;
     background-color: var(--breadcolor);
     color: var(--breadtxtcolor);
+}
+
+footer .contenuto{
     display: grid;
     grid-area: f;
+    grid-template-columns: 1fr 1fr; 
+    align-items: top;
+}
+#contatti{
+    grid-column: 1;
+}
+
+#assistenzaClienti{
+    grid-column: 2;
 }
