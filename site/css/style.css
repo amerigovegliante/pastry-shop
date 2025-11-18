@@ -100,7 +100,6 @@ header .contenuto{
 SEZIONE MENU'
 ====================================================================================================================================
 */
-
 #menu{
     display: grid;
     background-color: var(--menubgcolor);
@@ -133,6 +132,7 @@ SEZIONE MENU'
 #currentlink{
     background-color: var(--menubgcurrentpage);
     color: var(--menutextcurrentpage);
+    box-shadow: 10px 4px 10px rgba(0,0,0,0.1);
 }
 #menu ul li{
     display: inline;
@@ -211,6 +211,39 @@ SEZIONE MAIN
     grid-template-columns: 2fr 1fr; /* colonna testo + colonna immagine */
     align-content: center;
     padding: 1.5em;
+}
+#prodottiPrincipali img{
+    grid-column: 2;
+    margin: 1.5em;
+}
+#prodottiPrincipali button{
+    align-self: center;
+}
+/*
+------------------------------------------------------------------------------------------------------------------------------------
+GRIGLIA TORTE
+------------------------------------------------------------------------------------------------------------------------------------
+*/
+#grigliaTorte{
+    background-color: var(--menubgcolor);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));    /*da 260px a 1fr*/
+    gap: 1.5em;
+    padding: 1.5em;
+}
+#grigliaTorte .cardTorta{
+    color: var(--txtcolor);
+    background-color: var(--bgcolor);
+    border: solid;
+    border-color: black;
+    border-radius: 1px;
+    box-shadow: 10px 4px 10px rgba(0,0,0,0.1);
+}
+#grigliaTorte img{
+    width: 100%;    /*Riempie tutta la larghezza della card*/
+}
+#grigliaTorte .infoTorta{
+    padding: 1em;
 }
 /*
 ====================================================================================================================================
