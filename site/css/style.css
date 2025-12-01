@@ -38,7 +38,7 @@ body{
     margin: 0em;
     grid-template-columns: auto auto auto;
     grid-template-areas: 
-    "t l p" /*tendina menu(per telefono)  logo  bottoni(accedi carrello)*/
+    "h h h" /*header*/
     "n n n" /*menu per desktop*/
     "b b b" /*breadcrumb*/
     "c c c" /*contenuto*/
@@ -55,20 +55,21 @@ SEZIONE HEADER
 ====================================================================================================================================
 */
 header{
+    grid-area: h;
     background-color: var(--menubgcolor);
-    border-bottom: 10px double #1c0101 ;
+    border-bottom: 10px double #1c0101;
+    padding: 1.5em;
 }
 header .contenuto{
     display: grid;
-    width: 100%;
-    grid-template-columns: 1fr auto 1fr;
     grid-template-areas: "t l p";
-    text-align: center;
+    grid-template-columns: 1fr auto 1fr; 
+    width: 100%;
     align-items: center;
 }
 #logo{
-    display: grid;
     grid-area: l;
+    text-align: center;
 }
 #logo h1{
     background-image: url("../img/logo_compresso.png");
@@ -78,7 +79,7 @@ header .contenuto{
     text-indent: -999em;
     font-size: 6em;
     line-height: 1.5em;
-    margin-top:0.3em;
+    margin-top:0.3em;  
 }
 #logo p{
     font-style: italic;
@@ -91,10 +92,11 @@ header .contenuto{
     grid-area: t;
 }
 #pulsantiMenu{
+    grid-area: p;
     display: flex;
     justify-content: flex-end;
     gap: 1.5em;
-    grid-area: p;
+    padding-right: 0.5em;
 }
 .bottoneCarrello svg, .bottoneProfilo svg{
     width: 2.5em;
@@ -110,7 +112,6 @@ SEZIONE MENU'
 ====================================================================================================================================
 */
 #menu{
-    display: grid;
     background-color: var(--menubgcolor);
     color: var(--menutextcolor);
     font-size: 1.3em;
@@ -184,53 +185,56 @@ SEZIONE BREADCRUMB
 SEZIONE MAIN
 ====================================================================================================================================
 */
+#presentazionePasticceria{
+    grid-area: c;
+    background-color: var(--contentbgcolorchiaro);
+    color:var(--contenttxtcolorscuro);
+    padding: 1.5em;
+}
 #presentazionePasticceria .contenuto{
     display: grid;
-    grid-area: c;
     grid-template-columns: 1fr 2fr; /* colonna immagine + colonna testo */
     padding: 1.5em;
 }
-#presentazionePasticceria{
-    background-color: var(--contentbgcolorscuro);
-    color:var(--contenttxtcolorchiaro);
-    padding: 1.5em;
-}
 #presentazionePasticceria img{
-    max-width: 100%;
+    grid-column: 1;
     width: 20em;
+    max-width: 100%;
     background-color: white;
     border: solid 1px black;
-    justify-self: start; /* forza l'immagine a sinistra */
 }
 #presentazionePasticceria .testo{
+    grid-column: 2;
     align-content: center;
     padding: 1.5em;
 }
 
-#prodottiPrincipali img{
-    max-width: 100%;
-    width: 20em;
-    background-color: white;
-    border: solid 1px black;
-    justify-self: start; /* forza l'immagine a sinistra */
-}
 #prodottiPrincipali{
+    grid-area: c;
     background-color: var(--contentbgcolorchiaro);
     color: var(--contenttxtcolorscuro);
+    padding: 1.5em;
 }
 #prodottiPrincipali .contenuto{
     display: grid;
-    grid-area: c;
     grid-template-columns: 2fr 1fr; /* colonna testo + colonna immagine */
-    align-content: center;
     padding: 1.5em;
 }
-#prodottiPrincipali img{
-    grid-column: 2;
-    margin: 1.5em;
+#prodottiPrincipali .testo{
+    grid-column: 1;
 }
-#prodottiPrincipali button{
-    align-self: center;
+#prodottiPrincipali .immagini{
+    grid-column: 2;
+    display: flex;            
+    flex-direction: column;
+    gap: 1em; 
+    padding: 0 1.5em 0 1.5em;
+}
+#prodottiPrincipali .immagini img{  
+    width: 20em;
+    max-width: 100%;
+    background-color: white;
+    border: solid 1px black;
 }
 /*
 ------------------------------------------------------------------------------------------------------------------------------------
@@ -245,8 +249,8 @@ GRIGLIA TORTE
     padding: 1.5em;
 }
 #grigliaTorte .cardTorta{
-    color: var(--txtcolor);
-    background-color: var(--bgcolor);
+    color: var(--contenttxtcolorscuro);
+    background-color: var(--contentbgcolorchiaro);
     border: solid;
     border-color: black;
     border-radius: 20px;
@@ -272,16 +276,16 @@ SEZIONE FOOTER
 ====================================================================================================================================
 */
 footer{
-    margin: 1em;
+    grid-area: f;
     background-color: var(--breadcolor);
     color: var(--breadtxtcolor);
 }
 
 footer .contenuto{
     display: grid;
-    grid-area: f;
     grid-template-columns: 1fr 1fr; 
     align-items: top;
+    padding: 1em;
 }
 #contatti{
     grid-column: 1;

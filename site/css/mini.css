@@ -1,17 +1,26 @@
+body{
+    background-color: var(--bgcolor);
+    color: var(--txtcolor);
+    margin: 0em;
+    grid-template-columns: auto auto auto;
+    grid-template-areas: 
+    "p l t" /*pulsante menu a tendina(per telefono)  logo  bottoni(accedi carrello)*/
+    "b" /*breadcrumb*/
+    "c" /*contenuto*/
+    "f"; /*footer*/
+}
+
 .contenuto{
     width: 100%;
 }
 
 #logo{
-    display: grid;
     grid-area: l;
-    align-items: left;
 }
 #logo p{
     display: none;
 }
 .bottoneMenu{
-    display: grid;
     grid-area: t;
 }
 #menu{
