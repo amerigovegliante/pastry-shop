@@ -57,9 +57,9 @@ CREATE TABLE Persona(
 
 delete from item;
 
-INSERT INTO Persona (‘Email’, ‘Nome’, ‘Cognome’, ‘Username’, ‘Password’, ‘Ruolo’, ‘Sesso’) VALUES
-(‘user@gmail.com’,’user’,’user’,’user’, ‘user’, ‘U’, ‘N’),
-(‘admin@gmail.com, ‘admin’, ‘admin’, ‘admin’, ‘admin’, ‘A’,’N’),
+INSERT INTO Persona ('Email', 'Nome', 'Cognome', 'Username', 'Password', 'Ruolo', 'Sesso') VALUES
+('user@gmail.com','user','user','user', 'user', 'U', 'N'),
+('admin@gmail.com', 'admin', 'admin', 'admin', 'admin', 'A','N'),
 
 INSERT INTO item (id, nome, icona, descrizione, prezzo, immagine) VALUES 
 (1, 'Red Velvet', NULL, 'La red velvet è una torta morbida al cacao, dal colore rosso intenso, ricoperta con crema al formaggio.', 5.00, NULL),

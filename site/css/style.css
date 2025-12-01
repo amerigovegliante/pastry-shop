@@ -57,9 +57,24 @@ SEZIONE HEADER
 header{
     grid-area: h;
     background-color: var(--menubgcolor);
-    border-bottom: 10px double #1c0101;
-    padding: 1.5em;
+    position: relative;
+    padding:  1.5em 0em;
+    border: none;
+    /*border-bottom: 10px double #1c0101 ;*/
 }
+
+header::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30px;
+  background-image: url("../img/bordo_header.png");
+  background-repeat: repeat-x;
+  background-size: auto 30px;
+}
+
 header .contenuto{
     display: grid;
     grid-template-areas: "t l p";
@@ -83,8 +98,15 @@ header .contenuto{
 }
 #logo p{
     font-style: italic;
-    font-weight: bold;
+    font-weight: 800;
+    font-size: larger;
     color: #8b5437;
+    margin-bottom: 0.5em;
+}
+.sirivennela-regular {
+  font-family: "Sirivennela", sans-serif;
+  font-weight: bold;
+  font-style: normal;
 }
 
 .bottoneMenu{
@@ -146,6 +168,10 @@ SEZIONE MENU'
 #currentlink{
     background-color: var(--menubgcurrentpage);
     color: var(--menutextcurrentpage);
+    padding: 0.3em; 
+    -webkit-border-radius:0.3em;
+    -moz-border-radius:0.3em;
+    border-radius:1em 1em 0em 0em;
     box-shadow: 10px 4px 10px rgba(0,0,0,0.1);
 }
 #menu ul li{
@@ -202,6 +228,13 @@ SEZIONE MAIN
     max-width: 100%;
     background-color: white;
     border: solid 1px black;
+    justify-self: start; /* forza l'immagine a sinistra */
+}
+.cornice{
+    width: 20%;
+    float: left;
+    background: linear-gradient(45deg, var(--breadcolor), var(--contentbgcolorchiaro));
+    padding: 0.5em;
 }
 #presentazionePasticceria .testo{
     grid-column: 2;
