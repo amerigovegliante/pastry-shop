@@ -43,3 +43,20 @@ body{
 #menu{
     display: none;
 }
+
+footer .contenuto {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    gap: 1.5em;
+    padding: 1.5em;
+}
+    
+#contatti {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+#assistenzaClienti {
+    grid-column: 1;
+    grid-row: 2;
+}
