@@ -318,7 +318,6 @@ footer .contenuto{
     display: grid;
     grid-template-columns: 1fr 1fr; 
     align-items: top;
-    padding: 1em;
 }
 #contatti{
     grid-column: 1;
