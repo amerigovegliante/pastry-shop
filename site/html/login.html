@@ -16,7 +16,7 @@
 
             <div id="logo">
                 <h1>Pasticceria Padovana</h1>
-                <p>La pasticceria tradizionale su misura per i tuoi eventi</p>
+                <p class="sirivennela-regular">La pasticceria tradizionale su misura per i tuoi eventi</p>
             </div>
 
             <div id="pulsantiMenu">
@@ -46,8 +46,9 @@
         <ul class="contenuto">
             <li><a href="../../index.html"><span lang="en">Home</span></a></li>
             <li><a href="story.html">Chi siamo</a></li>
+            <li><a href="torte.html">Le nostre torte</a></li>
+            <li><a href="pasticcini.html">I nostri pasticcini </a></li>
             <li><a href="contattaci.html">Contattaci</a></li>
-            <li id="currentlink">Accedi</li>
         </ul>
     </nav>
 
@@ -61,7 +62,7 @@
 
             <form action="login_process.php" method="post" autocomplete="on">
                 <div>
-                    <label for="identificativo">Email o nome utente</label>
+                    <label for="identificativo">Email di registrazione</label>
                     <input type="text" id="identificativo" name="identificativo" required autocomplete="username">
                 </div>
 
@@ -73,19 +74,29 @@
                 <button type="submit">Accedi</button>
             </form>
 
-            <p>Non hai un account? <a href="registrazione.html">Registrati ora</a>.</p>
+            <p>Non hai un account? <a href="registrazione.html">Registrati qui</a>.</p>
         </section>
     </main>
 
     <footer>
-        <h2>Contatti</h2>
-        <address>
-            <p>Pasticceria Padovana</p>
-            <p>Via Roma 42<br>35100 Padova (PD)</p>
-            <p>Tel: <a href="tel:+390498765432">+39 049 8765432</a></p>
-            <p>Email: <a href="mailto:info@pasticceriapadovana.it">info@pasticceriapadovana.it</a></p>
-        </address>
-        <p>&copy; 2025 Pasticceria Padovana - Tutti i diritti riservati</p>
+        <div class="contenuto">
+            <div id="contatti">
+                <h2>Contatti</h2>
+                <address>
+                    <p>Pasticceria Padovana</p>
+                    <p>Via Roma 42<br>35100 Padova (PD)</p>
+                    <p>Tel: <a href="tel:+390498765432">+39 049 8765432</a></p>
+                    <p>Email: <a href="mailto:info@pasticceriapadovana.it">info@pasticceriapadovana.it</a></p>
+                </address>
+            </div>
+
+            <div id="assistenzaClienti">
+                <h2>Assistenza clienti shop online</h2>
+                <p>Lun-Ven 8:30-13:00 14:00-17:30</p>
+                <p>Email: <a href="mailto:gestioneclienti@pasticceriapadovana.it">gestioneclienti@pasticceriapadovana.it</a></p>
+                <p id="copyright">&copy; 2025 Pasticceria Padovana - Tutti i diritti riservati</p>
+            </div>
+        </div>
     </footer>
 </body>
 

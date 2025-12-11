@@ -3,27 +3,37 @@
     margin: 0em;
 }
 :root{
+/*
+====================================================================================================================================
+COLORI UTILIZZATI
+====================================================================================================================================
+*/
+    --bgcolor: #8b5437; /*sfondo del body*/
+    --hoverbgcolor: color-mix(in srgb, var(--#8b5437) 80%, white);  /*colore schiarito del 20%*/
+    --txtcolor:#38382f; /*header e menu*/
+
+    /* HEADER e MENU */
     --menubgcolor:#ffe09a;
     --menutextcolor: #1c0101;
     --menubgcurrentpage:#8b5437;
-    --menutextcurrentpage:#fffff1;
-    --bgcolor: #895437; /*header e menu*/
-    --hoverbgcolor: color-mix(in srgb, var(--bgcolor) 80%, white);  /*colore schiarito del 20%*/
-    --txtcolor:#fffff1; /*header e menu*/
+    --menutextcurrentpage:#8b5437;
+
+    /* BREADCRUMB */
     --breadcolor:#8b5437;
-    --breadtextcolor:#fffff1;
+    --breadtxtcolor:#fffff1;
+
+    /*MAIN*/
+    --mainbgcolor: #EAE3C9;
+
+    /* CONTENUTO */
     --contentbgcolorscuro:#1c0101;
     --contenttxtcolorscuro:#1c0101;
-    --contentbgcolorchiaro:#ffe09a;
-    --contenttxtcolorchiaro:#fffdd0;
+    --contentbgcolorchiaro:#EAE3C9;/*precedente #ffe09a*/
+    --contenttxtcolorchiaro:#EAE3C9;/*precedente #fffdd0*/
+
+    /* LINK */
     --visitedcolor: #3455db;
-    /*
-    --linkcolor: #fff;
-    --visitedcolor: #f3c42b;
-    --newscolor: #f3c42b;
-    --newstxcolor:#000;
-    --contentbgcolor:#fff;
-    --contenttxtcolor:#000;*/
+    --activecolor: #FF0000;
 }
 
 html, body{
@@ -44,6 +54,9 @@ body{
     "c c c" /*contenuto*/
     "f f f"; /*footer*/
 }
+main{
+    background-color: var(--mainbgcolor);
+}
 .contenuto{
     max-width: 1200px; /*oltre i 1200px e' scommoda la lettura dl sito quindi e' un valore fisso che si puo' usare*/
     width: 100%;
@@ -58,11 +71,11 @@ header{
     grid-area: h;
     background-color: var(--menubgcolor);
     position: relative;
-    padding:  1.5em 0em;
     border: none;
     /*border-bottom: 10px double #1c0101 ;*/
 }
 
+/*elemento di divisione e decorazione*/
 header::after {
   content: "";
   position: absolute;
@@ -85,6 +98,8 @@ header .contenuto{
 #logo{
     grid-area: l;
     text-align: center;
+    padding-top:0.4em; 
+    padding-bottom: 29px;
 }
 #logo h1{
     background-image: url("../img/logo_compresso.png");
@@ -92,16 +107,14 @@ header .contenuto{
     background-repeat: no-repeat;
     background-position: center;
     text-indent: -999em;
-    font-size: 6em;
-    line-height: 1.5em;
-    margin-top:0.3em;  
+    font-size: 5em;
+    line-height: 1.5em; 
 }
 #logo p{
     font-style: italic;
     font-weight: 800;
     font-size: larger;
     color: #8b5437;
-    margin-bottom: 0.5em;
 }
 .sirivennela-regular {
   font-family: "Sirivennela", sans-serif;
@@ -134,60 +147,81 @@ SEZIONE MENU'
 ====================================================================================================================================
 */
 #menu{
-    background-color: var(--menubgcolor);
-    color: var(--menutextcolor);
-    font-size: 1.3em;
-    width: 100%;
     grid-area: n;
+    background-color: var(--menubgcolor);
 }
-#menu a {
-    transition: all 0.3s ease; 
+#menu .contenuto{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    font-size: 1.3em;
+    color: var(--menutextcolor);
 }
-#menu a:link{
-    color:var(--menutextcolor)
-}
-
-#menu a:visited{
-    color:var(--visitedcolor)
-}
-#menu a:hover{
-    color:var(--menutextcurrentpage);
-    background-color: var(--menubgcurrentpage);
-    padding: 0.4em; 
-    -webkit-border-radius:0.3em;
-    -moz-border-radius:0.3em;
-    border-radius:0.3em;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-}
-
-
 #menu ul{
     list-style-type: none;
     text-align: center;
-}
-#currentlink{
-    background-color: var(--menubgcurrentpage);
-    color: var(--menutextcurrentpage);
-    padding: 0.3em; 
-    -webkit-border-radius:0.3em;
-    -moz-border-radius:0.3em;
-    border-radius:1em 1em 0em 0em;
-    box-shadow: 10px 4px 10px rgba(0,0,0,0.1);
+    justify-content: center; 
 }
 #menu ul li{
-    display: inline;
-    margin-top:auto;
-    flex: 1 1 200px;
-    padding: 1em 0.4em;
-    /*border: 2px groove var(--menubgcurrentpage);*/
+    position: relative; /* necessario per ::after */
+    font-weight: bold;
+    padding: 0 1em 0.5em 1em;
 }
-#menu .contenuto{
-    padding: 0em;
-    margin: 0em auto;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: stretch;
 
+/* 
+-------------------------------------
+COLORI TESTO MENU 
+-------------------------------------
+*/
+#menu{
+    padding: 0.2em;
+}
+#menu ul li a {                 /*tutte le ancore*/
+    text-decoration: none;      /*rimuove sottolineatura tipica dei link*/
+}
+#menu ul li a:active {
+    color: var(--activecolor); 
+}
+#menu ul li a:visited {
+    color: var(--visitedcolor); 
+}
+#menu ul li a:hover {
+    color: var(--menubgcurrentpage); 
+}
+#menu ul #currentlink{
+    color: var(--menubgcurrentpage); 
+}
+/* 
+-------------------------------------
+ANIMAZIONE SOTTOLINEATURA MENU
+-------------------------------------
+*/
+/* pseudoelememto linea che parte dal centro largo 0  */
+#menu ul li a::after{
+    content: "";
+    position: absolute; /*per posizionare la linea dove voglio*/
+    left: 50%;
+    bottom: 0;  /*in basso*/
+    width: 0;   /*normalmente largo 0, non visibile*/
+    height: 0.4em;
+    background-color: var(--menubgcurrentpage);
+    transform: translateX(-50%);    /*spostare la barra mentre cresce da l'illusione che si espanda dal centro*/
+    transition: width 0.3s ease;
+}
+
+#menu ul li a:hover::after {  
+    width: 100%; /*quando passo sopra all'ancora ingrandisco lo pseudoelemento fino agli estremi*/
+}
+
+/* pseudoelememto che sta sotto al testo del currentlink*/
+#menu ul #currentlink::after {
+    content: "";
+    position: absolute;
+    left: 0;  
+    bottom: 0;  /*in basso*/
+    width: 100%;
+    height: 0.4em;
+    background-color: var(--menubgcurrentpage);
 }
 /*
 ====================================================================================================================================
@@ -198,7 +232,7 @@ SEZIONE BREADCRUMB
     background-color: var(--breadcolor);
     color: var(--breadtxtcolor);
     font-size: 1.1em;
-    border: 1px solid var(--menutextcolor);
+    border: 1px solid black;
     padding: 0.5em 0em 0.5em 1.0em;
 }
 #breadcrumb .contenuto{
@@ -208,19 +242,17 @@ SEZIONE BREADCRUMB
 }
 /*
 ====================================================================================================================================
-SEZIONE MAIN
+PAGINA INDEX (index.html)
 ====================================================================================================================================
 */
 #presentazionePasticceria{
     grid-area: c;
-    background-color: var(--contentbgcolorchiaro);
-    color:var(--contenttxtcolorscuro);
-    padding: 1.5em;
 }
 #presentazionePasticceria .contenuto{
     display: grid;
     grid-template-columns: 1fr 2fr; /* colonna immagine + colonna testo */
     padding: 1.5em;
+    color:var(--contenttxtcolorscuro);
 }
 #presentazionePasticceria img{
     grid-column: 1;
@@ -271,11 +303,25 @@ SEZIONE MAIN
 }
 /*
 ------------------------------------------------------------------------------------------------------------------------------------
-GRIGLIA TORTE
+PAGINA CHI SIAMO (story.html)
+------------------------------------------------------------------------------------------------------------------------------------
+*/
+/*
+------------------------------------------------------------------------------------------------------------------------------------
+PAGINA CONTATTACI (contattaci.html)
+------------------------------------------------------------------------------------------------------------------------------------
+*/
+/*
+------------------------------------------------------------------------------------------------------------------------------------
+PAGINA LOGIN (login.html) e REGISTRAZIONE (registrazione.html)
+------------------------------------------------------------------------------------------------------------------------------------
+*/
+/*
+------------------------------------------------------------------------------------------------------------------------------------
+PAGINA TORTE (torte.html) e PAGINA PASTICCINI 
 ------------------------------------------------------------------------------------------------------------------------------------
 */
 #grigliaTorte{
-    background-color: var(--menubgcolor);
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));    /*da 260px a 1fr*/
     gap: 1.5em;
@@ -284,8 +330,7 @@ GRIGLIA TORTE
 #grigliaTorte .cardTorta{
     color: var(--contenttxtcolorscuro);
     background-color: var(--contentbgcolorchiaro);
-    border: solid;
-    border-color: black;
+    border: solid black 1px;
     border-radius: 20px;
     overflow: hidden;   
     box-shadow: 10px 4px 10px rgba(0,0,0,0.1);
@@ -312,6 +357,8 @@ footer{
     grid-area: f;
     background-color: var(--breadcolor);
     color: var(--breadtxtcolor);
+    padding: 1.5em;
+    border-top: 1px solid black;
 }
 
 footer .contenuto{
