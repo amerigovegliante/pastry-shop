@@ -5,6 +5,7 @@ create table item (
   descrizione varchar(255),
   prezzo float not null,
   immagine varchar(255),
+  tipo char not null,
   primary key(id)
 );
 
@@ -49,7 +50,6 @@ CREATE TABLE Persona(
 	Email VARCHAR(60) PRIMARY KEY,
 	Nome VARCHAR(20) NOT NULL,
 	Cognome VARCHAR(20) NOT NULL,
-	Sesso CHAR NOT NULL,
   Ruolo CHAR NOT NULL,
   Username VARCHAR(20) NOT NULL,
   Password VARCHAR(20) NOT NULL,
@@ -57,18 +57,18 @@ CREATE TABLE Persona(
 
 delete from item;
 
-INSERT INTO Persona ('Email', 'Nome', 'Cognome', 'Username', 'Password', 'Ruolo', 'Sesso') VALUES
-('user@gmail.com','user','user','user', 'user', 'U', 'N'),
-('admin@gmail.com', 'admin', 'admin', 'admin', 'admin', 'A','N'),
+INSERT INTO Persona ('Email', 'Nome', 'Cognome', 'Username', 'Password', 'Ruolo') VALUES
+('user@gmail.com','user','user','user', 'user', 'U'),
+('admin@gmail.com', 'admin', 'admin', 'admin', 'admin', 'A'),
 
-INSERT INTO item (id, nome, icona, descrizione, prezzo, immagine) VALUES 
-(1, 'Red Velvet', NULL, 'La red velvet è una torta morbida al cacao, dal colore rosso intenso, ricoperta con crema al formaggio.', 5.00, NULL),
-(2, 'Sachertorte', NULL, 'Torta viennese al cioccolato, morbidissima, con glassa fondente e sottile marmellata di albicocche. Capolavoro di pasticceria.', 7.00, NULL),
-(3, 'Tiramisù', NULL, 'Strati di savoiardi inzuppati nel caffè, crema al mascarpone e spolverata di cacao. Semplicemente delizioso.', 5.00, NULL),
-(4, 'Bignè al Cioccolato', NULL, 'Soffici bignè alla panna ricoperti di una lucida glassa al cioccolato. Un classico della pasticceria, golosissimo e leggero.', 1.50, NULL),
-(5, 'Babbà', NULL, 'Soffice dolce napoletano, imbevuto di rum, dalla caratteristica forma a fungo. Morbido e irresistibilmente brioso.', 2.00, NULL),
-(6, 'Maritozzo', NULL, 'Dolce romano sofficissimo, un panino dolce spaccato e farcito con panna montata abbondante. Semplicemente delizioso.', 3.50, NULL),
-(7, 'Cannolo', NULL, 'Cialda croccante ripiena di ricotta setacciata, zuccherata e arricchita con gocce di cioccolato e canditi.', 3.00, NULL);
+INSERT INTO item (id, nome, icona, descrizione, prezzo, immagine, tipo) VALUES 
+(1, 'Red Velvet', NULL, 'La red velvet è una torta morbida al cacao, dal colore rosso intenso, ricoperta con crema al formaggio.', 5.00, NULL,'T'),
+(2, 'Sachertorte', NULL, 'Torta viennese al cioccolato, morbidissima, con glassa fondente e sottile marmellata di albicocche. Capolavoro di pasticceria.', 7.00, NULL,'T'),
+(3, 'Tiramisù', NULL, 'Strati di savoiardi inzuppati nel caffè, crema al mascarpone e spolverata di cacao. Semplicemente delizioso.', 5.00, NULL,'T'),
+(4, 'Bignè al Cioccolato', NULL, 'Soffici bignè alla panna ricoperti di una lucida glassa al cioccolato. Un classico della pasticceria, golosissimo e leggero.', 1.50, NULL,'P'),
+(5, 'Babbà', NULL, 'Soffice dolce napoletano, imbevuto di rum, dalla caratteristica forma a fungo. Morbido e irresistibilmente brioso.', 2.00, NULL,'P'),
+(6, 'Maritozzo', NULL, 'Dolce romano sofficissimo, un panino dolce spaccato e farcito con panna montata abbondante. Semplicemente delizioso.', 3.50, NULL,'P'),
+(7, 'Cannolo', NULL, 'Cialda croccante ripiena di ricotta setacciata, zuccherata e arricchita con gocce di cioccolato e canditi.', 3.00, NULL,'P');
 
 INSERT INTO ordine (id, ritiro, numero) VALUES 
 (1, '2024-12-19 12:30:00', 'ORD001'),
