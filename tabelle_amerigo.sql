@@ -1,81 +1,105 @@
-create table item (
+USE gdelucch; 
+
+DROP TABLE IF EXISTS item_allergico;
+DROP TABLE IF EXISTS ordine_pasticcino;
+DROP TABLE IF EXISTS ordine_torta;
+DROP TABLE IF EXISTS ordine;
+DROP TABLE IF EXISTS persona;
+DROP TABLE IF EXISTS allergene;
+DROP TABLE IF EXISTS item;
+
+CREATE TABLE item (
   id int not null,
+  tipo varchar(255) not null,
   nome varchar(255) not null,
   icona varchar(255),
   descrizione varchar(255),
   prezzo float not null,
   immagine varchar(255),
-  primary key(id)
-);
+  PRIMARY KEY(id)
+) ENGINE=InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_unicode_ci;
 
-create table ordine (
+CREATE TABLE persona(
+	email varchar(60) not null,
+	nome varchar(20) not null,
+	cognome varchar(20) not null,
+  ruolo char not null,
+  password varchar(20) not null,
+  PRIMARY KEY(email)
+) ENGINE=InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_unicode_ci;
+
+CREATE TABLE ordine (
   id int not null,
   ritiro datetime,
   numero int,
   persona varchar(60) not null,
-  primary key(id),
-  FOREIGN KEY (persona) REFERENCES persona(Email)
-);
+  PRIMARY KEY(id),
+  FOREIGN KEY (persona) REFERENCES persona(email)
+) ENGINE=InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_unicode_ci;
 
-create table allergene (
+CREATE TABLE allergene (
   nome varchar(255) not null,
   icona varchar(255),
-  primary key(nome)
-);
+  PRIMARY KEY(nome)
+) ENGINE=InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_unicode_ci;
 
-create table ordine_torta (
+CREATE TABLE ordine_torta (
   torta int not null,
   ordine int not null,
   porzioni int not null,
   targa varchar(255),
   foto varchar(255),
-  constraint id primary key (torta, ordine)
-);
+  CONSTRAINT pk_ordine_torta primary key (torta, ordine)
+) ENGINE=InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_unicode_ci;
 
-create table ordine_pasticcino (
+CREATE TABLE ordine_pasticcino (
   pasticcino int not null,
   ordine int not null,
   quantita int not null,
-  constraint id primary key (pasticcino, ordine)
-);
+  CONSTRAINT pk_ordine_pasticcino primary key (pasticcino, ordine)
+) ENGINE=InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_unicode_ci;
 
-create table item_allergico (
+CREATE TABLE item_allergico (
   item int not null,
   allergene varchar(255) not null,
-  primary key(item)
-);
+  PRIMARY KEY(item, allergene)
+) ENGINE=InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_unicode_ci;
 
-CREATE TABLE Persona(
-	Email VARCHAR(60) PRIMARY KEY,
-	Nome VARCHAR(20) NOT NULL,
-	Cognome VARCHAR(20) NOT NULL,
-	Sesso CHAR NOT NULL,
-  Ruolo CHAR NOT NULL,
-  Username VARCHAR(20) NOT NULL,
-  Password VARCHAR(20) NOT NULL,
-);
+DELETE FROM item;
 
-delete from item;
+INSERT INTO persona (email, nome, cognome, ruolo, password) VALUES
+('user@gmail.com','user','user','user', 'user'),
+('admin@gmail.com', 'admin', 'admin', 'admin', 'admin');
 
-INSERT INTO Persona ('Email', 'Nome', 'Cognome', 'Username', 'Password', 'Ruolo', 'Sesso') VALUES
-('user@gmail.com','user','user','user', 'user', 'U', 'N'),
-('admin@gmail.com', 'admin', 'admin', 'admin', 'admin', 'A','N'),
+INSERT INTO item (id, tipo ,nome, icona, descrizione, prezzo, immagine) VALUES 
+(1, 'Torta', 'Red Velvet', NULL, 'La red velvet è una torta morbida al cacao, dal colore rosso intenso, ricoperta con crema al formaggio.', 5.00, NULL),
+(2, 'Torta', 'Sachertorte', NULL, 'Torta viennese al cioccolato, morbidissima, con glassa fondente e sottile marmellata di albicocche. Capolavoro di pasticceria.', 7.00, NULL),
+(3, 'Torta', 'Tiramisù', NULL, 'Strati di savoiardi inzuppati nel caffè, crema al mascarpone e spolverata di cacao. Semplicemente delizioso.', 5.00, NULL),
+(4, 'Pasticcino', 'Bignè al Cioccolato', NULL, 'Soffici bignè alla panna ricoperti di una lucida glassa al cioccolato. Un classico della pasticceria, golosissimo e leggero.', 1.50, NULL),
+(5, 'Pasticcino', 'Babbà', NULL, 'Soffice dolce napoletano, imbevuto di rum, dalla caratteristica forma a fungo. Morbido e irresistibilmente brioso.', 2.00, NULL),
+(6, 'Pasticcino', 'Maritozzo', NULL, 'Dolce romano sofficissimo, un panino dolce spaccato e farcito con panna montata abbondante. Semplicemente delizioso.', 3.50, NULL),
+(7, 'Pasticcino', 'Cannolo', NULL, 'Cialda croccante ripiena di ricotta setacciata, zuccherata e arricchita con gocce di cioccolato e canditi.', 3.00, NULL);
 
-INSERT INTO item (id, nome, icona, descrizione, prezzo, immagine) VALUES 
-(1, 'Red Velvet', NULL, 'La red velvet è una torta morbida al cacao, dal colore rosso intenso, ricoperta con crema al formaggio.', 5.00, NULL),
-(2, 'Sachertorte', NULL, 'Torta viennese al cioccolato, morbidissima, con glassa fondente e sottile marmellata di albicocche. Capolavoro di pasticceria.', 7.00, NULL),
-(3, 'Tiramisù', NULL, 'Strati di savoiardi inzuppati nel caffè, crema al mascarpone e spolverata di cacao. Semplicemente delizioso.', 5.00, NULL),
-(4, 'Bignè al Cioccolato', NULL, 'Soffici bignè alla panna ricoperti di una lucida glassa al cioccolato. Un classico della pasticceria, golosissimo e leggero.', 1.50, NULL),
-(5, 'Babbà', NULL, 'Soffice dolce napoletano, imbevuto di rum, dalla caratteristica forma a fungo. Morbido e irresistibilmente brioso.', 2.00, NULL),
-(6, 'Maritozzo', NULL, 'Dolce romano sofficissimo, un panino dolce spaccato e farcito con panna montata abbondante. Semplicemente delizioso.', 3.50, NULL),
-(7, 'Cannolo', NULL, 'Cialda croccante ripiena di ricotta setacciata, zuccherata e arricchita con gocce di cioccolato e canditi.', 3.00, NULL);
-
-INSERT INTO ordine (id, ritiro, numero) VALUES 
-(1, '2024-12-19 12:30:00', 'ORD001'),
-(2, '2024-12-19 13:15:00', 'ORD002'),
-(3, '2024-12-19 14:45:00', 'ORD003'),
-(4, '2024-12-20 09:30:00', 'ORD004'),
-(5, '2024-12-20 11:00:00', 'ORD005');
+INSERT INTO ordine (id, ritiro, numero, persona) VALUES 
+(1, '2024-12-19 12:30:00', 00000001, 'user@gmail.com'),
+(2, '2024-12-19 13:15:00', 00000002, 'user@gmail.com'),
+(3, '2024-12-19 14:45:00', 00000003, 'user@gmail.com'),
+(4, '2024-12-20 09:30:00', 00000004, 'admin@gmail.com'),
+(5, '2024-12-20 11:00:00', 00000005, 'admin@gmail.com');
 
 INSERT INTO ordine_torta (torta, ordine, porzioni, targa, foto) VALUES 
 (1, 1, 8, 'Auguri Sara', NULL),

@@ -1,0 +1,32 @@
+PROCEDURA PER CARICARE IL SITO SUL SERVER TECWEB
+ATTENZIONE: sostituite nome_utente con il vostro nome utente del laboratorio di TecWeb
+
+(1) CONNESSIONE AL SERVER (da terminale)
+Viene suggerito Putty come client ssh ma le istruzioni si riferiscono ad una versione vecchia, secondo me è più facile connettersi da terminale.
+aprire la connessione ssh da terminale con:
+ssh  -L8080:tecweb.studenti.math.unipd.it:80 -L8443:tecweb.studenti.math.unipd.it:443 -L8022:tecweb.studenti.math.unipd.it:22 nome_utente@paolotti.studenti.math.unipd.it
+NB: funziona a patto che le porte 8080 8443 8022 siano libere sul nostro pc. Nel caso bisogna usarne di altre libere.
+NON chiudere il terminale, per i passi seguenti serve la connessione al server.
+
+(2) PASSARE I FILE AL SERVER
+Utilizzare Filezilla o un altro client ftp con i seguenti parametri:
+host: sftp://localhost
+mettere nome utente e password del laboratorio
+porta 8022
+i file del sito vanno copiati nella cartella public_html
+
+(3) CARICARE IL DATABASE SU  DI PHPMYADMIN
+una volta connessi con putty o ssh, digitare da browser:
+http://localhost:8080/phpmyadmin
+La password è da recuperare e si trova nel file presente nella vostra home sul server.
+NB: Il database ha di default il nostro nome utente, da specificare con la direttiva USE nome_utente; ad inizio del file sql.
+nel mio caso: USE gdelucch;
+
+ACCESSO AL SITO
+Una volta caricato il sito diventa consultabile a:
+http://tecweb.studenti.math.unipd.it/nome_utente
+Se ancora connessi basta digitare:
+http://localhost:8080/nome_utente
+
+maggiori informazioni su:
+https://www.studenti.math.unipd.it/tecweb/
