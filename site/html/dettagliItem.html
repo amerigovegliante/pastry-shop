@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="utf-8">
+    <title>Dettagli sulle nostre torte e pasticcini - Pasticceria Padovana</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="pasticceria padovana, pasticceria, dolci, torta, pasticcini, padova, dolce">
+    <meta name="description"
+        content="Pagina dei dettagli sulle torte e pasticcini della Pasticceria Padovana">
+
+    <link rel="stylesheet" href="../css/style.css" media="screen">
+    <link rel="stylesheet" href="../css/mini.css" media="screen and (max-width:800px)">
+</head>
+
+<body>
+    <header>
+        <div class="contenuto">
+            <button type="button" class="bottoneMenu" aria-label="Apri il menu principale">Menu</button>
+
+            <div id="logo">
+                <h1>Pasticceria Padovana</h1>
+                <p class="sirivennela-regular">La pasticceria tradizionale su misura per i tuoi eventi</p>
+            </div>
+
+            <div id="pulsantiMenu">
+                <a href="login.html" class="bottoneProfilo" aria-label="Accedi alla tua area personale">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                </a>
+
+                <a href="carrello.html" class="bottoneCarrello" aria-label="Vai al carrello">
+                    <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16.5" cy="18.5" r="1.5" />
+                        <circle cx="9.5" cy="18.5" r="1.5" />
+                        <path d="M18 16H8a1 1 0 0 1-.958-.713L4.256 6H3a1 1 0 0 1 0-2h2
+                     a1 1 0 0 1 .958.713L6.344 6H21a1 1 0 0 1 .937 1.352l-3 8
+                     A1 1 0 0 1 18 16zm-9.256-2h8.563l2.25-6H6.944z" />
+                    </svg>
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+    <nav id="menu" aria-label="Menu principale">
+        <ul class="contenuto">
+            <li><a href="../../index.html"><span lang="en">Home</span></a></li>
+            <li><a href="story.html">Chi siamo</a></li>
+            <li><a href="pasticcini.html">I nostri pasticcini</a></li>
+            <li><a href="torte.html">Le nostre torte</a></li>
+            <li><a href="contattaci.html">Contattaci</a></li>
+        </ul>
+    </nav>
+
+    <nav id="breadcrumb" aria-label="Percorso di navigazione">
+        <p class="contenuto">Ti trovi in: <a href="../../index.html"><span lang="en">Home</span></a> &gt; <a href="../../torta.php">[tipoBreadcrumb]</a> &gt; [Item] </p>
+    </nav>
+
+    <main>
+        <article class="dettagliItem, contenuto">
+            <figure>
+                <img src="placeholder.jpeg"  alt="alt immagine">
+                <figcaption>placeholder</figcaption>
+            </figure>
+            <section class="infoItem">
+                <h2>Nome</h2>
+                <data value="12.00" class="prezzoTorta">€12.00</data> <!--prezzo dinamico in base alla porzione-->
+                <p>Descrizione</p>
+                <p>Allergeni: [ListaAllergeni]</p>
+                <form method="post" action="carrello.php">
+                    <fieldset>
+                    <legend>Acquisto Torta</legend>
+                    <input type="hidden" name="ID" value="[IDItem]"> <!--serve per passare l'id dell'item al carrello-->
+                    <div>
+                        <label for="quantita">Quantità</label>
+                        <input type="number" id="quantita" min="1" value="[quantitaItem]" name="quantita">
+                    </div>
+                    <p>Porzione: </p>
+                    <p>Le grammature sono indicative e possono variare in base alla decorazione OPPURE Peso indicativo calcolato su circa 150 g a persona</p>
+                    <div>
+                        <input type="radio" id="2P" name="porzione" value="300" >
+                        <label for="2P">2 persone (300gr)</label>
+                        <input type="radio" id="4P" name="porzione" value="600" checked>
+                        <label for="4P">4 persone (600gr)</label>
+                        <input type="radio" id="6P" name="porzione" value="900">
+                        <label for="6P">6 persone (900gr)</label>   
+                        <input type="radio" id="8P" name="porzione" value="1200">
+                        <label for="8P">8 persone (1.2kg)</label>
+                        <input type="radio" id="12P" name="porzione" value="1800">
+                        <label for="12P">12 persone (1.8kg)</label>
+                    </div> 
+                    <p>Personalizzazione (opzionale):</p>
+                    <div>
+                        <label for="Targa">
+                            <input type="checkbox" id="chkTarga">
+                            Aggiungi una targa
+                        </label>
+                        <label for="Foto">
+                            <input type="checkbox" id="chkFoto">
+                            Aggiungi una foto
+                        </label>
+                    </div>
+                    <div id="campoTarga" hidden>
+                        <label for="testoTarga">
+                            Testo sulla targa (max 20 caratteri)
+                        </label>
+                        <textarea id="testoTarga"
+                                    maxlength="20"
+                                    rows="2"
+                                    placeholder="Es. Buon Compleanno Anna"></textarea>
+                    </div>
+                    <div id="campoFoto" hidden>
+                        <label for="uploadFoto">
+                            Carica la foto da stampare (formati accettati: .jpg, .png)
+                        </label>
+                        <input type="file" id="uploadFoto" accept=".jpg, .jpeg, .png">
+                    </div>
+                    <button type="submit">Aggiungi al carrello</button>
+                    </fieldset>
+                    
+                </form>
+            </section>
+        </article>
+        [DettagliItem]
+    </main>
+
+    <footer>
+        <div class="contenuto">
+            <div id="contatti">
+                <h2>Contatti</h2>
+                <address>
+                    <p>Pasticceria Padovana</p>
+                    <p>Via Roma 42<br>35100 Padova (PD)</p>
+                    <p>Tel: <a href="tel:+390498765432">+39 049 8765432</a></p>
+                    <p>Email: <a href="mailto:info@pasticceriapadovana.it">info@pasticceriapadovana.it</a></p>
+                </address>
+            </div>
+
+            <div id="assistenzaClienti">
+                <h2>Assistenza clienti shop online</h2>
+                <p>Lun-Ven 8:30-13:00 14:00-17:30</p>
+                <p>Email: <a href="mailto:gestioneclienti@pasticceriapadovana.it">gestioneclienti@pasticceriapadovana.it</a></p>
+                <p id="copyright">&copy; 2025 Pasticceria Padovana - Tutti i diritti riservati</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

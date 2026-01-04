@@ -1,4 +1,4 @@
-USE gdelucch; 
+USE gromanat; 
 
 DROP TABLE IF EXISTS item_allergico;
 DROP TABLE IF EXISTS ordine_pasticcino;

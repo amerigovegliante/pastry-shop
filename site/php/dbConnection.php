@@ -3,9 +3,9 @@
 class DBAccess{
     // Parametri per la connessione al database
 	private const HOST_DB = "localhost";
-	private const DATABASE_NAME = "gdelucch";
-	private const USERNAME = "gdelucch";
-	private const PASSWORD = "pheexei3AiVu4toh";
+	private const DATABASE_NAME = "gromanat";
+	private const USERNAME = "gromanat";
+	private const PASSWORD = "eefee6eiMah3ohZi";
 
     private $connection;    //variabile di connessione
 
@@ -32,18 +32,28 @@ class DBAccess{
 
     //restituisce tutte le torte o i pasticcini a seconda del parametro tipo passato sia "Torta" o "Pasticcino"
     public function getListOfItems($tipo){
-        $query = "SELECT id, nome, descrizione, prezzo, immagine FROM item WHERE tipo='$tipo' ORDER BY ID ASC";
-        $queryResult = mysqli_query($this->connection, $query) 
-            or die("Errore in dbConnection: " . mysqli_error($this->connection));	
-        
-        if(mysqli_num_rows($queryResult) != 0){		
-			$result = array();						//array per i risultati
-			while($row = mysqli_fetch_assoc($queryResult)){	//restituisce ogni riga come array associativo
-				array_push($result, $row);			
-			} 										
-			$queryResult->free();					//libero memoria
-			return $result;
-		}
-		else return [];
-    }
+        //uso un placeholder per evitare sql injection, faccio si che il valore dopo il = sia sempre tratto come una stringa
+        $querySelect="SELECT id, nome, prezzo, icona FROM item WHERE tipo=?";
+        $stmt=mysqli_prepare($this->connection,$querySelect);
+        mysqli_stmt_bind_param($stmt, "s", $tipo); //binding del parametro: $tipo vine trattato sempre come stringa (s)
+        mysqli_stmt_execute($stmt); //esecuzione della query già compilata
+        $queryResult=mysqli_stmt_get_result($stmt);
+        /*creo un array associativo: 
+        $itemsArray = [
+            ['id'=>1, 'nome'=>'Torta Sacher', 'prezzo'=>22.50],
+            ['id'=>2, 'nome'=>'Torta al Cioccolato', 'prezzo'=>18.00]
+        ];*/
+        $itemsArray = array();
+        if (mysqli_num_rows($queryResult)>0){
+            while ($row = mysqli_fetch_assoc($queryResult)){ //mysqli_fetch_assoc($queryResult) restituisce una riga del risultato e la converte in un array associativo usando i nomi delle colonne come chiavi
+                if($row['icona'] == null){
+                    $row['icona'] = "../img/placeholder.jpeg"; //immagine di default se non presente
+                }
+                array_push($itemsArray,$row);
+            }
+            return $itemsArray;
+        }else{
+            return null;
+        }
+	}
 }
