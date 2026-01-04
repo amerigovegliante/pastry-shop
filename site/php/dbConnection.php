@@ -3,9 +3,9 @@
 class DBAccess{
     // Parametri per la connessione al database
 	private const HOST_DB = "localhost";
-	private const DATABASE_NAME = "gromanat";
-	private const USERNAME = "gromanat";
-	private const PASSWORD = "eefee6eiMah3ohZi";
+	private const DATABASE_NAME = "";
+	private const USERNAME = "";
+	private const PASSWORD = "";
 
     private $connection;    //variabile di connessione
 
