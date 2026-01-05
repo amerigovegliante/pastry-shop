@@ -20,7 +20,7 @@
             </div>
 
             <div id="pulsantiMenu">
-                <a href="login.html" class="bottoneProfilo" aria-label="Accedi alla tua area personale">
+                <a href="../html/login.html" class="bottoneProfilo" aria-label="Accedi alla tua area personale">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
@@ -28,7 +28,7 @@
                     </svg>
                 </a>
 
-                <a href="carrello.html" class="bottoneCarrello" aria-label="Vai al carrello">
+                <a href="../html/carrello.html" class="bottoneCarrello" aria-label="Vai al carrello">
                     <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="16.5" cy="18.5" r="1.5" />
                         <circle cx="9.5" cy="18.5" r="1.5" />
@@ -45,7 +45,7 @@
     <nav id="menu" aria-label="Menu principale">
         <ul class="contenuto">
             <li><a href="../../index.html"><span lang="en">Home</span></a></li>
-            <li><a href="story.html">Chi siamo</a></li>
+            <li><a href="../html/story.html">Chi siamo</a></li>
             <li><a href="../php/torte-pasticcini.php?tipo=torte">Le nostre torte</a></li>
             <li><a href="../php/torte-pasticcini.php?tipo=pasticcini">I nostri pasticcini </a></li>
             <li id="currentlink">Contattaci</li>
@@ -56,22 +56,23 @@
         <p class="contenuto">Ti trovi in: <a href="../../index.html"><span lang="en">Home</span></a> &gt; Contattaci</p>
     </nav>
 
-    <main id="contenuto">
-        <section aria-labelledby="titolo-contattaci">
-            <h2 id="titolo-contattaci">Contattaci</h2>
+    <main>
+        <section id="sezioneContattaci" class="contenuto" aria-labelledby="titolo-contattaci">
+            <form id="formContattaci" action="login_process.php" method="post">
+                <fieldset>
+                    <legend>Contattaci</legend>
+                    <div class="campoDati">
+                        <label for="identificativo">Email</label>
+                        <input type="text" id="identificativo" name="identificativo" required aria-required="true">
+                    </div>
 
-            <form action="login_process.php" method="post">
-                <div>
-                    <label for="identificativo">Email</label>
-                    <input type="text" id="identificativo" name="identificativo" required>
-                </div>
+                    <div class="campoDati">
+                        <label for="domande">Domande</label>
+                        <textarea name="domande" id="domande" rows="7"></textarea>
+                    </div>
 
-                <div>
-                    <label for="domande">Domande</label>
-                    <textarea name="domande" id="domande" rows="20" cols="40"></textarea>
-                </div>
-
-                <button type="submit">Invia</button>
+                    <button type="submit">Invia</button>
+                </fieldset>
             </form>
         </section>
     </main>

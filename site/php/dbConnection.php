@@ -3,9 +3,9 @@
 class DBAccess{
     // Parametri per la connessione al database
 	private const HOST_DB = "localhost";
-	private const DATABASE_NAME = "";
-	private const USERNAME = "";
-	private const PASSWORD = "";
+	private const DATABASE_NAME = "gdelucch";
+	private const USERNAME = "gdelucch";
+	private const PASSWORD = "pheexei3AiVu4toh";
 
     private $connection;    //variabile di connessione
 

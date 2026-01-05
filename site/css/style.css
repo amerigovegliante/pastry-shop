@@ -11,6 +11,8 @@ COLORI UTILIZZATI
     --bgcolor: #8b5437; /*sfondo del body*/
     --hoverbgcolor: color-mix(in srgb, var(--#8b5437) 80%, white);  /*colore schiarito del 20%*/
     --txtcolor:#38382f; /*header e menu*/
+    --txtsuccesscolor: #2e7d32; /*testo di successo*/
+    --txterrorcolor:  #c0392b; /*testo di errore*/
 
     /* HEADER e MENU */
     --menubgcolor:#ffe09a;
@@ -22,7 +24,7 @@ COLORI UTILIZZATI
     --breadcolor:#8b5437;
     --breadtxtcolor:#fffff1;
 
-    /*MAIN*/
+    /* MAIN */
     --mainbgcolor: #EAE3C9;
 
     /* CONTENUTO */
@@ -34,6 +36,9 @@ COLORI UTILIZZATI
     /* LINK */
     --visitedcolor: #3455db;
     --activecolor: #FF0000;
+
+    /* PULSANTI */
+     --buttoncolor: #8b5437;
 }
 
 html, body{
@@ -309,13 +314,74 @@ PAGINA CHI SIAMO (story.html)
 /*
 ------------------------------------------------------------------------------------------------------------------------------------
 PAGINA CONTATTACI (contattaci.html)
-------------------------------------------------------------------------------------------------------------------------------------
-*/
-/*
-------------------------------------------------------------------------------------------------------------------------------------
 PAGINA LOGIN (login.html) e REGISTRAZIONE (registrazione.html)
 ------------------------------------------------------------------------------------------------------------------------------------
 */
+#sezioneLogin, #sezioneRegistrazione{
+    padding: 1em 0 1em 1.5em;
+}
+#sezioneContattaci{
+    padding: 1em 0 0.5em 1.5em;
+}
+#formLogin, #formRegistrazione, #formContattaci{
+    max-width: 30%;
+}
+fieldset > legend{
+    font-size: 1.5em;    
+    font-weight: bold;     
+}
+fieldset{
+    border: none;
+}
+.campoDati{
+    display: flex;
+    flex-direction: column;
+    padding: 0.3em 0 0.3em 0;;
+}
+.campoDati label{
+    font-weight: bolder;
+}
+.campoDati input, .campoDati textarea{
+    max-width: 20em;
+    border: 1px solid grey;
+    border-radius: 4px;
+    padding: 0.3em;
+}
+/*
+------------------------------------------------------------------------------------------------------------------------------------
+QUALSIASI PULSANTE
+------------------------------------------------------------------------------------------------------------------------------------
+*/
+button{
+    margin: 1em 0 1em 0;
+    background-color: transparent;
+    color: var(--contenttxtcolorscuro);
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 0.7em;
+    border: var(--bgcolor) 1px solid;
+    cursor: pointer;
+    transition: all 0.3s ease; /* effetto di transizione */
+}
+button:hover{
+    background-color: var(--buttoncolor);
+    color: var(--contenttxtcolorchiaro);
+}
+/*
+------------------------------------------------------------------------------------------------------------------------------------
+TESTO DI ERRORE E DI SUCCESSO
+------------------------------------------------------------------------------------------------------------------------------------
+*/
+.errore {
+    color: var(--txterrorcolor);
+    font-size: 0.9em;
+    font-weight: bold;
+}
+.successo {
+    color: var(--txtsuccesscolor);
+    font-size: 1em;
+    font-weight: bold;
+}
 /*
 ------------------------------------------------------------------------------------------------------------------------------------
 PAGINA TORTE (torte.html) e PAGINA PASTICCINI 
