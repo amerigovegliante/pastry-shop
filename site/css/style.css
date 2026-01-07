@@ -416,6 +416,116 @@ PAGINA TORTE (torte.html) e PAGINA PASTICCINI
 }
 /*
 ====================================================================================================================================
+SEZIONE DETTAGLI ITEM
+====================================================================================================================================
+*/
+.dettagliItem {
+    display: flex;
+    gap: 3em;
+    padding: 1.5em;
+    align-items: flex-start;
+}
+.dettagliItem figure {
+    flex: 1 1 40%; /* 40% larghezza */
+    margin: 0;
+}
+
+.dettagliItem img {
+    width: 100%;
+    /*max-width: 500px;
+    display: block;
+    border-radius: 12px;
+    background-color: white;
+    border: 1px solid black;*/
+}
+
+.dettagliItem figcaption {
+    text-align: center;
+    font-size: 0.9em;
+    margin-top: 1.5em;
+    color: var(--contenttxtcolor);
+}
+.infoItem {
+    flex: 1 1 60%; /* 60% larghezza */
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+.infoItem h2 {
+    font-size: 2em;
+    margin: 0;
+}
+
+.prezzoItem{
+    font-size: 1.6em;
+    font-weight: bold;
+}
+.infoItem form {
+    margin-top: 1.5em;
+}
+
+.infoItem fieldset {
+    border: 1px solid #aaa;
+    padding: 1.5em;
+    border-radius: 10px;
+}
+
+.infoItem legend {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.infoItem label {
+    display: block;
+    margin-bottom: 0.3em;
+}
+.porzioni input[type="radio"] {/*nascondo i radio button */
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+.porzioni {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7em;
+    margin-top: 0.5em;
+}
+
+.porzioni label {
+    cursor: pointer;
+    padding: 0.6em 1em;
+    border: 2px solid var(--buttoncolor);
+    border-radius: 10px;
+    font-weight: bold;
+    text-align: center;
+    background-color: transparent;
+    color: var(--contenttxtcolorscuro);
+    transition: all 0.2s ease;
+    min-width: 6.5em;
+}
+.porzioni input[type="radio"]:checked + label {
+    background-color: var(--buttoncolor);
+    color: var(--contenttxtcolorchiaro);
+    border-color: var(--buttoncolor);
+}
+.porzioni label:hover {
+    background-color: color-mix(in srgb, var(--buttoncolor) 85%, white);
+}
+
+.porzioni input[type="radio"]:focus + label {
+    outline: 3px solid var(--breadcolor);
+    outline-offset: 2px;
+}
+
+.infoItem input[type="number"], .infoItem textarea {
+    width: 100%;
+    max-width: 20em;
+    padding: 0.4em;
+}
+
+
+/*
+====================================================================================================================================
 SEZIONE FOOTER
 ====================================================================================================================================
 */

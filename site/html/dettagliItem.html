@@ -61,14 +61,14 @@
     </nav>
 
     <main>
-        <article class="dettagliItem, contenuto">
+        <article class="dettagliItem contenuto">
             <figure>
-                <img src="placeholder.jpeg"  alt="alt immagine">
+                <img src="../img/placeholder.jpeg"  alt="alt immagine" class="cornice">
                 <figcaption>placeholder</figcaption>
             </figure>
             <section class="infoItem">
                 <h2>Nome</h2>
-                <data value="12.00" class="prezzoTorta">€12.00</data> <!--prezzo dinamico in base alla porzione-->
+                <data value="12.00" class="prezzoItem">€12.00</data> <!--prezzo dinamico in base alla porzione-->
                 <p>Descrizione</p>
                 <p>Allergeni: [ListaAllergeni]</p>
                 <form method="post" action="carrello.php">
@@ -76,22 +76,22 @@
                     <legend>Acquisto Torta</legend>
                     <input type="hidden" name="ID" value="[IDItem]"> <!--serve per passare l'id dell'item al carrello-->
                     <div>
-                        <label for="quantita">Quantità</label>
+                        <label for="quantita" class="voce">Quantità</label>
                         <input type="number" id="quantita" min="1" value="[quantitaItem]" name="quantita">
                     </div>
-                    <p>Porzione: </p>
+                    <p> Porzione: </p>
                     <p>Le grammature sono indicative e possono variare in base alla decorazione OPPURE Peso indicativo calcolato su circa 150 g a persona</p>
-                    <div>
+                    <div class="porzioni">
                         <input type="radio" id="2P" name="porzione" value="300" >
-                        <label for="2P">2 persone (300gr)</label>
-                        <input type="radio" id="4P" name="porzione" value="600" checked>
-                        <label for="4P">4 persone (600gr)</label>
+                        <label for="2P">2 persone (300 <abbr title="grammi">gr</abbr>)</label>
+                        <input type="radio" id="4P" name="porzione" value="600">
+                        <label for="4P">4 persone (600 <abbr title="grammi">gr</abbr>)</label>
                         <input type="radio" id="6P" name="porzione" value="900">
-                        <label for="6P">6 persone (900gr)</label>   
+                        <label for="6P">6 persone (900 <abbr title="grammi">gr</abbr>)</label>   
                         <input type="radio" id="8P" name="porzione" value="1200">
-                        <label for="8P">8 persone (1.2kg)</label>
+                        <label for="8P">8 persone (1.2<abbr title="kilogrammi">kg</abbr>)</label>
                         <input type="radio" id="12P" name="porzione" value="1800">
-                        <label for="12P">12 persone (1.8kg)</label>
+                        <label for="12P">12 persone (1.8<abbr title="kilogrammi">kg</abbr>)</label>
                     </div> 
                     <p>Personalizzazione (opzionale):</p>
                     <div>
