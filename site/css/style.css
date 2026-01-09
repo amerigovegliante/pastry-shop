@@ -352,7 +352,7 @@ fieldset{
 QUALSIASI PULSANTE
 ------------------------------------------------------------------------------------------------------------------------------------
 */
-button{
+button, .pulsanteGenerico{
     margin: 1em 0 1em 0;
     background-color: transparent;
     color: var(--contenttxtcolorscuro);
@@ -363,7 +363,7 @@ button{
     cursor: pointer;
     transition: all 0.3s ease; /* effetto di transizione */
 }
-button:hover{
+button:hover, .pulsanteGenerico:hover{
     background-color: var(--buttoncolor);
     color: var(--contenttxtcolorchiaro);
 }

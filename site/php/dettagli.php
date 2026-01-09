@@ -87,26 +87,25 @@ if($connessione){
                             <input type=\"checkbox\" id=\"chkTarga\">
                             Aggiungi una targa
                         </label>
+                        <div id=\"campoTarga\">  <!--la nascondo con javascript se il checkbox non è selezionato-->
+                            <label for=\"testoTarga\">
+                                Testo sulla targa (max 20 caratteri)
+                            </label>
+                            <textarea id=\"testoTarga\" name=\"testoTarga\" maxlength=\"20\" rows=\"1\" placeholder=\"Es. Buon Compleanno Anna\"></textarea>
+                        </div>
                         <label for=\"Foto\">
                             <input type=\"checkbox\" id=\"chkFoto\">
                             Aggiungi una foto
                         </label>
-                    </div>
-                    <div id=\"campoTarga\" hidden>
-                        <label for=\"testoTarga\">
-                            Testo sulla targa (max 20 caratteri)
-                        </label>
-                        <textarea id=\"testoTarga\"
-                                    maxlength=\"20\"
-                                    rows=\"2\"
-                                    placeholder=\"Es. Buon Compleanno Anna\"></textarea>
-                    </div>
-                    <div id=\"campoFoto\" hidden>
-                        <label for=\"uploadFoto\">
-                            Carica la foto da stampare (formati accettati: .jpg, .png)
-                        </label>
-                        <input type=\"file\" id=\"uploadFoto\" accept=\".jpg, .jpeg, .png\">
+                        <div id=\"campoFoto\"> <!--la nascondo con javascript se il checkbox non è selezionato-->
+                            <label for=\"uploadFoto\">
+                                Carica la foto da stampare (formati accettati: .jpg, .png)
+                            </label>
+                            <input type=\"file\" id=\"uploadFoto\" accept=\".jpg, .jpeg, .png\">
+                        </div>
                     </div>";
+                    
+                    
             
         } else if($Item['tipo']==='Pasticcino'){
             $tipoBreadcrumb="<a href=\"../../torte-pasticcini.php?tipo=pasticcini\">I nostri pasticcini</a>";
