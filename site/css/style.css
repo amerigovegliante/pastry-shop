@@ -372,12 +372,12 @@ button:hover{
 TESTO DI ERRORE E DI SUCCESSO
 ------------------------------------------------------------------------------------------------------------------------------------
 */
-.errore {
+.errore{
     color: var(--txterrorcolor);
     font-size: 0.9em;
     font-weight: bold;
 }
-.successo {
+.successo{
     color: var(--txtsuccesscolor);
     font-size: 1em;
     font-weight: bold;

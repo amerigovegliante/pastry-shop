@@ -21,7 +21,7 @@
             </div>
             <!-- per ora ho messo dei pulsanti presi da internet, penso siano da sistemare perché hanno grandezza fissa se non erro -->
             <div id="pulsantiMenu">
-                <a href="../html/login.html" class="bottoneProfilo" aria-label="Accedi alla tua area personale">
+                <a href="../php/login.php" class="bottoneProfilo" aria-label="Accedi alla tua area personale">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
@@ -64,6 +64,7 @@
                     <div class="campoDati">
                         <label for="nome">Nome</label>
                         <input type="text" name="nome" id="nome" value="[valoreNome]"
+                        placeholder="Es. Mario"
                         required aria-required="true" autocomplete="given-name">
                     </div>
                     [messaggioErroreNome]
@@ -71,6 +72,7 @@
                     <div class="campoDati">
                         <label for="cognome">Cognome</label>
                         <input type="text" name="cognome" id="cognome" value="[valoreCognome]"
+                        placeholder="Es. Rossi"
                         required aria-required="true" autocomplete="family-name">
                     </div>
                     [messaggioErroreCognome]
@@ -78,6 +80,7 @@
                     <div class="campoDati">
                         <label for="email">Email</label>
                         <input type="email" name="email" id="email" value="[valoreEmail]"
+                        placeholder="esempio@email.com"
                         required aria-required="true" autocomplete="email">
                     </div>
                     [messaggioErroreEmail]
@@ -85,15 +88,17 @@
                     <div class="campoDati">
                         <label for="password">Password</label>
                         <input type="password" name="password" id="password" value="[valorePassword]"
+                        placeholder="Minimo 8 caratteri" 
                         minlength="8" required aria-required="true" autocomplete="new-password">
                     </div>
                     [messaggioErrorePassword]
 
                     <button type="submit" name="submit">Registrati</button>
                 </fieldset>
+                [messaggioErroreDB]
                 [messaggioConferma]
             </form>
-            <p>Hai già un account? <a href="../html/login.html">Accedi qui</a>.</p>
+            <p>Hai già un account? <a href="../php/login.php">Accedi qui</a></p>
         </section>
     </main>
 

@@ -20,7 +20,7 @@
             </div>
 
             <div id="pulsantiMenu">
-                <a href="../html/login.html" class="bottoneProfilo" aria-label="Accedi alla tua area personale">
+                <a href="../php/login.php" class="bottoneProfilo" aria-label="Accedi alla tua area personale">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
@@ -58,24 +58,41 @@
 
     <main>
         <section id="sezioneLogin" class="contenuto" aria-labelledby="titolo-accesso">
-            <form id="formLogin" action="login_process.php" method="post" autocomplete="on">
+            <form id="formLogin" action="login.php" method="post" autocomplete="on">
                 <fieldset>
                     <legend>Accedi al tuo account</legend>
                     <div class="campoDati">
                         <label for="identificativo">Email di registrazione</label>
-                        <input type="text" id="identificativo" name="identificativo" required aria-required="true" autocomplete="username">
+                        <input type="email" name="email" id="email" value="[valoreEmail]" 
+                        placeholder="Inserisci la tua email"
+                        required aria-required="true" autocomplete="email">
                     </div>
+                    [messaggioEmailMancante]
 
                     <div class="campoDati">
                         <label for="password">Password</label>
-                        <input type="password" id="password" name="password" required aria-required="true" autocomplete="current-password">
+                        <input type="password" name="password" id="password" value="[valorePassword]"
+                        placeholder="Inserisci la tua password"
+                        minlength="8" required aria-required="true" autocomplete="current-password">
+                    <!--
+                        <button type="button" id="togglePassword" class="toggle-password"
+                        aria-pressed="false" aria-label="Mostra password" title="Mostra password">
+                            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+                                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                                <circle cx="12" cy="12" r="3" fill="currentColor"/> 
+                            </svg>
+                        </button>
+                    -->
                     </div>
-
-                    <button type="submit">Accedi</button>
+                    [messaggioPasswordMancante]
+                    
+                    <button type="submit" name="submit">Accedi</button>
                 </fieldset>
+                [messaggioErroreLogin]
+                [messaggioErroreDB]
             </form>
 
-            <p>Non hai un account? <a href="../php/registrazione.php">Registrati qui</a>.</p>
+            <p>Non hai un account? <a href="../php/registrazione.php">Registrati qui</a></p>
         </section>
     </main>
 

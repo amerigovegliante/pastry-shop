@@ -1,4 +1,4 @@
-USE gromanat; 
+USE gdelucch; 
 
 DROP TABLE IF EXISTS item_allergico;
 DROP TABLE IF EXISTS ordine_pasticcino;
@@ -25,8 +25,8 @@ CREATE TABLE persona(
 	email varchar(60) not null,
 	nome varchar(20) not null,
 	cognome varchar(20) not null,
-  ruolo char not null,
-  password varchar(20) not null,
+  ruolo varchar(20) not null,
+  password varchar(255) not null,
   PRIMARY KEY(email)
 ) ENGINE=InnoDB
   DEFAULT CHARSET = utf8
