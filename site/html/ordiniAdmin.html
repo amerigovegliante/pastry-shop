@@ -2,10 +2,10 @@
 <html lang="it">
 <head>
     <meta charset="utf-8">
-    <title>Pasticceria Padovana</title>
+    <title>Gestione Ordini - Pasticceria Padovana</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="pasticceria padovana, pasticceria, dolci, torta, pasticcini, padova, dolce">
-    <meta name="description" content="Pagina dedicata alla presentazione, promozione e vendita dolciaria di Pasticceria Padovana">
+    <meta name="description" content="Pagina dedicata alla visione degli ordini da parte dei responsabili, pasticceri e dipendenti della pasticceria Padovana">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -24,6 +24,9 @@
             --text-dark: #2C1810;
             --text-light: #F5F5F5;
             --shadow: rgba(0, 0, 0, 0.1);
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --info: #2196F3;
         }
 
         body {
@@ -31,10 +34,19 @@
             color: var(--text-dark);
             line-height: 1.6;
             overflow-x: hidden;
+            background: var(--bg-cream);
         }
 
         h1, h2, h3 {
             font-family: 'Playfair Display', serif;
+        }
+
+        .visually-hidden {
+            position: absolute;
+            left: -10000px;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
         }
 
         /* Skip Link */
@@ -53,7 +65,7 @@
             top: 0;
         }
 
-        /* Header moderno con effetto glassmorphism */
+        /* Header */
         header {
             position: fixed;
             top: 0;
@@ -73,7 +85,7 @@
         .header-content {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 1rem 2rem;
+            padding: 1.2rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -92,7 +104,7 @@
             font-style: italic;
         }
 
-        /* Navigazione moderna */
+        /* Navigazione */
         nav#menu {
             display: flex;
             align-items: center;
@@ -112,11 +124,11 @@
             transition: color 0.3s ease;
         }
 
-        nav#menu a:hover, nav#menu span {
+        nav#menu a:hover, nav#menu #currentlink span {
             color: var(--primary);
         }
 
-        nav#menu a::after {
+        nav#menu a::after, nav#menu #currentlink span::after {
             content: '';
             position: absolute;
             bottom: -5px;
@@ -127,18 +139,12 @@
             transition: width 0.3s ease;
         }
 
-        nav#menu a:hover::after, nav#menu span::after {
+        nav#menu a:hover::after {
             width: 100%;
         }
 
-        nav#menu span::after {
+        nav#menu #currentlink span::after {
             width: 100%;
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            height: 2px;
-            background: var(--accent);
         }
 
         .header-icons {
@@ -192,192 +198,232 @@
             transition: 0.3s;
         }
 
-        /* Breadcrumb nascosto visivamente ma accessibile */
-        #breadcrumb {
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            min-height: calc(100vh - 400px);
+            padding: 4rem 2rem;
+        }
+
+        .orders-container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: var(--text-dark);
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+
+        /* Table Description */
+        #descr {
             position: absolute;
             left: -10000px;
-            top: auto;
             width: 1px;
             height: 1px;
             overflow: hidden;
         }
 
-        /* Hero Section */
-        .hero {
-            margin-top: 80px;
-            height: 90vh;
-            background: linear-gradient(135deg, var(--bg-cream) 0%, #FFF 100%);
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-
-        .hero-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .hero-text h2 {
-            font-size: 3.5rem;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-        }
-
-        .hero-text p {
-            font-size: 1.2rem;
-            color: var(--text-dark);
-            margin-bottom: 1rem;
-            opacity: 0.9;
-        }
-
-        .hero-text strong {
-            color: var(--primary-light);
-        }
-
-        .hero-image {
-            position: relative;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .hero-image img {
-            width: 100%;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(139, 69, 19, 0.2);
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .cta-button {
-            display: inline-block;
-            margin-top: 2rem;
-            padding: 1rem 2.5rem;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(139, 69, 19, 0.3);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(139, 69, 19, 0.4);
-        }
-
-        /* Sezione Dolci Famosi */
-        .famous-sweets {
-            padding: 6rem 2rem;
+        /* Table Styling */
+        .orders-table-wrapper {
             background: white;
-        }
-
-        .section-header {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 4rem;
-        }
-
-        .section-header h2 {
-            font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .section-header::after {
-            content: '';
-            display: block;
-            width: 100px;
-            height: 4px;
-            background: var(--accent);
-            margin: 1rem auto;
-            border-radius: 2px;
-        }
-
-        .sweets-grid {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-
-        .sweet-card {
-            background: var(--bg-cream);
             border-radius: 20px;
-            padding: 2rem;
-            transition: all 0.3s ease;
-            position: relative;
+            box-shadow: 0 10px 40px var(--shadow);
             overflow: hidden;
         }
 
-        .sweet-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
+        table {
             width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
+            border-collapse: collapse;
         }
 
-        .sweet-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px var(--shadow);
-        }
-
-        .sweet-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .sweet-card dt {
+        caption {
             font-family: 'Playfair Display', serif;
             font-size: 1.8rem;
             color: var(--primary);
-            margin-bottom: 1rem;
+            padding: 2rem;
+            text-align: left;
             font-weight: 600;
         }
 
-        .sweet-card dd {
-            color: var(--text-dark);
-            line-height: 1.8;
-            opacity: 0.9;
+        thead {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
         }
 
-        .category-badge {
-            display: inline-block;
-            padding: 0.3rem 1rem;
+        thead th {
+            padding: 1.2rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #E5E5E5;
+            transition: all 0.3s ease;
+        }
+
+        tbody tr:hover {
+            background: var(--bg-cream);
+        }
+
+        tbody th,
+        tbody td {
+            padding: 1.5rem 1rem;
+            text-align: left;
+        }
+
+        tbody th {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        tbody td a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        tbody td a:hover {
+            color: var(--primary-light);
+            text-decoration: underline;
+        }
+
+        /* Status Controls */
+        .stato-ordine {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stato-ordine button {
+            width: 32px;
+            height: 32px;
+            border: 2px solid var(--primary);
             background: white;
             color: var(--primary);
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
         }
 
-        /* Footer moderno */
+        .stato-ordine button:hover {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .stato-ordine button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .stato-ordine select {
+            padding: 0.6rem 1rem;
+            border: 2px solid #E5E5E5;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            min-width: 150px;
+        }
+
+        .stato-ordine select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
+        }
+
+        .progresso-stato {
+            display: inline-block;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Status Colors */
+        select option[value="in_attesa"] {
+            background: #FFF3E0;
+        }
+
+        select option[value="in_preparazione"] {
+            background: #E3F2FD;
+        }
+
+        select option[value="completato"] {
+            background: #E8F5E9;
+        }
+
+        select option[value="ritirato"] {
+            background: #F5F5F5;
+        }
+
+        /* Responsive Table */
+        @media (max-width: 1200px) {
+            thead {
+                display: none;
+            }
+
+            tbody tr {
+                display: block;
+                margin-bottom: 1.5rem;
+                border: 2px solid #E5E5E5;
+                border-radius: 15px;
+                overflow: hidden;
+            }
+
+            tbody tr:hover {
+                border-color: var(--primary);
+            }
+
+            tbody th,
+            tbody td {
+                display: block;
+                text-align: left;
+                padding: 1rem 1.5rem;
+            }
+
+            tbody th {
+                background: var(--primary);
+                color: white;
+                font-size: 1.2rem;
+            }
+
+            tbody td::before {
+                content: attr(data-title) ": ";
+                font-weight: 700;
+                color: var(--primary);
+                display: inline-block;
+                margin-right: 0.5rem;
+            }
+
+            tbody td:not(:last-child) {
+                border-bottom: 1px solid #E5E5E5;
+            }
+        }
+
+        /* Footer */
         footer {
             background: linear-gradient(135deg, var(--text-dark) 0%, var(--primary) 100%);
             color: var(--text-light);
@@ -507,60 +553,22 @@
                 font-size: 1.2rem;
             }
 
-            .hero {
-                margin-top: 70px;
-                height: auto;
-                min-height: auto;
-                padding: 3rem 0;
+            main {
+                padding: 2rem 1rem;
             }
 
-            .hero-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-                padding: 0 1rem;
-            }
-
-            .hero-text h2 {
+            .page-header h1 {
                 font-size: 2rem;
             }
 
-            .hero-text p {
-                font-size: 1rem;
-            }
-
-            .hero-image {
-                order: -1;
-            }
-
-            .famous-sweets {
-                padding: 3rem 1rem;
-            }
-
-            .section-header {
-                margin-bottom: 2rem;
-            }
-
-            .section-header h2 {
-                font-size: 2rem;
-            }
-
-            .sweets-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .sweet-card {
+            caption {
+                font-size: 1.4rem;
                 padding: 1.5rem;
             }
 
             .footer-content {
                 grid-template-columns: 1fr;
                 gap: 2rem;
-                padding: 0 1rem;
-            }
-
-            footer {
-                padding: 3rem 1rem 2rem;
             }
         }
 
@@ -578,21 +586,17 @@
                 height: 24px;
             }
 
-            .hero-text h2 {
+            .page-header h1 {
                 font-size: 1.8rem;
             }
 
-            .section-header h2 {
-                font-size: 1.6rem;
+            .stato-ordine {
+                flex-direction: column;
+                gap: 0.8rem;
             }
 
-            .sweet-card dt {
-                font-size: 1.4rem;
-            }
-
-            .cta-button {
-                padding: 0.8rem 2rem;
-                font-size: 0.9rem;
+            .stato-ordine select {
+                width: 100%;
             }
         }
     </style>
@@ -607,30 +611,22 @@
                 <p>La tradizione su misura per te</p>
             </div>
 
-<<<<<<< Updated upstream
-            <div id="pulsantiMenu">
-                <a href="site/html/login.html" class="bottoneProfilo" aria-label="Accedi alla tua area personale">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
-                        <circle cx="12" cy="7" r="4" />
-=======
             <nav id="menu" aria-label="Menu di navigazione">
                 <ul>
-                    <li><span lang="en">Home</span></li>
+                    <li><a href="../../index.html"><span lang="en">Home</span></a></li>
                     <li><a href="./site/html/story.html">Chi siamo</a></li>
                     <li><a href="./site/php/torte-pasticcini.php?tipo=torte">Torte</a></li>
                     <li><a href="./site/php/torte-pasticcini.php?tipo=pasticcini">Pasticcini</a></li>
                     <li><a href="./site/html/contattaci.html">Contattaci</a></li>
+                    <li id="currentlink"><span>Ordini</span></li>
                 </ul>
             </nav>
 
             <div class="header-icons">
-                <a href="site/php/login.php" class="icon-btn" aria-label="Accedi alla tua area personale">
+                <a href="site/html/login.html" class="icon-btn" aria-label="Accedi alla tua area personale">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
                         <circle cx="12" cy="7" r="4"/>
->>>>>>> Stashed changes
                     </svg>
                 </a>
                 <a href="site/html/carrello.html" class="icon-btn" aria-label="Vai al carrello">
@@ -650,81 +646,88 @@
         </div>
     </header>
 
-    <nav id="breadcrumb">
-        <p>Ti trovi in: <span lang="en">Home</span></p>
-    </nav>
-
     <main id="main">
-        <section class="hero">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h2>La nostra pasticceria</h2>
-                    <p>Benvenuto a <strong>Pasticceria Padovana</strong>, dove la tradizione artigianale incontra la passione per la pasticceria di qualità.</p>
-                    <p>Proponiamo i sapori autentici dei dolci tradizionali di Padova con ingredienti genuini e un'attenzione unica ai dettagli.</p>
-                    <p>Che sia per una festa di compleanno, un matrimonio o una semplice colazione speciale, i nostri maestri pasticceri sono pronti a creare la tua <strong>torta</strong> personalizzata e <strong>pasticcini</strong> su ordinazione.</p>
-                    <a href="./site/html/contattaci.html" class="cta-button">Scopri di più</a>
-                </div>
-                <div class="hero-image">
-                    <img src="./site/img/vetrinaHome.jpg" alt="Vetrina della pasticceria">
-                </div>
-            </div>
-        </section>
-
-        <section class="famous-sweets">
-            <div class="section-header">
-                <h2>I nostri dolci più famosi</h2>
+        <div class="orders-container">
+            <div class="page-header">
+                <h1>Gestione Ordini</h1>
+                <p>Visualizza e gestisci tutti gli ordini in attesa di ritiro</p>
             </div>
 
-            <div class="sweets-grid">
-                <div class="sweet-card">
-                    <span class="category-badge">TORTE</span>
-                    <dl>
-                        <dt>Torta Pazientina</dt>
-                        <dd>Una torta a strati ricca e raffinata con pan di Spagna, zabaione e crema di mandorle, racchiusa da una copertura di cioccolato fondente. Nata nel Settecento, è considerata la "torta ufficiale" della città di Padova.</dd>
-                    </dl>
-                </div>
-
-                <div class="sweet-card">
-                    <span class="category-badge">TORTE</span>
-                    <dl>
-                        <dt>Dolce del Santo</dt>
-                        <dd>Un dolce lievitato simile al panettone ma con una personalità tutta padovana. Profumato con liquore all'amaretto, vaniglia o scorza d'arancia. Dedicato a Sant'Antonio di Padova, patrono della città.</dd>
-                    </dl>
-                </div>
-
-                <div class="sweet-card">
-                    <span class="category-badge">TORTE</span>
-                    <dl>
-                        <dt>Millefoglie</dt>
-                        <dd>Tre strati di pasta sfoglia cotta al forno fino a diventare dorata e croccante, alternati con due strati di crema. Una combinazione perfetta di croccantezza e cremosità.</dd>
-                    </dl>
-                </div>
-
-                <div class="sweet-card">
-                    <span class="category-badge">PASTICCINI</span>
-                    <dl>
-                        <dt>Bussolà padovano</dt>
-                        <dd>Un biscotto a forma di anello, friabile e profumato al burro. Tipico delle colazioni padovane, deriva dalla tradizione veneziana dei "bussolai". Ottimo con il caffè o con un bicchiere di vino dolce.</dd>
-                    </dl>
-                </div>
-
-                <div class="sweet-card">
-                    <span class="category-badge">PASTICCINI</span>
-                    <dl>
-                        <dt>Frollino al Mandorlato</dt>
-                        <dd>Pasta frolla croccante arricchita da pezzetti di mandorlato di Cologna Veneta. Una specialità locale che unisce due tradizioni: quella padovana e quella veronese.</dd>
-                    </dl>
-                </div>
-
-                <div class="sweet-card">
-                    <span class="category-badge">PASTICCINI</span>
-                    <dl>
-                        <dt>Bigné alla crema</dt>
-                        <dd>Classico della pasticceria: bignè gonfi e dorati, ripieni di crema pasticcera o chantilly e spolverati di zucchero a velo. Immancabili in ogni vassoio.</dd>
-                    </dl>
-                </div>
+            <div class="orders-table-wrapper">
+                <table aria-describedby="descr">
+                    <p id="descr">Tabella che elenca tutte le ordinazioni ancora da ritirare ordinate in base a data e ora di ritiro. 
+                        Ogni riga descrive un'ordinazione con numero identificativo dell'ordine, data e ora di ritiro, nominativo e telefono del cliente,
+                        costo totale, eventuali annotazioni e stato dell'ordine. Lo stato dell'ordine può essere: in attesa, in preparazione, completato o ritirato</p>
+                    
+                    <caption>Elenco degli ordini ancora da ritirare</caption>
+                    
+                    <thead>
+                        <tr>
+                            <th scope="col" abbr="ID">ID Ordine</th>
+                            <th scope="col" abbr="Ritiro">Data e ora ritiro</th>                
+                            <th scope="col" abbr="Nome">Nominativo</th>
+                            <th scope="col" abbr="Tel">Telefono</th>
+                            <th scope="col" abbr="Tot">Totale</th>
+                            <th scope="col" abbr="Note">Annotazioni</th>
+                            <th scope="col">Stato</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td data-title="Ritiro"><time datetime="2024-12-19 12:30:00">2024-12-19 12:30</time></td>
+                            <td data-title="Persona">Mario Rossi</td>
+                            <td data-title="Telefono"><a href="tel:+393456789012">345 678 9012</a></td> 
+                            <td data-title="Prezzo"><data value="45,00">€45,00</data></td>
+                            <td data-title="Annotazioni">Aggiungere una candelina</td>
+                            <td data-title="Stato">
+                                <div class="stato-ordine">
+                                    <button type="button" class="prev" aria-label="Stato precedente" onclick="changeStatus(this, -1)">◀</button>
+                                    
+                                    <label class="visually-hidden" for="stato-ordine-1">Stato ordine</label>
+                                    <select id="stato-ordine-1" name="stato" aria-label="Stato ordine" onchange="updateProgress(this)">
+                                        <option value="in_attesa" selected>In attesa</option>
+                                        <option value="in_preparazione">In preparazione</option>
+                                        <option value="completato">Completato</option>
+                                        <option value="ritirato">Ritirato</option>
+                                    </select>
+                                    
+                                    <button type="button" class="next" aria-label="Stato successivo" onclick="changeStatus(this, 1)">▶</button>
+                                </div>
+                                <span class="progresso-stato">1/4</span>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <th scope="row">2</th>
+                            <td data-title="Ritiro"><time datetime="2024-12-20 15:00:00">2024-12-20 15:00</time></td>
+                            <td data-title="Persona">Laura Bianchi</td>
+                            <td data-title="Telefono"><a href="tel:+393331234567">333 123 4567</a></td> 
+                            <td data-title="Prezzo"><data value="68,50">€68,50</data></td>
+                            <td data-title="Annotazioni">Torta senza glutine</td>
+                            <td data-title="Stato">
+                                <div class="stato-ordine">
+                                    <button type="button" class="prev" aria-label="Stato precedente" onclick="changeStatus(this, -1)">◀</button>
+                                    
+                                    <label class="visually-hidden" for="stato-ordine-2">Stato ordine</label>
+                                    <select id="stato-ordine-2" name="stato" aria-label="Stato ordine" onchange="updateProgress(this)">
+                                        <option value="in_attesa">In attesa</option>
+                                        <option value="in_preparazione" selected>In preparazione</option>
+                                        <option value="completato">Completato</option>
+                                        <option value="ritirato">Ritirato</option>
+                                    </select>
+                                    
+                                    <button type="button" class="next" aria-label="Stato successivo" onclick="changeStatus(this, 1)">▶</button>
+                                </div>
+                                <span class="progresso-stato">2/4</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-        </section>
+            <!-- [TabellaOrdini] - Qui verranno inserite altre righe -->
+        </div>
     </main>
 
     <footer>
@@ -732,7 +735,7 @@
             <div id="navigazione-footer">
                 <h2>Navigazione</h2>
                 <ul>
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="../../index.html">Home</a></li>
                     <li><a href="./site/html/story.html">Chi siamo</a></li>
                     <li><a href="./site/php/torte-pasticcini.php?tipo=torte">Torte</a></li>
                     <li><a href="./site/php/torte-pasticcini.php?tipo=pasticcini">Pasticcini</a></li>
@@ -763,7 +766,6 @@
     </footer>
 
     <script>
-        // Effetto scroll header
         window.addEventListener('scroll', () => {
             const header = document.getElementById('header');
             if (window.scrollY > 50) {
@@ -773,10 +775,30 @@
             }
         });
 
-        // Toggle menu mobile
         function toggleMenu() {
             const menu = document.getElementById('menu');
             menu.classList.toggle('active');
+        }
+
+        function changeStatus(button, direction) {
+            const container = button.closest('.stato-ordine');
+            const select = container.querySelector('select');
+            const currentIndex = select.selectedIndex;
+            const newIndex = currentIndex + direction;
+            
+            if (newIndex >= 0 && newIndex < select.options.length) {
+                select.selectedIndex = newIndex;
+                updateProgress(select);
+            }
+        }
+
+        function updateProgress(select) {
+            const container = select.closest('td');
+            const progressSpan = container.querySelector('.progresso-stato');
+            const selectedIndex = select.selectedIndex + 1;
+            const totalOptions = select.options.length;
+            
+            progressSpan.textContent = `${selectedIndex}/${totalOptions}`;
         }
     </script>
 </body>

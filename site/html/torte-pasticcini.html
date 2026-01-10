@@ -1,69 +1,599 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
     <meta charset="utf-8">
     <title>Le nostre torte - Pasticceria Padovana</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="pasticceria padovana, pasticceria, dolci, torta, pasticcini, padova, dolce">
-    <meta name="description"
-        content="Pagina vetrina per le torte e i pasticcini di Pasticceria Padovana">
+    <meta name="description" content="Pagina vetrina per le torte e i pasticcini di Pasticceria Padovana">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <link rel="stylesheet" href="../css/style.css" media="screen">
-    <link rel="stylesheet" href="../css/mini.css" media="screen and (max-width:800px)">
+        :root {
+            --primary: #8B4513;
+            --primary-light: #D2691E;
+            --accent: #FFD700;
+            --bg-cream: #FFF8E7;
+            --text-dark: #2C1810;
+            --text-light: #F5F5F5;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background: var(--bg-cream);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Skip Link */
+        a.skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary);
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            z-index: 100;
+        }
+
+        a.skip-link:focus {
+            top: 0;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 20px var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 30px var(--shadow);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #logo h1 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+
+        #logo p {
+            font-size: 0.9rem;
+            color: var(--primary-light);
+            font-style: italic;
+        }
+
+        /* Navigazione */
+        nav#menu {
+            display: flex;
+            align-items: center;
+        }
+
+        nav#menu ul {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        nav#menu a, nav#menu li {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav#menu a:hover, nav#menu #currentLink {
+            color: var(--primary);
+        }
+
+        nav#menu a::after, nav#menu #currentLink::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        nav#menu a:hover::after {
+            width: 100%;
+        }
+
+        nav#menu #currentLink::after {
+            width: 100%;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-btn svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--primary);
+            stroke-width: 1.5;
+            transition: stroke 0.3s ease;
+        }
+
+        .icon-btn:hover {
+            background: var(--bg-cream);
+            transform: translateY(-2px);
+        }
+
+        .icon-btn:hover svg {
+            stroke: var(--primary-light);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            min-height: calc(100vh - 400px);
+            padding: 4rem 2rem;
+        }
+
+        /* Page Header */
+        .page-title {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeInDown 0.6s ease;
+        }
+
+        .page-title h1 {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .page-title p {
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            opacity: 0.8;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Products Grid - Stili per il contenuto generato da PHP */
+        #grigliaTorte {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2.5rem;
+            list-style: none;
+            padding: 0;
+        }
+
+        .cardTorta {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px var(--shadow);
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            animation: fadeInUp 0.6s ease backwards;
+        }
+
+        .cardTorta:nth-child(1) { animation-delay: 0.1s; }
+        .cardTorta:nth-child(2) { animation-delay: 0.2s; }
+        .cardTorta:nth-child(3) { animation-delay: 0.3s; }
+        .cardTorta:nth-child(4) { animation-delay: 0.4s; }
+        .cardTorta:nth-child(5) { animation-delay: 0.5s; }
+        .cardTorta:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cardTorta:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(139, 69, 19, 0.25);
+        }
+
+        .cardTorta > a {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .cardTorta img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .cardTorta:hover img {
+            transform: scale(1.1);
+        }
+
+        .infoTorta {
+            padding: 2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .infoTorta h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .cardTorta:hover .infoTorta h2 {
+            color: var(--primary-light);
+        }
+
+        .prezzoTorta {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .pulsanteGenerico {
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(139, 69, 19, 0.3);
+            text-align: center;
+            display: inline-block;
+            margin-bottom: 0.8rem;
+        }
+
+        .pulsanteGenerico:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(139, 69, 19, 0.4);
+        }
+
+        .infoTorta button.pulsanteGenerico {
+            width: 100%;
+            margin-top: auto;
+            margin-bottom: 0;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--text-dark) 0%, var(--primary) 100%);
+            color: var(--text-light);
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        footer h2 {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        footer a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--accent);
+        }
+
+        footer address {
+            font-style: normal;
+            line-height: 2;
+        }
+
+        #navigazione-footer ul {
+            list-style: none;
+            line-height: 2.5;
+        }
+
+        #navigazione-footer a {
+            display: inline-block;
+            position: relative;
+        }
+
+        #navigazione-footer a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        #navigazione-footer a:hover::after {
+            width: 100%;
+        }
+
+        #copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            margin-top: 2rem;
+        }
+
+        .back-to-top {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.8rem 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-top:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .header-content {
+                padding: 1rem;
+            }
+
+            #logo h1 {
+                font-size: 1.4rem;
+            }
+
+            #logo p {
+                font-size: 0.75rem;
+            }
+
+            .menu-toggle {
+                display: block;
+                z-index: 1001;
+            }
+
+            nav#menu {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 80%;
+                max-width: 400px;
+                height: 100vh;
+                background: white;
+                transition: left 0.3s ease;
+                padding: 6rem 2rem 2rem;
+                box-shadow: 2px 0 20px var(--shadow);
+                overflow-y: auto;
+            }
+
+            nav#menu.active {
+                left: 0;
+            }
+
+            nav#menu ul {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            nav#menu a, nav#menu li {
+                font-size: 1.2rem;
+            }
+
+            main {
+                padding: 2rem 1rem;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 2rem;
+            }
+
+            #grigliaTorte {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 2rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #logo h1 {
+                font-size: 1.2rem;
+            }
+
+            #logo p {
+                display: none;
+            }
+
+            .icon-btn svg {
+                width: 24px;
+                height: 24px;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            #grigliaTorte {
+                grid-template-columns: 1fr;
+            }
+
+            .product-footer {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .view-details {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
-
 <body>
-    <header>
-        <div class="contenuto">
-            <button type="button" class="bottoneMenu" aria-label="Apri il menu principale">Menu</button>
-
+    <a href="#main" class="skip-link">Salta al contenuto principale</a>
+    
+    <header id="header">
+        <div class="header-content">
             <div id="logo">
                 <h1>Pasticceria Padovana</h1>
-                <p class="sirivennela-regular">La pasticceria tradizionale su misura per i tuoi eventi</p>
+                <p>La tradizione su misura per te</p>
             </div>
 
+<<<<<<< Updated upstream
             <div id="pulsantiMenu">
                 <a href="../html/login.html" class="bottoneProfilo" aria-label="Accedi alla tua area personale">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
                         <circle cx="12" cy="7" r="4" />
+=======
+            <nav id="menu" aria-label="Menu principale">
+                <ul>
+                    <li><a href="../../index.html"><span lang="en">Home</span></a></li>
+                    <li><a href="../html/story.html">Chi siamo</a></li>
+                    [LinkPagina]
+                    <li><a href="../html/contattaci.html">Contattaci</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-icons">
+                <a href="../php/login.php" class="icon-btn" aria-label="Accedi alla tua area personale">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+>>>>>>> Stashed changes
                     </svg>
                 </a>
-
-                <a href="../html/carrello.html" class="bottoneCarrello" aria-label="Vai al carrello">
-                    <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="16.5" cy="18.5" r="1.5" />
-                        <circle cx="9.5" cy="18.5" r="1.5" />
-                        <path d="M18 16H8a1 1 0 0 1-.958-.713L4.256 6H3a1 1 0 0 1 0-2h2
-                     a1 1 0 0 1 .958.713L6.344 6H21a1 1 0 0 1 .937 1.352l-3 8
-                     A1 1 0 0 1 18 16zm-9.256-2h8.563l2.25-6H6.944z" />
+                <a href="../html/carrello.html" class="icon-btn" aria-label="Vai al carrello">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"/>
+                        <circle cx="20" cy="21" r="1"/>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
                     </svg>
                 </a>
             </div>
+
+            <button class="menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
 
-    <nav id="menu" aria-label="Menu principale">
-        <ul class="contenuto">
-            <li><a href="../../index.html"><span lang="en">Home</span></a></li>
-            <li><a href="../html/story.html">Chi siamo</a></li>
-            [LinkPagina]
-            <li><a href="../html/contattaci.html">Contattaci</a></li>
-        </ul>
-    </nav>
-
-    <nav id="breadcrumb" aria-label="Percorso di navigazione">
-        <p class="contenuto">Ti trovi in: <a href="../../index.html"><span lang="en">Home</span></a> &gt;[titolo]</p>
-    </nav>
-
-    <main>
-        [grigliaItems]       <!--segnaposto per la parte in php-->
+    <main id="main">
+        [grigliaItems]
     </main>
 
     <footer>
-        <div class="contenuto">
+        <div class="footer-content">
+            <div id="navigazione-footer">
+                <h2>Navigazione</h2>
+                <ul>
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../html/story.html">Chi siamo</a></li>
+                    <li><a href="../php/torte-pasticcini.php?tipo=torte">Torte</a></li>
+                    <li><a href="../php/torte-pasticcini.php?tipo=pasticcini">Pasticcini</a></li>
+                    <li><a href="../html/contattaci.html">Contattaci</a></li>
+                </ul>
+            </div>
+
             <div id="contatti">
                 <h2>Contatti</h2>
                 <address>
@@ -75,12 +605,31 @@
             </div>
 
             <div id="assistenzaClienti">
-                <h2>Assistenza clienti shop online</h2>
-                <p>Lun-Ven 8:30-13:00 14:00-17:30</p>
+                <h2>Assistenza clienti</h2>
+                <p>Lun-Ven 8:30-13:00 | 14:00-17:30</p>
                 <p>Email: <a href="mailto:gestioneclienti@pasticceriapadovana.it">gestioneclienti@pasticceriapadovana.it</a></p>
-                <p id="copyright">&copy; 2025 Pasticceria Padovana - Tutti i diritti riservati</p>
             </div>
         </div>
+        <div style="text-align: center;">
+            <a href="#main" class="back-to-top">Torna su ↑</a>
+            <p id="copyright">&copy; 2025 Pasticceria Padovana - Tutti i diritti riservati</p>
+        </div>
     </footer>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('active');
+        }
+    </script>
 </body>
 </html>

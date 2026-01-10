@@ -26,17 +26,26 @@ $NessunaDisponibilità="";
 if (isset($_GET['tipo']) && $_GET['tipo']==='torte'){
 	$NessunaDisponibilità="nessuna torta disponibile";
 	$tipo="Torta";
-    $titolo="Le nostre torte";
-	$LinkPagina="<li id='currentLink'>Le nostre torte</li><li><a href=\"../php/torte-pasticcini.php?tipo=pasticcini\">I nostri pasticcini</a></li>";
+    $titolo="Torte";
+	$LinkPagina="<li id='currentLink'>Torte</li><li><a href=\"../php/torte-pasticcini.php?tipo=pasticcini\">Pasticcini</a></li>";
 }else if (isset($_GET['tipo']) && $_GET['tipo']==='pasticcini'){
 	$tipo="Pasticcino";
 	$NessunaDisponibilità="nessun pasticcino disponibile";
+<<<<<<< Updated upstream
     $titolo="I nostri pasticcini";
 	$LinkPagina="<li><a href=\"../php/torte-pasticcini.php?tipo=torte\">Le nostre torte</a></li><li id='currentLink'>I nostri pasticcini</li>";
 }/*else{ //CREA PROBLEMI: rennde l'html invalido, perchè????
     $LinkPagina="<li><a href=\"../php/torte.php?tipo=pasticcini\">I nostri pasticcini</a></li><li><a href=\"../php/torte.php?tipo=torte\">Le nostre torte</a></li>";
 	$listaItem ="<p>Non hai specificato se vuoi vedere le torte o i pasticcini.<p>"
 }*/
+=======
+    $titolo="Pasticcini";
+	$LinkPagina="<li><a href=\"../php/torte-pasticcini.php?tipo=torte\">Torte</a></li><li id='currentLink'>Pasticcini</li>";
+}else if (isset($_GET['tipo']) && $_GET['tipo']!=='torte' && $_GET['tipo']!=='pasticcini'){
+    $LinkPagina="<li><a href=\"../php/torte-pasticcini.php?tipo=pasticcini\">I nostri pasticcini</a></li><li><a href=\"../php/torte-pasticcini.php?tipo=torte\">Le nostre torte</a></li>";
+	$listaItem ="<p>Non hai specificato se vuoi vedere le torte o i pasticcini.<p>";
+}
+>>>>>>> Stashed changes
 
 // leggo i dati delle torte
 if($connessione){
