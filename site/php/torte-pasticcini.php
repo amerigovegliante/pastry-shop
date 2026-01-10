@@ -35,14 +35,14 @@ if (isset($_GET['tipo']) && $_GET['tipo']==='torte'){
 	$LinkPagina="<li><a href=\"../php/torte-pasticcini.php?tipo=torte\">Le nostre torte</a></li><li id='currentLink'>I nostri pasticcini</li>";
 }else if (isset($_GET['tipo']) && $_GET['tipo']!=='torte' && $_GET['tipo']!=='pasticcini'){
     $LinkPagina="<li><a href=\"../php/torte-pasticcini.php?tipo=pasticcini\">I nostri pasticcini</a></li><li><a href=\"../php/torte-pasticcini.php?tipo=torte\">Le nostre torte</a></li>";
-	$listaItem ="<p>Non hai specificato se vuoi vedere le torte o i pasticcini.<p>"
+	$listaItem ="<p>Non hai specificato se vuoi vedere le torte o i pasticcini.<p>";
 }
 
 // leggo i dati delle torte
 if($connessione){
     $Items=array();
 	$Items = $db->getListOfItems($tipo);
-	$db->closeConnection();
+	$db->closeDBConnection();
 	if (!empty($Items)){
 		$listaItem .= '<ul id="grigliaTorte" class="contenuto">';
 		foreach($Items as $Item){

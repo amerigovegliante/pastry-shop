@@ -3,9 +3,9 @@
 class DBAccess{
     // Parametri per la connessione al database
 	private const HOST_DB = "localhost";
-	private const DATABASE_NAME = "gromanat";
-	private const USERNAME = "gromanat";
-	private const PASSWORD = "eefee6eiMah3ohZi";
+	private const DATABASE_NAME = "aveglian";
+	private const USERNAME = "aveglian";
+	private const PASSWORD = "eechaeWai2choolo";
 
     private $connection;    //variabile di connessione
 
@@ -101,7 +101,7 @@ FUNZIONI PER LEGGERE DATI
     public function getOrdini(){
         $querySelect="SELECT id, ritiro, nome, cognome, telefono, annotazioni, stato, totale FROM ordine WHERE ritiro >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) ORDER BY ritiro ASC, stato ASC";
         //DATE_SUB(data, INTERVAL valore unità)= sottrae un intervallo di tempo a una data o data/ora
-        $queryResult = mysqli_query($this->conn, $querySelect);
+        $queryResult = mysqli_query($this->connection, $querySelect);
         if (mysqli_num_rows($queryResult)>0){
             $Ritirati=array();
             $NonRitirati=array();
@@ -196,17 +196,17 @@ FUNZIONI PER LEGGERE DATI
     
     //restituisce TRUE se esiste una tupla con email e password che corrispondono, FALSE altrimenti
     public function correctLogin($email, $password){
-        $hash = $this->getHash($email);     //ottengo l'hash della password dal database
-        if($hash === false){               // Se non esiste l'email-> non c'e' una password nel db, login fallito
-            return false;
-        }
-        
-        if (password_verify($password, $hash)){     //confronta la password inserita con l'hash salvato
-            return true;  // login corretto 
-        } else{
-            return false; // password errata
-        }
+    $hash = $this->getHash($email);     //ottengo l'hash della password dal database
+    if($hash === false || $hash === null){  // controllo sia per false che null
+        return false;
     }
+    
+    if (password_verify($password, $hash)){     //confronta la password inserita con l'hash salvato
+        return true;  // login corretto 
+    } else{
+        return false; // password errata
+    }
+}
 /* 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 FUNZIONI PER SCRIVERE DATI
