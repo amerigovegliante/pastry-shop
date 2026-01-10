@@ -78,6 +78,8 @@ if($connessione){
                         <label for=\"6P\">6 persone (900 <abbr title=\"grammi\">gr</abbr>)</label>   
                         <input type=\"radio\" id=\"8P\" name=\"porzione\" value=\"1200\">
                         <label for=\"8P\">8 persone (1.2<abbr title=\"chilogrammi\">kg</abbr>)</label>
+                        <input type=\"radio\" id=\"10P\" name=\"porzione\" value=\"1500\">
+                        <label for=\"10P\">10 persone (1.5<abbr title=\"chilogrammi\">kg</abbr>)</label>
                         <input type=\"radio\" id=\"12P\" name=\"porzione\" value=\"1800\">
                         <label for=\"12P\">12 persone (1.8<abbr title=\"chilogrammi\">kg</abbr>)</label>
                     </div> 
@@ -110,7 +112,7 @@ if($connessione){
         } else if($Item['tipo']==='Pasticcino'){
             $tipoBreadcrumb="<a href=\"../../torte-pasticcini.php?tipo=pasticcini\">I nostri pasticcini</a>";
         }
-        $formAcquisto.="<button type=\"submit\">Aggiungi al carrello</button>
+        $formAcquisto.="<button type=\"submit\" aria-label=\"Aggiungi ".htmlspecialchars($Item['nome'])." al carrello\">Aggiungi al carrello</button>
                         </fieldset>
                         </form>
                         </section>";

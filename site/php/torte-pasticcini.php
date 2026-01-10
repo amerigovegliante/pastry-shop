@@ -54,7 +54,7 @@ if($connessione){
                     <span class=\"prezzoTorta\">€".number_format($Item['prezzo'], 2, ',', '.')."</span> <!--number_format(numero, decimali, separatore_decimali, separatore_migliaia)-->
                     <!-- bottone VEDI DETTAGLI: finto in realtà tutta la card è il link VA BENE???, con aria-hidden lo nascondo agli screen readers essendo che ha funziona solamente decorativa, aria-label su tag a-->
                     <span class=\"pulsanteGenerico\" aria-hidden=\"true\">Vedi Dettagli</span>
-                    <button class=\"pulsanteGenerico\" aria-label=\"Aggiungi ".htmlspecialchars($Item['nome'])." al carrello\">Aggiungi al Carrello</button>
+                    <button type=\"submit\" class=\"pulsanteGenerico\" aria-label=\"Aggiungi ".htmlspecialchars($Item['nome'])." al carrello\">Aggiungi al Carrello</button>
                 </div>
                 </a>
              </article> </li>";

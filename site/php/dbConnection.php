@@ -3,9 +3,9 @@
 class DBAccess{
     // Parametri per la connessione al database
 	private const HOST_DB = "localhost";
-	private const DATABASE_NAME = "";
-	private const USERNAME = "";
-	private const PASSWORD = "";
+	private const DATABASE_NAME = "gromanat";
+	private const USERNAME = "gromanat";
+	private const PASSWORD = "eefee6eiMah3ohZi";
 
     private $connection;    //variabile di connessione
 
@@ -92,16 +92,29 @@ class DBAccess{
         }else{
             return null;
         }
-        /*$querySelect="SELECT allergene FROM item_allergico WHERE item=$ID";
-        $queryResult=mysqli_query($this->connection,$querySelect); 
-        $listaAllergeni = array();
+    }
+    //ritiro è un datetime
+    public function getOrdini(){
+        $querySelect="SELECT id, ritiro, nome, cognome, telefono, annotazioni, stato, totale FROM ordine WHERE ritiro >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) ORDER BY ritiro ASC, stato ASC";
+        //DATE_SUB(data, INTERVAL valore unità)= sottrae un intervallo di tempo a una data o data/ora
+        $queryResult = mysqli_query($this->conn, $querySelect);
         if (mysqli_num_rows($queryResult)>0){
+            $Ritirati=array();
+            $NonRitirati=array();
+            $Progresso=[1=>'in attesa', 2=>'in preparazione', 3=>'completato', 4=>'ritirato'];
             while ($row = mysqli_fetch_assoc($queryResult)){ //mysqli_fetch_assoc($queryResult) restituisce una riga del risultato e la converte in un array associativo usando i nomi delle colonne come chiavi
-                array_push($listaAllergeni,$row['allergene']); //aggiungo solo il nome dell'allergene all'array listaAllergeni
+                $row['progresso']=$Progresso[$row['stato']];
+                if ($row['stato']==4){
+                    array_push($Ritirati,$row);
+                }else{
+                    array_push($NonRitirati,$row);
+                }
             }
-            return $listaAllergeni;
+            return array_merge($NonRitirati, $Ritirati);
         }else{
             return null;
-        }*/
+        }
     }
+
+
 }

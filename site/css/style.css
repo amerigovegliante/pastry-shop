@@ -522,8 +522,28 @@ SEZIONE DETTAGLI ITEM
     max-width: 20em;
     padding: 0.4em;
 }
-
-
+/*
+====================================================================================================================================
+SEZIONE ORDINI ADMIN
+====================================================================================================================================
+*/
+.stato-ordine select {
+  appearance: none;
+  border: none;
+  background: transparent;
+  font-weight: 600;
+  text-align: center;
+}
+.visually-hidden{
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+.progresso-stato{
+    align-items: center;
+} 
 /*
 ====================================================================================================================================
 SEZIONE FOOTER
