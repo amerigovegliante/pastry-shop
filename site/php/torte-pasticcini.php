@@ -33,10 +33,10 @@ if (isset($_GET['tipo']) && $_GET['tipo']==='torte'){
 	$NessunaDisponibilità="nessun pasticcino disponibile";
     $titolo="I nostri pasticcini";
 	$LinkPagina="<li><a href=\"../php/torte-pasticcini.php?tipo=torte\">Le nostre torte</a></li><li id='currentLink'>I nostri pasticcini</li>";
-}/*else{ //CREA PROBLEMI: rennde l'html invalido, perchè????
-    $LinkPagina="<li><a href=\"../php/torte.php?tipo=pasticcini\">I nostri pasticcini</a></li><li><a href=\"../php/torte.php?tipo=torte\">Le nostre torte</a></li>";
+}else if (isset($_GET['tipo']) && $_GET['tipo']!=='torte' && $_GET['tipo']!=='pasticcini'){
+    $LinkPagina="<li><a href=\"../php/torte-pasticcini.php?tipo=pasticcini\">I nostri pasticcini</a></li><li><a href=\"../php/torte-pasticcini.php?tipo=torte\">Le nostre torte</a></li>";
 	$listaItem ="<p>Non hai specificato se vuoi vedere le torte o i pasticcini.<p>"
-}*/
+}
 
 // leggo i dati delle torte
 if($connessione){
@@ -47,13 +47,14 @@ if($connessione){
 		$listaItem .= '<ul id="grigliaTorte" class="contenuto">';
 		foreach($Items as $Item){
 			$listaItem .="<li> <article class=\"cardTorta\"> 
-                <a href=\"pagina-dettagli.php?ID=".urlencode($Item['id'])."\" aria-label=\"Vedi i dettagli: \"".htmlspecialchars($Item['nome'])."> 
+                <a href=\"dettagli.php?ID=".urlencode($Item['id'])."\" aria-label=\"Vedi i dettagli: \"".htmlspecialchars($Item['nome'])."> 
                 <img src=\"" . $Item['icona'] . "\" alt=\"\">
                 <div class=\"infoTorta\"> 
                     <h2>".htmlspecialchars($Item['nome'])."</h2> <!-- htmlspecialchars per renderlo più sicuro: rende i caratteri pericolosi come ><  & in formato HTML &lt; &gt; ect.-->
                     <span class=\"prezzoTorta\">€".number_format($Item['prezzo'], 2, ',', '.')."</span> <!--number_format(numero, decimali, separatore_decimali, separatore_migliaia)-->
                     <!-- bottone VEDI DETTAGLI: finto in realtà tutta la card è il link VA BENE???, con aria-hidden lo nascondo agli screen readers essendo che ha funziona solamente decorativa, aria-label su tag a-->
-                    <span class=\"btnDettagli\" aria-hidden=\"true\">Vedi Dettagli</span>
+                    <span class=\"pulsanteGenerico\" aria-hidden=\"true\">Vedi Dettagli</span>
+                    <button type=\"submit\" class=\"pulsanteGenerico\" aria-label=\"Aggiungi ".htmlspecialchars($Item['nome'])." al carrello\">Aggiungi al Carrello</button>
                 </div>
                 </a>
              </article> </li>";

@@ -3,9 +3,9 @@
 class DBAccess{
     // Parametri per la connessione al database
 	private const HOST_DB = "localhost";
-	private const DATABASE_NAME = "gdelucch";
-	private const USERNAME = "gdelucch";
-	private const PASSWORD = "pheexei3AiVu4toh";
+	private const DATABASE_NAME = "gromanat";
+	private const USERNAME = "gromanat";
+	private const PASSWORD = "eefee6eiMah3ohZi";
 
     private $connection;    //variabile di connessione
 
@@ -60,6 +60,67 @@ FUNZIONI PER LEGGERE DATI
             return null;
         }
 	}
+
+     public function getItemDetail($ID){
+        //uso un placeholder per evitare sql injection, faccio si che il valore dopo il = sia sempre tratto come una stringa
+        $querySelect="SELECT id, nome, prezzo, descrizione, immagine, tipo FROM item WHERE id=?";
+        $stmt=mysqli_prepare($this->connection,$querySelect);
+        mysqli_stmt_bind_param($stmt, "i", $ID); //binding del parametro: $ID vine trattato sempre come intero (i)
+        mysqli_stmt_execute($stmt); //esecuzione della query già compilata
+        $queryResult=mysqli_stmt_get_result($stmt);
+        /*creo un array associativo: 
+        $itemDetails = [
+            'id'=>1, 
+            'nome'=>'Torta Sacher', 
+            'prezzo'=>22.50,
+            'descrizione'=>'Descrizione della torta Sacher',
+            'immagine'=>'../img/sacher.jpg'
+        ];*/
+        if (mysqli_num_rows($queryResult)>0){
+            $itemDetails = mysqli_fetch_assoc($queryResult); //mysqli_fetch_assoc($queryResult) restituisce una riga del risultato e la converte in un array associativo usando i nomi delle colonne come chiavi
+            if($itemDetails['immagine'] == null){
+                $itemDetails['immagine'] = "../img/placeholder.jpeg"; //immagine di default se non presente
+            }
+            $querySelect="SELECT allergene FROM item_allergico WHERE item=$ID";
+            $queryResult=mysqli_query($this->connection,$querySelect); 
+            $listaAllergeni = array();
+            if (mysqli_num_rows($queryResult)>0){
+                while ($row = mysqli_fetch_assoc($queryResult)){ //mysqli_fetch_assoc($queryResult) restituisce una riga del risultato e la converte in un array associativo usando i nomi delle colonne come chiavi
+                    array_push($listaAllergeni,$row['allergene']); //aggiungo solo il nome dell'allergene all'array listaAllergeni
+                }
+            }else{
+                $listaAllergeni= null;
+            }
+            $itemDetails['allergeni'] = $listaAllergeni; //aggiungo l'array degli allergeni all'array itemDetails
+            return $itemDetails;
+        }else{
+            return null;
+        }
+    }
+    //ritiro è un datetime
+    public function getOrdini(){
+        $querySelect="SELECT id, ritiro, nome, cognome, telefono, annotazioni, stato, totale FROM ordine WHERE ritiro >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) ORDER BY ritiro ASC, stato ASC";
+        //DATE_SUB(data, INTERVAL valore unità)= sottrae un intervallo di tempo a una data o data/ora
+        $queryResult = mysqli_query($this->conn, $querySelect);
+        if (mysqli_num_rows($queryResult)>0){
+            $Ritirati=array();
+            $NonRitirati=array();
+            $Progresso=[1=>'in attesa', 2=>'in preparazione', 3=>'completato', 4=>'ritirato'];
+            while ($row = mysqli_fetch_assoc($queryResult)){ //mysqli_fetch_assoc($queryResult) restituisce una riga del risultato e la converte in un array associativo usando i nomi delle colonne come chiavi
+                $row['progresso']=$Progresso[$row['stato']];
+                if ($row['stato']==4){
+                    array_push($Ritirati,$row);
+                }else{
+                    array_push($NonRitirati,$row);
+                }
+            }
+            return array_merge($NonRitirati, $Ritirati);
+        }else{
+            return null;
+        }
+    }
+
+
 
     //restituisce TRUE se la email è gia presente nel database, FALSE se non c'è la email nel database
     public function emailExists($email){

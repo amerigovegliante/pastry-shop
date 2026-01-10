@@ -25,6 +25,7 @@ CREATE TABLE persona(
 	email varchar(60) not null,
 	nome varchar(20) not null,
 	cognome varchar(20) not null,
+  telefono int not null,
   ruolo varchar(20) not null,
   password varchar(255) not null,
   PRIMARY KEY(email)
@@ -34,9 +35,16 @@ CREATE TABLE persona(
 
 CREATE TABLE ordine (
   id int not null,
-  ritiro datetime,
+  ritiro datetime not null,
+  ordinazione datetime,
   numero int,
   persona varchar(60) not null,
+  nome varchar(20),
+	cognome varchar(20),
+  telefono int,
+  annotazioni varchar(300),
+  stato int not null,
+  totale float,
   PRIMARY KEY(id),
   FOREIGN KEY (persona) REFERENCES persona(email)
 ) ENGINE=InnoDB
@@ -81,9 +89,9 @@ CREATE TABLE item_allergico (
 
 DELETE FROM item;
 
-INSERT INTO persona (email, nome, cognome, ruolo, password) VALUES
-('user@gmail.com','user','user','user', 'user'),
-('admin@gmail.com', 'admin', 'admin', 'admin', 'admin');
+INSERT INTO persona (email, nome, cognome, telefono, ruolo, password) VALUES
+('user@gmail.com','user','user', 3456789012, 'user', 'user'),
+('admin@gmail.com', 'admin', 'admin', 3456789345, 'admin', 'admin');
 
 INSERT INTO item (id, tipo ,nome, icona, descrizione, prezzo, immagine) VALUES 
 (1, 'Torta', 'Red Velvet', NULL, 'La red velvet è una torta morbida al cacao, dal colore rosso intenso, ricoperta con crema al formaggio.', 5.00, NULL),
@@ -94,12 +102,27 @@ INSERT INTO item (id, tipo ,nome, icona, descrizione, prezzo, immagine) VALUES
 (6, 'Pasticcino', 'Maritozzo', NULL, 'Dolce romano sofficissimo, un panino dolce spaccato e farcito con panna montata abbondante. Semplicemente delizioso.', 3.50, NULL),
 (7, 'Pasticcino', 'Cannolo', NULL, 'Cialda croccante ripiena di ricotta setacciata, zuccherata e arricchita con gocce di cioccolato e canditi.', 3.00, NULL);
 
-INSERT INTO ordine (id, ritiro, numero, persona) VALUES 
-(1, '2024-12-19 12:30:00', 00000001, 'user@gmail.com'),
-(2, '2024-12-19 13:15:00', 00000002, 'user@gmail.com'),
-(3, '2024-12-19 14:45:00', 00000003, 'user@gmail.com'),
-(4, '2024-12-20 09:30:00', 00000004, 'admin@gmail.com'),
-(5, '2024-12-20 11:00:00', 00000005, 'admin@gmail.com');
+INSERT INTO ordine (id, ritiro, ordinazione, numero, persona, nome, cognome, telefono, annotazioni, stato, totale ) VALUES 
+(1, '2024-12-19 12:30:00', '2024-12-18 15:30:00', 1, 'user@gmail.com', 'user', 'user', 3456789012, 'aggiungere una candelina', 4, 10),
+(2, '2024-12-19 13:15:00', '2024-12-18 16:45:00', 2, 'user@gmail.com', 'user', 'user', 3456789012, NULL, 3, 15),
+(3, '2024-12-19 14:45:00', '2024-12-18 17:30:00', 3, 'user@gmail.com', 'user', 'user', 3456789012, 'voglio delle decorazioni al cioccolato', 2, 20),
+(4, '2024-12-20 09:30:00', '2024-12-19 18:35:00', 4, 'admin@gmail.com', 'cliente', 'cliente Cognome', 3456789345, NULL, 1, 30),
+(5, '2024-12-20 11:00:00', '2024-12-19 19:55:37', 5, 'admin@gmail.com', 'Qualcuno', 'cognome', 3456759345, NULL, 1, 40);
+
+
+CREATE TABLE ordine (
+  id int not null,
+  ritiro datetime,
+  ordinazione datetime,
+  numero int,
+  persona varchar(60) not null,
+  nome varchar(20) not null,
+	cognome varchar(20) not null,
+  telefono int not null,
+  annotazioni varchar(300),
+  PRIMARY KEY(id),
+  FOREIGN KEY (persona) REFERENCES persona(email)
+) 
 
 INSERT INTO ordine_torta (torta, ordine, porzioni, targa, foto) VALUES 
 (1, 1, 8, 'Auguri Sara', NULL),
