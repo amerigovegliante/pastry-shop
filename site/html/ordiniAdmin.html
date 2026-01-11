@@ -66,56 +66,6 @@
         <p class="contenuto">Ti trovi in: <a href="../../index.html"><span lang="en">Home</span></a> &gt; Ordini</p>
     </nav>
     <main>
-        <table class="contenuto" aria-describedby="descr">
-            <p id="descr">Tabella che elenca tutte le ordinazioni ancora da ritirare ordinate in base a data e ora di ritiro. 
-                Ogni riga descrive un'ordinazione con numero identificativo dell'ordine, data e ora di ritiro, nominativo e telefono del cliente,
-                 costo totale, eventuali annotazioni e stato dell'ordine. Lo stato dell'ordine può essere: in attesa, in preparazione, completato o ritirato</p>
-            <caption>Elenco degli ordini ancora da ritirare</caption>
-            <thead>
-                <tr>
-                    <th scope="col" abbr="ID">ID Ordine</th>
-                    <th scope="col" abbr="Ritiro">Data e ora ritiro</th>                
-                    <th scope="col" abbr="Nome">Nominativo</th>
-                    <th scope="col" abbr="Tel">Telefono</th>
-                    <th scope="col" abbr="Tot">Totale</th>
-                    <th scope="col" abbr="Note">Annotazioni</th>
-                    <th scope="col">Stato</th>
-                </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td data-title="Ritiro"><time datetime="2024-12-19 12:30:00">2024-12-19 12:30:00</time></td>
-                <td data-title="Persona">user user</td>
-                <td data-title="Telefono"><a href="tel:+393456789012">345 678 9012</a></td> 
-                <td data-title="Prezzo"><data value="45,00">€45,00</data></td>
-                <td data-title="Annotazioni">aggiungere una candelina</td>
-                <td data-title="Stato">
-                    <div class="stato-ordine">
-                    <button type="button" class="prev" aria-label="Stato precedente">
-                    ◀
-                    </button>
-
-                    <label class="visually-hidden" for="stato-ordine">
-                    Stato ordine
-                    </label>
-
-                    <select id="stato-ordine" name="stato" aria-label="Stato ordine" value="in attesa">
-                    <option value="in_attesa">In attesa</option>
-                    <option value="in_preparazione">In preparazione</option>
-                    <option value="completato">Completato</option>
-                    <option value="ritirato">Ritirato</option>
-                    </select>
-
-                    <button type="button" class="next" aria-label="Stato successivo">
-                    ▶
-                    </button>
-                </div>
-                <span class="progresso-stato">1/4</span>
-                </td>
-            </tr>
-            </tbody>
-        </table>
         [TabellaOrdini]
     </main>
 

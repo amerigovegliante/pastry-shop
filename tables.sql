@@ -1,4 +1,4 @@
-USE gdelucch; 
+USE gromanat; 
 
 DROP TABLE IF EXISTS item_allergico;
 DROP TABLE IF EXISTS ordine_pasticcino;
@@ -41,7 +41,7 @@ CREATE TABLE ordine (
   persona varchar(60) not null,
   nome varchar(20),
 	cognome varchar(20),
-  telefono int,
+  telefono varchar(15),
   annotazioni varchar(300),
   stato int not null,
   totale float,
@@ -103,11 +103,11 @@ INSERT INTO item (id, tipo ,nome, icona, descrizione, prezzo, immagine) VALUES
 (7, 'Pasticcino', 'Cannolo', NULL, 'Cialda croccante ripiena di ricotta setacciata, zuccherata e arricchita con gocce di cioccolato e canditi.', 3.00, NULL);
 
 INSERT INTO ordine (id, ritiro, ordinazione, numero, persona, nome, cognome, telefono, annotazioni, stato, totale ) VALUES 
-(1, '2024-12-19 12:30:00', '2024-12-18 15:30:00', 1, 'user@gmail.com', 'user', 'user', 3456789012, 'aggiungere una candelina', 4, 10),
-(2, '2024-12-19 13:15:00', '2024-12-18 16:45:00', 2, 'user@gmail.com', 'user', 'user', 3456789012, NULL, 3, 15),
-(3, '2024-12-19 14:45:00', '2024-12-18 17:30:00', 3, 'user@gmail.com', 'user', 'user', 3456789012, 'voglio delle decorazioni al cioccolato', 2, 20),
-(4, '2024-12-20 09:30:00', '2024-12-19 18:35:00', 4, 'admin@gmail.com', 'cliente', 'cliente Cognome', 3456789345, NULL, 1, 30),
-(5, '2024-12-20 11:00:00', '2024-12-19 19:55:37', 5, 'admin@gmail.com', 'Qualcuno', 'cognome', 3456759345, NULL, 1, 40);
+(1, '2026-12-19 12:30:00', '2024-12-18 15:30:00', 1, 'user@gmail.com', 'user', 'user', '39 345 678 9012', 'aggiungere una candelina', 4, 10),
+(2, '2026-12-19 13:15:00', '2024-12-18 16:45:00', 2, 'user@gmail.com', 'user', 'user', '39 345 678 9012', NULL, 3, 15),
+(3, '2026-12-19 14:45:00', '2024-12-18 17:30:00', 3, 'user@gmail.com', 'user', 'user', '39 345 678 9012', 'voglio delle decorazioni al cioccolato', 2, 20),
+(4, '2026-12-20 09:30:00', '2024-12-19 18:35:00', 4, 'admin@gmail.com', 'cliente', 'cliente Cognome', '39 345 678 9345', NULL, 1, 30),
+(5, '2026-12-20 11:00:00', '2024-12-19 19:55:37', 5, 'admin@gmail.com', 'Qualcuno', 'cognome', '39 345 675 9345', NULL, 1, 40);
 
 
 CREATE TABLE ordine (

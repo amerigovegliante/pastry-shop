@@ -34,7 +34,7 @@ if(isset($_GET['ID'])){
 if($connessione){
     $Item=array();
 	$Item = $db->getItemDetail($ID);
-	$db->closeConnection();
+	$db->closeDBConnection();
 	if ($Item!=null){ //DA DECIDERE: se inserire alt su immagine, cambiare il prezzo in base alla porzione e quantità selezionata
         $nome=htmlspecialchars($Item['nome']);
         $allergeniArray=array();

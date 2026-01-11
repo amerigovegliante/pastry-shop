@@ -20,12 +20,12 @@ $tabella="";
 if($connessione){
     $Ordini=array();
 	$Ordini = $db->getOrdini();
-	$db->closeConnection();
+	$db->closeDBConnection();
 	if ($Ordini!=null){ 
-        $tabella .= "<table class=\"contenuto\" aria-describedby=\"descr\">
-            <p id=\"descr\">Tabella che elenca tutte le ordinazioni ancora da ritirare ordinate in base a data e ora di ritiro. 
-                Ogni riga descrive un'ordinazione con numero identificativo dell'ordine, data e ora di ritiro, nominativo e telefono del cliente,
-                 costo totale, eventuali annotazioni e stato dell'ordine. Lo stato dell'ordine può essere: in attesa, in preparazione, completato o ritirato</p>
+        $tabella .= "<p id=\"descr\" class=\"visually-hidden\">Tabella che elenca tutte le ordinazioni ancora da ritirare ordinate in base a data e ora di ritiro. 
+                    Ogni riga descrive un'ordinazione con numero identificativo dell'ordine, data e ora di ritiro, nominativo e telefono del cliente,
+                     costo totale, eventuali annotazioni e stato dell'ordine. Lo stato dell'ordine può essere: in attesa, in preparazione, completato o ritirato</p>
+        <table class=\"contenuto\" aria-describedby=\"descr\">    
             <caption>Elenco degli ordini ancora da ritirare</caption>
             <thead>
                 <tr>
@@ -40,28 +40,29 @@ if($connessione){
             </thead>
             <tbody>";
         foreach($Ordini as $Ordine){
+            $idSelect = "stato-ordine-" . (int)$Ordine['id']; //creo un id unico
             $tabella .="<tr>
-                <td scope=\"row\">".htmlspecialchars($Ordine['id'])."</td>
+                <th scope=\"row\">".htmlspecialchars($Ordine['id'])."</th>
                 <td data-title=\"Ritiro\"><time datetime=\"".htmlspecialchars($Ordine['ritiro'])."\">".htmlspecialchars($Ordine['ritiro'])."</time></td>
                 <td data-title=\"Nominativo\">".htmlspecialchars($Ordine['nome'])." ".htmlspecialchars($Ordine['cognome'])."</td>
-                <td data-title=\"Telefono\"><a href=\"tel:+39".number_format($Ordine['telefono'])."\">".htmlspecialchars($Ordine['telefono'])."</a></td>
+                <td data-title=\"Telefono\"><a href=\"tel:+".htmlspecialchars($Ordine['telefono'])."\">".htmlspecialchars($Ordine['telefono'])."</a></td>
+                <td data-title=\"Totale\"><data value=\"".number_format($Ordine['totale'])."\">€".number_format($Ordine['totale'])."</data></td>
                 <td data-title=\"Annotazioni\">".htmlspecialchars($Ordine['annotazioni'])."</td>
-                <td data-title=\"Totale\"><data value=\"".number_format($Ordine['totale'])."\">€".htmlspecialchars($Ordine['totale'])."</data></td>
                 <td data-title=\"Stato\">
                 <div class=\"stato-ordine\">
                     <button type=\"button\" class=\"prev\" aria-label=\"Stato precedente\">
                     ◀
                     </button>
 
-                    <label class=\"visually-hidden\" for=\"stato-ordine\">
+                    <label class=\"visually-hidden\" for=\"$idSelect\">
                     Stato ordine
                     </label>
 
-                    <select id=\"stato-ordine\" name=\"stato\" aria-label=\"Stato ordine\" value=".htmlspecialchars($Ordine['progresso']).">
-                    <option value=\"in_attesa\">In attesa</option>
-                    <option value=\"in_preparazione\">In preparazione</option>
-                    <option value=\"completato\">Completato</option>
-                    <option value=\"ritirato\">Ritirato</option>
+                    <select id=\"$idSelect\" name=\"stato\" aria-label=\"Stato ordine\">
+                        <option value=\"1\" " . ($Ordine['stato'] == 1 ? 'selected' : '') . ">In attesa</option>
+                        <option value=\"2\" " . ($Ordine['stato'] == 2 ? 'selected' : '') . ">In preparazione</option>
+                        <option value=\"3\" " . ($Ordine['stato'] == 3 ? 'selected' : '') . ">Completato</option>
+                        <option value=\"4\" " . ($Ordine['stato'] == 4 ? 'selected' : '') . ">Ritirato</option>
                     </select>
 
                     <button type=\"button\" class=\"next\" aria-label=\"Stato successivo\">

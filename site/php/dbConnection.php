@@ -3,9 +3,9 @@
 class DBAccess{
     // Parametri per la connessione al database
 	private const HOST_DB = "localhost";
-	private const DATABASE_NAME = "aveglian";
-	private const USERNAME = "aveglian";
-	private const PASSWORD = "eechaeWai2choolo";
+	private const DATABASE_NAME = "";
+	private const USERNAME = "";
+	private const PASSWORD = "";
 
     private $connection;    //variabile di connessione
 
@@ -107,6 +107,12 @@ FUNZIONI PER LEGGERE DATI
             $NonRitirati=array();
             $Progresso=[1=>'in attesa', 2=>'in preparazione', 3=>'completato', 4=>'ritirato'];
             while ($row = mysqli_fetch_assoc($queryResult)){ //mysqli_fetch_assoc($queryResult) restituisce una riga del risultato e la converte in un array associativo usando i nomi delle colonne come chiavi
+                // trasformo i NULL in stringhe vuote
+                foreach ($row as $key => $value) {
+                    if ($value === null) {
+                        $row[$key] = '';
+                    }
+                }
                 $row['progresso']=$Progresso[$row['stato']];
                 if ($row['stato']==4){
                     array_push($Ritirati,$row);
