@@ -3,9 +3,14 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Contattaci - Pasticceria Padovana</title> <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Contatta la Pasticceria Padovana per informazioni su torte, ordini e preventivi."> <link rel="stylesheet" href="../css/style.css" media="screen">
+    <title>Contattaci - Pasticceria Padovana</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Pasticceria Padovana, contattaci, email, domande, assistenza clienti, Padova">
+    <meta name="description" content="Recapiti e modulo di contatto di Pasticceria Padovana.">
+
+    <link rel="stylesheet" href="../css/style.css" media="screen">
     <link rel="stylesheet" href="../css/mini.css" media="screen and (max-width:800px)">
+    <link rel="stylesheet" href="../css/print.css" media="print">
 </head>
 
 <body>
@@ -58,13 +63,14 @@
     <main>
         <section id="sezioneContattaci" class="contenuto" aria-labelledby="titolo-contattaci">
             <h2 id="titolo-contattaci" class="sr-only">Modulo di contatto</h2>
-            
+
             <form id="formContattaci" action="../php/invia_messaggio.php" method="post">
                 <fieldset>
-                    <legend>Scrivici un messaggio</legend> <div class="campoDati">
+                    <legend>Scrivici un messaggio</legend>
+                    <div class="campoDati">
                         <label for="identificativo">Email</label>
-                        <input type="email" id="identificativo" name="identificativo" 
-                               placeholder="La tua email" required aria-required="true">
+                        <input type="email" id="identificativo" name="identificativo" placeholder="La tua email"
+                            required aria-required="true">
                     </div>
 
                     <div class="campoDati">
@@ -93,10 +99,13 @@
             <div id="assistenzaClienti">
                 <h2>Assistenza clienti shop online</h2>
                 <p>Lun-Ven 8:30-13:00 14:00-17:30</p>
-                <p>Email: <a href="mailto:gestioneclienti@pasticceriapadovana.it">gestioneclienti@pasticceriapadovana.it</a></p>
+                <p>Email: <a
+                        href="mailto:gestioneclienti@pasticceriapadovana.it">gestioneclienti@pasticceriapadovana.it</a>
+                </p>
                 <p id="copyright">&copy; 2025 Pasticceria Padovana - Tutti i diritti riservati</p>
             </div>
         </div>
     </footer>
 </body>
+
 </html>
