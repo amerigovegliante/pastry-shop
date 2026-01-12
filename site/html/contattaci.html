@@ -3,10 +3,9 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Accedi - Pasticceria Padovana</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Accedi al tuo account su Pasticceria Padovana per gestire ordini e preferenze.">
-    <link rel="stylesheet" href="../css/style.css" media="screen">
+    <title>Contattaci - Pasticceria Padovana</title> <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Contatta la Pasticceria Padovana per informazioni su torte, ordini e preventivi."> <link rel="stylesheet" href="../css/style.css" media="screen">
+    <link rel="stylesheet" href="../css/mini.css" media="screen and (max-width:800px)">
 </head>
 
 <body>
@@ -28,7 +27,7 @@
                     </svg>
                 </a>
 
-                <a href="../html/carrello.html" class="bottoneCarrello" aria-label="Vai al carrello">
+                <a href="../php/carrello.php" class="bottoneCarrello" aria-label="Vai al carrello">
                     <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="16.5" cy="18.5" r="1.5" />
                         <circle cx="9.5" cy="18.5" r="1.5" />
@@ -58,17 +57,19 @@
 
     <main>
         <section id="sezioneContattaci" class="contenuto" aria-labelledby="titolo-contattaci">
-            <form id="formContattaci" action="login_process.php" method="post">
+            <h2 id="titolo-contattaci" class="sr-only">Modulo di contatto</h2>
+            
+            <form id="formContattaci" action="../php/invia_messaggio.php" method="post">
                 <fieldset>
-                    <legend>Contattaci</legend>
-                    <div class="campoDati">
+                    <legend>Scrivici un messaggio</legend> <div class="campoDati">
                         <label for="identificativo">Email</label>
-                        <input type="text" id="identificativo" name="identificativo" required aria-required="true">
+                        <input type="email" id="identificativo" name="identificativo" 
+                               placeholder="La tua email" required aria-required="true">
                     </div>
 
                     <div class="campoDati">
                         <label for="domande">Domande</label>
-                        <textarea name="domande" id="domande" rows="7"></textarea>
+                        <textarea name="domande" id="domande" rows="7" required aria-required="true"></textarea>
                     </div>
 
                     <button type="submit">Invia</button>
@@ -98,5 +99,4 @@
         </div>
     </footer>
 </body>
-
 </html>

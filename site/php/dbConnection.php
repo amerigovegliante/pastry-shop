@@ -1,134 +1,149 @@
 <?php
+// importiamo il file di configurazione che contiene le costanti per la connessione (DB_HOST, DB_USER, ecc..)
+require_once('../../db_config.php');
 
 class DBAccess{
-    // Parametri per la connessione al database
-	private const HOST_DB = "localhost";
-	private const DATABASE_NAME = "";
-	private const USERNAME = "";
-	private const PASSWORD = "";
+    
+    private $connection;
 
-    private $connection;    //variabile di connessione
+    public function openDBConnection(){
+        // configurazione per la segnalazione degli errori di mysqli, utile per il debug
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-    public function openDBConnection(){ //funzione di apertura connessione
-        
-        mysqli_report(MYSQLI_REPORT_ERROR);
-        
-        $this->connection = mysqli_connect(     //tentativo di connessione
-            DBAccess::HOST_DB, 
-            DBAccess::USERNAME,
-            DBAccess::PASSWORD,
-            DBAccess::DATABASE_NAME
-        );
-
-        if(mysqli_connect_errno())	//Controlla se la connessione è fallita
-			return false;
-		else 
-			return true;
+        try {
+            // tentativo di apertura della connessione usando le costanti definite in db_config.php
+            $this->connection = mysqli_connect(
+                DB_HOST, 
+                DB_USER,
+                DB_PASSWORD,
+                DB_NAME
+            );
+            return true;
+        } catch (mysqli_sql_exception $e) {
+            // in caso di errore di connessione, restituiamo false per gestirlo nel frontend
+            return false;
+        }
     }
 
-    public function closeDBConnection() {	//funzione di chiusura connessione
-		mysqli_close($this->connection);
-	}
-/* 
--------------------------------------------------------------------------------------------------------------------------------------------------
+    public function closeDBConnection() {
+        // chiude la connessione solo se è stata effettivamente aperta
+        if($this->connection) {
+            mysqli_close($this->connection);
+        }
+    }
+
+/* -------------------------------------------------------------------------------------------------------------------------------------------------
 FUNZIONI PER LEGGERE DATI
 -------------------------------------------------------------------------------------------------------------------------------------------------
 */
-    //restituisce tutte le torte o i pasticcini a seconda del parametro tipo passato sia "Torta" o "Pasticcino"
+
+    
+    // recupera la lista di prodotti filtrata per categoria (torta o pasticcino)
     public function getListOfItems($tipo){
-        //uso un placeholder per evitare sql injection, faccio si che il valore dopo il = sia sempre tratto come una stringa
-        $querySelect="SELECT id, nome, prezzo, icona FROM item WHERE tipo=?";
-        $stmt=mysqli_prepare($this->connection,$querySelect);
-        mysqli_stmt_bind_param($stmt, "s", $tipo); //binding del parametro: $tipo vine trattato sempre come stringa (s)
-        mysqli_stmt_execute($stmt); //esecuzione della query già compilata
-        $queryResult=mysqli_stmt_get_result($stmt);
-        /*creo un array associativo: 
-        $itemsArray = [
-            ['id'=>1, 'nome'=>'Torta Sacher', 'prezzo'=>22.50],
-            ['id'=>2, 'nome'=>'Torta al Cioccolato', 'prezzo'=>18.00]
-        ];*/
+        // prepariamo la query selezionando tutti i campi necessari per la visualizzazione in lista
+        // nota: prendiamo anche descrizione e immagine per avere flessibilità nel frontend
+        $querySelect = "SELECT id, nome, prezzo, icona, descrizione, immagine FROM item WHERE tipo=?";
+        $stmt = mysqli_prepare($this->connection, $querySelect);
+        mysqli_stmt_bind_param($stmt, "s", $tipo); 
+        mysqli_stmt_execute($stmt);
+        $queryResult = mysqli_stmt_get_result($stmt);
+
         $itemsArray = array();
-        if (mysqli_num_rows($queryResult)>0){
-            while ($row = mysqli_fetch_assoc($queryResult)){ //mysqli_fetch_assoc($queryResult) restituisce una riga del risultato e la converte in un array associativo usando i nomi delle colonne come chiavi
+        if (mysqli_num_rows($queryResult) > 0){
+            while ($row = mysqli_fetch_assoc($queryResult)){ 
+                // se non c'è un'icona specifica, ne assegniamo una di default
                 if($row['icona'] == null){
-                    $row['icona'] = "../img/placeholder.jpeg"; //immagine di default se non presente
+                    $row['icona'] = "../img/placeholder.jpeg"; 
                 }
-                array_push($itemsArray,$row);
+                if($row['immagine'] == null){
+                    $row['immagine'] = "../img/placeholder.jpeg";
+                }
+                array_push($itemsArray, $row);
             }
             return $itemsArray;
-        }else{
+        } else {
             return null;
         }
-	}
+    }
 
-     public function getItemDetail($ID){
-        //uso un placeholder per evitare sql injection, faccio si che il valore dopo il = sia sempre tratto come una stringa
-        $querySelect="SELECT id, nome, prezzo, descrizione, immagine, tipo FROM item WHERE id=?";
-        $stmt=mysqli_prepare($this->connection,$querySelect);
-        mysqli_stmt_bind_param($stmt, "i", $ID); //binding del parametro: $ID vine trattato sempre come intero (i)
-        mysqli_stmt_execute($stmt); //esecuzione della query già compilata
-        $queryResult=mysqli_stmt_get_result($stmt);
-        /*creo un array associativo: 
-        $itemDetails = [
-            'id'=>1, 
-            'nome'=>'Torta Sacher', 
-            'prezzo'=>22.50,
-            'descrizione'=>'Descrizione della torta Sacher',
-            'immagine'=>'../img/sacher.jpg'
-        ];*/
-        if (mysqli_num_rows($queryResult)>0){
-            $itemDetails = mysqli_fetch_assoc($queryResult); //mysqli_fetch_assoc($queryResult) restituisce una riga del risultato e la converte in un array associativo usando i nomi delle colonne come chiavi
+    // recupera il dettaglio completo di un singolo prodotto, inclusi gli allergeni
+    public function getItemDetail($ID){
+        // prima query: recuperiamo le informazioni base del prodotto
+        $querySelect = "SELECT id, nome, prezzo, descrizione, immagine, tipo FROM item WHERE id=?";
+        $stmt = mysqli_prepare($this->connection, $querySelect);
+        mysqli_stmt_bind_param($stmt, "i", $ID); 
+        mysqli_stmt_execute($stmt);
+        $queryResult = mysqli_stmt_get_result($stmt);
+
+        if (mysqli_num_rows($queryResult) > 0){
+            $itemDetails = mysqli_fetch_assoc($queryResult);
+            
+            // verifica presenza immagine
             if($itemDetails['immagine'] == null){
-                $itemDetails['immagine'] = "../img/placeholder.jpeg"; //immagine di default se non presente
+                $itemDetails['immagine'] = "../img/placeholder.jpeg"; 
             }
-            $querySelect="SELECT allergene FROM item_allergico WHERE item=$ID";
-            $queryResult=mysqli_query($this->connection,$querySelect); 
+
+            // seconda query: recuperiamo la lista degli allergeni associati a questo specifico prodotto
+            // usiamo un prepared statement anche qui per sicurezza
+            $queryAllergeni = "SELECT allergene FROM item_allergico WHERE item=?";
+            $stmtAllergeni = mysqli_prepare($this->connection, $queryAllergeni);
+            mysqli_stmt_bind_param($stmtAllergeni, "i", $ID);
+            mysqli_stmt_execute($stmtAllergeni);
+            $resultAllergeni = mysqli_stmt_get_result($stmtAllergeni);
+
             $listaAllergeni = array();
-            if (mysqli_num_rows($queryResult)>0){
-                while ($row = mysqli_fetch_assoc($queryResult)){ //mysqli_fetch_assoc($queryResult) restituisce una riga del risultato e la converte in un array associativo usando i nomi delle colonne come chiavi
-                    array_push($listaAllergeni,$row['allergene']); //aggiungo solo il nome dell'allergene all'array listaAllergeni
+            if (mysqli_num_rows($resultAllergeni) > 0){
+                while ($row = mysqli_fetch_assoc($resultAllergeni)){
+                    array_push($listaAllergeni, $row['allergene']);
                 }
-            }else{
-                $listaAllergeni= null;
+            } else {
+                $listaAllergeni = null;
             }
-            $itemDetails['allergeni'] = $listaAllergeni; //aggiungo l'array degli allergeni all'array itemDetails
+            
+            // uniamo gli allergeni ai dettagli del prodotto
+            $itemDetails['allergeni'] = $listaAllergeni; 
             return $itemDetails;
-        }else{
+        } else {
             return null;
         }
     }
-    //ritiro è un datetime
+
+    // recupera gli ordini recenti (ultima settimana) e futuri per il pannello admin
     public function getOrdini(){
-        $querySelect="SELECT id, ritiro, nome, cognome, telefono, annotazioni, stato, totale FROM ordine WHERE ritiro >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) ORDER BY ritiro ASC, stato ASC";
-        //DATE_SUB(data, INTERVAL valore unità)= sottrae un intervallo di tempo a una data o data/ora
+        // selezioniamo tutti i campi utili per identificare l'ordine e il cliente
+        // la query filtra per data di ritiro partendo da 7 giorni fa in poi
+        $querySelect = "SELECT id, ritiro, nome, cognome, telefono, annotazioni, stato, totale 
+                        FROM ordine 
+                        WHERE ritiro >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) 
+                        ORDER BY ritiro ASC, stato ASC";
+        
         $queryResult = mysqli_query($this->connection, $querySelect);
-        if (mysqli_num_rows($queryResult)>0){
-            $Ritirati=array();
-            $NonRitirati=array();
-            $Progresso=[1=>'in attesa', 2=>'in preparazione', 3=>'completato', 4=>'ritirato'];
-            while ($row = mysqli_fetch_assoc($queryResult)){ //mysqli_fetch_assoc($queryResult) restituisce una riga del risultato e la converte in un array associativo usando i nomi delle colonne come chiavi
-                // trasformo i NULL in stringhe vuote
-                foreach ($row as $key => $value) {
-                    if ($value === null) {
-                        $row[$key] = '';
-                    }
-                }
-                $row['progresso']=$Progresso[$row['stato']];
-                if ($row['stato']==4){
-                    array_push($Ritirati,$row);
-                }else{
-                    array_push($NonRitirati,$row);
+        
+        if (mysqli_num_rows($queryResult) > 0){
+            $Ritirati = array();
+            $NonRitirati = array();
+            // mappa per convertire lo stato numerico in stringa leggibile
+            $Progresso = [1=>'in attesa', 2=>'in preparazione', 3=>'completato', 4=>'ritirato'];
+            
+            while ($row = mysqli_fetch_assoc($queryResult)){
+                // assegnazione della stringa di stato, con fallback se il codice non esiste
+                $row['progresso'] = isset($Progresso[$row['stato']]) ? $Progresso[$row['stato']] : 'sconosciuto';
+                
+                // divisione degli ordini tra già conclusi (ritirati) e ancora attivi
+                if ($row['stato'] == 4){
+                    array_push($Ritirati, $row);
+                } else {
+                    array_push($NonRitirati, $row);
                 }
             }
+            // restituisce prima quelli attivi, poi quelli ritirati
             return array_merge($NonRitirati, $Ritirati);
-        }else{
+        } else {
             return null;
         }
     }
 
-
-
-    //restituisce TRUE se la email è gia presente nel database, FALSE se non c'è la email nel database
+    // verifica se un'email è già registrata nel sistema
     public function emailExists($email){
         $querySelect = "SELECT email FROM persona WHERE email = ?";
         $stmt = mysqli_prepare($this->connection, $querySelect);
@@ -136,17 +151,13 @@ FUNZIONI PER LEGGERE DATI
         mysqli_stmt_execute($stmt); 
         $queryResult = mysqli_stmt_get_result($stmt);
 
-        //controllo se la query ha restituito almeno una riga
         $exists = mysqli_num_rows($queryResult) > 0;
 
-        //pulizia memoria
-        mysqli_free_result($queryResult);
         mysqli_stmt_close($stmt);
-
         return $exists;
     }
 
-    //restituisce il nome relativo alla email, FALSE se non c'è la email nel database
+    // recupera il nome dell'utente data l'email
     public function getNome($email){
         $querySelect = "SELECT nome FROM persona WHERE email = ?";
         $stmt = mysqli_prepare($this->connection, $querySelect);
@@ -154,17 +165,16 @@ FUNZIONI PER LEGGERE DATI
         mysqli_stmt_execute($stmt); 
         mysqli_stmt_bind_result($stmt, $nome);
 
-        //controlla se la query ha trovato l'utente
         if (mysqli_stmt_fetch($stmt)) {
             mysqli_stmt_close($stmt);
-            return $nome;                   // restituisce il nome
+            return $nome;
         } else {
             mysqli_stmt_close($stmt);
-            return false;                   // email non trovata
+            return false;
         }
     }
 
-    //restituisce il cognome relativo alla email, FALSE se non c'è la email nel database
+    // recupera il cognome dell'utente data l'email
     public function getCognome($email){
         $querySelect = "SELECT cognome FROM persona WHERE email = ?";
         $stmt = mysqli_prepare($this->connection, $querySelect);
@@ -172,17 +182,16 @@ FUNZIONI PER LEGGERE DATI
         mysqli_stmt_execute($stmt); 
         mysqli_stmt_bind_result($stmt, $cognome);
 
-        //controlla se la query ha trovato l'utente
         if (mysqli_stmt_fetch($stmt)) {
             mysqli_stmt_close($stmt);
-            return $cognome;                // restituisce il cognome
+            return $cognome;
         } else {
             mysqli_stmt_close($stmt);
-            return false;                   // email non trovata
+            return false;
         }
     }
 
-    //data una email, restituisce l'hash della password salvato nel database. Restituisce FALSE se non c'è la email nel database
+    // recupera l'hash della password per la verifica del login
     public function getHash($email){
         $querySelect = "SELECT password FROM persona WHERE email = ?";
         $stmt = mysqli_prepare($this->connection, $querySelect);
@@ -190,49 +199,74 @@ FUNZIONI PER LEGGERE DATI
         mysqli_stmt_execute($stmt);
         mysqli_stmt_bind_result($stmt, $password_hash);
         
-        //controllo se la query ha trovato l'utente
         if(mysqli_stmt_fetch($stmt)){
             mysqli_stmt_close($stmt);
-            return $password_hash;      //restituisce l'hash corrispondente alla email
+            return $password_hash;
         } else{
             mysqli_stmt_close($stmt);
-            return false;               //email non trovata, restituisce FALSE   
+            return false;  
         }
     }
     
-    //restituisce TRUE se esiste una tupla con email e password che corrispondono, FALSE altrimenti
+    // verifica la corrispondenza tra email e password inserita
     public function correctLogin($email, $password){
-    $hash = $this->getHash($email);     //ottengo l'hash della password dal database
-    if($hash === false || $hash === null){  // controllo sia per false che null
-        return false;
+        $hash = $this->getHash($email);
+        
+        if($hash === false || $hash === null){
+            return false;
+        }
+        
+        // usiamo password_verify per confrontare la password in chiaro con l'hash crittografato nel db
+        if (password_verify($password, $hash)){
+            return true;
+        } else {
+            return false;
+        }
     }
-    
-    if (password_verify($password, $hash)){     //confronta la password inserita con l'hash salvato
-        return true;  // login corretto 
-    } else{
-        return false; // password errata
+
+    //restituisce il ruolo (admin o user) relativo alla email, FALSE se non trovato
+    public function getRuolo($email){
+        $querySelect = "SELECT ruolo FROM persona WHERE email = ?";
+        $stmt = mysqli_prepare($this->connection, $querySelect);
+        mysqli_stmt_bind_param($stmt, "s", $email);
+        mysqli_stmt_execute($stmt); 
+        mysqli_stmt_bind_result($stmt, $ruolo);
+
+        if (mysqli_stmt_fetch($stmt)) {
+            mysqli_stmt_close($stmt);
+            return $ruolo;
+        } else {
+            mysqli_stmt_close($stmt);
+            return false;
+        }
     }
-}
-/* 
--------------------------------------------------------------------------------------------------------------------------------------------------
+
+/* -------------------------------------------------------------------------------------------------------------------------------------------------
 FUNZIONI PER SCRIVERE DATI
 -------------------------------------------------------------------------------------------------------------------------------------------------
 */
-    //inserisce i dati di un nuovo utente semplice (user)
-    //restituisce l'oggetto mysqli_result se la query è andata a buon fine, altrimrnti FALSE
-	public function insertNewPersona($email, $nome, $cognome, $password){
-        $password_hash = password_hash($password, PASSWORD_DEFAULT);    // salvo l'hash della password
 
-		$queryInsert = "INSERT INTO persona(email, nome, cognome, ruolo, password)
-		VALUES (?, ?, ?, 'user', ?)";	
+// registra un nuovo utente nel database con ruolo 'user'
+    public function insertNewPersona($email, $nome, $cognome, $telefono, $password){
+        // crittografia della password
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+
+        $queryInsert = "INSERT INTO persona(email, nome, cognome, telefono, ruolo, password) VALUES (?, ?, ?, ?, 'user', ?)";   
 
         $stmt = mysqli_prepare($this->connection, $queryInsert);
-        mysqli_stmt_bind_param($stmt, "ssss", $email, $nome, $cognome, $password_hash);
-        $success = mysqli_stmt_execute($stmt); 
+        mysqli_stmt_bind_param($stmt, "sssss", $email, $nome, $cognome, $telefono, $password_hash);
+        
+        try {
+            $success = mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+            return $success;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
 
-        //pulizia memoria
-        mysqli_stmt_close($stmt);
-
-        return $success;   
-	}
+    public function getConn() {
+        return $this->connection;
+    }
 }
+?>

@@ -29,13 +29,13 @@
                     </svg>
                 </a>
 
-                <a href="../html/carrello.html" class="bottoneCarrello" aria-label="Vai al carrello">
+                <a href="../php/carrello.php" class="bottoneCarrello" aria-label="Vai al carrello">
                     <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="16.5" cy="18.5" r="1.5" />
                         <circle cx="9.5" cy="18.5" r="1.5" />
                         <path d="M18 16H8a1 1 0 0 1-.958-.713L4.256 6H3a1 1 0 0 1 0-2h2
-                     a1 1 0 0 1 .958.713L6.344 6H21a1 1 0 0 1 .937 1.352l-3 8
-                     A1 1 0 0 1 18 16zm-9.256-2h8.563l2.25-6H6.944z" />
+                      a1 1 0 0 1 .958.713L6.344 6H21a1 1 0 0 1 .937 1.352l-3 8
+                      A1 1 0 0 1 18 16zm-9.256-2h8.563l2.25-6H6.944z" />
                     </svg>
                 </a>
             </div>
@@ -58,6 +58,7 @@
 
     <main>
         <section id="sezioneRegistrazione" class="contenuto" aria-labelledby="titolo-registrazione">
+            <h2 id="titolo-registrazione" class="sr-only">Registrazione Utente</h2>
             <form id="formRegistrazione" action="../php/registrazione.php" method="post" autocomplete="on">
                 <fieldset>
                     <legend>Crea un nuovo account</legend>
@@ -76,6 +77,14 @@
                         required aria-required="true" autocomplete="family-name">
                     </div>
                     [messaggioErroreCognome]
+
+                    <div class="campoDati">
+                        <label for="telefono">Telefono</label>
+                        <input type="tel" name="telefono" id="telefono" value="[valoreTelefono]"
+                        placeholder="Es. 345 6789012"
+                        required aria-required="true" autocomplete="tel">
+                    </div>
+                    [messaggioErroreTelefono]
 
                     <div class="campoDati">
                         <label for="email">Email</label>
