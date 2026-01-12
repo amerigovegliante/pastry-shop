@@ -1,4 +1,4 @@
-USE gromanat; 
+USE ; 
 
 DROP TABLE IF EXISTS item_allergico;
 DROP TABLE IF EXISTS ordine_pasticcino;
@@ -87,6 +87,16 @@ CREATE TABLE item_allergico (
   DEFAULT CHARSET = utf8
   COLLATE = utf8_unicode_ci;
 
+CREATE TABLE domanda_contattaci (
+  id int not null AUTO_INCREMENT,
+  email varchar(60) not null,
+  domanda text not null,
+  data_invio datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY(id)
+) ENGINE=InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_unicode_ci;
+
 DELETE FROM item;
 
 INSERT INTO persona (email, nome, cognome, telefono, ruolo, password) VALUES
@@ -108,21 +118,6 @@ INSERT INTO ordine (id, ritiro, ordinazione, numero, persona, nome, cognome, tel
 (3, '2026-12-19 14:45:00', '2024-12-18 17:30:00', 3, 'user@gmail.com', 'user', 'user', '39 345 678 9012', 'voglio delle decorazioni al cioccolato', 2, 20),
 (4, '2026-12-20 09:30:00', '2024-12-19 18:35:00', 4, 'admin@gmail.com', 'cliente', 'cliente Cognome', '39 345 678 9345', NULL, 1, 30),
 (5, '2026-12-20 11:00:00', '2024-12-19 19:55:37', 5, 'admin@gmail.com', 'Qualcuno', 'cognome', '39 345 675 9345', NULL, 1, 40);
-
-
-CREATE TABLE ordine (
-  id int not null,
-  ritiro datetime,
-  ordinazione datetime,
-  numero int,
-  persona varchar(60) not null,
-  nome varchar(20) not null,
-	cognome varchar(20) not null,
-  telefono int not null,
-  annotazioni varchar(300),
-  PRIMARY KEY(id),
-  FOREIGN KEY (persona) REFERENCES persona(email)
-) 
 
 INSERT INTO ordine_torta (torta, ordine, porzioni, targa, foto) VALUES 
 (1, 1, 8, 'Auguri Sara', NULL),

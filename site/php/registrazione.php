@@ -42,7 +42,6 @@ if(isset($_POST['submit'])){
     $nome = pulisciInput($_POST['nome']);
     $cognome = pulisciInput($_POST['cognome']);
     $email = pulisciInput($_POST['email']);
-    $password = pulisciInput($_POST['password']);
 
     //controllo nome
     if (strlen($nome) === 0) {					//se il nome risulta vuoto

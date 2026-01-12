@@ -58,21 +58,25 @@
 
     <main>
         <section id="sezioneContattaci" class="contenuto" aria-labelledby="titolo-contattaci">
-            <form id="formContattaci" action="login_process.php" method="post">
+            <form id="formContattaci" action="../php/contattaci.php" method="post">
                 <fieldset>
                     <legend>Contattaci</legend>
                     <div class="campoDati">
-                        <label for="identificativo">Email</label>
-                        <input type="text" id="identificativo" name="identificativo" required aria-required="true">
+                        <label for="email">Email</label>
+                        <input type="text" id="email" name="email" value="[valoreEmail]" aria-required="true" autocomplete="email">
                     </div>
+                    [messaggioErroreEmail]  <!--se è stato lasciato vuoto o c'è una mail non valida-->
 
                     <div class="campoDati">
-                        <label for="domande">Domande</label>
-                        <textarea name="domande" id="domande" rows="7"></textarea>
+                        <label for="domanda">Domanda</label>
+                        <textarea name="domanda" id="domanda" rows="7" required aria-required="true">[valoreDomanda]</textarea>
                     </div>
+                    [messaggioErroreDomanda]    <!--se è stato lasciato vuoto-->
 
-                    <button type="submit">Invia</button>
+                    <button type="submit" name="submit">Invia</button>
                 </fieldset>
+                [messaggioErroreDB]
+                [messaggioConferma]
             </form>
         </section>
     </main>

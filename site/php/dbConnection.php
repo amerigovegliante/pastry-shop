@@ -235,4 +235,19 @@ FUNZIONI PER SCRIVERE DATI
 
         return $success;   
 	}
+
+    //inserisce una nuova riga nella tabella "domanda_contattaci" del DB
+    //restituisce l'oggetto mysqli_result se la query è andata a buon fine, altrimrnti FALSE
+    public function insertNewDomanda($email, $domanda){
+        $queryInsert = "INSERT INTO domanda_contattaci(email, domanda) VALUES (?, ?)";
+
+        $stmt = mysqli_prepare($this->connection, $queryInsert);
+        mysqli_stmt_bind_param($stmt, "ss", $email, $domanda);
+        $success = mysqli_stmt_execute($stmt); 
+
+        //pulizia memoria
+        mysqli_stmt_close($stmt);
+
+        return $success; 
+    }
 }
