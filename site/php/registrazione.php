@@ -3,35 +3,38 @@ error_reporting(E_ALL); //attiva visualizzazione errori
 ini_set('display_errors', 1);
 
 require_once "dbConnection.php";
-use DBAccess;
 
 $paginaHTML = file_get_contents('../html/registrazione.html');
 if ($paginaHTML === false) {
-    die("Errore: impossibile leggere registrazione.html");
+    die("Errore: impossibile leggere il file template html/registrazione.html");
 }
 
 //DICHIARAZIONE VARIABILI
-$email ='';
-$nome ='';
-$cognome ='';
-$password ='';
-$erroreEmail ='';
-$erroreNome ='';
-$erroreCognome ='';
-$ArrayErroriPassword =[];
-$errorePassword ='';
-$messaggioErrore ='';       //per errore di connessione con il DB
-$messaggioConferma = '';    //inserimento dei dati avvenuto con successo
+$email = '';
+$nome = '';
+$cognome = '';
+$telefono = '';
+$password = '';
 
-//funzione per pulire l'input del form per evitare errori o iniezione di codice sql malevola
+$erroreEmail = '';
+$erroreNome = '';
+$erroreCognome = '';
+$erroreTelefono = '';
+$errorePassword = '';
+$ArrayErroriPassword = [];
+
+$messaggioErrore = '';       //per errore generico o di connessione con il DB
+$messaggioConferma = '';     //inserimento dei dati avvenuto con successo
+
+//funzione per pulire l'input del form per evitare iniezioni di codice e XSS
 function pulisciInput($value){
- 	$value = trim($value);				
-  	$value = strip_tags($value); 		
-	$value = htmlentities($value);		
-  	return $value;
+    $value = trim($value);              
+    $value = strip_tags($value);        
+    $value = htmlentities($value);      
+    return $value;
 }
 
-//fa diventare maiuscole solo le iniziali
+//formatta il testo rendendo maiuscole solo le iniziali delle parole
 function formattaNomeCognome($value){
     return ucwords(strtolower($value));                
 }
@@ -42,31 +45,42 @@ if(isset($_POST['submit'])){
     $nome = pulisciInput($_POST['nome']);
     $cognome = pulisciInput($_POST['cognome']);
     $email = pulisciInput($_POST['email']);
+    $telefono = pulisciInput($_POST['telefono']);
+    
+    //la password non va sanitizzata con htmlentities per non alterare i caratteri speciali prima dell'hashing
+    $password = trim($_POST['password']);
 
     //controllo nome
-    if (strlen($nome) === 0) {					//se il nome risulta vuoto
-		$erroreNome = '<p class="errore">Inserire il nome</p>';
+    if (strlen($nome) === 0) {
+        $erroreNome = '<p class="errore" role="alert">Inserire il nome</p>';
     } else if (!preg_match("/^[a-zA-ZÀ-ÿ\s]+$/u", $nome)) {
-    $erroreNome = '<p class="errore">Il nome può contenere solo lettere e spazi</p>';
+        $erroreNome = '<p class="errore" role="alert">Il nome può contenere solo lettere e spazi</p>';
     }
 
     //controllo cognome
     if (strlen($cognome) === 0) {
-        $erroreCognome = '<p class="errore">Inserire il cognome</p>';
+        $erroreCognome = '<p class="errore" role="alert">Inserire il cognome</p>';
     } else if (!preg_match("/^[a-zA-ZÀ-ÿ\s]+$/u", $cognome)) {
-    $erroreCognome = '<p class="errore">Il cognome può contenere solo lettere e spazi</p>';
+        $erroreCognome = '<p class="errore" role="alert">Il cognome può contenere solo lettere e spazi</p>';
     }
 
     //controllo email
     if (strlen($email) === 0) {
-        $erroreEmail = '<p class="errore">Inserire una email</p>';
+        $erroreEmail = '<p class="errore" role="alert">Inserire una email</p>';
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $erroreEmail = '<p class="errore">Formato email non valido</p>';
+        $erroreEmail = '<p class="errore" role="alert">Formato email non valido</p>';
     }
 
-    //controllo password
+    //controllo telefono
+    if (strlen($telefono) === 0) {
+        $erroreTelefono = '<p class="errore" role="alert">Inserire il numero di telefono</p>';
+    } elseif (!preg_match("/^[0-9\s\+]+$/", $telefono)) {
+        $erroreTelefono = '<p class="errore" role="alert">Il telefono può contenere solo numeri, spazi o il prefisso +</p>';
+    }
+
+    //controllo password e complessità richiesta
     if (strlen($password) < 8) {
-    $ArrayErroriPassword[] = '<li>La password deve essere lunga almeno 8 caratteri.</li>';
+        $ArrayErroriPassword[] = '<li>La password deve essere lunga almeno 8 caratteri.</li>';
     }
     if (!preg_match('/[A-Z]/', $password)) {
         $ArrayErroriPassword[] = '<li>La password deve contenere almeno una lettera maiuscola.</li>';
@@ -82,40 +96,47 @@ if(isset($_POST['submit'])){
     }
 
     if(!empty($ArrayErroriPassword)){
-        $errorePassword .= '<div class="errore"><ul>';
+        $errorePassword .= '<div class="errore" role="alert"><ul>';
         foreach($ArrayErroriPassword as $error){
             $errorePassword .= $error;
         }
         $errorePassword .= '</ul></div>';
     }
 
-    //INSERIMENTO VALORI NEL DATABASE (solo se tutti i campi sono corretti)
-    if (empty($erroreNome) && empty($erroreCognome) && empty($erroreEmail) && empty($errorePassword)){
+    //inserimento valori nel database solo se non ci sono errori in nessun campo
+    if (empty($erroreNome) && empty($erroreCognome) && empty($erroreEmail) && empty($erroreTelefono) && empty($errorePassword)){
+        
         $nome = formattaNomeCognome($nome);
         $cognome = formattaNomeCognome($cognome);
 
         $db = new DBAccess();
-        $connessione = $db->openDBConnection(); //tento la connessione
+        $connessione = $db->openDBConnection();
+        
         if(!$connessione){  
-            $messaggioErrore = '<p class="errore">Siamo spiacenti, si è verificato un problema di connessione. Riprova più tardi.</p>';
+            $messaggioErrore = '<p class="errore" role="alert">Siamo spiacenti, si è verificato un problema di connessione. Riprova più tardi.</p>';
         } else {
-            if($db->emailExists($email)){        //se la email è gia registrata nel database
-                $erroreEmail = '<div class="errore"><p>L\'indirizzo email è già stato usato.</p>
-                                <p>Riprova con una email differente.</p></div>';
+            if($db->emailExists($email)){        
+                $erroreEmail = '<div class="errore" role="alert"><p>L\'indirizzo email è già registrato.</p>
+                                <p>Riprova con una email differente o effettua il login.</p></div>';
             } else {
-                $success = $db->insertNewPersona($email, $nome, $cognome, $password);
-                $db->closeDBConnection();   //chiudo la connessione
+                $success = $db->insertNewPersona($email, $nome, $cognome, $telefono, $password);
+                $db->closeDBConnection();
+                
                 if(!$success){  
-                    $messaggioErrore = '<p class="errore">Siamo spiacenti, si è verificato un problema di connessione. Riprova più tardi.</p>';
+                    $messaggioErrore = '<p class="errore" role="alert">Siamo spiacenti, si è verificato un errore durante la registrazione. Riprova più tardi.</p>';
                 } else {
-                   //AVVIO SESSIONE
-                    session_start();                    
+                   //avvio sessione e login automatico post-registrazione
+                    session_start();
+                    session_regenerate_id(true); //prevenzione session fixation
+                    
                     $_SESSION['email'] = $email;
                     $_SESSION['nome'] = $nome;
                     $_SESSION['cognome'] = $cognome;
+                    $_SESSION['ruolo'] = 'user'; //il ruolo di default per la registrazione pubblica è user
 
-                    $messaggioConferma = '<div class="successo">
+                    $messaggioConferma = '<div class="successo" role="status">
                         <p>Registrazione completata con successo!</p>
+                        <p>Benvenuto/a ' . $nome . '.</p>
                         <p><a href="areaPersonale.php">Vai alla tua area personale</a></p>
                         </div>';
                 }
@@ -124,15 +145,17 @@ if(isset($_POST['submit'])){
     }
 }
 
-//fa si che una volta inviato il form, giusto o sbagliato, vengono ricompilati i campi gia' scritti dall'utente, evitando frustrazione
+//fa si che una volta inviato il form, giusto o sbagliato, vengono ricompilati i campi gia' scritti  dall'utente, evitando frustrazione
 $paginaHTML = str_replace('[valoreNome]', $nome, $paginaHTML);
 $paginaHTML = str_replace('[valoreCognome]', $cognome, $paginaHTML);
 $paginaHTML = str_replace('[valoreEmail]', $email, $paginaHTML);
-$paginaHTML = str_replace('[valorePassword]', $password, $paginaHTML);
+$paginaHTML = str_replace('[valoreTelefono]', $telefono, $paginaHTML);
+$paginaHTML = str_replace('[valorePassword]', '', $paginaHTML); //il campo password viene svuotato per sicurezza
 
 $paginaHTML = str_replace('[messaggioErroreNome]', $erroreNome, $paginaHTML);
 $paginaHTML = str_replace('[messaggioErroreCognome]', $erroreCognome, $paginaHTML);
 $paginaHTML = str_replace('[messaggioErroreEmail]', $erroreEmail, $paginaHTML);
+$paginaHTML = str_replace('[messaggioErroreTelefono]', $erroreTelefono, $paginaHTML);
 $paginaHTML = str_replace('[messaggioErrorePassword]', $errorePassword, $paginaHTML);
 
 $paginaHTML = str_replace('[messaggioErroreDB]', $messaggioErrore, $paginaHTML); 

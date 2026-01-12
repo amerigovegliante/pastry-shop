@@ -28,7 +28,7 @@
                     </svg>
                 </a>
 
-                <a href="../html/carrello.html" class="bottoneCarrello" aria-label="Vai al carrello">
+                <a href="../php/carrello.php" class="bottoneCarrello" aria-label="Vai al carrello">
                     <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="16.5" cy="18.5" r="1.5" />
                         <circle cx="9.5" cy="18.5" r="1.5" />
@@ -58,11 +58,12 @@
 
     <main>
         <section id="sezioneLogin" class="contenuto" aria-labelledby="titolo-accesso">
+            <h2 id="titolo-accesso" class="sr-only">Accesso Area Riservata</h2>
             <form id="formLogin" action="login.php" method="post" autocomplete="on">
                 <fieldset>
                     <legend>Accedi al tuo account</legend>
                     <div class="campoDati">
-                        <label for="identificativo">Email di registrazione</label>
+                        <label for="email">Email di registrazione</label>
                         <input type="email" name="email" id="email" value="[valoreEmail]" 
                         placeholder="Inserisci la tua email"
                         required aria-required="true" autocomplete="email">
@@ -72,17 +73,7 @@
                     <div class="campoDati">
                         <label for="password">Password</label>
                         <input type="password" name="password" id="password" value="[valorePassword]"
-                        placeholder="Inserisci la tua password"
-                        minlength="8" required aria-required="true" autocomplete="current-password">
-                    <!--
-                        <button type="button" id="togglePassword" class="toggle-password"
-                        aria-pressed="false" aria-label="Mostra password" title="Mostra password">
-                            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
-                                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" fill="none" stroke="currentColor" stroke-width="1.5"/>
-                                <circle cx="12" cy="12" r="3" fill="currentColor"/> 
-                            </svg>
-                        </button>
-                    -->
+                        placeholder="Inserisci la tua password" required aria-required="true" autocomplete="current-password">
                     </div>
                     [messaggioPasswordMancante]
                     

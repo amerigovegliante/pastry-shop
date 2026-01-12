@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL); //attiva visualizzazione errori
+error_reporting(E_ALL); 
 ini_set('display_errors', 1);
 
 require_once "dbConnection.php";
@@ -11,10 +11,9 @@ if ($paginaHTML === false) {
 }
 
 $db = new DBAccess();
-$connessione = $db->openDBConnection(); //tento la connessione
+$connessione = $db->openDBConnection(); 
 
-//VARIABILI
-//script per item
+// VARIABILI
 $tipoBreadcrumb="";
 $nome="";
 $ID="";
@@ -22,111 +21,108 @@ $listaAllergeni= "";
 $Itemdetails= "";
 $formAcquisto="";   
 
-
-
-
-if(isset($_GET['ID'])){
-    $ID=$_GET['ID'];
+if(isset($_GET['ID']) && is_numeric($_GET['ID'])){
+    $ID = $_GET['ID'];
 } else {
-    die("Errore: ID non specificato.");
+    die("Errore: ID prodotto non valido.");
 }
-// leggo i dati della torta con ID specificato
+
 if($connessione){
-    $Item=array();
-	$Item = $db->getItemDetail($ID);
-	$db->closeDBConnection();
-	if ($Item!=null){ //DA DECIDERE: se inserire alt su immagine, cambiare il prezzo in base alla porzione e quantità selezionata
-        $nome=htmlspecialchars($Item['nome']);
-        $allergeniArray=array();
-        $allergeniArray=$Item['allergeni']; //prendo l'array degli allergeni
+    $Item = $db->getItemDetail($ID);
+    $db->closeDBConnection(); 
+    
+    if ($Item != null){
+        $nome = htmlspecialchars($Item['nome']);
+        
+        $allergeniArray = $Item['allergeni']; 
         if(!empty($allergeniArray)){
+            $listaAllergeni = "<ul class=\"listaAllergeni\">Allergeni:"; 
             foreach($allergeniArray as $allergene){
-                $listaAllergeni.="<li>".htmlspecialchars($allergene)."</li>";
+                $listaAllergeni .= "<li>".htmlspecialchars($allergene)."</li>";
             }
+            $listaAllergeni .= "</ul>";
+        } else {
+            $listaAllergeni = ""; 
         }
-        $listaAllergeni.="</ul>";
-		$Itemdetails .= "<figure>
-                         <img src=\"" . $Item['immagine'] . "\" alt=\"\" class=\"cornice\">
+
+        // definizione etichetta prezzo
+        $prezzoFormatted = number_format($Item['prezzo'], 2, ',', '.');
+        $etichettaUnit = ($Item['tipo'] === 'Torta') ? "/ porzione" : "cad.";
+
+        $Itemdetails .= "<figure>
+                         <img src=\"" . htmlspecialchars($Item['immagine']) . "\" alt=\"\" class=\"cornice\">
                          <figcaption>".htmlspecialchars($Item['nome'])."</figcaption>
                       </figure>
                       <section class=\"infoItem\">
                           <h2>".htmlspecialchars($Item['nome'])."</h2> 
-                          <data value=\"" . $Item['prezzo'] . "\" class=\"prezzoTorta\">€".number_format($Item['prezzo'], 2, ',', '.')."</data> 
+                          <data value=\"" . $Item['prezzo'] . "\" class=\"prezzoItem\">€" . $prezzoFormatted . " <small>" . $etichettaUnit . "</small></data> 
                           <p>".htmlspecialchars($Item['descrizione'])."</p>
-                          <ul class=\"listaAllergeni\"> Allergeni: " . $listaAllergeni . "</ul>
+                          " . $listaAllergeni . "
                       </section>";
-        $formAcquisto.="<section class=\"acquistoItem\">
+
+        $formAcquisto .= "<section class=\"acquistoItem\">
                 <form method=\"post\" action=\"carrello.php\">
                     <fieldset>
                     <legend>Acquisto ".htmlspecialchars($Item['nome'])."</legend>
-                    <input type=\"hidden\" name=\"ID\" value=\"".htmlspecialchars($Item['id'])."\"> <!--serve per passare l'id dell'item al carrello-->
+                    <input type=\"hidden\" name=\"ID\" value=\"".htmlspecialchars($Item['id'])."\">
                     <div>
-                        <label for=\"quantita\">Quantità</label>
+                        <label for=\"quantita\">Quantità (n. prodotti)</label>
                         <input type=\"number\" id=\"quantita\" min=\"1\" value=\"1\" name=\"quantita\">
                     </div>";
                     
-        if($Item['tipo']==='Torta'){
-            $tipoBreadcrumb="<a href=\"../../torte-pasticcini.php?tipo=torte\">Le nostre torte</a>";
-            $formAcquisto.="<label for=\"porzione\"> Porzione: </label>
-                    <p>Le grammature sono indicative e possono variare in base alla decorazione OPPURE Peso indicativo calcolato su circa 150 g a persona</p>
-                    <div class=\"porzioni\">
-                        <input type=\"radio\" id=\"2P\" name=\"porzione\" value=\"300\" >
-                        <label for=\"2P\">2 persone (300 <abbr title=\"grammi\">gr</abbr>)</label>
-                        <input type=\"radio\" id=\"4P\" name=\"porzione\" value=\"600\">
-                        <label for=\"4P\">4 persone (600 <abbr title=\"grammi\">gr</abbr>)</label>
-                        <input type=\"radio\" id=\"6P\" name=\"porzione\" value=\"900\">
-                        <label for=\"6P\">6 persone (900 <abbr title=\"grammi\">gr</abbr>)</label>   
-                        <input type=\"radio\" id=\"8P\" name=\"porzione\" value=\"1200\">
-                        <label for=\"8P\">8 persone (1.2<abbr title=\"chilogrammi\">kg</abbr>)</label>
-                        <input type=\"radio\" id=\"10P\" name=\"porzione\" value=\"1500\">
-                        <label for=\"10P\">10 persone (1.5<abbr title=\"chilogrammi\">kg</abbr>)</label>
-                        <input type=\"radio\" id=\"12P\" name=\"porzione\" value=\"1800\">
-                        <label for=\"12P\">12 persone (1.8<abbr title=\"chilogrammi\">kg</abbr>)</label>
-                    </div> 
-                    <label>Personalizzazione (opzionale):</label>
-                    <div>
-                        <label for=\"Targa\">
-                            <input type=\"checkbox\" id=\"chkTarga\">
-                            Aggiungi una targa
-                        </label>
-                        <div id=\"campoTarga\">  <!--la nascondo con javascript se il checkbox non è selezionato-->
-                            <label for=\"testoTarga\">
-                                Testo sulla targa (max 20 caratteri)
-                            </label>
-                            <textarea id=\"testoTarga\" name=\"testoTarga\" maxlength=\"20\" rows=\"1\" placeholder=\"Es. Buon Compleanno Anna\"></textarea>
-                        </div>
-                        <label for=\"Foto\">
-                            <input type=\"checkbox\" id=\"chkFoto\">
-                            Aggiungi una foto
-                        </label>
-                        <div id=\"campoFoto\"> <!--la nascondo con javascript se il checkbox non è selezionato-->
-                            <label for=\"uploadFoto\">
-                                Carica la foto da stampare (formati accettati: .jpg, .png)
-                            </label>
-                            <input type=\"file\" id=\"uploadFoto\" accept=\".jpg, .jpeg, .png\">
-                        </div>
-                    </div>";
-                    
-                    
+        if($Item['tipo'] === 'Torta'){
+            $tipoBreadcrumb = "<a href=\"torte-pasticcini.php?tipo=torte\">Le nostre torte</a>";
             
-        } else if($Item['tipo']==='Pasticcino'){
-            $tipoBreadcrumb="<a href=\"../../torte-pasticcini.php?tipo=pasticcini\">I nostri pasticcini</a>";
+            $formAcquisto .= "<label for=\"porzione\"> Grandezza Torta: </label>
+                    <p>Prezzo calcolato a porzione (ca. 150g a persona)</p>
+                    <div class=\"porzioni\">
+                        <input type=\"radio\" id=\"p6\" name=\"porzione\" value=\"6\" checked>
+                        <label for=\"p6\">6 Persone</label>
+
+                        <input type=\"radio\" id=\"p8\" name=\"porzione\" value=\"8\">
+                        <label for=\"p8\">8 Persone</label>
+
+                        <input type=\"radio\" id=\"p10\" name=\"porzione\" value=\"10\">
+                        <label for=\"p10\">10 Persone</label>   
+
+                        <input type=\"radio\" id=\"p12\" name=\"porzione\" value=\"12\">
+                        <label for=\"p12\">12 Persone</label>
+                    </div> 
+                    
+                    <fieldset class=\"personalizzazione\">
+                        <legend>Personalizzazione (opzionale):</legend>
+                        <div>
+                            <label for=\"chkTarga\">
+                                <input type=\"checkbox\" id=\"chkTarga\" name=\"chkTarga\">
+                                Aggiungi una targa
+                            </label>
+                            <div id=\"campoTarga\"> 
+                                <label for=\"testoTarga\">Testo sulla targa (max 20 caratteri)</label>
+                                <textarea id=\"testoTarga\" name=\"testoTarga\" maxlength=\"20\" rows=\"1\" placeholder=\"Es. Buon Compleanno\"></textarea>
+                            </div>
+                            </div>
+                    </fieldset>";
+            
+        } else if($Item['tipo'] === 'Pasticcino'){
+            $tipoBreadcrumb = "<a href=\"torte-pasticcini.php?tipo=pasticcini\">I nostri pasticcini</a>";
         }
-        $formAcquisto.="<button type=\"submit\" aria-label=\"Aggiungi ".htmlspecialchars($Item['nome'])." al carrello\">Aggiungi al carrello</button>
+
+        $formAcquisto .= "<button type=\"submit\" aria-label=\"Aggiungi ".htmlspecialchars($Item['nome'])." al carrello\">Aggiungi al carrello</button>
                         </fieldset>
                         </form>
                         </section>";
-	}else{
-		$Itemdetails ="<p>I dettagli del prodotto". $Item['nome']."non sono al momento disponibili</p>"; 
-	}
+    } else {
+        $Itemdetails = "<p class='errore'>Prodotto non trovato.</p>"; 
+        $nome = "Errore";
+    }
 } else {
-	$Itemdetails = "<p>I sistemi sono momentaneamente fuori servizio, ci scusiamo per il disagio</p>";
+    $Itemdetails = "<p class='errore'>Errore di connessione al database.</p>";
 }
 
-//RIMPIAZZO I SEGNAPOSTO [...]
 $paginaHTML = str_replace("[DettagliItem]", $Itemdetails, $paginaHTML);
 $paginaHTML = str_replace("[tipoBreadcrumb]", $tipoBreadcrumb, $paginaHTML);
 $paginaHTML = str_replace("[Item]", $nome, $paginaHTML);
 $paginaHTML = str_replace("[formAcquisto]", $formAcquisto, $paginaHTML);
+
 echo $paginaHTML;
 ?>
