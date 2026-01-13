@@ -22,9 +22,8 @@ $confermaInvio ='';    //inserimento dei dati avvenuto con successo
 if(session_status() === PHP_SESSION_NONE){
     session_start();                    
 }
-$email = isset($_SESSION['email']) ? $_SESSION['email'] : '';
-if(isset($email)) {
-    $paginaHTML = str_replace('[valoreEmail]', $email, $paginaHTML);
+if(isset($_SESSION['email'])){      
+    $email = $_SESSION['email'];
 }
 
 //funzione per pulire l'input del form per evitare errori o iniezione di codice sql malevola

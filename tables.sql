@@ -1,5 +1,7 @@
 -- USE nomedb; -- inserite il vostro nome utente
+USE gdelucch;
 
+DROP TABLE IF EXISTS domanda_contattaci;
 DROP TABLE IF EXISTS item_allergico;
 DROP TABLE IF EXISTS ordine_pasticcino;
 DROP TABLE IF EXISTS ordine_torta;
