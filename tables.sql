@@ -23,11 +23,11 @@ CREATE TABLE persona(
 CREATE TABLE item (
   id int NOT NULL AUTO_INCREMENT,
   tipo ENUM('torta', 'pasticcino') NOT NULL,
-  nome varchar(255) NOT NULL,
-  icona varchar(255),
+  nome varchar(30) NOT NULL,
   descrizione varchar(255),
   prezzo DECIMAL(10,2) NOT NULL,
   immagine varchar(255),
+  testo_alternativo varchar(255),
   PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -82,9 +82,9 @@ CREATE TABLE item_allergico (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE domanda_contattaci (
-  id int not null AUTO_INCREMENT,
-  email varchar(60) not null,
-  domanda text not null,
+  id int  NOT NULL AUTO_INCREMENT,
+  email varchar(60)  NOT NULL,
+  domanda text  NOT NULL,
   data_invio datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(id)
 ) ENGINE=InnoDB
@@ -94,24 +94,24 @@ CREATE TABLE domanda_contattaci (
 DELETE FROM item;
 
 INSERT INTO persona (email, nome, cognome, telefono, ruolo, password) VALUES
-('user@gmail.com','user','user', '3456789012', 'user', '$2y$12$lNuhYtwpLE.XKF4dBOP4tOYbgK.e44PvxwW85eG0snfpS9Dz0a2S6'),
-('admin@gmail.com', 'admin', 'admin', '3456789345', 'admin', '$2y$12$swcL0qKYW9Nt0KwIXDBr3ODL6OcMDjDMkFYiW19eZbUs1uYDAvLVe');
+('user','user','user', '3456789012', 'user', '$2y$12$lNuhYtwpLE.XKF4dBOP4tOYbgK.e44PvxwW85eG0snfpS9Dz0a2S6'),
+('admin', 'admin', 'admin', '3456789345', 'admin', '$2y$12$swcL0qKYW9Nt0KwIXDBr3ODL6OcMDjDMkFYiW19eZbUs1uYDAvLVe');
 
-INSERT INTO item (id, tipo ,nome, icona, descrizione, prezzo, immagine) VALUES 
-(1, 'Torta', 'Red Velvet', NULL, 'La red velvet è una torta morbida al cacao, dal colore rosso intenso, ricoperta con crema al formaggio.', 5.00, NULL),
-(2, 'Torta', 'Sachertorte', NULL, 'Torta viennese al cioccolato, morbidissima, con glassa fondente e sottile marmellata di albicocche. Capolavoro di pasticceria.', 7.00, NULL),
-(3, 'Torta', 'Tiramisù', NULL, 'Strati di savoiardi inzuppati nel caffè, crema al mascarpone e spolverata di cacao. Semplicemente delizioso.', 5.00, NULL),
-(4, 'Pasticcino', 'Bignè al Cioccolato', NULL, 'Soffici bignè alla panna ricoperti di una lucida glassa al cioccolato. Un classico della pasticceria, golosissimo e leggero.', 1.50, NULL),
-(5, 'Pasticcino', 'Babbà', NULL, 'Soffice dolce napoletano, imbevuto di rum, dalla caratteristica forma a fungo. Morbido e irresistibilmente brioso.', 2.00, NULL),
-(6, 'Pasticcino', 'Maritozzo', NULL, 'Dolce romano sofficissimo, un panino dolce spaccato e farcito con panna montata abbondante. Semplicemente delizioso.', 3.50, NULL),
-(7, 'Pasticcino', 'Cannolo', NULL, 'Cialda croccante ripiena di ricotta setacciata, zuccherata e arricchita con gocce di cioccolato e canditi.', 3.00, NULL);
+INSERT INTO item (id, tipo ,nome, descrizione, prezzo, immagine, testo_alternativo) VALUES 
+(1, 'Torta', 'Red Velvet', 'La red velvet è una torta morbida al cacao, dal colore rosso intenso, ricoperta con crema al formaggio.', 5.00, NULL, ''),
+(2, 'Torta', 'Sachertorte', 'Torta viennese al cioccolato, morbidissima, con glassa fondente e sottile marmellata di albicocche. Capolavoro di pasticceria.', 7.00, NULL, ''),
+(3, 'Torta', 'Tiramisù', 'Strati di savoiardi inzuppati nel caffè, crema al mascarpone e spolverata di cacao. Semplicemente delizioso.', 5.00, NULL, ''),
+(4, 'Pasticcino', 'Bignè al Cioccolato', 'Soffici bignè alla panna ricoperti di una lucida glassa al cioccolato. Un classico della pasticceria, golosissimo e leggero.', 1.50, NULL, ''),
+(5, 'Pasticcino', 'Babbà', 'Soffice dolce napoletano, imbevuto di rum, dalla caratteristica forma a fungo. Morbido e irresistibilmente brioso.', 2.00, NULL, ''),
+(6, 'Pasticcino', 'Maritozzo', 'Dolce romano sofficissimo, un panino dolce spaccato e farcito con panna montata abbondante. Semplicemente delizioso.', 3.50, NULL, ''),
+(7, 'Pasticcino', 'Cannolo', 'Cialda croccante ripiena di ricotta setacciata, zuccherata e arricchita con gocce di cioccolato e canditi.', 3.00, NULL, '');
 
 INSERT INTO ordine (id, ritiro, ordinazione, numero, persona, nome, cognome, telefono, annotazioni, stato, totale ) VALUES 
-(1, '2024-12-19 12:30:00', '2024-12-18 15:30:00', 1, 'user@gmail.com', 'user', 'user', '3456789012', 'aggiungere una candelina', 4, 10),
-(2, '2024-12-19 13:15:00', '2024-12-18 16:45:00', 2, 'user@gmail.com', 'user', 'user', '3456789012', NULL, 3, 15),
-(3, '2024-12-19 14:45:00', '2024-12-18 17:30:00', 3, 'user@gmail.com', 'user', 'user', '3456789012', 'voglio delle decorazioni al cioccolato', 2, 20),
-(4, '2024-12-20 09:30:00', '2024-12-19 18:35:00', 4, 'admin@gmail.com', 'cliente', 'cliente Cognome', '3456789345', NULL, 1, 30),
-(5, '2024-12-20 11:00:00', '2024-12-19 19:55:37', 5, 'admin@gmail.com', 'Qualcuno', 'cognome', '3456759345', NULL, 1, 40);
+(1, '2024-12-19 12:30:00', '2024-12-18 15:30:00', 1, 'user', 'user', 'user', '3456789012', 'aggiungere una candelina', 4, 10),
+(2, '2024-12-19 13:15:00', '2024-12-18 16:45:00', 2, 'user', 'user', 'user', '3456789012', NULL, 3, 15),
+(3, '2024-12-19 14:45:00', '2024-12-18 17:30:00', 3, 'user', 'user', 'user', '3456789012', 'voglio delle decorazioni al cioccolato', 2, 20),
+(4, '2024-12-20 09:30:00', '2024-12-19 18:35:00', 4, 'admin', 'cliente', 'cliente Cognome', '3456789345', NULL, 1, 30),
+(5, '2024-12-20 11:00:00', '2024-12-19 19:55:37', 5, 'admin', 'Qualcuno', 'cognome', '3456759345', NULL, 1, 40);
 
 INSERT INTO ordine_torta (torta, ordine, porzioni, targa, foto) VALUES 
 (1, 1, 8, 'Auguri Sara', NULL),

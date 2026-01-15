@@ -45,10 +45,12 @@ if($connessione){
     if (!empty($Items)){
         $listaItem .= '<ul id="grigliaTorte" class="contenuto">';
         foreach($Items as $Item){
-            $listaItem .="<li> <article class=\"cardTorta\"> 
-                
+            $imgSrc = !empty($Item['immagine']) ? $Item['immagine'] : "img/placeholder.jpeg";
+            $altText = !empty($Item['testo_alternativo']) ? $Item['testo_alternativo'] : "Immagine non disponibile";
+            $listaItem .="<li> <article class=\"cardTorta\">     
                 <a href=\"dettagli.php?ID=".urlencode($Item['id'])."\" style=\"text-decoration:none; color:inherit;\"> 
-                    <img src=\"" . $Item['icona'] . "\" alt=\"\">
+                   <img src=\"" . htmlspecialchars($imgSrc)
+                   . "\" alt=\"" . htmlspecialchars($altText) . "\">
                     <div class=\"infoTorta\"> 
                         <h2>".htmlspecialchars($Item['nome'])."</h2> 
                         <span class=\"prezzoTorta\">€".number_format($Item['prezzo'], 2, ',', '.')."</span> 

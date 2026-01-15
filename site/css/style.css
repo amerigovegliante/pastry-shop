@@ -41,6 +41,19 @@ COLORI UTILIZZATI
      --buttoncolor: #8b5437;
 }
 
+/* PER NASCONDERE ELEMENTI, MA RIMANGONO VISIBILI ALLO SCREEN READER*/
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%); 
+  white-space: nowrap;
+  border: 0;
+}
+
 html, body{
     font-size: 100%;
     font-family: "Lexend", Roboto, sans-serif; /*DA DECIDERE*/
@@ -328,15 +341,16 @@ PAGINA CHI SIAMO (story.html)
 ------------------------------------------------------------------------------------------------------------------------------------
 PAGINA CONTATTACI (contattaci.html)
 PAGINA LOGIN (login.html) e REGISTRAZIONE (registrazione.html)
+PAGINA AGGIUNGI PRODOTTO (aggiungiProdotto.html)
 ------------------------------------------------------------------------------------------------------------------------------------
 */
-#sezioneLogin, #sezioneRegistrazione{
+#sezioneLogin, #sezioneRegistrazione, #sezioneAggiungiProdotto{
     padding: 1em 0 1em 1.5em;
 }
 #sezioneContattaci{
     padding: 1em 0 0.5em 1.5em;
 }
-#formLogin, #formRegistrazione, #formContattaci{
+#formLogin, #formRegistrazione, #formContattaci, #formAggiungiProdotto{
     max-width: 30%;
 }
 fieldset > legend{
@@ -354,7 +368,7 @@ fieldset{
 .campoDati label{
     font-weight: bolder;
 }
-.campoDati input, .campoDati textarea{
+.campoDati input, .campoDati textarea, .campoDati select{
     max-width: 20em;
     border: 1px solid grey;
     border-radius: 4px;
@@ -381,7 +395,34 @@ button:hover, .pulsanteGenerico:hover{
     background-color: var(--buttoncolor);
     color: var(--contenttxtcolorchiaro);
 }
+/*
+------------------------------------------------------------------------------------------------------------------------------------
+AIUTI COMPILAZIONE FORM
+------------------------------------------------------------------------------------------------------------------------------------
+*/
+.campoDati small{                   /*nasconde i suggerimenti*/
+    position: absolute;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    white-space: nowrap;
+}
 
+.campoDati:focus-within small {     /*quando il campo dati riceve il focus il suggerimento torna visibile*/
+    position: static;
+    clip: auto;
+    clip-path: none;
+    height: auto;
+    width: auto;
+    overflow: visible;
+    white-space: normal;
+    display: block;
+    margin-top: 0.25rem;
+    color: #555;
+    font-size: 0.9em;
+}
 /*
 ====================================================================================================================================
 PAGINA CHI SIAMO (story.html)
@@ -488,7 +529,7 @@ TESTO DI ERRORE E DI SUCCESSO
 }
 /*
 ------------------------------------------------------------------------------------------------------------------------------------
-PAGINA TORTE (torte.html) e PAGINA PASTICCINI 
+PAGINA TORTE e PASTICCINI (torte-pasticcini.html)
 ------------------------------------------------------------------------------------------------------------------------------------
 */
 #grigliaTorte{
@@ -674,7 +715,8 @@ footer .contenuto{
     grid-column: 2;
 }
 
-/* ===================================================================
+/* 
+===================================================================
    SEZIONE CARRELLO E CHECKOUT (Blocco Completo)
 ===================================================================
 */

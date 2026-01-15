@@ -27,6 +27,7 @@ $erroreEmail ='';
 $errorePassword ='';    
 $erroreLogin ='';       
 $erroreDB ='';          
+$utentiSpeciali = ["admin", "user"];   
 
 //funzione per pulire l'input del form per evitare errori o iniezione di codice sql malevola
 function pulisciInput($value){
@@ -44,7 +45,7 @@ if(isset($_POST['submit'])){
     //controllo email
     if (strlen($email) === 0){
         $erroreEmail = '<p class="errore" role="alert">Inserire l\'email</p>';
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)){
+    } else if (!in_array($email, $utentiSpeciali) && !filter_var($email, FILTER_VALIDATE_EMAIL)){  //fa passare "admin" e "user" come mail
         $erroreEmail = '<p class="errore" role="alert">Formato email non valido</p>';
     }
 
@@ -72,7 +73,7 @@ if(isset($_POST['submit'])){
                     $_SESSION['cognome'] = $db->getCognome($email) ?: '';
                     
                     $ruolo = $db->getRuolo($email);
-                    $_SESSION['ruolo'] = $ruolo ?: 'user'; 
+                    $_SESSION['ruolo'] = $ruolo ?: 'user'; //se $ruolo ha un valore vero/non vuoto usa $ruolo; altrimenti usa 'user'
 
                     $db->closeDBConnection();
 

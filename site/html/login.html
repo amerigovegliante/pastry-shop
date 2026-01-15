@@ -63,21 +63,21 @@
     <main>
         <section id="sezioneLogin" class="contenuto" aria-labelledby="titolo-accesso">
             <h2 id="titolo-accesso" class="sr-only">Accesso Area Riservata</h2>
-            <form id="formLogin" action="login.php" method="post" autocomplete="on">
+            <form id="formLogin" action="login.php" method="post" autocomplete="on" novalidate> <!--novalidate necessario per far passare (admin,admin) e (user,user)-->
                 <fieldset>
                     <legend>Accedi al tuo account</legend>
                     <div class="campoDati">
                         <label for="email">Email di registrazione</label>
                         <input type="email" name="email" id="email" value="[valoreEmail]" 
                         placeholder="Inserisci la tua email"
-                        required aria-required="true" autocomplete="email">
+                        required autocomplete="email">
                     </div>
                     [messaggioEmailMancante]
 
                     <div class="campoDati">
                         <label for="password">Password</label>
                         <input type="password" name="password" id="password" value="[valorePassword]"
-                        placeholder="Inserisci la tua password" required aria-required="true" autocomplete="current-password">
+                        placeholder="Inserisci la tua password" required autocomplete="current-password">
                     </div>
                     [messaggioPasswordMancante]
                     

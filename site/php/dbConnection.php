@@ -36,13 +36,12 @@ class DBAccess{
 FUNZIONI PER LEGGERE DATI
 -------------------------------------------------------------------------------------------------------------------------------------------------
 */
-
     
     // recupera la lista di prodotti filtrata per categoria (torta o pasticcino)
     public function getListOfItems($tipo){
         // prepariamo la query selezionando tutti i campi necessari per la visualizzazione in lista
         // nota: prendiamo anche descrizione e immagine per avere flessibilità nel frontend
-        $querySelect = "SELECT id, nome, prezzo, icona, descrizione, immagine FROM item WHERE tipo=?";
+        $querySelect = "SELECT id, nome, prezzo, descrizione, immagine, testo_alternativo FROM item WHERE tipo=?";
         $stmt = mysqli_prepare($this->connection, $querySelect);
         mysqli_stmt_bind_param($stmt, "s", $tipo); 
         mysqli_stmt_execute($stmt);
@@ -51,10 +50,7 @@ FUNZIONI PER LEGGERE DATI
         $itemsArray = array();
         if (mysqli_num_rows($queryResult) > 0){
             while ($row = mysqli_fetch_assoc($queryResult)){ 
-                // se non c'è un'icona specifica, ne assegniamo una di default
-                if($row['icona'] == null){
-                    $row['icona'] = "../img/placeholder.jpeg"; 
-                }
+                // se non c'è un'immagine specifica, ne assegniamo una di default
                 if($row['immagine'] == null){
                     $row['immagine'] = "../img/placeholder.jpeg";
                 }
@@ -207,7 +203,7 @@ FUNZIONI PER LEGGERE DATI
             return false;  
         }
     }
-    
+
     // verifica la corrispondenza tra email e password inserita
     public function correctLogin($email, $password){
         $hash = $this->getHash($email);
@@ -240,13 +236,18 @@ FUNZIONI PER LEGGERE DATI
             return false;
         }
     }
+    
+    //restituisce la variabile di connessione al DB
+    public function getConn() {
+        return $this->connection;
+    }
 
-/* -------------------------------------------------------------------------------------------------------------------------------------------------
+/* 
+-------------------------------------------------------------------------------------------------------------------------------------------------
 FUNZIONI PER SCRIVERE DATI
 -------------------------------------------------------------------------------------------------------------------------------------------------
 */
-
-// registra un nuovo utente nel database con ruolo 'user'
+    //registra un nuovo utente nel database con ruolo 'user'
     public function insertNewPersona($email, $nome, $cognome, $telefono, $password){
         // crittografia della password
         $password_hash = password_hash($password, PASSWORD_DEFAULT);
@@ -256,31 +257,35 @@ FUNZIONI PER SCRIVERE DATI
         $stmt = mysqli_prepare($this->connection, $queryInsert);
         mysqli_stmt_bind_param($stmt, "sssss", $email, $nome, $cognome, $telefono, $password_hash);
         
-        try {
-            $success = mysqli_stmt_execute($stmt);
-            mysqli_stmt_close($stmt);
-            return $success;
-        } catch (Exception $e) {
-            return false;
-        }
+        $success = mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);   
+        return $success;
     }
-    //inserisce una nuova riga nella tabella "domanda_contattaci" del DB
+
+    //inserisce una nuova domanda dell'utente nel DB
     //restituisce l'oggetto mysqli_result se la query è andata a buon fine, altrimrnti FALSE
     public function insertNewDomanda($email, $domanda){
         $queryInsert = "INSERT INTO domanda_contattaci(email, domanda) VALUES (?, ?)";
 
         $stmt = mysqli_prepare($this->connection, $queryInsert);
         mysqli_stmt_bind_param($stmt, "ss", $email, $domanda);
-        $success = mysqli_stmt_execute($stmt); 
 
-        //pulizia memoria
+        $success = mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
-
-        return $success; 
+        return $success;
     }
 
-    public function getConn() {
-        return $this->connection;
+    //inserisce un nuovo item (prodotto della pasticceria) nel DB
+    //restituisce l'oggetto mysqli_result se la query è andata a buon fine, altrimrnti FALSE
+    public function insertNewItem($tipo, $nome, $descrizione, $prezzo, $immagine, $testoAlternativo){
+        $queryInsert = "INSERT INTO item(tipo, nome, descrizione, prezzo, immagine, testo_alternativo) VALUES (?, ?, ?, ?, ?, ?)";
+
+        $stmt = mysqli_prepare($this->connection, $queryInsert);
+        mysqli_stmt_bind_param($stmt, "sssdss", $tipo, $nome, $descrizione, $prezzo, $immagine, $testoAlternativo); 
+
+        $success = mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+        return $success;
     }
-}
+}  
 ?>
