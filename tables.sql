@@ -12,8 +12,8 @@ CREATE TABLE item (
   id int not null,
   tipo varchar(255) not null,
   nome varchar(255) not null,
-  icona varchar(255),
-  descrizione varchar(255),
+  descrizioneImmagine varchar(300) not null,
+  descrizione varchar(500),
   prezzo float not null,
   immagine varchar(255),
   PRIMARY KEY(id)
@@ -93,14 +93,20 @@ INSERT INTO persona (email, nome, cognome, telefono, ruolo, password) VALUES
 ('user@gmail.com','user','user', 3456789012, 'user', 'user'),
 ('admin@gmail.com', 'admin', 'admin', 3456789345, 'admin', 'admin');
 
-INSERT INTO item (id, tipo ,nome, icona, descrizione, prezzo, immagine) VALUES 
-(1, 'Torta', 'Red Velvet', NULL, 'La red velvet è una torta morbida al cacao, dal colore rosso intenso, ricoperta con crema al formaggio.', 5.00, NULL),
-(2, 'Torta', 'Sachertorte', NULL, 'Torta viennese al cioccolato, morbidissima, con glassa fondente e sottile marmellata di albicocche. Capolavoro di pasticceria.', 7.00, NULL),
-(3, 'Torta', 'Tiramisù', NULL, 'Strati di savoiardi inzuppati nel caffè, crema al mascarpone e spolverata di cacao. Semplicemente delizioso.', 5.00, NULL),
-(4, 'Pasticcino', 'Bignè al Cioccolato', NULL, 'Soffici bignè alla panna ricoperti di una lucida glassa al cioccolato. Un classico della pasticceria, golosissimo e leggero.', 1.50, NULL),
-(5, 'Pasticcino', 'Babbà', NULL, 'Soffice dolce napoletano, imbevuto di rum, dalla caratteristica forma a fungo. Morbido e irresistibilmente brioso.', 2.00, NULL),
-(6, 'Pasticcino', 'Maritozzo', NULL, 'Dolce romano sofficissimo, un panino dolce spaccato e farcito con panna montata abbondante. Semplicemente delizioso.', 3.50, NULL),
-(7, 'Pasticcino', 'Cannolo', NULL, 'Cialda croccante ripiena di ricotta setacciata, zuccherata e arricchita con gocce di cioccolato e canditi.', 3.00, NULL);
+INSERT INTO item (id, tipo ,nome, descrizioneImmagine, descrizione, prezzo, immagine) VALUES 
+(1, 'Torta', 'Red Velvet', 'Torta Red Velvet composta da pan di Spagna rosso intenso farcito e decorato con crema al formaggio, ciuffi di frosting e briciole rosse', 'La red velvet è una torta morbida al cacao, dal colore rosso intenso, ricoperta con crema al formaggio.', 15.00, NULL),
+(2, 'Torta', 'Sacher', 'Torta Sacher al cioccolato fondente, ricoperta da glassa lucida e decorata con la scritta “Sacher” e ciuffi di cioccolato', 'Torta viennese al cioccolato, morbidissima, con glassa fondente e sottile marmellata di albicocche. Capolavoro di pasticceria.', 22.00, NULL),
+(3, 'Torta', 'Tiramisù', '', 'Strati di savoiardi inzuppati nel caffè, crema al mascarpone e spolverata di cacao. Semplicemente delizioso.', 18.00, NULL),
+(4, 'Pasticcino', 'Bignè al Cioccolato', '', 'Soffici bignè alla panna ricoperti di una lucida glassa al cioccolato. Un classico della pasticceria, golosissimo e leggero.', 1.50, NULL),
+(5, 'Pasticcino', 'Babbà', '', 'Soffice dolce napoletano, imbevuto di rum, dalla caratteristica forma a fungo. Morbido e irresistibilmente brioso.', 2.00, NULL),
+(6, 'Pasticcino', 'Maritozzo', '', 'Dolce romano sofficissimo, un panino dolce spaccato e farcito con panna montata abbondante. Semplicemente delizioso.', 3.50, NULL),
+(7, 'Pasticcino', 'Cannolo', '', 'Cialda croccante ripiena di ricotta setacciata, zuccherata e arricchita con gocce di cioccolato e canditi.', 3.00, NULL),
+(8, 'Torta', 'Torta Pazientina', '', 'Una torta a strati ricca e raffinata. Una base di pan di Spagna, uno strato di zabaione e uno di crema di mandorle; racchiusa da una copertura di cioccolato fondente. Nata nel Settecento, è considerata la “torta ufficiale” della città di Padova. Il dolce delle grandi occasioni, era servito alle famiglie nobili e ai canonici della città.',30.00 ,NULL),
+(9, 'Torta', 'Dolce del Santo', '', 'Un dolce lievitato, simile al panettone ma con una personalità tutta padovana. L''impasto è a base di farina, uova, burro, zucchero e miele. Profumato con liquore all''amaretto, vaniglia o scorza d''arancia. Dedicato a Sant''Antonio di Padova, patrono della città. Un dolce semplice ma ricco di significato, legato alla devozione popolare e alla condivisione.',25.00 ,NULL),
+(10, 'Torta', 'Millefoglie', '', 'Tre strati di pasta sfoglia cotta al forno fino a diventare dorata e croccante, alternati con due strati di crema. Una combinazione di croccantezza e cremosità, resa possibile dal contrasto tra la pasta sfoglia friabile e la crema morbida.',20.00 ,NULL),
+(11, 'Pasticcino', 'Bussolà padovano', '', 'Un biscotto a forma di anello, friabile e profumato al burro. Tipico delle colazioni padovane, deriva dalla tradizione veneziana dei "bussolai". Ottimo da gustare con il caffè o con un bicchiere di vino dolce.',0.20 ,NULL),
+(12, 'Pasticcino', 'Frollino al Mandorlato', '', 'Pasta frolla croccante arricchita da pezzetti di mandorlato di Cologna Veneta, dolce natalizio veneto a base di mandorle e miele. Una specialità locale che unisce due tradizioni: quella padovana e quella veronese.',0.20 ,NULL),
+(13, 'Pasticcino', 'Bigné alla crema', '', 'Classico della pasticceria: bignè gonfi e dorati, ripieni di crema pasticcera o chantilly e spolverati di zucchero a velo. Immancabili in ogni vassoio.',1.50 ,NULL);
 
 INSERT INTO ordine (id, ritiro, ordinazione, numero, persona, nome, cognome, telefono, annotazioni, stato, totale ) VALUES 
 (1, '2026-12-19 12:30:00', '2024-12-18 15:30:00', 1, 'user@gmail.com', 'user', 'user', '39 345 678 9012', 'aggiungere una candelina', 4, 10),
