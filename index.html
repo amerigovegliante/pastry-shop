@@ -6,19 +6,15 @@
     <title>Pasticceria Padovana</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="pasticceria padovana, pasticceria, dolci, torta, pasticcini, padova, dolce">
-    <meta name="description"
-        content="Pagina dedicata alla presentazione, promozione e vendita dolciaria di Pasticceria Padovana">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sirivennela&display=swap" rel="stylesheet">
+    <meta name="description" content="Pagina dedicata alla presentazione, promozione e vendita dolciaria di Pasticceria Padovana">
 
     <link rel="stylesheet" href="site/css/style.css" media="screen">
-    <link rel="stylesheet" href="site/css/mini.css" media="screen and (max-width:600px)">
+    <link rel="stylesheet" href="site/css/mini.css" media="screen and (max-width:800px)">
+    <link rel="stylesheet" href="site/css/print.css" media="print">
 </head>
 
 <body>
-    <a href="#main" class="">Salta al contenuto principale</a>
+    <a href="#main" class="sr-only">Salta al contenuto principale</a>
     <header>
         <div class="contenuto">
             <button type="button" class="bottoneMenu" aria-label="Apri il menu principale">Menu</button>
@@ -37,7 +33,7 @@
                     </svg>
                 </a>
 
-                <a href="site/html/carrello.html" class="bottoneCarrello" aria-label="Vai al carrello">
+                <a href="site/php/carrello.php" class="bottoneCarrello" aria-label="Vai al carrello">
                     <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="16.5" cy="18.5" r="1.5" />
                         <circle cx="9.5" cy="18.5" r="1.5" />
@@ -50,13 +46,14 @@
 
         </div>
     </header>
+    
     <nav id="menu" aria-label="Menu di navigazione">
         <ul class="contenuto">
             <li lang="en" id="currentlink"><span lang="en">Home</span></li>
-            <li><a href="./site/html/story.html">Chi siamo</a></li>
-            <li><a href="./site/php/torte-pasticcini.php?tipo=torte">Le nostre torte</a></li>
-            <li><a href="./site/php/torte-pasticcini.php?tipo=pasticcini">I nostri pasticcini </a></li>
-            <li><a href="./site/html/contattaci.html">Contattaci</a></li>
+            <li><a href="site/html/story.html">Chi siamo</a></li>
+            <li><a href="site/php/torte-pasticcini.php?tipo=torte">Le nostre torte</a></li>
+            <li><a href="site/php/torte-pasticcini.php?tipo=pasticcini">I nostri pasticcini </a></li>
+            <li><a href="site/php/contattaci.php">Contattaci</a></li>
         </ul>
     </nav>
 
@@ -64,13 +61,13 @@
         <p class="contenuto">Ti trovi in: <span lang="en">Home</span></p>
     </nav>
 
-    <main>
-        <section id="presentazionePasticceria" aria-labelledby="La nostra pasticceria">
+    <main id="main">
+        <section id="presentazionePasticceria" aria-labelledby="titolo-presentazione">
             <div class="contenuto"> 
                
-                <img src="./site/img/vetrinaHome.png" alt="" class="cornice">
+                <img src="site/img/vetrinaHome.png" alt="" class="cornice">
                 <div class="testo">
-                    <h2>La nostra pasticceria</h2>
+                    <h2 id="titolo-presentazione">La nostra pasticceria</h2>
                     <p>Benvenuto a <strong>Pasticceria Padovana</strong>, dove la tradizione artigianale incontra
                         la passione per la <strong>pasticcera</strong> di qualità.</p>
                     <p>Proponiamo i sapori autentici dei dolci tradizionali di Padova.</p>
@@ -85,10 +82,10 @@
             </div>
         </section>
 
-        <section id="prodottiPrincipali" aria-labelledby="I nostri dolci piú famosi">
+        <section id="prodottiPrincipali" aria-labelledby="titolo-prodotti">
             <div class="contenuto">
                 <div class="testo">
-                    <h2>I nostri dolci più famosi</h2>
+                    <h2 id="titolo-prodotti">I nostri dolci più famosi</h2>
                     <dl class="dolciFamosi">
 
                         <dt>Torta Pazientina</dt>
@@ -135,9 +132,9 @@
                     </dl>
                 </div>
                 <div class="immagini">
-                    <img src="./site/img/placeholder.jpeg" id="placeholder" alt=""> 
-                    <img src="./site/img/placeholder.jpeg" id="placeholder" alt=""> 
-                    <img src="./site/img/placeholder.jpeg" id="placeholder" alt=""> 
+                    <img src="site/img/placeholder.jpeg" alt=""> 
+                    <img src="site/img/placeholder.jpeg" alt=""> 
+                    <img src="site/img/placeholder.jpeg" alt=""> 
                 </div>
             </div>
         </section>
@@ -165,6 +162,7 @@
             <a href="#main" class="">Torna su</a>
         </div>
     </footer>
+    
 </body>
 
 </html>

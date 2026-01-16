@@ -41,6 +41,19 @@ COLORI UTILIZZATI
      --buttoncolor: #8b5437;
 }
 
+/* PER NASCONDERE ELEMENTI, MA RIMANGONO VISIBILI ALLO SCREEN READER*/
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%); 
+  white-space: nowrap;
+  border: 0;
+}
+
 html, body{
     font-size: 100%;
     font-family: "Lexend", Roboto, sans-serif; /*DA DECIDERE*/
@@ -228,6 +241,19 @@ ANIMAZIONE SOTTOLINEATURA MENU
     height: 0.4em;
     background-color: var(--menubgcurrentpage);
 }
+
+/*
+====================================================================================================================================
+AREA PERSONALE
+====================================================================================================================================
+*/
+.azioni-utente {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+}
 /*
 ====================================================================================================================================
 SEZIONE BREADCRUMB
@@ -315,15 +341,16 @@ PAGINA CHI SIAMO (story.html)
 ------------------------------------------------------------------------------------------------------------------------------------
 PAGINA CONTATTACI (contattaci.html)
 PAGINA LOGIN (login.html) e REGISTRAZIONE (registrazione.html)
+PAGINA AGGIUNGI PRODOTTO (aggiungiProdotto.html)
 ------------------------------------------------------------------------------------------------------------------------------------
 */
-#sezioneLogin, #sezioneRegistrazione{
+#sezioneLogin, #sezioneRegistrazione, #sezioneAggiungiProdotto{
     padding: 1em 0 1em 1.5em;
 }
 #sezioneContattaci{
     padding: 1em 0 0.5em 1.5em;
 }
-#formLogin, #formRegistrazione, #formContattaci{
+#formLogin, #formRegistrazione, #formContattaci, #formAggiungiProdotto{
     max-width: 30%;
 }
 fieldset > legend{
@@ -341,7 +368,7 @@ fieldset{
 .campoDati label{
     font-weight: bolder;
 }
-.campoDati input, .campoDati textarea{
+.campoDati input, .campoDati textarea, .campoDati select{
     max-width: 20em;
     border: 1px solid grey;
     border-radius: 4px;
@@ -353,7 +380,8 @@ QUALSIASI PULSANTE
 ------------------------------------------------------------------------------------------------------------------------------------
 */
 button, .pulsanteGenerico{
-    margin: 1em 0 1em 0;
+    display: inline-block;
+    margin: 0.2em 0 0.2em 0;
     background-color: transparent;
     color: var(--contenttxtcolorscuro);
     text-transform: uppercase;
@@ -367,6 +395,123 @@ button:hover, .pulsanteGenerico:hover{
     background-color: var(--buttoncolor);
     color: var(--contenttxtcolorchiaro);
 }
+/*
+------------------------------------------------------------------------------------------------------------------------------------
+AIUTI COMPILAZIONE FORM
+------------------------------------------------------------------------------------------------------------------------------------
+*/
+.campoDati small{                   /*nasconde i suggerimenti*/
+    position: absolute;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.campoDati:focus-within small {     /*quando il campo dati riceve il focus il suggerimento torna visibile*/
+    position: static;
+    clip: auto;
+    clip-path: none;
+    height: auto;
+    width: auto;
+    overflow: visible;
+    white-space: normal;
+    display: block;
+    margin-top: 0.25rem;
+    color: #555;
+    font-size: 0.9em;
+}
+/*
+====================================================================================================================================
+PAGINA CHI SIAMO (story.html)
+====================================================================================================================================
+*/
+
+main section {
+    margin-bottom: 3em;
+    line-height: 1.8em;
+}
+
+main section h2 {
+    color: var(--buttoncolor);
+    border-bottom: 2px solid var(--menubgcolor);
+    padding-bottom: 0.2em;
+    margin-bottom: 0.8em;
+}
+
+
+#valori ul {
+    margin-left: 1.5em;
+}
+#valori li {
+    margin-bottom: 0.5em;
+}
+
+.griglia-team {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    gap: 2em;
+    list-style: none;
+    padding: 0;
+    margin-top: 2em;
+}
+
+.griglia-team figure {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    text-align: center;
+    height: 100%;
+    margin: 0;
+    transition: transform 0.3s ease;
+}
+
+.griglia-team figure:hover {
+    transform: translateY(-5px);
+}
+
+.griglia-team img {
+    width: 100%;
+    height: 32em;
+    object-fit: cover;
+    display: block;
+    background-color: #f0f0f0;
+}
+
+.griglia-team figcaption {
+    padding: 1.5em;
+}
+
+.griglia-team figcaption p:first-child {
+    font-size: 1.2em;
+    color: var(--buttoncolor);
+    margin-bottom: 0.5em;
+}
+
+aside[aria-labelledby="info-visita"] {
+    background-color: var(--menubgcolor);
+    padding: 2em;
+    border-radius: 15px;
+    text-align: center;
+    border: 2px dashed var(--buttoncolor);
+    margin-top: 4em;
+}
+
+aside[aria-labelledby="info-visita"] h2 {
+    color: var(--buttoncolor);
+    margin-top: 0;
+}
+
+aside[aria-labelledby="info-visita"] a {
+    font-weight: bold;
+    color: var(--buttoncolor);
+    text-decoration: underline;
+}
+
 /*
 ------------------------------------------------------------------------------------------------------------------------------------
 TESTO DI ERRORE E DI SUCCESSO
@@ -384,7 +529,7 @@ TESTO DI ERRORE E DI SUCCESSO
 }
 /*
 ------------------------------------------------------------------------------------------------------------------------------------
-PAGINA TORTE (torte.html) e PAGINA PASTICCINI 
+PAGINA TORTE e PASTICCINI (torte-pasticcini.html)
 ------------------------------------------------------------------------------------------------------------------------------------
 */
 #grigliaTorte{
@@ -544,31 +689,6 @@ SEZIONE ORDINI ADMIN
 .progresso-stato{
     align-items: center;
 } 
-
-/*tabella responsive codice della prof 
-thead, tfoot{
-    display: none;
-}
-tr, th, td {
-    display: block;
-    padding: 0;
-    white-space: normal;
-}
-th[data-title]:before, td[data-title]:before {
-    content: attr(data-title) ":\00A0";
-    font-weight: bold;
-}
-th{
-    background-color: #BD091B;
-    color: #FFF;
-}
-td,th {
-    border-top:none;
-}
-tr:first-child {
-    border: 1px solid #000;
-}*/
-
 /*
 ====================================================================================================================================
 SEZIONE FOOTER
@@ -593,4 +713,177 @@ footer .contenuto{
 
 #assistenzaClienti{
     grid-column: 2;
+}
+
+/* 
+===================================================================
+   SEZIONE CARRELLO E CHECKOUT (Blocco Completo)
+===================================================================
+*/
+
+#carrello table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2em;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px; 
+    overflow: hidden;
+}
+
+#carrello th, #carrello td {
+    padding: 1em;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    vertical-align: top;
+}
+
+#carrello th {
+    background-color: var(--bgcolor);
+    color: white;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+#carrello tr:last-child td {
+    border-bottom: none;
+}
+
+#carrello .totaleLabel {
+    text-align: right;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+#carrello .totaleValore {
+    font-weight: bold;
+    font-size: 1.4em;
+    color: var(--buttoncolor);
+}
+
+.azioniCarrello {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5em;
+    padding: 1em;
+    background-color: var(--contentbgcolorchiaro);
+    border-radius: 8px;
+}
+
+.pulsanteSecondario {
+    text-decoration: none;
+    color: var(--contenttxtcolorscuro);
+    border-bottom: 1px solid currentColor;
+    font-weight: bold;
+}
+.pulsanteSecondario:hover {
+    color: var(--buttoncolor);
+}
+
+.link-rimuovi {
+    color: var(--txterrorcolor); /* Rosso */
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 0.9em;
+    border: 1px solid var(--txterrorcolor);
+    padding: 0.3em 0.6em;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+.link-rimuovi:hover {
+    background-color: var(--txterrorcolor);
+    color: white;
+}
+
+.carrello-vuoto {
+    text-align: center;
+    padding: 4em;
+    background-color: white;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    margin-top: 1em;
+}
+.carrello-vuoto p {
+    font-size: 1.5em;
+    margin-bottom: 1.5em;
+    color: #666;
+}
+
+.form-checkout {
+    align-items: center;
+    gap: 1.5em;
+    background-color: white;
+    padding: 0.5em 1em;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.box-data {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.box-data label {
+    font-size: 0.8em;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: 0.3em;
+    color: #666;
+}
+
+.box-data input[type="date"] {
+    padding: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 1em;
+    cursor: pointer;
+    min-width: 150px;
+    margin-bottom: 1em;
+}
+
+/* 6. Adattamento MOBILE (Schermi piccoli) */
+@media screen and (max-width: 700px) {
+    /* Rende la tabella scrollabile orizzontalmente se non ci sta */
+    #contenitoreTabella {
+        overflow-x: auto;
+    }
+    
+    /* Impila i pulsanti finali invece di affiancarli */
+    .azioniCarrello {
+        flex-direction: column;
+        gap: 1.5em;
+        align-items: stretch; /* Bottoni larghi tutto lo schermo */
+    }
+
+    .pulsanteSecondario {
+        text-align: center;
+        display: block;
+        margin-bottom: 1em;
+    }
+
+    /* Impila il calendario e il bottone conferma */
+    .form-checkout {
+        flex-direction: column;
+        width: 100%;
+        padding: 1em;
+    }
+    
+    .box-data {
+        width: 100%;
+        margin-bottom: 1em;
+    }
+    
+    .box-data input[type="date"] {
+        width: 100%; /* Calendario largo tutto lo schermo */
+    }
+    
+    /* Riduce un po' il font della tabella su mobile */
+    #carrello th, #carrello td {
+        padding: 0.5em;
+        font-size: 0.9em;
+    }
 }

@@ -18,10 +18,8 @@ $connessione = $db->openDBConnection(); //tento la connessione
 $listaItem= "";
 $tipo="";
 $titolo="";
-$ID="";
 $LinkPagina="";
 $NessunaDisponibilità="";
-
 
 if (isset($_GET['tipo']) && $_GET['tipo']==='torte'){
 	$NessunaDisponibilità="nessuna torta disponibile";
@@ -32,41 +30,47 @@ if (isset($_GET['tipo']) && $_GET['tipo']==='torte'){
 	$tipo="Pasticcino";
 	$NessunaDisponibilità="nessun pasticcino disponibile";
     $titolo="I nostri pasticcini";
-	$LinkPagina="<li><a href=\"../php/torte-pasticcini.php?tipo=torte\">Le nostre torte</a></li><li id='currentLink'>I nostri pasticcini</li>";
-}else if (isset($_GET['tipo']) && $_GET['tipo']!=='torte' && $_GET['tipo']!=='pasticcini'){
-    $LinkPagina="<li><a href=\"../php/torte-pasticcini.php?tipo=pasticcini\">I nostri pasticcini</a></li><li><a href=\"../php/torte-pasticcini.php?tipo=torte\">Le nostre torte</a></li>";
-	$listaItem ="<p>Non hai specificato se vuoi vedere le torte o i pasticcini.<p>";
+    $LinkPagina="<li><a href=\"../php/torte-pasticcini.php?tipo=torte\">Le nostre torte</a></li><li id='currentLink'>I nostri pasticcini</li>";
+}else {
+    $tipo="Torta";
+    $titolo="Le nostre torte";
+    $LinkPagina="<li id='currentLink'>Le nostre torte</li><li><a href=\"../php/torte-pasticcini.php?tipo=pasticcini\">I nostri pasticcini</a></li>";
 }
 
 // leggo i dati delle torte
 if($connessione){
-    $Items=array();
-	$Items = $db->getListOfItems($tipo);
-	$db->closeDBConnection();
-	if (!empty($Items)){
-		$listaItem .= '<ul id="grigliaTorte" class="contenuto">';
-		foreach($Items as $Item){
-			$listaItem .="<li> <article class=\"cardTorta\"> 
-                <a href=\"dettagli.php?ID=".urlencode($Item['id'])."\" aria-label=\"Vedi i dettagli: \"".htmlspecialchars($Item['nome'])."> 
-                <img src=\"" . $Item['icona'] . "\" alt=\"\">
-                <div class=\"infoTorta\"> 
-                    <h2>".htmlspecialchars($Item['nome'])."</h2> <!-- htmlspecialchars per renderlo più sicuro: rende i caratteri pericolosi come ><  & in formato HTML &lt; &gt; ect.-->
-                    <span class=\"prezzoTorta\">€".number_format($Item['prezzo'], 2, ',', '.')."</span> <!--number_format(numero, decimali, separatore_decimali, separatore_migliaia)-->
-                    <!-- bottone VEDI DETTAGLI: finto in realtà tutta la card è il link VA BENE???, con aria-hidden lo nascondo agli screen readers essendo che ha funziona solamente decorativa, aria-label su tag a-->
-                    <span class=\"pulsanteGenerico\" aria-hidden=\"true\">Vedi Dettagli</span>
-                    <button type=\"submit\" class=\"pulsanteGenerico\" aria-label=\"Aggiungi ".htmlspecialchars($Item['nome'])." al carrello\">Aggiungi al Carrello</button>
-                </div>
+    $Items = $db->getListOfItems($tipo);
+    $db->closeDBConnection();
+    
+    if (!empty($Items)){
+        $listaItem .= '<ul id="grigliaTorte" class="contenuto">';
+        foreach($Items as $Item){
+            $imgSrc = !empty($Item['immagine']) ? $Item['immagine'] : "img/placeholder.jpeg";
+            $altText = !empty($Item['testo_alternativo']) ? $Item['testo_alternativo'] : "Immagine non disponibile";
+            $listaItem .="<li> <article class=\"cardTorta\">     
+                <a href=\"dettagli.php?ID=".urlencode($Item['id'])."\" style=\"text-decoration:none; color:inherit;\"> 
+                   <img src=\"" . htmlspecialchars($imgSrc)
+                   . "\" alt=\"" . htmlspecialchars($altText) . "\">
+                    <div class=\"infoTorta\"> 
+                        <h2>".htmlspecialchars($Item['nome'])."</h2> 
+                        <span class=\"prezzoTorta\">€".number_format($Item['prezzo'], 2, ',', '.')."</span> 
+                    </div>
                 </a>
+
+                <div class=\"infoTorta\">
+                    <a href=\"dettagli.php?ID=".urlencode($Item['id'])."\" class=\"pulsanteGenerico\">Vedi Dettagli</a>
+                </div>
+
              </article> </li>";
-		}
+        }
         $listaItem .= '</ul>';
-	}else{
-		$listaItem ="<p>Al momento non abbiamo $NessunaDisponibilità, però se volete chiamarci siamo più che felici di ascoltare la vostra richiesta</p>"; //DA CAMBIARE
-        //OPPURE $listaItem ="<p>La sezione $tipo è momentaneamente non disponibile.</p>";
+    }else{
+        $listaItem ="<p class='contenuto'>Al momento non abbiamo $NessunaDisponibilità, però se volete chiamarci siamo più che felici di ascoltare la vostra richiesta</p>";
     }
 } else {
-	$listaItem = "<p>I sistemi sono momentaneamente fuori servizio, ci scusiamo per il disagio.</p>";
+    $listaItem = "<p class='errore contenuto'>I sistemi sono momentaneamente fuori servizio, ci scusiamo per il disagio.</p>";
 }
+
 //RIMPIAZZO I SEGNAPOSTO [...]
 $paginaHTML = str_replace("[grigliaItems]", $listaItem, $paginaHTML);
 $paginaHTML = str_replace("[LinkPagina]", $LinkPagina, $paginaHTML);

@@ -3,10 +3,10 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Contattaci - Pasticceria Padovana</title>
+    <title>Area Personale - Pasticceria Padovana</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords" content="Pasticceria Padovana, contattaci, email, domande, assistenza clienti, Padova">
-    <meta name="description" content="Recapiti e modulo di contatto di Pasticceria Padovana.">
+    <meta name="keywords" content="area personale, Pasticceria Padovana">
+    <meta name="description" content="Accedi alla tua area personale su Pasticceria Padovana per gestire il tuo profilo utente.">
 
     <link rel="stylesheet" href="../css/style.css" media="screen">
     <link rel="stylesheet" href="../css/mini.css" media="screen and (max-width:800px)">
@@ -14,6 +14,8 @@
 </head>
 
 <body>
+    <a href="#main" class="salta-contenuto">Salta al contenuto principale</a>
+
     <header>
         <div class="contenuto">
             <button type="button" class="bottoneMenu" aria-label="Apri il menu principale">Menu</button>
@@ -24,16 +26,9 @@
             </div>
 
             <div id="pulsantiMenu">
-                <a href="../php/login.php" class="bottoneProfilo" aria-label="Accedi alla tua area personale">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
-                        <circle cx="12" cy="7" r="4" />
-                    </svg>
-                </a>
-
-                <a href="../php/carrello.php" class="bottoneCarrello" aria-label="Vai al carrello">
-                    <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <a href="carrello.php" class="bottoneCarrello" aria-label="Vai al carrello">
+                    <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true">
                         <circle cx="16.5" cy="18.5" r="1.5" />
                         <circle cx="9.5" cy="18.5" r="1.5" />
                         <path d="M18 16H8a1 1 0 0 1-.958-.713L4.256 6H3a1 1 0 0 1 0-2h2
@@ -50,38 +45,27 @@
         <ul class="contenuto">
             <li><a href="../../index.html"><span lang="en">Home</span></a></li>
             <li><a href="../html/story.html">Chi siamo</a></li>
-            <li><a href="../php/torte-pasticcini.php?tipo=torte">Le nostre torte</a></li>
-            <li><a href="../php/torte-pasticcini.php?tipo=pasticcini">I nostri pasticcini </a></li>
-            <li id="currentlink">Contattaci</li>
+            <li><a href="torte-pasticcini.php?tipo=torte">Le nostre torte</a></li>
+            <li><a href="torte-pasticcini.php?tipo=pasticcini">I nostri pasticcini </a></li>
+            <li><a href="../php/contattaci.php">Contattaci</a></li>
         </ul>
     </nav>
 
     <nav id="breadcrumb" aria-label="Percorso di navigazione">
-        <p class="contenuto">Ti trovi in: <a href="../../index.html"><span lang="en">Home</span></a> &gt; Contattaci</p>
+        <p class="contenuto">Ti trovi in: <a href="../../index.html"><span lang="en">Home</span></a> &gt; Area Personale
+        </p>
     </nav>
 
-    <main>
-        <section id="sezioneContattaci" class="contenuto" aria-labelledby="titolo-contattaci">
-            <form id="formContattaci" action="../php/contattaci.php" method="post">
-                <fieldset>
-                    <legend>Contattaci</legend>
-                    <div class="campoDati">
-                        <label for="email">Email</label>
-                        <input type="text" id="email" name="email" value="[valoreEmail]" placeholder="La tua email" required autocomplete="email">
-                    </div>
-                    [messaggioErroreEmail]  <!--se è stato lasciato vuoto o c'è una mail non valida-->
+    <main id="main">
+        <section class="contenuto">
+            <h2>Benvenuto, [NomeUtente] [CognomeUtente]</h2>
 
-                    <div class="campoDati">
-                        <label for="domanda">Domanda</label>
-                        <textarea name="domanda" id="domanda" rows="7" required>[valoreDomanda]</textarea>
-                    </div>
-                    [messaggioErroreDomanda]    <!--se è stato lasciato vuoto-->
+            <p>Questa è la tua area personale.</p>
 
-                    <button type="submit" name="submit">Invia</button>
-                </fieldset>
-                [messaggioErroreDB]
-                [messaggioConferma]
-            </form>
+            <ul class="azioni-utente">
+                [PulsanteAdmin]
+                <li><a href="logout.php" class="pulsanteGenerico">Disconnettiti</a></li>
+            </ul>
         </section>
     </main>
 
