@@ -16,7 +16,8 @@ class DBAccess{
                 DB_HOST, 
                 DB_USER,
                 DB_PASSWORD,
-                DB_NAME
+                DB_NAME,
+                DB_PORT
             );
             return true;
         } catch (mysqli_sql_exception $e) {
