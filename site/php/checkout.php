@@ -4,148 +4,206 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 require_once "dbConnection.php";
-use DBAccess;
+// controlli di sicurezza iniziali ----------------------------------------------------
 
-// controlli preliminari
+// se non loggato -> Login
 if (!isset($_SESSION['ruolo'])) {
     header("Location: login.php");
     exit;
 }
+
+// se carrello vuoto o inesistente -> Carrello
 if (!isset($_SESSION['carrello']) || count($_SESSION['carrello']) === 0) {
     header("Location: carrello.php");
     exit;
 }
 
+// se non è una richiesta POST -> Carrello
+if ($_SERVER["REQUEST_METHOD"] != "POST") {
+    header("Location: carrello.php");
+    exit;
+}
+
+// verifica Token CSRF (Anti-Forgery)
+if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+    die("Errore di sicurezza: Richiesta non valida. Torna al carrello.");
+}
+// consumiamo il token (opzionale, ma buona pratica per azioni one-time)
+unset($_SESSION['csrf_token']); 
+
+
+
+// connessione al DB ----------------------------------------------------------------------
 $db = new DBAccess();
 $aperta = $db->openDBConnection();
 $connessione = $db->getConn();
 
+// Se il DB non risponde, impostiamo l'errore in sessione e andiamo alla pagina di esito
 if (!$aperta || !$connessione) {
-    die("Errore critico: Impossibile connettersi al database.");
+    $_SESSION['risultato_esito'] = ['successo' => false];
+    header("Location: esito.php");
+    exit;
 }
 
-// recupero dati utente
-$emailUtente = $_SESSION['email'];
-$queryUtente = "SELECT nome, cognome, telefono FROM persona WHERE email = ?";
-$stmtU = mysqli_prepare($connessione, $queryUtente);
-mysqli_stmt_bind_param($stmtU, "s", $emailUtente);
-mysqli_stmt_execute($stmtU);
-$resU = mysqli_stmt_get_result($stmtU);
-$datiUtente = mysqli_fetch_assoc($resU);
-mysqli_stmt_close($stmtU);
+// elaborazione ordine con transazione ---------------------------------------------------
+try {
+    // tutto quello che succede da qui in poi è "in sospeso" fino al commit()
+    $connessione->begin_transaction();
 
-if (!$datiUtente) {
-    die("Errore: Utente non trovato nel database.");
-}
+    // recupero e Pulizia Dati Input
+    $emailUtente = $_SESSION['email'];
+    $nomeOrdine = htmlspecialchars($_POST['nome']);
+    $cognomeOrdine = htmlspecialchars($_POST['cognome']);
+    $telefonoOrdine = htmlspecialchars($_POST['telefono']);
+    $annotazioni = isset($_POST['annotazioni']) ? htmlspecialchars($_POST['annotazioni']) : null;
 
-// preparazione Dati Ordine
-$totaleOrdine = 0;
-foreach ($_SESSION['carrello'] as $item) {
-    $totaleOrdine += ($item['prezzo_unitario'] * $item['quantita']);
-}
+    $dataOrdinazione = date('Y-m-d H:i:s');
+    
+    // gestione data ritiro
+    if (isset($_POST['dataRitiro']) && !empty($_POST['dataRitiro'])) {
+        $dataRitiro = $_POST['dataRitiro'] . " 10:00:00";
+    } else {
+        $dataRitiro = date('Y-m-d H:i:s', strtotime('+2 days 10:00:00'));
+    }
+    
+    // calcolo totale ordine
+    $totaleOrdine = 0;
+    foreach ($_SESSION['carrello'] as $item) {
+        $totaleOrdine += ($item['prezzo_unitario_calcolato'] * $item['quantita']);
+    }
 
-$dataOrdinazione = date('Y-m-d H:i:s');
-if (isset($_POST['dataRitiro']) && !empty($_POST['dataRitiro'])) {
-    $dataRitiro = $_POST['dataRitiro'] . " 10:00:00"; 
-} else {
-    $dataRitiro = date('Y-m-d H:i:s', strtotime('+2 days'));
-}
-$numeroOrdine = rand(1000, 9999);
-$stato = 1; // In attesa
+    // Generazione numero ordine casuale (dite che vada bene? non è sicuro al 100% ma è semplice)
+    $numeroOrdine = rand(10000, 99999);
+    $stato = 1; // 1 = in attesa
 
-// inserimento in tabella ORDINE
-$queryOrdine = "INSERT INTO ordine (ritiro, ordinazione, numero, persona, nome, cognome, telefono, stato, totale) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    // inserimento ordine
+    $queryOrdine = "INSERT INTO ordine (ritiro, ordinazione, numero, persona, nome, cognome, telefono, annotazioni, stato, totale) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-$stmt = mysqli_prepare($connessione, $queryOrdine);
-if (!$stmt) {
-    die("Errore preparazione query ordine: " . mysqli_error($connessione));
-}
+    $stmt = mysqli_prepare($connessione, $queryOrdine);
+    if (!$stmt) throw new Exception("Errore prepare Ordine");
 
-mysqli_stmt_bind_param($stmt, "ssissssid", 
-    $dataRitiro, $dataOrdinazione, $numeroOrdine, $emailUtente, 
-    $datiUtente['nome'], $datiUtente['cognome'], $datiUtente['telefono'], 
-    $stato, $totaleOrdine
-);
+    mysqli_stmt_bind_param($stmt, "ssisssssid", 
+        $dataRitiro, $dataOrdinazione, $numeroOrdine, $emailUtente, 
+        $nomeOrdine, $cognomeOrdine, $telefonoOrdine, $annotazioni,
+        $stato, $totaleOrdine
+    );
 
-if (mysqli_stmt_execute($stmt)) {
+    if (!mysqli_stmt_execute($stmt)) {
+        throw new Exception("Errore execute Ordine");
+    }
+    
+    // recupero l'ID autogenerato dell'ordine appena creato
     $idOrdine = mysqli_insert_id($connessione);
     mysqli_stmt_close($stmt);
 
-    // inserimento Prodotti
+    $riepilogoProdotti = '
+    <table class="tabella-riepilogo">
+        <caption>Dettaglio dei prodotti ordinati</caption>
+        <thead>
+            <tr>
+                <th scope="col">Prodotto</th>
+                <th scope="col">Dettagli</th>
+                <th scope="col">Quantità</th>
+            </tr>
+        </thead>
+        <tbody>';
+    
     foreach ($_SESSION['carrello'] as $item) {
-        
-        if ($item['tipo'] === 'Torta') {
-            
-            $queryTorta = "INSERT INTO ordine_torta (torta, ordine, porzioni, targa) VALUES (?, ?, ?, ?)";
-            $stmtT = mysqli_prepare($connessione, $queryTorta);
-            
-            $porzioniTotaliDB = (int)$item['porzione'] * (int)$item['quantita'];
-            
-            $targa = $item['targa'];
-            
-            mysqli_stmt_bind_param($stmtT, "iiis", $item['id'], $idOrdine, $porzioniTotaliDB, $targa);
-            mysqli_stmt_execute($stmtT);
-            mysqli_stmt_close($stmtT);
 
-        } else {
-            $queryPast = "INSERT INTO ordine_pasticcino (pasticcino, ordine, quantita) VALUES (?, ?, ?)";
-            $stmtP = mysqli_prepare($connessione, $queryPast);
-            
-            mysqli_stmt_bind_param($stmtP, "iii", $item['id'], $idOrdine, $item['quantita']);
-            mysqli_stmt_execute($stmtP);
-            mysqli_stmt_close($stmtP);
+    $tipoItem = strtolower($item['tipo']);
+
+    $nomeProd = htmlspecialchars($item['nome']);
+    $qty = (int)$item['quantita'];
+
+    // costruzione dettagli extra
+    $dettagliExtra = '<ul class="dettagli-prodotto">';
+
+    if ($tipoItem === 'torta') {
+        $porzioni = (int)$item['porzione'];
+        $dettagliExtra .= "<li>Formato: $porzioni persone</li>";
+
+        if (!empty($item['targa'])) {
+            $targa = htmlspecialchars($item['targa']);
+            $dettagliExtra .= "<li>Targa: $targa</li>";
         }
+    } else {
+        $dettagliExtra .= "<li>-</li>";
     }
 
-    // in caso di successo
+    $dettagliExtra .= '</ul>';
+
+    $riepilogoProdotti .= "
+        <tr>
+            <th scope=\"row\">$nomeProd</th>
+            <td>$dettagliExtra</td>
+            <td class=\"cella-numerica\">$qty</td>
+        </tr>";
+
+    if ($tipoItem === 'torta') {
+        $queryTorta = "INSERT INTO ordine_torta (torta, ordine, porzioni, targa, numero_torte) 
+                       VALUES (?, ?, ?, ?, ?)";
+        $stmtT = mysqli_prepare($connessione, $queryTorta);
+
+        $idItem = (int)$item['id'];
+        $targa = $item['targa'] ?? "";
+        $numeroTorte = (int)$item['quantita'];
+
+        mysqli_stmt_bind_param(
+            $stmtT,
+            "iiisi",
+            $idItem,
+            $idOrdine,
+            $porzioni,
+            $targa,
+            $numeroTorte
+        );
+
+        mysqli_stmt_execute($stmtT);
+        mysqli_stmt_close($stmtT);
+
+    } else {
+        $queryPast = "INSERT INTO ordine_pasticcino (pasticcino, ordine, quantita) 
+                      VALUES (?, ?, ?)";
+        $stmtP = mysqli_prepare($connessione, $queryPast);
+
+        $idItem = (int)$item['id'];
+        $quantita = (int)$item['quantita'];
+
+        mysqli_stmt_bind_param($stmtP, "iii", $idItem, $idOrdine, $quantita);
+        mysqli_stmt_execute($stmtP);
+        mysqli_stmt_close($stmtP);
+    }
+}
+
+    $riepilogoProdotti .= "
+            </tbody>
+        </table>";
+
+    // commit finale. confermiamo le modifiche al database. Se non arriviamo qui, scatta il catch.
+    $connessione->commit();
+
+    // Salviamo i dati necessari per la pagina di ringraziamento in sessione
+    $_SESSION['risultato_esito'] = [
+        'successo' => true,
+        'numero_ordine' => $numeroOrdine,
+        'nome_cognome' => "$nomeOrdine $cognomeOrdine",
+        'totale' => $totaleOrdine,
+        'data_ritiro' => $dataRitiro,
+        'lista_prodotti' => $riepilogoProdotti
+    ];
+
     unset($_SESSION['carrello']);
     $db->closeDBConnection();
-
-    ?>
-    <!DOCTYPE html>
-    <html lang="it">
-    <head>
-        <meta charset="utf-8">
-        <title>Ordine Confermato</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="../css/style.css">
-        <link rel="stylesheet" href="../css/mini.css" media="screen and (max-width:800px)">
-    </head>
-    <body>
-        <header>
-            <div class="contenuto">
-                <div id="logo">
-                    <h1>Pasticceria Padovana</h1>
-                    <p class="sirivennela-regular">Grazie per il tuo acquisto</p>
-                </div>
-            </div>
-        </header>
-        <main>
-            <section class="contenuto" style="text-align: center; padding: 3em;">
-                <h2 class="successo" style="font-size: 2em; margin-bottom: 0.5em;">Ordine Confermato!</h2>
-                <div style="background: white; padding: 2em; border-radius: 10px; max-width: 600px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
-                    <p style="font-size: 1.2em;">Il tuo numero d'ordine è: <strong style="color:#8b5437;">#<?php echo $numeroOrdine; ?></strong></p>
-                    <p>Totale pagato: <strong>€<?php echo number_format($totaleOrdine, 2, ',', '.'); ?></strong></p>
-                    <p>Data ritiro prevista: <strong><?php echo date('d/m/Y', strtotime($dataRitiro)); ?></strong></p>
-                    <hr style="margin: 1.5em 0; border: 0; border-top: 1px solid #ddd;">
-                    <p>Riceverai una email di conferma a breve.</p>
-                </div>
-                
-                <div style="margin-top: 2em;">
-                    <a href="../../index.html" class="pulsanteGenerico">Torna alla Home</a>
-                </div>
-            </section>
-        </main>
-        <footer>
-            <div class="contenuto"><p>&copy; 2025 Pasticceria Padovana</p></div>
-        </footer>
-    </body>
-    </html>
-    <?php
+    header("Location: esito.php");
     exit;
 
-} else {
-    die("Errore critico durante il salvataggio dell'ordine: " . mysqli_error($connessione));
+} catch (Exception $e) {
+    // Qualcosa è andato storto: annulliamo tutte le modifiche al DB
+    $connessione->rollback();
+    $db->closeDBConnection();
+    $_SESSION['risultato_esito'] = ['successo' => false];
+    header("Location: esito.php");
+    exit;
 }
 ?>

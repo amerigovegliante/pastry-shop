@@ -3,9 +3,9 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Contattaci - Pasticceria Padovana</title>
+    <title>Ordine Confermato - Pasticceria Padovana</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Recapiti e modulo di contatto di Pasticceria Padovana.">
+    <meta name="description" content="Conferma dell'ordine avvenuta con successo.">
 
     <link rel="stylesheet" href="../css/style.css" media="screen">
     <link rel="stylesheet" href="../css/mini.css" media="screen and (max-width:800px)">
@@ -13,35 +13,31 @@
 </head>
 
 <body>
+    <a href="#main" class="salta-contenuto">Salta al contenuto principale</a>
+    
     <header>
         <div class="contenuto">
             <button type="button" class="bottoneMenu" aria-label="Apri il menu principale">Menu</button>
-
             <div id="logo">
                 <h1>Pasticceria Padovana</h1>
                 <p class="sirivennela-regular">La pasticceria tradizionale su misura per i tuoi eventi</p>
             </div>
-
             <div id="pulsantiMenu">
-                <a href="../php/login.php" class="bottoneProfilo" aria-label="Accedi alla tua area personale">
+                <a href="../php/areaPersonale.php" class="bottoneProfilo" aria-label="Accedi alla tua area personale">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
                         <circle cx="12" cy="7" r="4" />
                     </svg>
                 </a>
-
                 <a href="../php/carrello.php" class="bottoneCarrello" aria-label="Vai al carrello">
                     <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="16.5" cy="18.5" r="1.5" />
                         <circle cx="9.5" cy="18.5" r="1.5" />
-                        <path d="M18 16H8a1 1 0 0 1-.958-.713L4.256 6H3a1 1 0 0 1 0-2h2
-                     a1 1 0 0 1 .958.713L6.344 6H21a1 1 0 0 1 .937 1.352l-3 8
-                     A1 1 0 0 1 18 16zm-9.256-2h8.563l2.25-6H6.944z" />
+                        <path d="M18 16H8a1 1 0 0 1-.958-.713L4.256 6H3a1 1 0 0 1 0-2h2 a1 1 0 0 1 .958.713L6.344 6H21a1 1 0 0 1 .937 1.352l-3 8 A1 1 0 0 1 18 16zm-9.256-2h8.563l2.25-6H6.944z" />
                     </svg>
                 </a>
             </div>
-
         </div>
     </header>
 
@@ -51,36 +47,42 @@
             <li><a href="../html/story.html">Chi siamo</a></li>
             <li><a href="../php/torte-pasticcini.php?tipo=torte">Le nostre torte</a></li>
             <li><a href="../php/torte-pasticcini.php?tipo=pasticcini">I nostri pasticcini </a></li>
-            <li id="currentlink">Contattaci</li>
+            <li><a href="../php/contattaci.php">Contattaci</a></li>
         </ul>
     </nav>
 
-    <nav id="breadcrumb" aria-label="Percorso di navigazione">
-        <p class="contenuto">Ti trovi in: <a href="../../index.html"><span lang="en">Home</span></a> &gt; Contattaci</p>
+    <nav id="breadcrumb" aria-label="Percorso">
+        <p class="contenuto">Ti trovi in: <a href="../../index.html"><span lang="en">Home</span></a> &gt; <a href="../php/carrello.php">Carrello</a> &gt; Ordine Confermato</p>
     </nav>
 
-    <main>
-        <section id="sezioneContattaci" class="contenuto" aria-labelledby="titolo-contattaci">
-            <form id="formContattaci" action="../php/contattaci.php" method="post">
-                <fieldset>
-                    <legend>Contattaci</legend>
-                    <div class="campoDati">
-                        <label for="email">Email</label>
-                        <input type="text" id="email" name="email" value="[valoreEmail]" placeholder="La tua email" required autocomplete="email">
-                    </div>
-                    [messaggioErroreEmail]
+    <main id="main">
+        <section class="contenuto" id="esitoPositivo">
 
-                    <div class="campoDati">
-                        <label for="domanda">Domanda</label>
-                        <textarea name="domanda" id="domanda" rows="7" required>[valoreDomanda]</textarea>
-                    </div>
-                    [messaggioErroreDomanda]
+            <h2 class="successo">Ordine Confermato!</h2>
+            
+            <div class="box-riepilogo-esito">
+                <p class="numero-ordine">Numero Ordine: <strong>#[numeroOrdine]</strong></p>
+                
+                <ul class="dettagli-esito">
+                    <li><strong>Intestatario:</strong> [nomeCognome]</li>
+                    <li><strong>Totale da pagare (in cassa):</strong> [totale]</li>
+                    <li><strong>Ritiro previsto:</strong> [dataRitiro] (dalle 10:00)</li>
+                </ul>
 
-                    <button type="submit" name="submit">Invia</button>
-                </fieldset>
-                [messaggioErroreDB]
-                [messaggioConferma]
-            </form>
+                <h3>Riepilogo Prodotti:</h3>
+                
+                <div class="table-container">
+                    [ListaProdotti]
+                </div>
+
+                <hr>
+                <p>Abbiamo ricevuto la tua richiesta. Ti aspettiamo in negozio!</p>
+            </div>
+            
+            <div class="azioni-esito">
+                <a href="../../index.html" class="pulsanteGenerico">Torna alla Home</a>
+            </div>
+
         </section>
     </main>
 
@@ -99,13 +101,10 @@
             <div id="assistenzaClienti">
                 <h2>Assistenza clienti shop online</h2>
                 <p>Lun-Ven 8:30-13:00 14:00-17:30</p>
-                <p>Email: <a
-                        href="mailto:gestioneclienti@pasticceriapadovana.it">gestioneclienti@pasticceriapadovana.it</a>
-                </p>
+                <p>Email: <a href="mailto:gestioneclienti@pasticceriapadovana.it">gestioneclienti@pasticceriapadovana.it</a></p>
                 <p id="copyright">&copy; 2025 Pasticceria Padovana - Tutti i diritti riservati</p>
             </div>
         </div>
     </footer>
 </body>
-
 </html>

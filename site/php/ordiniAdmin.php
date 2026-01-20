@@ -14,7 +14,6 @@ if (!isset($_SESSION['ruolo']) || $_SESSION['ruolo'] !== 'admin') {
 }
 
 require_once "dbConnection.php";
-use DBAccess;
 
 $paginaHTML = file_get_contents('../html/ordiniAdmin.html');
 if ($paginaHTML === false) {

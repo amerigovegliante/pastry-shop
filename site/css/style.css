@@ -1,18 +1,23 @@
-*{  /*cancella le impostazioni predefinite*/
-    padding: 0em;
-    margin: 0em;
-}
-:root{
 /*
 ====================================================================================================================================
-COLORI UTILIZZATI
+1. RESET E VARIABILI GLOBALI
 ====================================================================================================================================
 */
-    --bgcolor: #8b5437; /*sfondo del body*/
-    --hoverbgcolor: color-mix(in srgb, var(--#8b5437) 80%, white);  /*colore schiarito del 20%*/
-    --txtcolor:#38382f; /*header e menu*/
-    --txtsuccesscolor: #2e7d32; /*testo di successo*/
-    --txterrorcolor:  #c0392b; /*testo di errore*/
+*{  
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box; 
+}
+
+:root{
+    /* Palette Colori */
+    --bgcolor: #8b5437; /* Marrone scuro */
+    --primary-color: #8b5437; 
+    --hoverbgcolor: color-mix(in srgb, var(--bgcolor) 80%, white);
+    
+    --txtcolor:#38382f; 
+    --txtsuccesscolor: #2e7d32; 
+    --txterrorcolor:  #c0392b; 
 
     /* HEADER e MENU */
     --menubgcolor:#ffe09a;
@@ -30,19 +35,19 @@ COLORI UTILIZZATI
     /* CONTENUTO */
     --contentbgcolorscuro:#1c0101;
     --contenttxtcolorscuro:#1c0101;
-    --contentbgcolorchiaro:#EAE3C9;/*precedente #ffe09a*/
-    --contenttxtcolorchiaro:#EAE3C9;/*precedente #fffdd0*/
-
-    /* LINK */
-    --visitedcolor: #3455db;
-    --activecolor: #FF0000;
+    --contentbgcolorchiaro:#EAE3C9;
+    --contenttxtcolorchiaro:#EAE3C9;
 
     /* PULSANTI */
      --buttoncolor: #8b5437;
+     
+    /* LINK */
+    --visitedcolor: #3455db;
+    --activecolor: #FF0000;
 }
 
-/* PER NASCONDERE ELEMENTI, MA RIMANGONO VISIBILI ALLO SCREEN READER*/
-.sr-only {
+/* PER NASCONDERE ELEMENTI (SCREEN READER) */
+.sr-only, .visually-hidden {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -54,46 +59,64 @@ COLORI UTILIZZATI
   border: 0;
 }
 
+/* LINK "SALTA AL CONTENUTO" */
+.salta-contenuto {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    background: #000;
+    color: #fff;
+    padding: 0.5em;
+    z-index: 9999;
+    text-decoration: none;
+    font-weight: bold;
+    transition: top 0.3s;
+}
+.salta-contenuto:focus { top: 0; }
+
 html, body{
     font-size: 100%;
-    font-family: "Lexend", Roboto, sans-serif; /*DA DECIDERE*/
+    font-family: "Lexend", Roboto, sans-serif; 
     line-height: 1.5em;
 }
 
-body{
+/* LAYOUT PRINCIPALE (Flexbox Verticale) */
+body {
     background-color: var(--bgcolor);
     color: var(--txtcolor);
-    margin: 0em;
-    grid-template-columns: auto auto auto;
-    grid-template-areas: 
-    "h h h" /*header*/
-    "n n n" /*menu per desktop*/
-    "b b b" /*breadcrumb*/
-    "c c c" /*contenuto*/
-    "f f f"; /*footer*/
+    min-height: 100vh; 
+    display: flex;
+    flex-direction: column;
 }
-main{
-    background-color: var(--mainbgcolor);
-}
-.contenuto{
-    max-width: 1200px; /*oltre i 1200px e' scommoda la lettura dl sito quindi e' un valore fisso che si puo' usare*/
+
+header, #menu, #breadcrumb, footer {
+    flex-shrink: 0; 
     width: 100%;
-    margin: auto;
 }
+
+main {
+    flex-grow: 1; 
+    width: 100%;
+    background-color: var(--mainbgcolor);
+    display: block; 
+}
+
+.contenuto{
+    max-width: 1200px; 
+    width: 100%;
+    margin: 0 auto;
+}
+
 /*
 ====================================================================================================================================
-SEZIONE HEADER
+2. HEADER
 ====================================================================================================================================
 */
 header{
-    grid-area: h;
     background-color: var(--menubgcolor);
     position: relative;
     border: none;
-    /*border-bottom: 10px double #1c0101 ;*/
 }
-
-/*elemento di divisione e decorazione*/
 header::after {
   content: "";
   position: absolute;
@@ -113,6 +136,7 @@ header .contenuto{
     width: 100%;
     align-items: center;
 }
+
 #logo{
     grid-area: l;
     text-align: center;
@@ -137,11 +161,10 @@ header .contenuto{
 .sirivennela-regular {
   font-family: "Sirivennela", sans-serif;
   font-weight: bold;
-  font-style: normal;
 }
 
 .bottoneMenu{
-    display: none;
+    display: none; 
     grid-area: t;
 }
 #pulsantiMenu{
@@ -159,14 +182,15 @@ header .contenuto{
     transform: scale(1.3);
     transition: transform 0.3s ease;
 }
+
 /*
 ====================================================================================================================================
-SEZIONE MENU'
+3. MENU DI NAVIGAZIONE
 ====================================================================================================================================
 */
 #menu{
-    grid-area: n;
     background-color: var(--menubgcolor);
+    padding: 0.2em;
 }
 #menu .contenuto{
     display: flex;
@@ -179,84 +203,39 @@ SEZIONE MENU'
     list-style-type: none;
     text-align: center;
     justify-content: center; 
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
 }
 #menu ul li{
-    position: relative; /* necessario per ::after */
+    position: relative;
     font-weight: bold;
     padding: 0 1em 0.5em 1em;
 }
 
-/* 
--------------------------------------
-COLORI TESTO MENU 
--------------------------------------
-*/
-#menu{
-    padding: 0.2em;
-}
-#menu ul li a {                 /*tutte le ancore*/
-    text-decoration: none;      /*rimuove sottolineatura tipica dei link*/
-}
-#menu ul li a:active {
-    color: var(--activecolor); 
-}
-#menu ul li a:visited {
-    color: var(--visitedcolor); 
-}
-#menu ul li a:hover {
-    color: var(--menubgcurrentpage); 
-}
-#menu ul #currentlink{
-    color: var(--menubgcurrentpage); 
-}
-/* 
--------------------------------------
-ANIMAZIONE SOTTOLINEATURA MENU
--------------------------------------
-*/
-/* pseudoelememto linea che parte dal centro largo 0  */
-#menu ul li a::after{
+#menu ul li a { text-decoration: none; color: inherit; }
+#menu ul li a:active { color: var(--activecolor); }
+#menu ul li a:visited { color: var(--visitedcolor); }
+#menu ul li a:hover { color: var(--menubgcurrentpage); }
+#menu ul #currentlink{ color: var(--menubgcurrentpage); }
+
+/* Animazione Sottolineatura */
+#menu ul li a::after, #menu ul #currentlink::after{
     content: "";
-    position: absolute; /*per posizionare la linea dove voglio*/
+    position: absolute; 
     left: 50%;
-    bottom: 0;  /*in basso*/
-    width: 0;   /*normalmente largo 0, non visibile*/
+    bottom: 0;  
+    width: 0;   
     height: 0.4em;
     background-color: var(--menubgcurrentpage);
-    transform: translateX(-50%);    /*spostare la barra mentre cresce da l'illusione che si espanda dal centro*/
+    transform: translateX(-50%);    
     transition: width 0.3s ease;
 }
-
-#menu ul li a:hover::after {  
-    width: 100%; /*quando passo sopra all'ancora ingrandisco lo pseudoelemento fino agli estremi*/
-}
-
-/* pseudoelememto che sta sotto al testo del currentlink*/
-#menu ul #currentlink::after {
-    content: "";
-    position: absolute;
-    left: 0;  
-    bottom: 0;  /*in basso*/
-    width: 100%;
-    height: 0.4em;
-    background-color: var(--menubgcurrentpage);
-}
+#menu ul li a:hover::after, #menu ul #currentlink::after { width: 100%; }
 
 /*
 ====================================================================================================================================
-AREA PERSONALE
-====================================================================================================================================
-*/
-.azioni-utente {
-    list-style-type: none;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; 
-}
-/*
-====================================================================================================================================
-SEZIONE BREADCRUMB
+4. BREADCRUMB
 ====================================================================================================================================
 */
 #breadcrumb{
@@ -266,122 +245,17 @@ SEZIONE BREADCRUMB
     border: 1px solid black;
     padding: 0.5em 0em 0.5em 1.0em;
 }
-#breadcrumb .contenuto{
-    text-align: left;
-    width: 100%;
-    grid-area: b;
-}
-/*
-====================================================================================================================================
-PAGINA INDEX (index.html)
-====================================================================================================================================
-*/
-#presentazionePasticceria{
-    grid-area: c;
-}
-#presentazionePasticceria .contenuto{
-    display: grid;
-    grid-template-columns: 1fr 2fr; /* colonna immagine + colonna testo */
-    padding: 1.5em;
-    color:var(--contenttxtcolorscuro);
-}
-#presentazionePasticceria img{
-    grid-column: 1;
-    width: 20em;
-    max-width: 100%;
-    background-color: white;
-    border: solid 1px black;
-    justify-self: start; /* forza l'immagine a sinistra */
-}
-.cornice{
-    width: 20%;
-    float: left;
-    background: linear-gradient(45deg, var(--breadcolor), var(--contentbgcolorchiaro));
-    padding: 0.5em;
-}
-#presentazionePasticceria .testo{
-    grid-column: 2;
-    align-content: center;
-    padding: 1.5em;
-}
+#breadcrumb .contenuto{ text-align: left; }
+#breadcrumb a { color: var(--breadtxtcolor); text-decoration: underline; }
 
-#prodottiPrincipali{
-    grid-area: c;
-    background-color: var(--contentbgcolorchiaro);
-    color: var(--contenttxtcolorscuro);
-    padding: 1.5em;
-}
-#prodottiPrincipali .contenuto{
-    display: grid;
-    grid-template-columns: 2fr 1fr; /* colonna testo + colonna immagine */
-    padding: 1.5em;
-}
-#prodottiPrincipali .testo{
-    grid-column: 1;
-}
-#prodottiPrincipali .immagini{
-    grid-column: 2;
-    display: flex;            
-    flex-direction: column;
-    gap: 1em; 
-    padding: 0 1.5em 0 1.5em;
-}
-#prodottiPrincipali .immagini img{  
-    width: 20em;
-    max-width: 100%;
-    background-color: white;
-    border: solid 1px black;
-}
 /*
-------------------------------------------------------------------------------------------------------------------------------------
-PAGINA CHI SIAMO (story.html)
-------------------------------------------------------------------------------------------------------------------------------------
-*/
-/*
-------------------------------------------------------------------------------------------------------------------------------------
-PAGINA CONTATTACI (contattaci.html)
-PAGINA LOGIN (login.html) e REGISTRAZIONE (registrazione.html)
-PAGINA AGGIUNGI PRODOTTO (aggiungiProdotto.html)
-------------------------------------------------------------------------------------------------------------------------------------
-*/
-#sezioneLogin, #sezioneRegistrazione, #sezioneAggiungiProdotto{
-    padding: 1em 0 1em 1.5em;
-}
-#sezioneContattaci{
-    padding: 1em 0 0.5em 1.5em;
-}
-#formLogin, #formRegistrazione, #formContattaci, #formAggiungiProdotto{
-    max-width: 30%;
-}
-fieldset > legend{
-    font-size: 1.5em;    
-    font-weight: bold;     
-}
-fieldset{
-    border: none;
-}
-.campoDati{
-    display: flex;
-    flex-direction: column;
-    padding: 0.3em 0 0.3em 0;;
-}
-.campoDati label{
-    font-weight: bolder;
-}
-.campoDati input, .campoDati textarea, .campoDati select{
-    max-width: 20em;
-    border: 1px solid grey;
-    border-radius: 4px;
-    padding: 0.3em;
-}
-/*
-------------------------------------------------------------------------------------------------------------------------------------
-QUALSIASI PULSANTE
-------------------------------------------------------------------------------------------------------------------------------------
+====================================================================================================================================
+5. ELEMENTI COMUNI
+====================================================================================================================================
 */
 button, .pulsanteGenerico{
     display: inline-block;
-    margin: 0.2em 0 0.2em 0;
+    margin: 0.2em 0;
     background-color: transparent;
     color: var(--contenttxtcolorscuro);
     text-transform: uppercase;
@@ -389,66 +263,106 @@ button, .pulsanteGenerico{
     padding: 0.7em;
     border: var(--bgcolor) 1px solid;
     cursor: pointer;
-    transition: all 0.3s ease; /* effetto di transizione */
+    transition: all 0.3s ease;
+    text-decoration: none;
 }
 button:hover, .pulsanteGenerico:hover{
     background-color: var(--buttoncolor);
     color: var(--contenttxtcolorchiaro);
 }
-/*
-------------------------------------------------------------------------------------------------------------------------------------
-AIUTI COMPILAZIONE FORM
-------------------------------------------------------------------------------------------------------------------------------------
-*/
-.campoDati small{                   /*nasconde i suggerimenti*/
-    position: absolute;
-    clip: rect(0 0 0 0);
-    clip-path: inset(50%);
-    height: 1px;
-    width: 1px;
-    overflow: hidden;
-    white-space: nowrap;
+
+.pulsanteSecondario {
+    display: inline-block;
+    text-decoration: none;
+    color: var(--contenttxtcolorscuro);
+    border-bottom: 1px solid currentColor;
+    font-weight: bold;
+    padding: 0.5em;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+.pulsanteSecondario:hover { color: var(--buttoncolor); }
+
+/* Form Generici */
+#sezioneLogin, #sezioneRegistrazione, #sezioneAggiungiProdotto{ padding: 1em 0 1em 1.5em; }
+#sezioneContattaci{ padding: 1em 0 0.5em 1.5em; }
+#formLogin, #formRegistrazione, #formContattaci, #formAggiungiProdotto{ max-width: 100%; }
+fieldset > legend{ font-size: 1.5em; font-weight: bold; }
+fieldset{ border: none; padding: 0; margin: 0; }
+
+.campoDati{
+    display: flex;
+    flex-direction: column;
+    padding: 0.3em 0;
+}
+.campoDati label{ font-weight: bolder; }
+.campoDati input, .campoDati textarea, .campoDati select{
+    max-width: 100%;
+    width: 20em;
+    border: 1px solid grey;
+    border-radius: 4px;
+    padding: 0.5em;
 }
 
-.campoDati:focus-within small {     /*quando il campo dati riceve il focus il suggerimento torna visibile*/
-    position: static;
-    clip: auto;
-    clip-path: none;
-    height: auto;
-    width: auto;
-    overflow: visible;
-    white-space: normal;
-    display: block;
-    margin-top: 0.25rem;
-    color: #555;
-    font-size: 0.9em;
-}
+.errore{ color: var(--txterrorcolor); font-size: 0.9em; font-weight: bold; }
+.successo{ color: var(--txtsuccesscolor); font-size: 1em; font-weight: bold; }
+
 /*
 ====================================================================================================================================
-PAGINA CHI SIAMO (story.html)
+6. PAGINE SPECIFICHE (Index, Chi Siamo, Prodotti)
 ====================================================================================================================================
 */
 
-main section {
-    margin-bottom: 3em;
-    line-height: 1.8em;
+/* INDEX */
+#presentazionePasticceria .contenuto{
+    display: grid;
+    grid-template-columns: 1fr 2fr; 
+    padding: 1.5em;
+    color:var(--contenttxtcolorscuro);
+    gap: 2em;
+}
+#presentazionePasticceria img{
+    grid-column: 1;
+    width: 20em;
+    max-width: 100%;
+    background-color: white;
+    border: solid 1px black;
+    justify-self: start; 
+}
+.cornice{
+    width: 20%;
+    float: left;
+    background: linear-gradient(45deg, var(--breadcolor), var(--contentbgcolorchiaro));
+    padding: 0.5em;
+}
+#presentazionePasticceria .testo{ grid-column: 2; align-content: center; }
+
+#prodottiPrincipali{
+    background-color: var(--contentbgcolorchiaro);
+    color: var(--contenttxtcolorscuro);
+    padding: 1.5em;
+}
+#prodottiPrincipali .contenuto{
+    display: grid;
+    grid-template-columns: 2fr 1fr; 
+    padding: 1.5em;
+    gap: 2em;
+}
+#prodottiPrincipali .immagini{
+    grid-column: 2;
+    display: flex;            
+    flex-direction: column;
+    gap: 1em; 
+}
+#prodottiPrincipali .immagini img{  
+    width: 20em;
+    max-width: 100%;
+    background-color: white;
+    border: solid 1px black;
 }
 
-main section h2 {
-    color: var(--buttoncolor);
-    border-bottom: 2px solid var(--menubgcolor);
-    padding-bottom: 0.2em;
-    margin-bottom: 0.8em;
-}
-
-
-#valori ul {
-    margin-left: 1.5em;
-}
-#valori li {
-    margin-bottom: 0.5em;
-}
-
+/* CHI SIAMO */
 .griglia-team {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
@@ -457,41 +371,28 @@ main section h2 {
     padding: 0;
     margin-top: 2em;
 }
-
 .griglia-team figure {
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    text-align: center;
     height: 100%;
-    margin: 0;
     transition: transform 0.3s ease;
 }
-
-.griglia-team figure:hover {
-    transform: translateY(-5px);
-}
-
+.griglia-team figure:hover { transform: translateY(-5px); }
 .griglia-team img {
     width: 100%;
     height: 32em;
     object-fit: cover;
-    display: block;
     background-color: #f0f0f0;
 }
-
-.griglia-team figcaption {
-    padding: 1.5em;
-}
-
+.griglia-team figcaption { padding: 1.5em; text-align: center; }
 .griglia-team figcaption p:first-child {
     font-size: 1.2em;
     color: var(--buttoncolor);
     margin-bottom: 0.5em;
 }
-
 aside[aria-labelledby="info-visita"] {
     background-color: var(--menubgcolor);
     padding: 2em;
@@ -501,40 +402,10 @@ aside[aria-labelledby="info-visita"] {
     margin-top: 4em;
 }
 
-aside[aria-labelledby="info-visita"] h2 {
-    color: var(--buttoncolor);
-    margin-top: 0;
-}
-
-aside[aria-labelledby="info-visita"] a {
-    font-weight: bold;
-    color: var(--buttoncolor);
-    text-decoration: underline;
-}
-
-/*
-------------------------------------------------------------------------------------------------------------------------------------
-TESTO DI ERRORE E DI SUCCESSO
-------------------------------------------------------------------------------------------------------------------------------------
-*/
-.errore{
-    color: var(--txterrorcolor);
-    font-size: 0.9em;
-    font-weight: bold;
-}
-.successo{
-    color: var(--txtsuccesscolor);
-    font-size: 1em;
-    font-weight: bold;
-}
-/*
-------------------------------------------------------------------------------------------------------------------------------------
-PAGINA TORTE e PASTICCINI (torte-pasticcini.html)
-------------------------------------------------------------------------------------------------------------------------------------
-*/
+/* PRODOTTI */
 #grigliaTorte{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));    /*da 260px a 1fr*/
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
     gap: 1.5em;
     padding: 1.5em;
 }
@@ -545,97 +416,48 @@ PAGINA TORTE e PASTICCINI (torte-pasticcini.html)
     border-radius: 20px;
     overflow: hidden;   
     box-shadow: 10px 4px 10px rgba(0,0,0,0.1);
-    text-decoration: none;     /* rimuove la sottolineatura del link */
-    transition: transform 0.3s ease; /* effetto di transizione */
+    text-decoration: none;    
+    transition: transform 0.3s ease; 
+    display: flex;
+    flex-direction: column;
 }
 #grigliaTorte .cardTorta:hover{
-    transform: translateY(-0.5em);     /* leggera “alzata” */
-    box-shadow: 0 8px 16px rgba(0,0,0,0.15); /* ombra più intensa */
-    background: var(--hoverbgcolor) 
+    transform: translateY(-0.5em);    
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15); 
+    background: var(--hoverbgcolor);
 }
-#grigliaTorte img{
-    width: 100%;    /*Riempie tutta la larghezza della card*/
-}
-#grigliaTorte .infoTorta{
-    padding: 1em;
-}
-/*
-====================================================================================================================================
-SEZIONE DETTAGLI ITEM
-====================================================================================================================================
-*/
+#grigliaTorte img{ width: 100%; height: 200px; object-fit: cover; }
+#grigliaTorte .infoTorta{ padding: 1em; }
+
+/* Dettaglio Item */
 .dettagliItem {
     display: flex;
     gap: 3em;
     padding: 1.5em;
     align-items: flex-start;
 }
-.dettagliItem figure {
-    flex: 1 1 40%; /* 40% larghezza */
-    margin: 0;
-}
-
-.dettagliItem img {
-    width: 100%;
-    /*max-width: 500px;
-    display: block;
-    border-radius: 12px;
-    background-color: white;
-    border: 1px solid black;*/
-}
-
+.dettagliItem figure { flex: 1 1 40%; margin: 0; }
+.dettagliItem img { width: 100%; border-radius: 10px; border: 1px solid #ccc; }
 .dettagliItem figcaption {
     text-align: center;
     font-size: 0.9em;
-    margin-top: 1.5em;
+    margin-top: 0.5em;
     color: var(--contenttxtcolor);
 }
 .infoItem {
-    flex: 1 1 60%; /* 60% larghezza */
+    flex: 1 1 60%; 
     display: flex;
     flex-direction: column;
     gap: 1em;
 }
-.infoItem h2 {
-    font-size: 2em;
-    margin: 0;
-}
+.prezzoItem{ font-size: 1.6em; font-weight: bold; color: var(--buttoncolor); }
 
-.prezzoItem{
-    font-size: 1.6em;
-    font-weight: bold;
-}
-.infoItem form {
-    margin-top: 1.5em;
-}
-
-.infoItem fieldset {
-    border: 1px solid #aaa;
-    padding: 1.5em;
-    border-radius: 10px;
-}
-
-.infoItem legend {
-    font-weight: bold;
-    font-size: 1.2em;
-}
-
-.infoItem label {
-    display: block;
-    margin-bottom: 0.3em;
-}
-.porzioni input[type="radio"] {/*nascondo i radio button */
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
-}
 .porzioni {
     display: flex;
     flex-wrap: wrap;
     gap: 0.7em;
     margin-top: 0.5em;
 }
-
 .porzioni label {
     cursor: pointer;
     padding: 0.6em 1em;
@@ -645,7 +467,6 @@ SEZIONE DETTAGLI ITEM
     text-align: center;
     background-color: transparent;
     color: var(--contenttxtcolorscuro);
-    transition: all 0.2s ease;
     min-width: 6.5em;
 }
 .porzioni input[type="radio"]:checked + label {
@@ -653,115 +474,136 @@ SEZIONE DETTAGLI ITEM
     color: var(--contenttxtcolorchiaro);
     border-color: var(--buttoncolor);
 }
-.porzioni label:hover {
-    background-color: color-mix(in srgb, var(--buttoncolor) 85%, white);
-}
+.porzioni input[type="radio"] { position: absolute; opacity: 0; pointer-events: none; }
 
-.porzioni input[type="radio"]:focus + label {
-    outline: 3px solid var(--breadcolor);
-    outline-offset: 2px;
-}
 
-.infoItem input[type="number"], .infoItem textarea {
+/*
+====================================================================================================================================
+7. STILI UNIFICATI PER LE TABELLE (Carrello, Ordini, Riepilogo)
+====================================================================================================================================
+*/
+
+.table-container, 
+#contenitoreTabella {
     width: 100%;
-    max-width: 20em;
-    padding: 0.4em;
-}
-/*
-====================================================================================================================================
-SEZIONE ORDINI ADMIN
-====================================================================================================================================
-*/
-.stato-ordine select {
-  appearance: none;
-  border: none;
-  background: transparent;
-  font-weight: 600;
-  text-align: center;
-}
-.visually-hidden{
-    position: absolute;
-    left: -10000px;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-}
-.progresso-stato{
-    align-items: center;
-} 
-/*
-====================================================================================================================================
-SEZIONE FOOTER
-====================================================================================================================================
-*/
-footer{
-    grid-area: f;
-    background-color: var(--breadcolor);
-    color: var(--breadtxtcolor);
-    padding: 1.5em;
-    border-top: 1px solid black;
+    overflow-x: auto;
+    border-radius: 8px;
+    margin-bottom: 2em;
 }
 
-footer .contenuto{
-    display: grid;
-    grid-template-columns: 1fr 1fr; 
-    align-items: top;
-}
-#contatti{
-    grid-column: 1;
-}
-
-#assistenzaClienti{
-    grid-column: 2;
-}
-
-/* 
-===================================================================
-   SEZIONE CARRELLO E CHECKOUT (Blocco Completo)
-===================================================================
-*/
-
-#carrello table {
+/* Stile Base Comune per tutte le tabelle */
+.tabella-carrello, 
+.tabella-ordini, 
+.tabella-riepilogo {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 2em;
     background-color: white;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    border-radius: 8px; 
-    overflow: hidden;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    margin-bottom: 2em;
+    min-width: 600px;
 }
 
-#carrello th, #carrello td {
-    padding: 1em;
+/* CAPTION (Titolo della tabella) */
+.tabella-carrello caption,
+.tabella-ordini caption,
+.tabella-riepilogo caption {
     text-align: left;
-    border-bottom: 1px solid #ddd;
-    vertical-align: top;
+    font-weight: bold;
+    font-size: 1.1em;
+    color: var(--buttoncolor);
+    padding: 0.5em 0;
+    caption-side: top;
 }
 
-#carrello th {
-    background-color: var(--bgcolor);
+/* INTESTAZIONE COLONNE */
+.tabella-carrello thead th, 
+.tabella-ordini thead th, 
+.tabella-riepilogo thead th {
+    background-color: var(--bgcolor); 
     color: white;
     text-transform: uppercase;
     font-size: 0.9em;
     font-weight: bold;
+    padding: 1em;
+    text-align: left;
+    border-bottom: 2px solid var(--menubgcolor);
+}
+/* CELLE DI RIGA */
+.tabella-carrello tbody th, .tabella-carrello tbody td,
+.tabella-ordini tbody th, .tabella-ordini tbody td,
+.tabella-riepilogo tbody th, .tabella-riepilogo tbody td,
+.tabella-carrello tfoot td {
+    padding: 1em;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+    color: var(--txtcolor);
 }
 
-#carrello tr:last-child td {
-    border-bottom: none;
+/* INTESTAZIONE DI RIGA (La prima colonna - TRASPARENTE) */
+.tabella-carrello tbody th, 
+.tabella-ordini tbody th, 
+.tabella-riepilogo tbody th {
+    background-color: transparent !important;
+    color: var(--txtcolor) !important;
+    font-weight: bold; 
 }
 
-#carrello .totaleLabel {
-    text-align: right;
+tr:last-child td, tr:last-child th { border-bottom: none; }
+
+
+/* --- SPECIFICHE CARRELLO --- */
+
+/* Totali nel footer del carrello */
+.tabella-carrello .totaleLabel { 
+    text-align: right; 
+    font-weight: bold; 
+    font-size: 1.2em; 
+}
+.tabella-carrello .totaleValore { 
+    font-weight: bold; 
+    font-size: 1.4em; 
+    color: var(--buttoncolor); 
+}
+
+/* Controlli Quantità (+ e -) */
+.controllo-quantita {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.form-inline { display: inline; margin: 0; }
+
+.btn-qty {
+    background-color: #eee;
+    border: 1px solid #ccc;
+    color: #333;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
     font-weight: bold;
     font-size: 1.2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+    padding: 0;
+    line-height: 1;
 }
+.btn-qty:hover { background-color: #ddd; }
+.qty-numero { font-weight: bold; font-size: 1.1em; min-width: 20px; text-align: center; }
 
-#carrello .totaleValore {
+/* Link rimuovi e azioni */
+.link-rimuovi {
+    color: var(--txterrorcolor); 
+    background: none;
+    border: none;
     font-weight: bold;
-    font-size: 1.4em;
-    color: var(--buttoncolor);
+    cursor: pointer;
+    text-decoration: underline;
 }
-
 .azioniCarrello {
     display: flex;
     justify-content: space-between;
@@ -771,32 +613,6 @@ footer .contenuto{
     background-color: var(--contentbgcolorchiaro);
     border-radius: 8px;
 }
-
-.pulsanteSecondario {
-    text-decoration: none;
-    color: var(--contenttxtcolorscuro);
-    border-bottom: 1px solid currentColor;
-    font-weight: bold;
-}
-.pulsanteSecondario:hover {
-    color: var(--buttoncolor);
-}
-
-.link-rimuovi {
-    color: var(--txterrorcolor); /* Rosso */
-    font-weight: bold;
-    text-decoration: none;
-    font-size: 0.9em;
-    border: 1px solid var(--txterrorcolor);
-    padding: 0.3em 0.6em;
-    border-radius: 4px;
-    transition: all 0.2s;
-}
-.link-rimuovi:hover {
-    background-color: var(--txterrorcolor);
-    color: white;
-}
-
 .carrello-vuoto {
     text-align: center;
     padding: 4em;
@@ -805,85 +621,280 @@ footer .contenuto{
     border-radius: 10px;
     margin-top: 1em;
 }
-.carrello-vuoto p {
-    font-size: 1.5em;
-    margin-bottom: 1.5em;
-    color: #666;
-}
 
-.form-checkout {
-    align-items: center;
-    gap: 1.5em;
+
+/*
+====================================================================================================================================
+8. CONFERMA ORDINE (CHECKOUT FORM)
+====================================================================================================================================
+*/
+#confermaOrdine .form-conferma {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2em;
+    align-items: start;
+}
+#confermaOrdine fieldset {
     background-color: white;
-    padding: 0.5em 1em;
+    border: 1px solid #ccc;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    padding: 1.5em;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    height: 100%;
+}
+#confermaOrdine legend {
+    font-size: 1.2em;
+    color: var(--buttoncolor);
+    font-weight: bold;
+    padding: 0 0.5em;
+    margin-bottom: 0.5em;
+}
+#confermaOrdine label { margin-top: 1em; display: block; font-size: 0.9em; color: #555; }
+#confermaOrdine input:not([type="checkbox"]), #confermaOrdine textarea {
+    width: 100%;
+    padding: 0.7em;
+    margin-top: 0.3em;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    background-color: #fff;
+}
+.riepilogo-totale, .azioni-conferma { grid-column: 1 / -1; }
+
+.riepilogo-totale {
+    margin-top: 2em; 
+    padding: 1em; 
+    background: #fff3cd; 
+    border: 1px solid #ffeeba;
+    border-radius: 5px;
+    font-size: 1.1em;
+    text-align: center;
+}
+.azioni-conferma {
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+    margin-top: 1em;
 }
 
-.box-data {
+/* Checkbox Autocompilazione */
+#confermaOrdine .opzione-autocompilazione {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    width: 100%;
+    background-color: var(--contentbgcolorchiaro);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 1em;
+    margin-bottom: 1em;
+    gap: 10px;
+}
+#box-autocompilazione { display: none; }
+#confermaOrdine .opzione-autocompilazione input[type="checkbox"] { flex-shrink: 0; width: 20px; height: 20px; }
+#confermaOrdine .opzione-autocompilazione label { margin: 0; flex-grow: 1; cursor: pointer; }
+
+
+/*
+====================================================================================================================================
+9. SPECIFICHE AREA PERSONALE (Layout, Griglie, Admin)
+   La tabella ordini è gestita nella sezione 7
+====================================================================================================================================
+*/
+
+/* --- Tasto Logout Rosso --- */
+#pulsante-logout {
+    color: var(--txterrorcolor);
+    border: 1px solid var(--txterrorcolor);
+    padding: 0.5em 1em;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+#pulsante-logout:hover {
+    background-color: var(--txterrorcolor);
+    color: white;
+    border-color: var(--txterrorcolor);
+}
+
+.header-area-personale {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1em;
+    margin-bottom: 2em;
+    padding-bottom: 1em;
+    border-bottom: 2px solid var(--menubgcolor);
+}
+.header-area-personale h2 { margin: 0; color: var(--buttoncolor); }
+
+.griglia-area-personale {
+    display: grid;
+    grid-template-columns: 1fr 2fr; 
+    gap: 2em;
+    align-items: start;
+}
+.box-profilo, .box-ordini {
+    background-color: var(--contentbgcolorchiaro);
+    padding: 1.5em;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+.box-profilo h3, .box-ordini h3 {
+    color: var(--buttoncolor);
+    margin-bottom: 1em;
+    border-bottom: 1px dashed var(--buttoncolor);
+    padding-bottom: 0.5em;
+}
+
+/* Badge Stato Ordine */
+.stato-tag {
+    display: inline-block;
+    padding: 0.25em 0.8em;
+    border-radius: 15px;
+    font-size: 0.85em;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+}
+.s-1 { background-color: #f39c12; } /* In attesa */
+.s-2 { background-color: #3498db; } /* In preparazione */
+.s-3 { background-color: var(--txtsuccesscolor); } /* Pronto */
+.s-4 { background-color: #7f8c8d; } /* Ritirato */
+
+/* Zona Eliminazione Account */
+.zona-pericolo {
+    margin-top: 3em;
+    padding: 1.5em;
+    border: 2px dashed var(--txterrorcolor);
+    background-color: #fff0f0; 
+    border-radius: 8px;
+    text-align: center;
+}
+.bottone-elimina {
+    background: none;
+    color: var(--txterrorcolor);
+    border: 1px solid var(--txterrorcolor);
+    padding: 0.7em 1.5em;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.bottone-elimina:hover { background-color: var(--txterrorcolor); color: white; }
+
+/* Pannello Admin */
+.pannello-admin {
+    background-color: white;
+    border: 2px solid var(--menubgcolor);
+    border-radius: 8px;
+    padding: 1.5em;
+    margin-bottom: 2em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+.admin-header h3 { margin: 0; color: var(--bgcolor); text-transform: uppercase; }
+.bottone-admin {
+    display: inline-block;
+    padding: 0.7em 1.2em;
+    background-color: var(--bgcolor);
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+.bottone-admin:hover { background-color: var(--hoverbgcolor); color: var(--txtcolor); }
+
+
+/*
+====================================================================================================================================
+10. SPECIFICHE ESITO (Layout, Messaggi)
+   La tabella riepilogo è gestita nella sezione 7
+====================================================================================================================================
+*/
+#esitoPositivo, #esitoNegativo {
+    text-align: center;
+    padding: 2em;
+}
+
+.box-riepilogo-esito {
+    background-color: var(--contentbgcolorchiaro);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 2em;
+    margin: 1em auto 2em auto;
+    max-width: 800px;
     text-align: left;
 }
 
-.box-data label {
-    font-size: 0.8em;
-    text-transform: uppercase;
-    font-weight: bold;
-    margin-bottom: 0.3em;
-    color: #666;
+/* Dettagli prodotto in lista pulita */
+ul.dettagli-prodotto {
+    list-style-type: none !important;
+    padding-left: 0;
+    margin: 0;
 }
+ul.dettagli-prodotto li {
+    font-size: 0.9em;
+    color: #555;
+    margin-bottom: 0.2em;
+}
+/* Rimuoviamo eventuali pallini colorati */
+ul.dettagli-prodotto li::before { content: none !important; }
 
-.box-data input[type="date"] {
-    padding: 0.5em;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-family: inherit;
-    font-size: 1em;
-    cursor: pointer;
-    min-width: 150px;
+/* Messaggi Esito */
+.successo { color: var(--txtsuccesscolor); font-size: 2em; margin-bottom: 0.5em; }
+.numero-ordine {
+    font-size: 1.2em;
     margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    border-bottom: 2px solid var(--primary-color);
+}
+.dettagli-esito { list-style: none; padding: 0; margin-bottom: 2em; }
+.dettagli-esito li { margin-bottom: 0.5em; font-size: 1.1em; }
+
+.box-errore {
+    background-color: #fff;
+    padding: 2em;
+    border: 1px solid #ddd;
+    border-left: 6px solid var(--txterrorcolor);
+    margin: 2em auto;
+    max-width: 800px;
+    text-align: left;
+}
+.titolo-errore { color: var(--txterrorcolor); font-size: 2em; margin-bottom: 0.5em; }
+.azioni-esito, .azioni-errore {
+    display: flex;
+    justify-content: center;
+    gap: 1.5em;
+    flex-wrap: wrap;
+    margin-top: 2em;
 }
 
-/* 6. Adattamento MOBILE (Schermi piccoli) */
-@media screen and (max-width: 700px) {
-    /* Rende la tabella scrollabile orizzontalmente se non ci sta */
-    #contenitoreTabella {
-        overflow-x: auto;
-    }
-    
-    /* Impila i pulsanti finali invece di affiancarli */
-    .azioniCarrello {
-        flex-direction: column;
-        gap: 1.5em;
-        align-items: stretch; /* Bottoni larghi tutto lo schermo */
-    }
 
-    .pulsanteSecondario {
-        text-align: center;
-        display: block;
-        margin-bottom: 1em;
-    }
-
-    /* Impila il calendario e il bottone conferma */
-    .form-checkout {
-        flex-direction: column;
-        width: 100%;
-        padding: 1em;
-    }
-    
-    .box-data {
-        width: 100%;
-        margin-bottom: 1em;
-    }
-    
-    .box-data input[type="date"] {
-        width: 100%; /* Calendario largo tutto lo schermo */
-    }
-    
-    /* Riduce un po' il font della tabella su mobile */
-    #carrello th, #carrello td {
-        padding: 0.5em;
-        font-size: 0.9em;
-    }
+/*
+====================================================================================================================================
+11. FOOTER
+====================================================================================================================================
+*/
+footer{
+    background-color: var(--breadcolor);
+    color: var(--breadtxtcolor);
+    padding: 1.5em;
+    border-top: 1px solid black;
+    margin-top: auto;
 }
+footer .contenuto{
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    align-items: start;
+}
+#contatti{ grid-column: 1; }
+#assistenzaClienti{ grid-column: 2; }
+footer a { color: #fff; text-decoration: underline; }

@@ -7,7 +7,6 @@ if (session_status() === PHP_SESSION_NONE){
     session_start();                    
 }
 
-// MODIFICA: Se l'utente è già loggato, va all'Area Personale (che gestirà eventuali link admin)
 if (isset($_SESSION['ruolo'])) {
     header("Location: areaPersonale.php");
     exit;

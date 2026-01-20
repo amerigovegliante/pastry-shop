@@ -3,7 +3,6 @@ error_reporting(E_ALL); //attiva visualizzazione errori
 ini_set('display_errors', 1);
 
 require_once "dbConnection.php";
-use DBAccess;
 
 $paginaHTML = file_get_contents('../html/torte-pasticcini.html');
 if ($paginaHTML === false) {
@@ -33,7 +32,7 @@ if (isset($_GET['tipo']) && $_GET['tipo']==='torte'){
     $LinkPagina="<li><a href=\"../php/torte-pasticcini.php?tipo=torte\">Le nostre torte</a></li><li id='currentLink'>I nostri pasticcini</li>";
 }else if (isset($_GET['tipo']) && $_GET['tipo']!=='pasticcini' && $_GET['tipo']!=='torte'){ //oppure si potrebbe andare su pag404
     $titolo="Le nostre scelte";
-    $listaItem="Scegli tra la nostra selezione di <a href=\"../php/torte-pasticcini.php?tipo=torte\">torte</a> o <a href=\"../php/torte-pasticcini.php?tipo=pasticcini\">pasticcini</a>"
+    $listaItem="Scegli tra la nostra selezione di <a href=\"../php/torte-pasticcini.php?tipo=torte\">torte</a> o <a href=\"../php/torte-pasticcini.php?tipo=pasticcini\">pasticcini</a>";
     $LinkPagina="<li><a href=\"../php/torte-pasticcini.php?tipo=torte\">Le nostre torte</a></li><li><a href=\"../php/torte-pasticcini.php?tipo=pasticcini\">I nostri pasticcini</a></li>";
 }
 
@@ -45,7 +44,7 @@ if($connessione && empty($listaItem)){
     if (!empty($Items)){
         $listaItem .= '<ul id="grigliaTorte" class="contenuto">';
         foreach($Items as $Item){
-            $imgSrc = !empty($Item['immagine']) ? $Item['immagine'] : "img/placeholder.jpeg";
+            $imgSrc = !empty($Item['immagine']) ? "../img/" . $Item['immagine'] : "../img/placeholder.jpeg";
             $altText = !empty($Item['testo_alternativo']) ? $Item['testo_alternativo'] : "Immagine non disponibile";
             $listaItem .="<li> <article class=\"cardTorta\">     
                 <a href=\"dettagli.php?ID=".urlencode($Item['id'])."\" style=\"text-decoration:none; color:inherit;\"> 

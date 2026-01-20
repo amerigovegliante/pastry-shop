@@ -4,60 +4,81 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 require_once "dbConnection.php";
-use DBAccess;
 
-// carico il template HTML
+// carico template HTML
 $paginaHTML = file_get_contents('../html/carrello.html');
 if ($paginaHTML === false) {
-    die("Errore template carrello");
+    die("Errore: impossibile leggere il template carrello.html");
 }
 
 $db = new DBAccess();
 
-// aggiunta prodotto al carrello
+// gestione aggiunta articolo al carrello
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['ID'])) {
     
     $connessione = $db->openDBConnection();
     if ($connessione) {
         $idProdotto = $_POST['ID'];
-        // recuperiamo i dati: per ora le torte il prezzo DB è inteso "a porzione"
         $itemDB = $db->getItemDetail($idProdotto);
         $db->closeDBConnection();
 
         if ($itemDB) {
+            $tipoItem = strtolower($itemDB['tipo']);
             
-            $quantita = isset($_POST['quantita']) ? (int)$_POST['quantita'] : 1;
-            $porzioneScelta = isset($_POST['porzione']) ? (int)$_POST['porzione'] : null;
+            // sanificazione input
+            $quantitaInput = isset($_POST['quantita']) ? (int)$_POST['quantita'] : 1;
+            if ($quantitaInput < 1) $quantitaInput = 1;
+
+            $porzioneScelta = isset($_POST['porzione']) ? (int)$_POST['porzione'] : 0; 
+            $testoTarga = isset($_POST['testoTarga']) ? trim($_POST['testoTarga']) : "";
+
+            // calcolo del prezzo per unità
+            $prezzoBaseItem = (float)$itemDB['prezzo'];
+            $prezzoPerUnita = $prezzoBaseItem; 
             
-            // calcolo prezzo unitario dell'oggetto intero
-            if ($itemDB['tipo'] === 'Torta' && $porzioneScelta > 0) {
-                $prezzoOggetto = $itemDB['prezzo'] * $porzioneScelta;
-            } else {
-                $prezzoOggetto = $itemDB['prezzo'];
+            if ($tipoItem === 'torta' && $porzioneScelta > 0) {
+                $prezzoPerUnita = $prezzoBaseItem * $porzioneScelta;
             }
 
-            // creo l'elemento
             $nuovoElemento = array(
                 'id' => $itemDB['id'],
                 'nome' => $itemDB['nome'],
-                'prezzo_unitario' => $prezzoOggetto,
-                'quantita' => $quantita,
-                'tipo' => $itemDB['tipo'],
+                'tipo' => $tipoItem,
+                'prezzo_unitario_calcolato' => $prezzoPerUnita, 
+                'quantita' => $quantitaInput,
                 'porzione' => $porzioneScelta,
-                'targa' => (isset($_POST['chkTarga']) && !empty($_POST['testoTarga'])) ? $_POST['testoTarga'] : null
+                'targa' => $testoTarga
             );
 
             if (!isset($_SESSION['carrello'])) {
                 $_SESSION['carrello'] = array();
             }
-            $_SESSION['carrello'][] = $nuovoElemento;
+
+            // uniamo i prodotti identici
+            $trovato = false;
+            foreach ($_SESSION['carrello'] as &$itemCarrello) {
+                if ($itemCarrello['id'] == $nuovoElemento['id'] &&
+                    $itemCarrello['porzione'] == $nuovoElemento['porzione'] &&
+                    $itemCarrello['targa'] === $nuovoElemento['targa']) {
+                    
+                    $itemCarrello['quantita'] += $quantitaInput;
+                    $trovato = true;
+                    break;
+                }
+            }
+            unset($itemCarrello); 
+
+            if (!$trovato) {
+                $_SESSION['carrello'][] = $nuovoElemento;
+            }
         }
     }
+    // pattern PRG per evitare reinvio form al refresh
     header("Location: carrello.php");
     exit;
 }
 
-// rimozione prodotto dal carrello
+// rimoizone articolo dal carrello
 if (isset($_GET['action']) && $_GET['action'] == 'rimuovi' && isset($_GET['index'])) {
     $index = (int)$_GET['index'];
     if (isset($_SESSION['carrello'][$index])) {
@@ -68,71 +89,83 @@ if (isset($_GET['action']) && $_GET['action'] == 'rimuovi' && isset($_GET['index
     exit;
 }
 
-// costruzione tabella
+// generazione contenuto carrello
 $contenutoGenerato = "";
 
 if (isset($_SESSION['carrello']) && count($_SESSION['carrello']) > 0) {
     
-    // righe
     $righeProdotti = "";
     $totaleCarrello = 0;
 
     foreach ($_SESSION['carrello'] as $index => $item) {
-        $prezzoTotaleItem = $item['prezzo_unitario'] * $item['quantita'];
-        $totaleCarrello += $prezzoTotaleItem;
+        
+        $prezzoUnitario = isset($item['prezzo_unitario_calcolato']) ? $item['prezzo_unitario_calcolato'] : 0;
+        $prezzoTotaleRiga = $prezzoUnitario * $item['quantita'];
+        $totaleCarrello += $prezzoTotaleRiga;
 
+        // Dettagli extra
         $dettagliExtra = "";
-        if ($item['tipo'] === 'Torta') {
-            if ($item['porzione']) {
-                $dettagliExtra .= "<small>Torta per: {$item['porzione']} persone</small><br>";
+        if ($item['tipo'] === 'torta') {
+            $infoParts = [];
+            if ($item['porzione'] > 0) {
+                $infoParts[] = "Formato: " . $item['porzione'] . " persone";
             }
-            if ($item['targa']) {
-                $dettagliExtra .= "<small>Targa: " . htmlspecialchars($item['targa']) . "</small><br>";
+            if (!empty($item['targa'])) {
+                $infoParts[] = "Targa: <em>" . htmlspecialchars($item['targa']) . "</em>";
+            }
+            if (!empty($infoParts)) {
+                $dettagliExtra = "<span class='info-extra'>" . implode("<br>", $infoParts) . "</span>";
             }
         }
+        if (empty($dettagliExtra)) {
+            $dettagliExtra = "<span aria-hidden='true'>-</span><span class='sr-only'>Nessun dettaglio extra</span>";
+        }
+
+        $unitarioFormat = number_format($prezzoUnitario, 2, ',', '.');
+        $totaleRigaFormat = number_format($prezzoTotaleRiga, 2, ',', '.');
+        $nomeProdotto = htmlspecialchars($item['nome']);
 
         $righeProdotti .= "<tr>
-            <td data-label='Prodotto'><strong>" . htmlspecialchars($item['nome']) . "</strong></td>
-            <td data-label='Dettagli'>" . ($dettagliExtra ? $dettagliExtra : "-") . "</td>
+            <th scope='row' data-label='Prodotto'>$nomeProdotto</th>
+            <td data-label='Dettagli'>$dettagliExtra</td>
             <td data-label='Quantità'>" . $item['quantita'] . "</td>
-            <td data-label='Prezzo'>€" . number_format($item['prezzo_unitario'], 2, ',', '.') . "</td>
-            <td data-label='Totale'><strong>€" . number_format($prezzoTotaleItem, 2, ',', '.') . "</strong></td>
+            <td data-label='Prezzo Unit.'>€$unitarioFormat</td>
+            <td data-label='Totale'><strong>€$totaleRigaFormat</strong></td>
             <td data-label='Azioni'>
-                <a href='carrello.php?action=rimuovi&index=$index' class='link-rimuovi'>Rimuovi</a>
+                <a href='carrello.php?action=rimuovi&index=$index' class='link-rimuovi' aria-label='Rimuovi $nomeProdotto dal carrello'>Rimuovi</a>
             </td>
         </tr>";
     }
 
-    $totaleFormat = "€" . number_format($totaleCarrello, 2, ',', '.');
+    $totaleGeneraleFormat = "€" . number_format($totaleCarrello, 2, ',', '.');
 
-    // checkout con data se loggato
-    $formCheckout = "";
+    // logica di login
+    $pulsanteProcedi = "";
     if (isset($_SESSION['ruolo'])) {
-        $minDate = date('Y-m-d', strtotime('+2 day'));
-        $formCheckout = "
-        <form action='checkout.php' method='POST' class='form-checkout'>
-            <div class='box-data'>
-                <label for='dataRitiro'>Data di Ritiro:</label>
-                <input type='date' id='dataRitiro' name='dataRitiro' min='$minDate' required>
-            </div>
-            <button type='submit' class='pulsanteGenerico'>Conferma e Ordina</button>
-        </form>";
+        $pulsanteProcedi = "
+        <div class='box-checkout'>
+            <a href='conferma_ordine.php' class='pulsanteGenerico'>Procedi con l'ordine &rarr;</a>
+        </div>";
     } else {
-        $formCheckout = "<a href='login.php' class='pulsanteGenerico'>Accedi per ordinare</a>";
+        $pulsanteProcedi = "
+        <div class='login-alert'>
+            <p>Per concludere l'ordine è necessario accedere.</p>
+            <a href='login.php' class='pulsanteGenerico'>Accedi o Registrati</a>
+        </div>";
     }
 
-    // assemblaggio Finale
     $contenutoGenerato = "
     <div id='contenitoreTabella'>
-        <table summary='Riepilogo prodotti nel carrello'>
+        <table class='tabella-carrello'>
+            <caption>Riepilogo prodotti nel tuo carrello</caption>
             <thead>
                 <tr>
                     <th scope='col'>Prodotto</th>
                     <th scope='col'>Info Extra</th>
                     <th scope='col'>Qtà</th>
-                    <th scope='col'>Prezzo</th>
+                    <th scope='col'>Prezzo Unit.</th>
                     <th scope='col'>Totale</th>
-                    <th scope='col'></th>
+                    <th scope='col'><span class='sr-only'>Azioni</span></th>
                 </tr>
             </thead>
             <tbody>
@@ -140,25 +173,28 @@ if (isset($_SESSION['carrello']) && count($_SESSION['carrello']) > 0) {
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan='4' class='totaleLabel'>Totale Ordine:</td>
-                    <td class='totaleValore'>$totaleFormat</td>
+                    <td colspan='4' class='totaleLabel'>Totale Complessivo:</td>
+                    <td class='totaleValore'>$totaleGeneraleFormat</td>
                     <td></td>
                 </tr>
             </tfoot>
         </table>
 
         <div class='azioniCarrello'>
-            <a href='torte-pasticcini.php?tipo=torte' class='pulsanteSecondario'>← Continua acquisti</a>
-            $formCheckout
+            <a href='torte-pasticcini.php?tipo=torte' class='link-indietro'>&larr; Continua acquisti</a>
+            $pulsanteProcedi
         </div>
     </div>";
 
 } else {
-    // CARRELLO VUOTO
+    // Caso Carrello Vuoto
     $contenutoGenerato = "
     <div class='carrello-vuoto'>
         <p>Il tuo carrello è vuoto.</p>
-        <a href='torte-pasticcini.php?tipo=torte' class='pulsanteGenerico'>Inizia lo shopping</a>
+        <div class='bottoni-vuoto'>
+            <a href='torte-pasticcini.php?tipo=torte' class='pulsanteGenerico'>Le nostre Torte</a>
+            <a href='torte-pasticcini.php?tipo=pasticcini' class='pulsanteGenerico'>I nostri Pasticcini</a>
+        </div>
     </div>";
 }
 

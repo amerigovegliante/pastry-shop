@@ -5,9 +5,8 @@
     <meta charset="utf-8">
     <title>Area Personale - Pasticceria Padovana</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords" content="area personale, Pasticceria Padovana">
-    <meta name="description" content="Accedi alla tua area personale su Pasticceria Padovana per gestire il tuo profilo utente.">
-
+    <meta name="description" content="Gestisci il tuo account personale su Pasticceria Padovana, visualizza e modifica i tuoi dati e ordini.">
+    
     <link rel="stylesheet" href="../css/style.css" media="screen">
     <link rel="stylesheet" href="../css/mini.css" media="screen and (max-width:800px)">
     <link rel="stylesheet" href="../css/print.css" media="print">
@@ -19,25 +18,27 @@
     <header>
         <div class="contenuto">
             <button type="button" class="bottoneMenu" aria-label="Apri il menu principale">Menu</button>
-
             <div id="logo">
                 <h1>Pasticceria Padovana</h1>
                 <p class="sirivennela-regular">La pasticceria tradizionale su misura per i tuoi eventi</p>
             </div>
-
             <div id="pulsantiMenu">
-                <a href="carrello.php" class="bottoneCarrello" aria-label="Vai al carrello">
-                    <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true">
+                <span class="bottoneProfilo attivo" aria-label="Sei nella tua area personale">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                </span>
+                <a href="../php/carrello.php" class="bottoneCarrello" aria-label="Vai al carrello">
+                    <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="16.5" cy="18.5" r="1.5" />
                         <circle cx="9.5" cy="18.5" r="1.5" />
-                        <path d="M18 16H8a1 1 0 0 1-.958-.713L4.256 6H3a1 1 0 0 1 0-2h2
-                     a1 1 0 0 1 .958.713L6.344 6H21a1 1 0 0 1 .937 1.352l-3 8
-                     A1 1 0 0 1 18 16zm-9.256-2h8.563l2.25-6H6.944z" />
+                        <path
+                            d="M18 16H8a1 1 0 0 1-.958-.713L4.256 6H3a1 1 0 0 1 0-2h2 a1 1 0 0 1 .958.713L6.344 6H21a1 1 0 0 1 .937 1.352l-3 8 A1 1 0 0 1 18 16zm-9.256-2h8.563l2.25-6H6.944z" />
                     </svg>
                 </a>
             </div>
-
         </div>
     </header>
 
@@ -45,8 +46,8 @@
         <ul class="contenuto">
             <li><a href="../../index.html"><span lang="en">Home</span></a></li>
             <li><a href="../html/story.html">Chi siamo</a></li>
-            <li><a href="torte-pasticcini.php?tipo=torte">Le nostre torte</a></li>
-            <li><a href="torte-pasticcini.php?tipo=pasticcini">I nostri pasticcini </a></li>
+            <li><a href="../php/torte-pasticcini.php?tipo=torte">Le nostre torte</a></li>
+            <li><a href="../php/torte-pasticcini.php?tipo=pasticcini">I nostri pasticcini </a></li>
             <li><a href="../php/contattaci.php">Contattaci</a></li>
         </ul>
     </nav>
@@ -57,16 +58,75 @@
     </nav>
 
     <main id="main">
-        <section class="contenuto">
-            <h2>Benvenuto, [NomeUtente] [CognomeUtente]</h2>
+        <div class="contenuto">
 
-            <p>Questa è la tua area personale.</p>
+            <div class="header-area-personale">
+                <h2>Benvenuto, [NomeUtente]</h2>
+                <a href="logout.php" class="pulsanteSecondario" id="pulsante-logout">Disconnettiti</a>
+            </div>
 
-            <ul class="azioni-utente">
-                [PulsanteAdmin]
-                <li><a href="logout.php" class="pulsanteGenerico">Disconnettiti</a></li>
-            </ul>
-        </section>
+            <div aria-live="polite" class="area-messaggi">
+                [MessaggiSistema]
+            </div>
+
+            [SezioneAdmin]
+
+            <div class="griglia-area-personale">
+
+                <section class="box-profilo" aria-labelledby="titolo-dati">
+                    <h3 id="titolo-dati">I miei Dati</h3>
+
+                    <form action="areaPersonale.php" method="POST">
+                        <input type="hidden" name="action" value="modificaDati">
+                        [csrfToken]
+
+                        <div class="campoDati">
+                            <span class="etichetta-statica">Email:</span>
+                            <span class="valore-statico">[valoreEmail]</span>
+                        </div>
+
+                        <div class="campoDati">
+                            <label for="nome">Nome</label>
+                            <input type="text" id="nome" name="nome" value="[valoreNome]" required
+                                autocomplete="given-name">
+                        </div>
+
+                        <div class="campoDati">
+                            <label for="cognome">Cognome</label>
+                            <input type="text" id="cognome" name="cognome" value="[valoreCognome]" required
+                                autocomplete="family-name">
+                        </div>
+
+                        <div class="campoDati">
+                            <label for="telefono">Telefono</label>
+                            <input type="tel" id="telefono" name="telefono" value="[valoreTelefono]" pattern="[0-9]{10}"
+                                required autocomplete="tel">
+                        </div>
+
+                        <button type="submit" class="pulsanteGenerico">Salva Modifiche</button>
+                    </form>
+                </section>
+
+                <section class="box-ordini" aria-labelledby="titolo-ordini">
+                    <h3 id="titolo-ordini">I miei Ordini</h3>
+                    <div class="table-container">
+                        [TabellaOrdini]
+                    </div>
+                </section>
+            </div>
+
+            <section class="zona-pericolo" aria-labelledby="titolo-pericolo">
+                <h3 id="titolo-pericolo">Gestione Account</h3>
+                <p>Desideri eliminare il tuo account? Questa azione è irreversibile.</p>
+                <form action="areaPersonale.php" method="POST"
+                    onsubmit="return confirm('Sei sicuro di voler eliminare il tuo account? Questa azione non può essere annullata.');">
+                    <input type="hidden" name="action" value="eliminaAccount">
+                    [csrfToken]
+                    <button type="submit" class="bottone-elimina">Elimina il mio account</button>
+                </form>
+            </section>
+
+        </div>
     </main>
 
     <footer>
@@ -84,9 +144,7 @@
             <div id="assistenzaClienti">
                 <h2>Assistenza clienti shop online</h2>
                 <p>Lun-Ven 8:30-13:00 14:00-17:30</p>
-                <p>Email: <a
-                        href="mailto:gestioneclienti@pasticceriapadovana.it">gestioneclienti@pasticceriapadovana.it</a>
-                </p>
+                <p>Email: <a href="mailto:gestioneclienti@pasticceriapadovana.it">gestioneclienti@pasticceriapadovana.it</a></p>
                 <p id="copyright">&copy; 2025 Pasticceria Padovana - Tutti i diritti riservati</p>
             </div>
         </div>

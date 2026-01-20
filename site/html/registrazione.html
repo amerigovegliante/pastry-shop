@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <title>Registrati - Pasticceria Padovana</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords" content="pasticceria padovana, pasticceria, dolci, torta, pasticcini, padova, dolce">
     <meta name="description" content="Crea un account su Pasticceria Padovana per ordinare online e ricevere offerte speciali.">
 
     <link rel="stylesheet" href="../css/style.css" media="screen">
@@ -22,7 +21,6 @@
                 <h1>Pasticceria Padovana</h1>
                 <p class="sirivennela-regular">La pasticceria tradizionale su misura per i tuoi eventi</p>
             </div>
-            <!-- per ora ho messo dei pulsanti presi da internet, penso siano da sistemare perché hanno grandezza fissa se non erro -->
             <div id="pulsantiMenu">
                 <a href="../php/login.php" class="bottoneProfilo" aria-label="Accedi alla tua area personale">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -36,9 +34,7 @@
                     <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="16.5" cy="18.5" r="1.5" />
                         <circle cx="9.5" cy="18.5" r="1.5" />
-                        <path d="M18 16H8a1 1 0 0 1-.958-.713L4.256 6H3a1 1 0 0 1 0-2h2
-                      a1 1 0 0 1 .958.713L6.344 6H21a1 1 0 0 1 .937 1.352l-3 8
-                      A1 1 0 0 1 18 16zm-9.256-2h8.563l2.25-6H6.944z" />
+                        <path d="M18 16H8a1 1 0 0 1-.958-.713L4.256 6H3a1 1 0 0 1 0-2h2 a1 1 0 0 1 .958.713L6.344 6H21a1 1 0 0 1 .937 1.352l-3 8 A1 1 0 0 1 18 16zm-9.256-2h8.563l2.25-6H6.944z" />
                     </svg>
                 </a>
             </div>
@@ -84,7 +80,7 @@
                     <div class="campoDati">
                         <label for="telefono">Telefono</label>
                         <input type="tel" name="telefono" id="telefono" value="[valoreTelefono]"
-                        placeholder="Es. 345 6789012"
+                        placeholder="Es. 3456789012" pattern="[0-9]{10}" title="Inserire 10 cifre senza spazi"
                         required autocomplete="tel">
                     </div>
                     [messaggioErroreTelefono]
@@ -105,11 +101,10 @@
                     </div>
                     [messaggioErrorePassword]
 
-                    <button type="submit" name="submit">Registrati</button>
+                    <button type="submit" name="submit" class="pulsanteGenerico">Registrati</button>
                 </fieldset>
                 [messaggioErroreDB]
-                [messaggioConferma]
-            </form>
+                </form>
             <p>Hai già un account? <a href="../php/login.php">Accedi qui</a></p>
         </section>
     </main>
@@ -135,5 +130,4 @@
         </div>
     </footer>
 </body>
-
 </html>
