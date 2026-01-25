@@ -139,6 +139,24 @@ FUNZIONI PER LEGGERE DATI
         }
     }
 
+    //restituisce tutti i dettagli di un determinato ordine, dato il suo id. FALSE se non presente.
+    public function getOrdineById($id){
+        $querySelect = "SELECT * FROM ordine WHERE id = ?";
+        $stmt = mysqli_prepare($this->connection, $querySelect);
+        mysqli_stmt_bind_param($stmt, "i", $id);
+        mysqli_stmt_execute($stmt); 
+        $queryResult = mysqli_stmt_get_result($stmt);
+
+        if (mysqli_num_rows($queryResult) > 0) {
+            $ordine = mysqli_fetch_assoc($queryResult);
+        } else {
+            $ordine = false;
+        }
+
+        mysqli_stmt_close($stmt);
+        return $ordine;
+    }
+
     // verifica se un'email è già registrata nel sistema
     public function emailExists($email){
         $querySelect = "SELECT email FROM persona WHERE email = ?";
@@ -153,6 +171,19 @@ FUNZIONI PER LEGGERE DATI
         return $exists;
     }
 
+    // verifica se un allergene è già presente nel sistema
+    public function allergeneExists($nomeAllergene){
+        $querySelect = "SELECT nome FROM allergene WHERE nome = ?";
+        $stmt = mysqli_prepare($this->connection, $querySelect);
+        mysqli_stmt_bind_param($stmt, "s", $nomeAllergene);
+        mysqli_stmt_execute($stmt); 
+        $queryResult = mysqli_stmt_get_result($stmt);
+
+        $exists = mysqli_num_rows($queryResult) > 0;
+
+        mysqli_stmt_close($stmt);
+        return $exists;
+    }
     // recupera il nome dell'utente data l'email
     public function getNome($email){
         $querySelect = "SELECT nome FROM persona WHERE email = ?";
@@ -242,6 +273,50 @@ FUNZIONI PER LEGGERE DATI
         return $this->connection;
     }
 
+    //restituisce tutti gli items ordinati per tipo e per nome, FALSE se non ne trova
+    public function getAllItems(){
+        $querySelect = "SELECT * FROM item ORDER BY tipo, nome";
+        $stmt = mysqli_prepare($this->connection, $querySelect);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $items = array();
+
+        if (mysqli_num_rows($result) > 0){
+            while ($row = mysqli_fetch_assoc($result)){ //salvo riga per riga in un array associativo
+                $items[] = $row;
+            }
+        } else {
+            mysqli_stmt_close($stmt);
+            return false;   //nessun record trovato
+        }
+
+        mysqli_stmt_close($stmt);
+        return $items;
+    }
+
+    //restituisce il numero di domande fatte da un ip nella data odierna 
+    public function numDomandeIP($ip){
+        $querySelect = "SELECT COUNT(*) AS num FROM domanda_contattaci WHERE ip_utente = ? AND DATE(data_invio) = CURDATE()";
+        $stmt = mysqli_prepare($this->connection, $querySelect);
+        mysqli_stmt_bind_param($stmt, "s", $ip);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $row = mysqli_fetch_assoc($result);
+        mysqli_stmt_close($stmt);
+        return (int)($row['num'] ?? 0);
+    }
+
+    //restituisce il numero di domande fatte da una email nella data odierna 
+    public function numDomandeEmail($email){
+        $querySelect = "SELECT COUNT(*) AS num FROM domanda_contattaci WHERE email = ? AND DATE(data_invio) = CURDATE()";
+        $stmt = mysqli_prepare($this->connection, $querySelect);
+        mysqli_stmt_bind_param($stmt, "s", $email);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $row = mysqli_fetch_assoc($result);
+        mysqli_stmt_close($stmt);
+        return (int)($row['num'] ?? 0);
+    }
 /* 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 FUNZIONI PER SCRIVERE DATI
@@ -264,11 +339,11 @@ FUNZIONI PER SCRIVERE DATI
 
     //inserisce una nuova domanda dell'utente nel DB
     //restituisce l'oggetto mysqli_result se la query è andata a buon fine, altrimrnti FALSE
-    public function insertNewDomanda($email, $domanda){
-        $queryInsert = "INSERT INTO domanda_contattaci(email, domanda) VALUES (?, ?)";
+    public function insertNewDomanda($email, $domanda, $ip){
+        $queryInsert = "INSERT INTO domanda_contattaci(email, domanda, ip_utente) VALUES (?, ?, ?)";
 
         $stmt = mysqli_prepare($this->connection, $queryInsert);
-        mysqli_stmt_bind_param($stmt, "ss", $email, $domanda);
+        mysqli_stmt_bind_param($stmt, "sss", $email, $domanda, $ip);
 
         $success = mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
@@ -276,7 +351,7 @@ FUNZIONI PER SCRIVERE DATI
     }
 
     //inserisce un nuovo item (prodotto della pasticceria) nel DB
-    //restituisce l'oggetto mysqli_result se la query è andata a buon fine, altrimrnti FALSE
+    //restituisce l'id dell'oggeto appena inserito, altrimrnti FALSE
     public function insertNewItem($tipo, $nome, $descrizione, $prezzo, $immagine, $testoAlternativo){
         $queryInsert = "INSERT INTO item(tipo, nome, descrizione, prezzo, immagine, testo_alternativo) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -285,7 +360,58 @@ FUNZIONI PER SCRIVERE DATI
 
         $success = mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
+        if ($success) {
+            return mysqli_insert_id($this->connection);
+        } else {
+            return false;
+        }
+    }
+
+    //inserisce una nuova riga in item_allergico nel DB
+    //restituisce l'oggetto mysqli_result se la query è andata a buon fine, altrimrnti FALSE
+    public function insertNewItemAllergico($idIitem, $allergeneItem){
+        if(!$this->allergeneExists($allergeneItem)){
+            return false;
+        }
+        $queryInsert = "INSERT INTO item_allergico(item, allergene) VALUES (?, ?)";
+        $stmt = mysqli_prepare($this->connection, $queryInsert);
+        mysqli_stmt_bind_param($stmt, "is", $idIitem, $allergeneItem); 
+        $success = mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
         return $success;
+    }
+
+    //elimina l'item con l'id passatogli
+    //ritorna TRUE se l'eliminazione è andata a buon fine, FALSE se fallisce, "collegato" se c'è un ordine collegato e non può procedere
+    public function deleteItemById($idItem){
+        // array delle tabelle collegate agli ordini
+        $tabelleCollegate = [
+            'ordine_torta' => 'torta',
+            'ordine_pasticcino' => 'pasticcino'
+        ];
+
+        // controlla se l'item è collegato a ordini
+        foreach ($tabelleCollegate as $tabella => $colonna){
+            $queryCheck = "SELECT COUNT(*) AS num FROM $tabella WHERE $colonna = ?";
+            $stmt = mysqli_prepare($this->connection, $queryCheck);
+            mysqli_stmt_bind_param($stmt, "i", $idItem);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            $row = mysqli_fetch_assoc($result);
+            mysqli_stmt_close($stmt);
+            
+            if ($row['num'] > 0) {
+                return "collegato"; // se è collegato non elimina, restituisce un messaggio
+            }
+        }
+        //altrimenti procede con l'eliminazione
+        $queryDeleteItem = "DELETE FROM item WHERE id = ?";
+        $stmt = mysqli_prepare($this->connection, $queryDeleteItem);
+        mysqli_stmt_bind_param($stmt, "i", $idItem);
+        mysqli_stmt_execute($stmt);
+        $righeEliminate = mysqli_stmt_affected_rows($stmt); //conta il numero di righe eliminate
+        mysqli_stmt_close($stmt);
+        return $righeEliminate > 0; //TRUE se ha eliminato almeno una riga
     }
 }  
 ?>

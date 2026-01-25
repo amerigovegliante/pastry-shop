@@ -134,11 +134,8 @@ if(isset($_POST['submit'])){
                     $_SESSION['cognome'] = $cognome;
                     $_SESSION['ruolo'] = 'user'; //il ruolo di default per la registrazione pubblica è user
 
-                    $messaggioConferma = '<div class="successo" role="status">
-                        <p>Registrazione completata con successo!</p>
-                        <p>Benvenuto/a ' . $nome . '.</p>
-                        <p><a href="areaPersonale.php">Vai alla tua area personale</a></p>
-                        </div>';
+                    header("Location: areaPersonale.php");  //reindirizzamento all'area personale
+                    exit;
                 }
             }
         }
@@ -159,7 +156,6 @@ $paginaHTML = str_replace('[messaggioErroreTelefono]', $erroreTelefono, $paginaH
 $paginaHTML = str_replace('[messaggioErrorePassword]', $errorePassword, $paginaHTML);
 
 $paginaHTML = str_replace('[messaggioErroreDB]', $messaggioErrore, $paginaHTML); 
-$paginaHTML = str_replace('[messaggioConferma]', $messaggioConferma, $paginaHTML); 
 
 echo $paginaHTML;
 ?>

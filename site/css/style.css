@@ -113,6 +113,12 @@ header .contenuto{
     width: 100%;
     align-items: center;
 }
+header .contenuto > a {
+    grid-area: l;
+    display: block;         
+    text-align: center;
+    text-decoration: none;
+}
 #logo{
     grid-area: l;
     text-align: center;
@@ -344,13 +350,13 @@ PAGINA LOGIN (login.html) e REGISTRAZIONE (registrazione.html)
 PAGINA AGGIUNGI PRODOTTO (aggiungiProdotto.html)
 ------------------------------------------------------------------------------------------------------------------------------------
 */
-#sezioneLogin, #sezioneRegistrazione, #sezioneAggiungiProdotto{
+#sezioneLogin, #sezioneRegistrazione{
     padding: 1em 0 1em 1.5em;
 }
 #sezioneContattaci{
     padding: 1em 0 0.5em 1.5em;
 }
-#formLogin, #formRegistrazione, #formContattaci, #formAggiungiProdotto{
+#formLogin, #formRegistrazione, #formContattaci{
     max-width: 30%;
 }
 fieldset > legend{
@@ -374,6 +380,26 @@ fieldset{
     border-radius: 4px;
     padding: 0.3em;
 }
+
+#aggiungiProdotto{
+    display: grid;
+    grid-template-areas:"m m"
+                        "f t";
+    grid-template-columns: 30% 70%;
+    gap: 0.5em;
+}
+#messaggi{
+    grid-area: m;
+    text-align: center;
+}
+#sezioneAggiungiProdotto{
+    grid-area: f;
+    padding-left: 1.5em;
+}
+#sezioneTabellaProdotti{
+    grid-area: t;
+    padding-right: 1.5em;
+}
 /*
 ------------------------------------------------------------------------------------------------------------------------------------
 QUALSIASI PULSANTE
@@ -394,6 +420,74 @@ button, .pulsanteGenerico{
 button:hover, .pulsanteGenerico:hover{
     background-color: var(--buttoncolor);
     color: var(--contenttxtcolorchiaro);
+}
+
+.pulsanteCancella {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  color: #c00;
+  transition: color 0.2s ease;
+}
+.pulsanteCancella:hover {
+  color: #ff0000;
+  transform: scale(1.2);
+}
+/*
+------------------------------------------------------------------------------------------------------------------------------------
+TABELLA PRODOTTI in aggiungiProdotto.html
+------------------------------------------------------------------------------------------------------------------------------------
+*/
+#aggiungiProdotto table {
+    border-collapse: separate; 
+    border-spacing: 0;
+    width: 100%;
+    margin-top: 20px;
+    background-color: #fff;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    overflow: hidden;
+    border-radius: 8px;
+    word-wrap: break-word; /* va a capo su testo lungo */
+}
+
+#aggiungiProdotto th, #aggiungiProdotto td {
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    vertical-align: top;
+    padding: 0 8px;
+}
+
+#aggiungiProdotto th {
+    background-color: var(--bgcolor);
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+#aggiungiProdotto tr:last-child td {
+    border-bottom: none;
+}
+
+#aggiungiProdotto tr {
+    transition: background-color 0.3s ease;
+}
+
+#aggiungiProdotto tr:hover{
+    background-color: var(--#dadada);
+}
+
+#aggiungiProdotto td:first-child {
+    font-weight: bold;
+    color: #555;
+}/*
+====================================================================================================================================
+PAGINA DETTAGLI ORDINE (dettaglioOrdine.html)
+====================================================================================================================================
+*/
+#dettagliOrdine ul{
+    padding-left: 1.5em;
 }
 /*
 ------------------------------------------------------------------------------------------------------------------------------------
@@ -519,7 +613,7 @@ TESTO DI ERRORE E DI SUCCESSO
 */
 .errore{
     color: var(--txterrorcolor);
-    font-size: 0.9em;
+    font-size: 1em;
     font-weight: bold;
 }
 .successo{

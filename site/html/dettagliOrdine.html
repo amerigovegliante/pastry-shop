@@ -3,10 +3,10 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Gestione Ordini - Pasticceria Padovana</title>
+    <title>Dettagli Ordine - Pasticceria Padovana</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="pasticceria padovana, pasticceria, dolci, torta, pasticcini, padova, dolce">
-    <meta name="description" content="Pagina dedicata alla visione degli ordini da parte dei responsabili, pasticceri e dipendenti della pasticceria Padovana">
+    <meta name="description" content="Crea un account su Pasticceria Padovana per ordinare online e ricevere offerte speciali.">
 
     <link rel="stylesheet" href="../css/style.css" media="screen">
     <link rel="stylesheet" href="../css/mini.css" media="screen and (max-width:800px)">
@@ -14,18 +14,16 @@
 </head>
 
 <body>
-    <a href="#main" class="sr-only">Salta al contenuto principale</a>
     <header>
         <div class="contenuto">
             <button type="button" class="bottoneMenu" aria-label="Apri il menu principale">Menu</button>
-
             <a href="../../index.html" aria-label="Torna alla homepage">
                 <div id="logo">
                     <h1>Pasticceria Padovana</h1>
                     <p class="sirivennela-regular">La pasticceria tradizionale su misura per i tuoi eventi</p>
                 </div>
             </a>
-
+            <!-- per ora ho messo dei pulsanti presi da internet, penso siano da sistemare perché hanno grandezza fissa se non erro -->
             <div id="pulsantiMenu">
                 <a href="../php/login.php" class="bottoneProfilo" aria-label="Accedi alla tua area personale">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -45,27 +43,28 @@
                     </svg>
                 </a>
             </div>
-
         </div>
     </header>
-    
-    <nav id="menu" aria-label="Menu di navigazione">
+
+    <nav id="menu" aria-label="Menu principale">
         <ul class="contenuto">
             <li><a href="../../index.html"><span lang="en">Home</span></a></li>
             <li><a href="../html/story.html">Chi siamo</a></li>
-            <li><a href="torte-pasticcini.php?tipo=torte">Le nostre torte</a></li>
-            <li><a href="torte-pasticcini.php?tipo=pasticcini">I nostri pasticcini </a></li>
+            <li><a href="../php/torte-pasticcini.php?tipo=torte">Le nostre torte</a></li>
+            <li><a href="../php/torte-pasticcini.php?tipo=pasticcini">I nostri pasticcini </a></li>
             <li><a href="../php/contattaci.php">Contattaci</a></li>
-            <li id="currentlink">Ordini</li>
         </ul>
     </nav>
 
-    <nav id="breadcrumb">
-        <p class="contenuto">Ti trovi in: <a href="../../index.html"><span lang="en">Home</span></a> &gt; Ordini</p>
+    <nav id="breadcrumb" aria-label="Percorso di navigazione">
+        <p class="contenuto">Ti trovi in: <a href="../../index.html"><span lang="en">Home</span></a> &gt; <a href="../php/dettagliOrdine.php">Dettagli ordine</a> &gt; Aggiungi prodotto</p>
     </nav>
-    
-    <main id="main">
-        [TabellaOrdini]
+
+    <main>
+        <section id="dettagliOrdine" class="contenuto">
+            [messaggioErroreDB]
+            [listaDettagliOrdine]
+        </section>
     </main>
 
     <footer>
@@ -86,7 +85,6 @@
                 <p>Email: <a href="mailto:gestioneclienti@pasticceriapadovana.it">gestioneclienti@pasticceriapadovana.it</a></p>
                 <p id="copyright">&copy; 2025 Pasticceria Padovana - Tutti i diritti riservati</p>
             </div>
-            <a href="#main" class="">Torna su</a>
         </div>
     </footer>
 </body>

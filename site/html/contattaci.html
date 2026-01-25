@@ -18,10 +18,12 @@
         <div class="contenuto">
             <button type="button" class="bottoneMenu" aria-label="Apri il menu principale">Menu</button>
 
-            <div id="logo">
-                <h1>Pasticceria Padovana</h1>
-                <p class="sirivennela-regular">La pasticceria tradizionale su misura per i tuoi eventi</p>
-            </div>
+            <a href="../../index.html" aria-label="Torna alla homepage">
+                <div id="logo">
+                    <h1>Pasticceria Padovana</h1>
+                    <p class="sirivennela-regular">La pasticceria tradizionale su misura per i tuoi eventi</p>
+                </div>
+            </a>
 
             <div id="pulsantiMenu">
                 <a href="../php/login.php" class="bottoneProfilo" aria-label="Accedi alla tua area personale">
@@ -73,7 +75,7 @@
 
                     <div class="campoDati">
                         <label for="domanda">Domanda</label>
-                        <textarea name="domanda" id="domanda" rows="7" required>[valoreDomanda]</textarea>
+                        <textarea name="domanda" id="domanda" rows="7" maxlength="500" placeholder="Scrivi qui (max 500 caratteri)..." required>[valoreDomanda]</textarea>
                     </div>
                     [messaggioErroreDomanda]    <!--se è stato lasciato vuoto-->
 

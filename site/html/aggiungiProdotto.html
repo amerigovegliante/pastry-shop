@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Registrati - Pasticceria Padovana</title>
+    <title>Aggiungi Prodotto - Pasticceria Padovana</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="pasticceria padovana, pasticceria, dolci, torta, pasticcini, padova, dolce">
     <meta name="description" content="Crea un account su Pasticceria Padovana per ordinare online e ricevere offerte speciali.">
@@ -17,11 +17,12 @@
     <header>
         <div class="contenuto">
             <button type="button" class="bottoneMenu" aria-label="Apri il menu principale">Menu</button>
-
-            <div id="logo">
-                <h1>Pasticceria Padovana</h1>
-                <p class="sirivennela-regular">La pasticceria tradizionale su misura per i tuoi eventi</p>
-            </div>
+            <a href="../../index.html" aria-label="Torna alla homepage">
+                <div id="logo">
+                    <h1>Pasticceria Padovana</h1>
+                    <p class="sirivennela-regular">La pasticceria tradizionale su misura per i tuoi eventi</p>
+                </div>
+            </a>
             <!-- per ora ho messo dei pulsanti presi da internet, penso siano da sistemare perché hanno grandezza fissa se non erro -->
             <div id="pulsantiMenu">
                 <a href="../php/login.php" class="bottoneProfilo" aria-label="Accedi alla tua area personale">
@@ -56,11 +57,15 @@
     </nav>
 
     <nav id="breadcrumb" aria-label="Percorso di navigazione">
-        <p class="contenuto">Ti trovi in: <a href="../../index.html"><span lang="en">Home</span></a> &gt; Aggiungi prodotto</p>
+        <p class="contenuto">Ti trovi in: <a href="../../index.html"><span lang="en">Home</span></a> &gt; <a href="../php/areaPersonale.php">Area personale</a> &gt; Aggiungi prodotto</p>
     </nav>
 
-    <main>
-        <section id="sezioneAggiungiProdotto" class="contenuto">
+    <main id="aggiungiProdotto" class="contenuto">
+        <div id="messaggi">
+            [messaggioErroreDB]
+            [messaggioConferma]
+        </div>
+        <section id="sezioneAggiungiProdotto">
             <h2>Aggiungi un nuovo prodotto</h2>
 
             <form id="formAggiungiProdotto" action="../php/aggiungiProdotto.php" method="post" enctype="multipart/form-data" autocomplete="on">
@@ -69,7 +74,7 @@
 
                     <div class="campoDati">
                         <label for="tipo">Tipo di prodotto:</label>
-                         <select id="tipo" name="tipo" required>
+                        <select id="tipo" name="tipo" required>
                             <option value="">-- Seleziona un tipo --</option>   <!--opzione non valida-->
                             <option value="torta">Torta</option>
                             <option value="pasticcino">Pasticcino</option>
@@ -112,11 +117,26 @@
                     </div>
                     [messaggioErroreTestoAlternativo]
 
+                    <div class="campoDati">
+                        <fieldset>
+                            <legend>Allergeni contenuti:</legend>
+                            <label><input type="checkbox" name="allergeni[]" value="Glutine"> Glutine</label><br>
+                            <label><input type="checkbox" name="allergeni[]" value="Uova"> Uova</label><br>
+                            <label><input type="checkbox" name="allergeni[]" value="Latte"> Latte</label><br>
+                            <label><input type="checkbox" name="allergeni[]" value="Frutta a guscio"> Frutta a guscio</label><br>
+                            <label><input type="checkbox" name="allergeni[]" value="Arachidi"> Arachidi</label><br>
+                            <label><input type="checkbox" name="allergeni[]" value="Soia"> Soia</label><br>
+                            <label><input type="checkbox" name="allergeni[]" value="Sesamo"> Sesamo</label><br>
+                        </fieldset>
+                    </div>
+
                     <button type="submit" name="submit">Aggiungi prodotto</button>
                 </fieldset>
-                [messaggioErroreDB]
-                [messaggioConferma]
             </form>
+        </section>
+
+        <section id="sezioneTabellaProdotti">
+            [tabellaProdotti]
         </section>
     </main>
 

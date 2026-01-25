@@ -15,8 +15,10 @@ $email ='';
 $domanda ='';
 $erroreEmail ='';
 $erroreDomanda ='';       
-$erroreDB ='';               //errore in accesso o inserimento dati nel database
-$confermaInvio ='';    //inserimento dei dati avvenuto con successo
+$erroreDB ='';          //errore in accesso o inserimento dati nel database
+$confermaInvio ='';     //inserimento dei dati avvenuto con successo
+$ip ='';                //ip utente 
+$limite = 3;            //numero di domande che si possono inviare nello stesso giorno dallo stesso ip
 
 //Se è stato fatto il login, recupera la mail dai dati della sessione
 if(session_status() === PHP_SESSION_NONE){
@@ -51,22 +53,27 @@ if(isset($_POST['submit'])){
     if (strlen($domanda) === 0) {
         $erroreDomanda = '<p class="errore">Inserire almeno una domanda</p>';
     }
-
+    
+    //recupero IP utente 
+    $ip = $_SERVER['REMOTE_ADDR']; 
+    
     //INSERIMENTO VALORI NEL DATABASE (solo se tutti i campi sono corretti)
     if (empty($erroreEmail) && empty($erroreDomanda)){
         $db = new DBAccess();
         $connessione = $db->openDBConnection(); //tento la connessione
         if(!$connessione){  
             $erroreDB = '<p class="errore">Siamo spiacenti, si è verificato un problema di connessione. Riprova più tardi.</p>';
+        } else if(($db->numDomandeIP($ip)) >= $limite || ($db->numDomandeEmail($email) >= $limite)){
+                $erroreDB = '<p class="errore">Ha già inviato il numero massimo di domande per oggi: ' . $limite . '</p>';
         } else {
-            $success = $db->insertNewDomanda($email, $domanda);
-            $db->closeDBConnection();   //chiudo la connessione
+            $success = $db->insertNewDomanda($email, $domanda, $ip);
             if(!$success){  
                 $erroreDB = '<p class="errore">Siamo spiacenti, si è verificato un problema di connessione. Riprova più tardi.</p>';
             } else {
                 $confermaInvio = '<p class="successo">Domanda inviata con successo!</p>';
             }
         }
+        $db->closeDBConnection();   //chiudo la connessione
     }
 }
 

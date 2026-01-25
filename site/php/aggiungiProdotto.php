@@ -27,6 +27,8 @@ $erroreTestoAlternativo = '';
 $messaggioErrore = '';       //per errore generico o di connessione con il DB
 $messaggioConferma = '';     //inserimento dei dati avvenuto con successo
 
+$tabellaItems = '';
+
 //funzione per pulire l'input del form per evitare iniezioni di codice e XSS
 function pulisciInput($value){
     $value = trim($value);              
@@ -35,6 +37,18 @@ function pulisciInput($value){
     return $value;
 }
 
+//funzione per inserire gli allergeni
+function inserisciAllergeni($db, $itemId, $allergeni) {
+    if (!empty($allergeni) && !empty($itemId) && is_array($allergeni)) {
+        foreach ($allergeni as $a) {
+            $success = $db->insertNewItemAllergico($itemId, htmlspecialchars($a));
+            if (!$success) return false;
+        }
+    }
+    return true;
+}
+
+//GESTIONE AGGIUNTA PRODOTTO
 if(isset($_POST['submit'])){
     
     //tipo
@@ -68,7 +82,7 @@ if(isset($_POST['submit'])){
         $errorePrezzo = '<p class="errore" role="alert"> Inserisci un prezzo valido tra 0 e 99999999.99</p>';
     }
 
-   // immagine
+   //immagine
     if (isset($_FILES['immagine']) && $_FILES['immagine']['error'] === UPLOAD_ERR_OK) {
 
         $fileTmpPath = $_FILES['immagine']['tmp_name'];     //percorso temporaneo dove PHP mette il file appena caricato
@@ -80,7 +94,7 @@ if(isset($_POST['submit'])){
         if (!in_array($fileExtension, $allowedExtensions)) {
             $erroreImmagine = '<p class="errore" role="alert">Formato immagine non consentito. Usa JPG, PNG o WEBP.</p>';
         } else {
-            $uploadDir = '../img/uploads/'; //cartella dove salvare le immagini
+            $uploadDir = '../img/'; //cartella dove salvare le immagini
     
             if (!is_dir($uploadDir)) {  //sela cartella non esiste la crea
                 mkdir($uploadDir, 0755, true);
@@ -90,7 +104,7 @@ if(isset($_POST['submit'])){
             
             if (move_uploaded_file($fileTmpPath, $destPath)) {  //sposta il file nella cartella definitiva
                 // salva solo il path relativo
-                $immagine = '../img/uploads/' . $newFileName;
+                $immagine = '../img/' . $newFileName;
             } else {
                 $erroreImmagine = '<p class="errore" role="alert">Errore durante il caricamento dell\'immagine.</p>';
             }
@@ -106,8 +120,8 @@ if(isset($_POST['submit'])){
     } else if (strlen($testoAlternativo) > 255){
         $erroreTestoAlternativo = '<p class="errore" role="alert">Il testo alternativo non può superare 255 caratteri</p>';
     }
-    
-    //inserimento valori nel database solo se non ci sono errori in nessun campo
+
+    //INSERIMENTO VALORI NEL DATABASE solo se non ci sono errori in nessun campo
     if(empty($erroreTipo) && empty($erroreNome) && empty($erroreDescrizione) && empty($errorePrezzo) && empty($erroreImmagine) && empty($erroreTestoAlternativo)){
 
         $db = new DBAccess();
@@ -116,17 +130,94 @@ if(isset($_POST['submit'])){
         if(!$connessione){  
             $messaggioErrore = '<p class="errore" role="alert">Errore di connessione al database</p>';
         } else {
-            $success = $db->insertNewItem($tipo, $nome, $descrizione, $prezzo, $immagine, $testoAlternativo);
-            $db->closeDBConnection();
+            $lastItemId = $db->insertNewItem($tipo, $nome, $descrizione, $prezzo, $immagine, $testoAlternativo);    //inserimento e recupero id ultimo item aggiunto  
 
-            if(!$success){  
+            if(!$lastItemId){  
                 $messaggioErrore = '<p class="errore" role="alert">Errore durante la scrittura nel database</p>';
             } else {
                 $messaggioConferma = '<div class="successo" role="status">
                         <p>Prodotto inserito con successo!</p>
                         </div>';
             }
+
+            //Inserimento allergeni
+            $allergeni = $_POST['allergeni'];     //recupero array degli allergeni selezionati
+            $successAllergeni = inserisciAllergeni($db, $lastItemId, $allergeni);
+            $db->closeDBConnection();
+            if(!$successAllergeni){
+                $messaggioErrore = '<p class="errore" role="alert">Errore durante la scrittura degli allergeni</p>';
+                $messaggioConferma = '';
+            }
         }
+    }
+}
+
+//GESTIONE ELIMINAZIONE PRODOTTO
+if (isset($_POST['delete']) && !empty($_POST['delete_id'])){
+    $idDaCancellare = intval($_POST['delete_id']);  //intval rimuove tutto ciò che non è numero, restituendo un valore intero pulito.
+    $db = new DBAccess();
+    $connessione = $db->openDBConnection();
+
+    if ($connessione) {
+        $success = $db->deleteItemById($idDaCancellare);
+        $db->closeDBConnection();
+
+        if ($success === true){
+            $messaggioConferma = '<div class="successo" role="status"><p>Prodotto eliminato con successo!</p></div>';
+        } elseif ($success === "collegato"){  //se risulta collegato a degli ordini non posso cancellarlo
+            $messaggioErrore = '<p class="errore" role="alert">Impossibile eliminare il dolce: è presente in uno o più ordini.</p>';
+        } else {
+            $messaggioErrore = '<p class="errore" role="alert">Errore durante l\'eliminazione del prodotto.</p>';
+        }
+    } else {
+        $messaggioErrore = '<p class="errore" role="alert">Errore di connessione al database durante l\'eliminazione.</p>';
+    }
+}
+
+//TABELLA PRODOTTI: Viene stampata una tabella con tutti i prodotti salvati nel DB fino a quel momento
+$db = new DBAccess();
+$connessione = $db->openDBConnection();
+if(!$connessione){  
+    $messaggioErrore = '<p class="errore" role="alert">Errore di connessione al database</p>';
+} else {
+    $items = $db->getAllItems();
+    $db->closeDBConnection();
+    if(empty($items)){
+        $tabellaItems = '<p class="errore" role="alert">Non sono stati trovati prodotti nel database</p>';
+    } else {    //se ho recuperato almeno un prodotto dal DB
+        $tabellaItems = '<p id="descr" class="sr-only">Tabella contenente la lista di dolci registrati. Ogni riga descrive un dolce con numero 
+                        identificativo, tipologia, nome, descrizione e prezzo. L\'ultima colonna consente di eliminare il dolce corrispondente dal database.</p>
+                        <table aria-describedby="descr">
+                            <caption>Tabella dei prodotti disponibili</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Tipo</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Descrizione</th>
+                                    <th scope="col">Prezzo (€)</th>
+                                    <th scope="col">Elimina</th>
+                                </tr>
+                            </thead>
+                            <tbody>';
+        foreach ($items as $item){
+            $tabellaItems .= '<tr>' .
+            '<td>' . htmlspecialchars($item['id']) . '</td>' .
+            '<td>' . htmlspecialchars($item['tipo']) . '</td>' .
+            '<td>' . htmlspecialchars($item['nome']) . '</td>' .
+            '<td>' . htmlspecialchars($item['descrizione']) . '</td>' .
+            '<td>' . number_format($item['prezzo'], 2, ',', '.') . '</td>' .
+            '<td>
+                <form method="post" onsubmit="return confirm(\'Vuoi davvero eliminare questo dolce?\');">
+                    <input type="hidden" name="delete_id" value="' . htmlspecialchars($item['id']) . '">
+                    <button type="submit" name="delete" class="pulsanteCancella" aria-label="Elimina prodotto <?= htmlspecialchars($item[\'nome\']) ?>">
+                        &#x1F5D1;
+                    </button>
+                </form>
+            </td>' .
+            '</tr>';
+        }
+        $tabellaItems .= '</tbody> </table>';
     }
 }
 //fa si che una volta inviato il form, giusto o sbagliato, vengono ricompilati i campi gia' scritti  dall'utente, evitando frustrazione
@@ -145,5 +236,6 @@ $paginaHTML = str_replace('[messaggioErroreTestoAlternativo]', $erroreTestoAlter
 $paginaHTML = str_replace('[messaggioErroreDB]', $messaggioErrore, $paginaHTML); 
 $paginaHTML = str_replace('[messaggioConferma]', $messaggioConferma, $paginaHTML); 
 
+$paginaHTML = str_replace('[tabellaProdotti]', $tabellaItems, $paginaHTML);
 echo $paginaHTML;
 ?>

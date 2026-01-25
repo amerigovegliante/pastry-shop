@@ -69,11 +69,9 @@ if(isset($_POST['submit'])){
                     session_regenerate_id(true);
 
                     $_SESSION['email'] = $email;
-                    $_SESSION['nome'] = $db->getNome($email) ?: '';
-                    $_SESSION['cognome'] = $db->getCognome($email) ?: '';
-                    
-                    $ruolo = $db->getRuolo($email);
-                    $_SESSION['ruolo'] = $ruolo ?: 'user'; //se $ruolo ha un valore vero/non vuoto usa $ruolo; altrimenti usa 'user'
+                    $_SESSION['nome'] = $db->getNome($email);
+                    $_SESSION['cognome'] = $db->getCognome($email);
+                    $_SESSION['ruolo'] =$db->getRuolo($email); 
 
                     $db->closeDBConnection();
 

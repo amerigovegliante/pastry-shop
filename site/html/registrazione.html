@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Registrati - Pasticceria Padovana</title>
+    <title>Registrazione - Pasticceria Padovana</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="pasticceria padovana, pasticceria, dolci, torta, pasticcini, padova, dolce">
     <meta name="description" content="Crea un account su Pasticceria Padovana per ordinare online e ricevere offerte speciali.">
@@ -18,10 +18,12 @@
         <div class="contenuto">
             <button type="button" class="bottoneMenu" aria-label="Apri il menu principale">Menu</button>
 
-            <div id="logo">
-                <h1>Pasticceria Padovana</h1>
-                <p class="sirivennela-regular">La pasticceria tradizionale su misura per i tuoi eventi</p>
-            </div>
+            <a href="../../index.html" aria-label="Torna alla homepage">
+                <div id="logo">
+                    <h1>Pasticceria Padovana</h1>
+                    <p class="sirivennela-regular">La pasticceria tradizionale su misura per i tuoi eventi</p>
+                </div>
+            </a>
             <!-- per ora ho messo dei pulsanti presi da internet, penso siano da sistemare perché hanno grandezza fissa se non erro -->
             <div id="pulsantiMenu">
                 <a href="../php/login.php" class="bottoneProfilo" aria-label="Accedi alla tua area personale">
@@ -60,7 +62,7 @@
     </nav>
 
     <main>
-        <section id="sezioneRegistrazione" class="contenuto" aria-labelledby="titolo-registrazione">
+        <div id="sezioneRegistrazione" class="contenuto">
             <h2 id="titolo-registrazione" class="sr-only">Registrazione Utente</h2>
             <form id="formRegistrazione" action="../php/registrazione.php" method="post" autocomplete="on">
                 <fieldset>
@@ -108,10 +110,9 @@
                     <button type="submit" name="submit">Registrati</button>
                 </fieldset>
                 [messaggioErroreDB]
-                [messaggioConferma]
             </form>
             <p>Hai già un account? <a href="../php/login.php">Accedi qui</a></p>
-        </section>
+        </div>
     </main>
 
     <footer>

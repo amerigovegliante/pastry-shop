@@ -19,7 +19,8 @@ $cognome = isset($_SESSION['cognome']) ? $_SESSION['cognome'] : '';
 $pulsanteAdmin = "";
 if ($_SESSION['ruolo'] === 'admin') {
     // se è admin, creo un elemento della lista con il link
-    $pulsanteAdmin = '<li><a href="ordiniAdmin.php" class="pulsanteGenerico">Gestione Ordini (Admin)</a></li>';
+    $pulsanteAdmin = '<li><a href="ordiniAdmin.php" class="pulsanteGenerico">Gestione Ordini (Admin)</a></li>' . 
+                    '<li><a href="aggiungiProdotto.php" class="pulsanteGenerico">Aggiungi Prodotto (Admin)</a></li>';
 }
 
 // sostituzioni
