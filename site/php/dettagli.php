@@ -4,6 +4,9 @@ ini_set('display_errors', 1);
 
 require_once "dbConnection.php";
 
+/*var_dump(scandir(__DIR__ . '/../html'));
+die;*/
+
 $paginaHTML = file_get_contents( __DIR__ .'/../html/dettagli.html');
 if ($paginaHTML === false) {
     die("Errore: impossibile leggere dettagli.html");

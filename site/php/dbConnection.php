@@ -306,5 +306,25 @@ class DBAccess{
         
         return $result;
     }
+
+     public function  AggiornaStati($statiModificati) {
+        // Verifico se la connessione è aperta, altrimenti provo ad aprirla
+        if (!$this->connection) {
+            if (!$this->openDBConnection()) {
+                return false;
+            }
+        }
+        
+        $connessione = $this->connection; 
+
+        foreach($statiModificati as $idOrdine => $nuovoStato){
+            $query = "UPDATE ordine SET stato=? WHERE id=?";
+            $stmt = mysqli_prepare($connessione, $query);
+            mysqli_stmt_bind_param($stmt, "ii", $nuovoStato, $idOrdine);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+        }
+    }
+
 }  
 ?>

@@ -1,5 +1,8 @@
 <?php
-session_start();
+// Avvio sessione se non già avviata
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 error_reporting(E_ALL); 
 ini_set('display_errors', 1);
 
@@ -131,7 +134,7 @@ if (isset($_SESSION['ruolo']) && $_SESSION['ruolo'] === 'admin') {
             <p>Accesso riservato allo staff</p>
         </div>
         <div class="admin-azioni">
-            <a href="ordini-amministatore" class="bottone-admin">
+            <a href="ordini-amministratore" class="bottone-admin">
                 <span class="icona-btn">📋</span> Gestione Ordini Clienti
             </a>
             <a href="aggiungi-prodotto" class="bottone-admin">

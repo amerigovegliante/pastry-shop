@@ -41,7 +41,7 @@ $whitelist = [
     'esito-invio-ordine' => ['file' => 'site/php/esito.php', 'permesso' => 'user_admin'],
 
     //Accessibili ad admin 
-    'ordini-amministatore'            => ['file' => 'site/php/ordiniAdmin.php', 'permesso' => 'admin'],
+    'ordini-amministratore'            => ['file' => 'site/php/ordiniAdmin.php', 'permesso' => 'admin'],
     'aggiungi-prodotto' => ['file' => 'site/php/aggiungiProdotto.php', 'permesso' => 'admin']
 ];
 
