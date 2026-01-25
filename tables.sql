@@ -27,6 +27,7 @@ CREATE TABLE item (
   prezzo DECIMAL(10,2) NOT NULL, -- Prezzo a porzione (torte) o al pezzo (pasticcini)
   immagine varchar(255),
   testo_alternativo varchar(255),
+  attivo boolean NOT NULL DEFAULT TRUE,
   PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -84,6 +85,7 @@ CREATE TABLE domanda_contattaci (
   id int  NOT NULL AUTO_INCREMENT,
   email varchar(60)  NOT NULL,
   domanda text  NOT NULL,
+  ip_utente varchar(45) NOT NULL,
   data_invio datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET = utf8 COLLATE = utf8_unicode_ci;
