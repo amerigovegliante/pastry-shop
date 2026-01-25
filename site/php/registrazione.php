@@ -1,10 +1,19 @@
 <?php
-error_reporting(E_ALL); //attiva visualizzazione errori
+// 1. AVVIO SESSIONE SUBITO
+session_start();
+
+// 2. SE L'UTENTE È GIÀ LOGGATO, NON DEVE STARE QUI
+if (isset($_SESSION['ruolo'])) {
+    header("Location: areaPersonale.php");
+    exit;
+}
+
+error_reporting(E_ALL); 
 ini_set('display_errors', 1);
 
 require_once "dbConnection.php";
 
-$paginaHTML = file_get_contents('../html/registrazione.html');
+$paginaHTML = file_get_contents( __DIR__ .'/../html/registrazione.html');
 if ($paginaHTML === false) {
     die("Errore: impossibile leggere il file template html/registrazione.html");
 }
@@ -23,10 +32,9 @@ $erroreTelefono = '';
 $errorePassword = '';
 $ArrayErroriPassword = [];
 
-$messaggioErrore = '';       //per errore generico o di connessione con il DB
-$messaggioConferma = '';     //inserimento dei dati avvenuto con successo
+$messaggioErrore = '';       
 
-//funzione per pulire l'input del form per evitare iniezioni di codice e XSS
+//funzione per pulire l'input
 function pulisciInput($value){
     $value = trim($value);              
     $value = strip_tags($value);        
@@ -34,7 +42,7 @@ function pulisciInput($value){
     return $value;
 }
 
-//formatta il testo rendendo maiuscole solo le iniziali delle parole
+//formatta il testo rendendo maiuscole solo le iniziali
 function formattaNomeCognome($value){
     return ucwords(strtolower($value));                
 }
@@ -45,9 +53,11 @@ if(isset($_POST['submit'])){
     $nome = pulisciInput($_POST['nome']);
     $cognome = pulisciInput($_POST['cognome']);
     $email = pulisciInput($_POST['email']);
-    $telefono = pulisciInput($_POST['telefono']);
     
-    //la password non va sanitizzata con htmlentities per non alterare i caratteri speciali prima dell'hashing
+    // Telefono: rimuovo eventuali spazi inseriti per errore dall'utente prima del controllo
+    $telefonoRaw = str_replace(' ', '', $_POST['telefono']);
+    $telefono = pulisciInput($telefonoRaw);
+    
     $password = trim($_POST['password']);
 
     //controllo nome
@@ -74,11 +84,12 @@ if(isset($_POST['submit'])){
     //controllo telefono
     if (strlen($telefono) === 0) {
         $erroreTelefono = '<p class="errore" role="alert">Inserire il numero di telefono</p>';
-    } elseif (!preg_match("/^[0-9\s\+]+$/", $telefono)) {
-        $erroreTelefono = '<p class="errore" role="alert">Il telefono può contenere solo numeri, spazi o il prefisso +</p>';
+    } elseif (!preg_match("/^[0-9]{10}$/", $telefono)) {
+        // accetta SOLO 10 numeri esatti, da capire se ci va bene o no.
+        $erroreTelefono = '<p class="errore" role="alert">Il telefono deve essere composto da 10 cifre senza spazi o simboli.</p>';
     }
 
-    //controllo password e complessità richiesta
+    //controllo password
     if (strlen($password) < 8) {
         $ArrayErroriPassword[] = '<li>La password deve essere lunga almeno 8 caratteri.</li>';
     }
@@ -103,7 +114,7 @@ if(isset($_POST['submit'])){
         $errorePassword .= '</ul></div>';
     }
 
-    //inserimento valori nel database solo se non ci sono errori in nessun campo
+    //inserimento valori nel database
     if (empty($erroreNome) && empty($erroreCognome) && empty($erroreEmail) && empty($erroreTelefono) && empty($errorePassword)){
         
         $nome = formattaNomeCognome($nome);
@@ -113,7 +124,7 @@ if(isset($_POST['submit'])){
         $connessione = $db->openDBConnection();
         
         if(!$connessione){  
-            $messaggioErrore = '<p class="errore" role="alert">Siamo spiacenti, si è verificato un problema di connessione. Riprova più tardi.</p>';
+            $messaggioErrore = '<p class="errore" role="alert">Problema di connessione. Riprova più tardi.</p>';
         } else {
             if($db->emailExists($email)){        
                 $erroreEmail = '<div class="errore" role="alert"><p>L\'indirizzo email è già registrato.</p>
@@ -123,11 +134,9 @@ if(isset($_POST['submit'])){
                 $db->closeDBConnection();
                 
                 if(!$success){  
-                    $messaggioErrore = '<p class="errore" role="alert">Siamo spiacenti, si è verificato un errore durante la registrazione. Riprova più tardi.</p>';
+                    $messaggioErrore = '<p class="errore" role="alert">Errore durante la registrazione. Riprova più tardi.</p>';
                 } else {
-                   //avvio sessione e login automatico post-registrazione
-                    session_start();
-                    session_regenerate_id(true); //prevenzione session fixation
+                    session_regenerate_id(true); 
                     
                     $_SESSION['email'] = $email;
                     $_SESSION['nome'] = $nome;
@@ -142,12 +151,12 @@ if(isset($_POST['submit'])){
     }
 }
 
-//fa si che una volta inviato il form, giusto o sbagliato, vengono ricompilati i campi gia' scritti  dall'utente, evitando frustrazione
+// Sostituzioni nel template 
 $paginaHTML = str_replace('[valoreNome]', $nome, $paginaHTML);
 $paginaHTML = str_replace('[valoreCognome]', $cognome, $paginaHTML);
 $paginaHTML = str_replace('[valoreEmail]', $email, $paginaHTML);
 $paginaHTML = str_replace('[valoreTelefono]', $telefono, $paginaHTML);
-$paginaHTML = str_replace('[valorePassword]', '', $paginaHTML); //il campo password viene svuotato per sicurezza
+$paginaHTML = str_replace('[valorePassword]', '', $paginaHTML); 
 
 $paginaHTML = str_replace('[messaggioErroreNome]', $erroreNome, $paginaHTML);
 $paginaHTML = str_replace('[messaggioErroreCognome]', $erroreCognome, $paginaHTML);

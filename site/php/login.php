@@ -7,15 +7,14 @@ if (session_status() === PHP_SESSION_NONE){
     session_start();                    
 }
 
-// MODIFICA: Se l'utente è già loggato, va all'Area Personale (che gestirà eventuali link admin)
 if (isset($_SESSION['ruolo'])) {
-    header("Location: areaPersonale.php");
+    header("Location: area-personale");
     exit;
 }
   
 require_once "dbConnection.php";
 
-$paginaHTML = file_get_contents('../html/login.html');
+$paginaHTML = file_get_contents( __DIR__ .'/../html/login.html');
 if ($paginaHTML === false) {
     die("Errore: impossibile leggere login.html");
 }
@@ -75,7 +74,7 @@ if(isset($_POST['submit'])){
 
                     $db->closeDBConnection();
 
-                    header("Location: areaPersonale.php");
+                    header("Location: area-personale");
                     exit;
             }
         }

@@ -3,9 +3,8 @@ error_reporting(E_ALL); //attiva visualizzazione errori
 ini_set('display_errors', 1);
 
 require_once "dbConnection.php";
-use DBAccess;
 
-$paginaHTML = file_get_contents('../html/contattaci.html');
+$paginaHTML = file_get_contents( __DIR__ .'/../html/contattaci.html');
 if ($paginaHTML === false) {
     die("Errore: impossibile leggere contattaci.html");
 }

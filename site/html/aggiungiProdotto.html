@@ -5,12 +5,13 @@
     <meta charset="utf-8">
     <title>Aggiungi Prodotto - Pasticceria Padovana</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords" content="pasticceria padovana, pasticceria, dolci, torta, pasticcini, padova, dolce">
-    <meta name="description" content="Crea un account su Pasticceria Padovana per ordinare online e ricevere offerte speciali.">
+    <meta name="description" content="Aggiungi un nuovo prodotto al catalogo della Pasticceria Padovana.">
 
-    <link rel="stylesheet" href="../css/style.css" media="screen">
-    <link rel="stylesheet" href="../css/mini.css" media="screen and (max-width:800px)">
-    <link rel="stylesheet" href="../css/print.css" media="print">
+    <base href="<?= BASE_URL ?>">
+
+    <link rel="stylesheet" href="site/css/style.css" media="screen">
+    <link rel="stylesheet" href="site/css/mini.css" media="screen and (max-width:800px)">
+    <link rel="stylesheet" href="site/css/print.css" media="print">
 </head>
 
 <body>
@@ -25,7 +26,7 @@
             </a>
             <!-- per ora ho messo dei pulsanti presi da internet, penso siano da sistemare perché hanno grandezza fissa se non erro -->
             <div id="pulsantiMenu">
-                <a href="../php/login.php" class="bottoneProfilo" aria-label="Accedi alla tua area personale">
+                <a href="area-personale" class="bottoneProfilo" aria-label="Torna all'area personale">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
@@ -33,13 +34,12 @@
                     </svg>
                 </a>
 
-                <a href="../php/carrello.php" class="bottoneCarrello" aria-label="Vai al carrello">
+                <a href="carrello" class="bottoneCarrello" aria-label="Vai al carrello">
                     <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="16.5" cy="18.5" r="1.5" />
                         <circle cx="9.5" cy="18.5" r="1.5" />
-                        <path d="M18 16H8a1 1 0 0 1-.958-.713L4.256 6H3a1 1 0 0 1 0-2h2
-                      a1 1 0 0 1 .958.713L6.344 6H21a1 1 0 0 1 .937 1.352l-3 8
-                      A1 1 0 0 1 18 16zm-9.256-2h8.563l2.25-6H6.944z" />
+                        <path
+                            d="M18 16H8a1 1 0 0 1-.958-.713L4.256 6H3a1 1 0 0 1 0-2h2 a1 1 0 0 1 .958.713L6.344 6H21a1 1 0 0 1 .937 1.352l-3 8 A1 1 0 0 1 18 16zm-9.256-2h8.563l2.25-6H6.944z" />
                     </svg>
                 </a>
             </div>
@@ -48,11 +48,11 @@
 
     <nav id="menu" aria-label="Menu principale">
         <ul class="contenuto">
-            <li><a href="../../index.html"><span lang="en">Home</span></a></li>
-            <li><a href="../html/story.html">Chi siamo</a></li>
-            <li><a href="../php/torte-pasticcini.php?tipo=torte">Le nostre torte</a></li>
-            <li><a href="../php/torte-pasticcini.php?tipo=pasticcini">I nostri pasticcini </a></li>
-            <li><a href="../php/contattaci.php">Contattaci</a></li>
+            <li><a href="home"><span lang="en">Home</span></a></li>
+            <li><a href="chi-siamo">Chi siamo</a></li>
+            <li><a href="torte">Le nostre torte</a></li>
+            <li><a href="pasticcini">I nostri pasticcini </a></li>
+            <li><a href="contattaci">Contattaci</a></li>
         </ul>
     </nav>
 
@@ -68,9 +68,11 @@
         <section id="sezioneAggiungiProdotto">
             <h2>Aggiungi un nuovo prodotto</h2>
 
-            <form id="formAggiungiProdotto" action="../php/aggiungiProdotto.php" method="post" enctype="multipart/form-data" autocomplete="on">
+            <form id="formAggiungiProdotto" action="../php/aggiungiProdotto.php" method="post" enctype="multipart/form-data">
                 <fieldset>
                     <legend>Dettagli del prodotto</legend>
+                    
+                    [csrfToken]
 
                     <div class="campoDati">
                         <label for="tipo">Tipo di prodotto:</label>
@@ -84,7 +86,7 @@
 
                     <div class="campoDati">
                         <label for="nome">Nome del prodotto:</label>
-                        <input id="nome" name="nome" maxlength="30" required aria-describedby="name-help" value="[valoreNome]">
+                        <input type="text" id="nome" name="nome" maxlength="30" required aria-describedby="name-help" value="[valoreNome]">
                         <small id="name-help">Massimo 30 caratteri</small>
                     </div>
                     [messaggioErroreNome]
@@ -97,23 +99,23 @@
                     [messaggioErroreDescrizione]
 
                     <div class="campoDati">
-                        <label for="prezzo">Prezzo per porzione (€):</label>
+                        <label for="prezzo">Prezzo (€):</label>
                         <input type="number" id="prezzo" name="prezzo" step="0.01" min="0" max="99999999.99" required aria-describedby="price-help" value="[valorePrezzo]">
-                        <small id="price-help">Formato decimale, ad esempio 12.50</small>
+                        <small id="price-help">Per le torte indicare il prezzo a porzione.</small>
                     </div>
                     [messaggioErrorePrezzo]
 
                     <div class="campoDati">
                         <label for="immagine">Immagine del prodotto:</label>
                         <input type="file" id="immagine" name="immagine" accept="image/*" required aria-describedby="img-help">
-                        <small id="img-help">Carica un'immagine del prodotto</small>
+                        <small id="img-help">Formati ammessi: JPG, PNG, WEBP.</small>
                     </div>
                     [messaggioErroreImmagine]
 
                     <div class="campoDati">
-                        <label for="testoAlternativo">Testo alternativo all'immagine:</label>
+                        <label for="testoAlternativo">Testo alternativo (ALT):</label>
                         <textarea id="testoAlternativo" name="testoAlternativo" maxlength="255" required aria-describedby="alt-help">[valoreTestoAlternativo]</textarea>
-                        <small id="alt-help">Massimo 255 caratteri</small>
+                        <small id="alt-help">Descrizione dell'immagine per non vedenti.</small>
                     </div>
                     [messaggioErroreTestoAlternativo]
 
@@ -161,5 +163,4 @@
         </div>
     </footer>
 </body>
-
 </html>

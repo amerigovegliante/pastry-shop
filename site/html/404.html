@@ -3,9 +3,10 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Carrello - Pasticceria Padovana</title>
+    <title>Pagina non trovata</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Visualizza il riepilogo dei prodotti nel tuo carrello e procedi con l'ordine.">
+    <meta name="keywords" content="Pasticceria Padovana, contattaci, email, domande, assistenza clienti, Padova">
+    <meta name="description" content="Errore 404: pagina non trovata">
 
     <base href="<?= BASE_URL ?>">
 
@@ -15,33 +16,35 @@
 </head>
 
 <body>
-    <a href="#main" class="salta-contenuto">Salta al contenuto principale</a>
-
     <header>
         <div class="contenuto">
             <button type="button" class="bottoneMenu" aria-label="Apri il menu principale">Menu</button>
-            <a href="../../index.html" aria-label="Torna alla homepage">
-                <div id="logo">
-                    <h1>Pasticceria Padovana</h1>
-                    <p class="sirivennela-regular">La pasticceria tradizionale su misura per i tuoi eventi</p>
-                </div>
-            </a>
+
+            <div id="logo">
+                <h1>Pasticceria Padovana</h1>
+                <p class="sirivennela-regular">La pasticceria tradizionale su misura per i tuoi eventi</p>
+            </div>
+
             <div id="pulsantiMenu">
-                <a href="login" class="bottoneProfilo" aria-label="Accedi">
+                <a href="login" class="bottoneProfilo" aria-label="Accedi alla tua area personale">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
                         <circle cx="12" cy="7" r="4" />
                     </svg>
                 </a>
-                <span class="bottoneCarrello attivo" aria-label="Sei nel carrello">
+
+                <a href="carrello" class="bottoneCarrello" aria-label="Vai al carrello">
                     <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="16.5" cy="18.5" r="1.5" />
                         <circle cx="9.5" cy="18.5" r="1.5" />
-                        <path d="M18 16H8a1 1 0 0 1-.958-.713L4.256 6H3a1 1 0 0 1 0-2h2 a1 1 0 0 1 .958.713L6.344 6H21a1 1 0 0 1 .937 1.352l-3 8 A1 1 0 0 1 18 16zm-9.256-2h8.563l2.25-6H6.944z" />
+                        <path d="M18 16H8a1 1 0 0 1-.958-.713L4.256 6H3a1 1 0 0 1 0-2h2
+                     a1 1 0 0 1 .958.713L6.344 6H21a1 1 0 0 1 .937 1.352l-3 8
+                     A1 1 0 0 1 18 16zm-9.256-2h8.563l2.25-6H6.944z" />
                     </svg>
-                </span>
+                </a>
             </div>
+
         </div>
     </header>
 
@@ -55,16 +58,17 @@
         </ul>
     </nav>
 
-    <nav id="breadcrumb" aria-label="Percorso">
-        <p class="contenuto">Ti trovi in: <a href="home"><span lang="en">Home</span></a> &gt; Carrello</p>
+    <nav id="breadcrumb" aria-label="Percorso di navigazione">
+        <p class="contenuto">Ti trovi in: 404 Pagina non trovata</p>
     </nav>
 
-    <main id="main">
-        <section id="carrello" class="contenuto">
-            <h2>Il tuo Carrello</h2>
-
-            [ContenutoCarrello]
-
+    <main>
+        <section aria-labelledby="Pagina non trovata" class="contenuto">
+            <img src="site/img/404.gif" alt="Mascotte a forma di torta sommersa da una montagna di dolciumi">
+            <h1>404: Troppa dolcezza! Non riusciamo a trovare la pagina che cercavi.</h1>
+            <p>Sembra che tu ti sia perso tra le nostre bontà. </p>
+            <p>Non ti preoccupare, la pagina che cercavi non è qui.</p>
+            <p>Torna alla nostra <a href="home"><span lang="en">Home</span></a> e continua ad esplorare il nostro universo di <a href="torte">dolci</a> e <a href="pasticcini">pasticcini</a>.</p>   
         </section>
     </main>
 
@@ -83,7 +87,9 @@
             <div id="assistenzaClienti">
                 <h2>Assistenza clienti shop online</h2>
                 <p>Lun-Ven 8:30-13:00 14:00-17:30</p>
-                <p>Email: <a href="mailto:gestioneclienti@pasticceriapadovana.it">gestioneclienti@pasticceriapadovana.it</a></p>
+                <p>Email: <a
+                        href="mailto:gestioneclienti@pasticceriapadovana.it">gestioneclienti@pasticceriapadovana.it</a>
+                </p>
                 <p id="copyright">&copy; 2025 Pasticceria Padovana - Tutti i diritti riservati</p>
             </div>
         </div>

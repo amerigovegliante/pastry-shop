@@ -1,8 +1,7 @@
 <?php
-// configurazione delle credenziali del database.
-// questo file viene ignorato da git grazie a gitignore per permettere a ogniuno di noi di avere le proprie credenziali locali
-define('DB_HOST', 'localhost'); 
-define('DB_NAME', 'user'); 
-define('DB_USER', 'user'); 
-define('DB_PASSWORD', 'vostra_password');
+define('DB_HOST',     getenv('MYSQLHOST') ?: 'localhost');
+define('DB_USER',     getenv('MYSQLUSER') ?: 'gromanat');
+define('DB_PASSWORD', getenv('MYSQLPASSWORD') ?: 'eefee6eiMah3ohZi');
+define('DB_NAME',     getenv('MYSQLDATABASE') ?: 'gromanat');
+define('DB_PORT',     getenv('MYSQLPORT') ?: '30022');
 ?>

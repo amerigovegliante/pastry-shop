@@ -1,6 +1,6 @@
 <?php
 // importiamo il file di configurazione che contiene le costanti per la connessione (DB_HOST, DB_USER, ecc..)
-require_once('../../db_config.php');
+require_once( __DIR__ .'/../../db_config.php');
 
 class DBAccess{
     
@@ -16,11 +16,11 @@ class DBAccess{
                 DB_HOST, 
                 DB_USER,
                 DB_PASSWORD,
-                DB_NAME
+                DB_NAME,
+                DB_PORT
             );
             return true;
         } catch (mysqli_sql_exception $e) {
-            // in caso di errore di connessione, restituiamo false per gestirlo nel frontend
             return false;
         }
     }
@@ -32,15 +32,13 @@ class DBAccess{
         }
     }
 
-/* -------------------------------------------------------------------------------------------------------------------------------------------------
-FUNZIONI PER LEGGERE DATI
--------------------------------------------------------------------------------------------------------------------------------------------------
-*/
+    //restituisce la variabile di connessione al DB (necessaria per le transazioni e altre operazioni manuali)
+    public function getConn() {
+        return $this->connection;
+    }
     
     // recupera la lista di prodotti filtrata per categoria (torta o pasticcino)
     public function getListOfItems($tipo){
-        // prepariamo la query selezionando tutti i campi necessari per la visualizzazione in lista
-        // nota: prendiamo anche descrizione e immagine per avere flessibilità nel frontend
         $querySelect = "SELECT id, nome, prezzo, descrizione, immagine, testo_alternativo FROM item WHERE tipo=?";
         $stmt = mysqli_prepare($this->connection, $querySelect);
         mysqli_stmt_bind_param($stmt, "s", $tipo); 
@@ -50,10 +48,6 @@ FUNZIONI PER LEGGERE DATI
         $itemsArray = array();
         if (mysqli_num_rows($queryResult) > 0){
             while ($row = mysqli_fetch_assoc($queryResult)){ 
-                // se non c'è un'immagine specifica, ne assegniamo una di default
-                if($row['immagine'] == null){
-                    $row['immagine'] = "../img/placeholder.jpeg";
-                }
                 array_push($itemsArray, $row);
             }
             return $itemsArray;
@@ -64,7 +58,6 @@ FUNZIONI PER LEGGERE DATI
 
     // recupera il dettaglio completo di un singolo prodotto, inclusi gli allergeni
     public function getItemDetail($ID){
-        // prima query: recuperiamo le informazioni base del prodotto
         $querySelect = "SELECT id, nome, prezzo, descrizione, immagine, tipo FROM item WHERE id=?";
         $stmt = mysqli_prepare($this->connection, $querySelect);
         mysqli_stmt_bind_param($stmt, "i", $ID); 
@@ -73,14 +66,8 @@ FUNZIONI PER LEGGERE DATI
 
         if (mysqli_num_rows($queryResult) > 0){
             $itemDetails = mysqli_fetch_assoc($queryResult);
-            
-            // verifica presenza immagine
-            if($itemDetails['immagine'] == null){
-                $itemDetails['immagine'] = "../img/placeholder.jpeg"; 
-            }
 
-            // seconda query: recuperiamo la lista degli allergeni associati a questo specifico prodotto
-            // usiamo un prepared statement anche qui per sicurezza
+            // query allergeni
             $queryAllergeni = "SELECT allergene FROM item_allergico WHERE item=?";
             $stmtAllergeni = mysqli_prepare($this->connection, $queryAllergeni);
             mysqli_stmt_bind_param($stmtAllergeni, "i", $ID);
@@ -96,7 +83,6 @@ FUNZIONI PER LEGGERE DATI
                 $listaAllergeni = null;
             }
             
-            // uniamo gli allergeni ai dettagli del prodotto
             $itemDetails['allergeni'] = $listaAllergeni; 
             return $itemDetails;
         } else {
@@ -104,10 +90,8 @@ FUNZIONI PER LEGGERE DATI
         }
     }
 
-    // recupera gli ordini recenti (ultima settimana) e futuri per il pannello admin
+    // recupera gli ordini recenti per il pannello admin
     public function getOrdini(){
-        // selezioniamo tutti i campi utili per identificare l'ordine e il cliente
-        // la query filtra per data di ritiro partendo da 7 giorni fa in poi
         $querySelect = "SELECT id, ritiro, nome, cognome, telefono, annotazioni, stato, totale 
                         FROM ordine 
                         WHERE ritiro >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) 
@@ -118,21 +102,16 @@ FUNZIONI PER LEGGERE DATI
         if (mysqli_num_rows($queryResult) > 0){
             $Ritirati = array();
             $NonRitirati = array();
-            // mappa per convertire lo stato numerico in stringa leggibile
             $Progresso = [1=>'in attesa', 2=>'in preparazione', 3=>'completato', 4=>'ritirato'];
             
             while ($row = mysqli_fetch_assoc($queryResult)){
-                // assegnazione della stringa di stato, con fallback se il codice non esiste
                 $row['progresso'] = isset($Progresso[$row['stato']]) ? $Progresso[$row['stato']] : 'sconosciuto';
-                
-                // divisione degli ordini tra già conclusi (ritirati) e ancora attivi
                 if ($row['stato'] == 4){
                     array_push($Ritirati, $row);
                 } else {
                     array_push($NonRitirati, $row);
                 }
             }
-            // restituisce prima quelli attivi, poi quelli ritirati
             return array_merge($NonRitirati, $Ritirati);
         } else {
             return null;
@@ -157,6 +136,52 @@ FUNZIONI PER LEGGERE DATI
         return $ordine;
     }
 
+    //restituisce tutti i dettagli di un determinato ordine, dato il suo id. FALSE se non presente.
+    public function getOrdineById($id){
+        $querySelect = "SELECT * FROM ordine WHERE id = ?";
+        $stmt = mysqli_prepare($this->connection, $querySelect);
+        mysqli_stmt_bind_param($stmt, "i", $id);
+        mysqli_stmt_execute($stmt); 
+        $queryResult = mysqli_stmt_get_result($stmt);
+
+        if (mysqli_num_rows($queryResult) > 0) {
+            $ordine = mysqli_fetch_assoc($queryResult);
+        } else {
+            $ordine = false;
+        }
+
+        mysqli_stmt_close($stmt);
+        return $ordine;
+    }
+
+    // Recupera TUTTI i dati di un utente
+    public function getPersona($email){
+        $query = "SELECT email, nome, cognome, telefono, ruolo FROM persona WHERE email = ?";
+        $stmt = mysqli_prepare($this->connection, $query);
+        mysqli_stmt_bind_param($stmt, "s", $email);
+        mysqli_stmt_execute($stmt);
+        $res = mysqli_stmt_get_result($stmt);
+        return mysqli_fetch_assoc($res);
+    }
+
+    // Recupera ordini di un singolo utente (Storico)
+    public function getOrdiniUtente($email){
+        $query = "SELECT id, ritiro, ordinazione, stato, totale, numero 
+                  FROM ordine 
+                  WHERE persona = ? 
+                  ORDER BY ordinazione DESC";
+        $stmt = mysqli_prepare($this->connection, $query);
+        mysqli_stmt_bind_param($stmt, "s", $email);
+        mysqli_stmt_execute($stmt);
+        $res = mysqli_stmt_get_result($stmt);
+        
+        $ordini = array();
+        while($row = mysqli_fetch_assoc($res)){
+            array_push($ordini, $row);
+        }
+        return $ordini;
+    }
+
     // verifica se un'email è già registrata nel sistema
     public function emailExists($email){
         $querySelect = "SELECT email FROM persona WHERE email = ?";
@@ -164,9 +189,7 @@ FUNZIONI PER LEGGERE DATI
         mysqli_stmt_bind_param($stmt, "s", $email);
         mysqli_stmt_execute($stmt); 
         $queryResult = mysqli_stmt_get_result($stmt);
-
         $exists = mysqli_num_rows($queryResult) > 0;
-
         mysqli_stmt_close($stmt);
         return $exists;
     }
@@ -184,6 +207,7 @@ FUNZIONI PER LEGGERE DATI
         mysqli_stmt_close($stmt);
         return $exists;
     }
+    
     // recupera il nome dell'utente data l'email
     public function getNome($email){
         $querySelect = "SELECT nome FROM persona WHERE email = ?";
@@ -191,7 +215,6 @@ FUNZIONI PER LEGGERE DATI
         mysqli_stmt_bind_param($stmt, "s", $email);
         mysqli_stmt_execute($stmt); 
         mysqli_stmt_bind_result($stmt, $nome);
-
         if (mysqli_stmt_fetch($stmt)) {
             mysqli_stmt_close($stmt);
             return $nome;
@@ -201,14 +224,12 @@ FUNZIONI PER LEGGERE DATI
         }
     }
 
-    // recupera il cognome dell'utente data l'email
     public function getCognome($email){
         $querySelect = "SELECT cognome FROM persona WHERE email = ?";
         $stmt = mysqli_prepare($this->connection, $querySelect);
         mysqli_stmt_bind_param($stmt, "s", $email);
         mysqli_stmt_execute($stmt); 
         mysqli_stmt_bind_result($stmt, $cognome);
-
         if (mysqli_stmt_fetch($stmt)) {
             mysqli_stmt_close($stmt);
             return $cognome;
@@ -218,14 +239,12 @@ FUNZIONI PER LEGGERE DATI
         }
     }
 
-    // recupera l'hash della password per la verifica del login
     public function getHash($email){
         $querySelect = "SELECT password FROM persona WHERE email = ?";
         $stmt = mysqli_prepare($this->connection, $querySelect);
         mysqli_stmt_bind_param($stmt, "s", $email);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_bind_result($stmt, $password_hash);
-        
         if(mysqli_stmt_fetch($stmt)){
             mysqli_stmt_close($stmt);
             return $password_hash;
@@ -235,30 +254,18 @@ FUNZIONI PER LEGGERE DATI
         }
     }
 
-    // verifica la corrispondenza tra email e password inserita
     public function correctLogin($email, $password){
         $hash = $this->getHash($email);
-        
-        if($hash === false || $hash === null){
-            return false;
-        }
-        
-        // usiamo password_verify per confrontare la password in chiaro con l'hash crittografato nel db
-        if (password_verify($password, $hash)){
-            return true;
-        } else {
-            return false;
-        }
+        if($hash === false || $hash === null){ return false; }
+        if (password_verify($password, $hash)){ return true; } else { return false; }
     }
 
-    //restituisce il ruolo (admin o user) relativo alla email, FALSE se non trovato
     public function getRuolo($email){
         $querySelect = "SELECT ruolo FROM persona WHERE email = ?";
         $stmt = mysqli_prepare($this->connection, $querySelect);
         mysqli_stmt_bind_param($stmt, "s", $email);
         mysqli_stmt_execute($stmt); 
         mysqli_stmt_bind_result($stmt, $ruolo);
-
         if (mysqli_stmt_fetch($stmt)) {
             mysqli_stmt_close($stmt);
             return $ruolo;
@@ -324,14 +331,10 @@ FUNZIONI PER SCRIVERE DATI
 */
     //registra un nuovo utente nel database con ruolo 'user'
     public function insertNewPersona($email, $nome, $cognome, $telefono, $password){
-        // crittografia della password
         $password_hash = password_hash($password, PASSWORD_DEFAULT);
-
         $queryInsert = "INSERT INTO persona(email, nome, cognome, telefono, ruolo, password) VALUES (?, ?, ?, ?, 'user', ?)";   
-
         $stmt = mysqli_prepare($this->connection, $queryInsert);
         mysqli_stmt_bind_param($stmt, "sssss", $email, $nome, $cognome, $telefono, $password_hash);
-        
         $success = mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);   
         return $success;
@@ -354,7 +357,6 @@ FUNZIONI PER SCRIVERE DATI
     //restituisce l'id dell'oggeto appena inserito, altrimrnti FALSE
     public function insertNewItem($tipo, $nome, $descrizione, $prezzo, $immagine, $testoAlternativo){
         $queryInsert = "INSERT INTO item(tipo, nome, descrizione, prezzo, immagine, testo_alternativo) VALUES (?, ?, ?, ?, ?, ?)";
-
         $stmt = mysqli_prepare($this->connection, $queryInsert);
         mysqli_stmt_bind_param($stmt, "sssdss", $tipo, $nome, $descrizione, $prezzo, $immagine, $testoAlternativo); 
 
@@ -376,9 +378,108 @@ FUNZIONI PER SCRIVERE DATI
         $queryInsert = "INSERT INTO item_allergico(item, allergene) VALUES (?, ?)";
         $stmt = mysqli_prepare($this->connection, $queryInsert);
         mysqli_stmt_bind_param($stmt, "is", $idIitem, $allergeneItem); 
+    // Aggiorna i dati dell'utente (Nome, Cognome, Telefono)
+    public function updatePersona($vecchiaEmail, $nuovoNome, $nuovoCognome, $nuovoTelefono){
+        $query = "UPDATE persona SET nome=?, cognome=?, telefono=? WHERE email=?";
+        $stmt = mysqli_prepare($this->connection, $query);
+        mysqli_stmt_bind_param($stmt, "ssss", $nuovoNome, $nuovoCognome, $nuovoTelefono, $vecchiaEmail);
         $success = mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
         return $success;
+    }
+
+        $success = mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+        if ($success) {
+            return mysqli_insert_id($this->connection);
+        } else {
+            return false;
+        }
+    }
+
+    //inserisce una nuova riga in item_allergico nel DB
+    //restituisce l'oggetto mysqli_result se la query è andata a buon fine, altrimrnti FALSE
+    public function insertNewItemAllergico($idIitem, $allergeneItem){
+        if(!$this->allergeneExists($allergeneItem)){
+            return false;
+        }
+        $queryInsert = "INSERT INTO item_allergico(item, allergene) VALUES (?, ?)";
+        $stmt = mysqli_prepare($this->connection, $queryInsert);
+        mysqli_stmt_bind_param($stmt, "is", $idIitem, $allergeneItem); 
+    }
+    
+    // Aggiorna i dati dell'utente (Nome, Cognome, Telefono)
+    public function updatePersona($vecchiaEmail, $nuovoNome, $nuovoCognome, $nuovoTelefono){
+        $query = "UPDATE persona SET nome=?, cognome=?, telefono=? WHERE email=?";
+        $stmt = mysqli_prepare($this->connection, $query);
+        mysqli_stmt_bind_param($stmt, "ssss", $nuovoNome, $nuovoCognome, $nuovoTelefono, $vecchiaEmail);
+        $success = mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+        return $success;
+    }
+
+    // Elimina utente
+    public function deletePersona($email) {
+        // Verifico se la connessione è aperta, altrimenti provo ad aprirla
+        if (!$this->connection) {
+            if (!$this->openDBConnection()) {
+                return false;
+            }
+        }
+        
+        $connessione = $this->connection; 
+        
+        // 1. Controllo se ci sono ordini ATTIVI (Stato 1, 2, 3)
+        $queryCheck = "SELECT id FROM ordine WHERE persona = ? AND stato IN (1, 2, 3)";
+        $stmtCheck = mysqli_prepare($connessione, $queryCheck);
+        
+        if (!$stmtCheck) {
+            return false;
+        }
+
+        mysqli_stmt_bind_param($stmtCheck, "s", $email);
+        mysqli_stmt_execute($stmtCheck);
+        mysqli_stmt_store_result($stmtCheck);
+
+        // Se ci sono ordini attivi, NON cancello e ritorno false
+        if(mysqli_stmt_num_rows($stmtCheck) > 0){
+            mysqli_stmt_close($stmtCheck);
+            return false; 
+        }
+        mysqli_stmt_close($stmtCheck);
+
+        $queryDelete = "DELETE FROM persona WHERE email = ?";
+        $stmtDelete = mysqli_prepare($connessione, $queryDelete);
+        
+        if (!$stmtDelete) {
+            return false;
+        }
+
+        mysqli_stmt_bind_param($stmtDelete, "s", $email);
+        $result = mysqli_stmt_execute($stmtDelete);
+        
+        mysqli_stmt_close($stmtDelete);
+        
+        return $result;
+    }
+
+     public function  AggiornaStati($statiModificati) {
+        // Verifico se la connessione è aperta, altrimenti provo ad aprirla
+        if (!$this->connection) {
+            if (!$this->openDBConnection()) {
+                return false;
+            }
+        }
+        
+        $connessione = $this->connection; 
+
+        foreach($statiModificati as $idOrdine => $nuovoStato){
+            $query = "UPDATE ordine SET stato=? WHERE id=?";
+            $stmt = mysqli_prepare($connessione, $query);
+            mysqli_stmt_bind_param($stmt, "ii", $nuovoStato, $idOrdine);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+        }
     }
 
     //elimina l'item con l'id passatogli

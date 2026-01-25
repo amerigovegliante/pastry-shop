@@ -3,9 +3,9 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Carrello - Pasticceria Padovana</title>
+    <title>Ordine Confermato - Pasticceria Padovana</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Visualizza il riepilogo dei prodotti nel tuo carrello e procedi con l'ordine.">
+    <meta name="description" content="Conferma dell'ordine avvenuta con successo.">
 
     <base href="<?= BASE_URL ?>">
 
@@ -16,31 +16,29 @@
 
 <body>
     <a href="#main" class="salta-contenuto">Salta al contenuto principale</a>
-
+    
     <header>
         <div class="contenuto">
             <button type="button" class="bottoneMenu" aria-label="Apri il menu principale">Menu</button>
-            <a href="../../index.html" aria-label="Torna alla homepage">
-                <div id="logo">
-                    <h1>Pasticceria Padovana</h1>
-                    <p class="sirivennela-regular">La pasticceria tradizionale su misura per i tuoi eventi</p>
-                </div>
-            </a>
+            <div id="logo">
+                <h1>Pasticceria Padovana</h1>
+                <p class="sirivennela-regular">La pasticceria tradizionale su misura per i tuoi eventi</p>
+            </div>
             <div id="pulsantiMenu">
-                <a href="login" class="bottoneProfilo" aria-label="Accedi">
+                <a href="area-personale" class="bottoneProfilo" aria-label="Accedi alla tua area personale">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
                         <circle cx="12" cy="7" r="4" />
                     </svg>
                 </a>
-                <span class="bottoneCarrello attivo" aria-label="Sei nel carrello">
+                <a href="carrello" class="bottoneCarrello" aria-label="Vai al carrello">
                     <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="16.5" cy="18.5" r="1.5" />
                         <circle cx="9.5" cy="18.5" r="1.5" />
                         <path d="M18 16H8a1 1 0 0 1-.958-.713L4.256 6H3a1 1 0 0 1 0-2h2 a1 1 0 0 1 .958.713L6.344 6H21a1 1 0 0 1 .937 1.352l-3 8 A1 1 0 0 1 18 16zm-9.256-2h8.563l2.25-6H6.944z" />
                     </svg>
-                </span>
+                </a>
             </div>
         </div>
     </header>
@@ -56,14 +54,36 @@
     </nav>
 
     <nav id="breadcrumb" aria-label="Percorso">
-        <p class="contenuto">Ti trovi in: <a href="home"><span lang="en">Home</span></a> &gt; Carrello</p>
+        <p class="contenuto">Ti trovi in: <a href="home"><span lang="en">Home</span></a> &gt; <a href="carrelloì">Carrello</a> &gt; Ordine Confermato</p>
     </nav>
 
     <main id="main">
-        <section id="carrello" class="contenuto">
-            <h2>Il tuo Carrello</h2>
+        <section class="contenuto" id="esitoPositivo">
 
-            [ContenutoCarrello]
+            <h2 class="successo">Ordine Confermato!</h2>
+            
+            <div class="box-riepilogo-esito">
+                <p class="numero-ordine">Numero Ordine: <strong>#[numeroOrdine]</strong></p>
+                
+                <ul class="dettagli-esito">
+                    <li><strong>Intestatario:</strong> [nomeCognome]</li>
+                    <li><strong>Totale da pagare (in cassa):</strong> [totale]</li>
+                    <li><strong>Ritiro previsto:</strong> [dataRitiro] (dalle 10:00)</li>
+                </ul>
+
+                <h3>Riepilogo Prodotti:</h3>
+                
+                <div class="table-container">
+                    [ListaProdotti]
+                </div>
+
+                <hr>
+                <p>Abbiamo ricevuto la tua richiesta. Ti aspettiamo in negozio!</p>
+            </div>
+            
+            <div class="azioni-esito">
+                <a href="home" class="pulsanteGenerico">Torna alla Home</a>
+            </div>
 
         </section>
     </main>
@@ -89,5 +109,4 @@
         </div>
     </footer>
 </body>
-
 </html>
