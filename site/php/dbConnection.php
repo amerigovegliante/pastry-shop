@@ -136,24 +136,6 @@ class DBAccess{
         return $ordine;
     }
 
-    //restituisce tutti i dettagli di un determinato ordine, dato il suo id. FALSE se non presente.
-    public function getOrdineById($id){
-        $querySelect = "SELECT * FROM ordine WHERE id = ?";
-        $stmt = mysqli_prepare($this->connection, $querySelect);
-        mysqli_stmt_bind_param($stmt, "i", $id);
-        mysqli_stmt_execute($stmt); 
-        $queryResult = mysqli_stmt_get_result($stmt);
-
-        if (mysqli_num_rows($queryResult) > 0) {
-            $ordine = mysqli_fetch_assoc($queryResult);
-        } else {
-            $ordine = false;
-        }
-
-        mysqli_stmt_close($stmt);
-        return $ordine;
-    }
-
     // Recupera TUTTI i dati di un utente
     public function getPersona($email){
         $query = "SELECT email, nome, cognome, telefono, ruolo FROM persona WHERE email = ?";
@@ -207,7 +189,7 @@ class DBAccess{
         mysqli_stmt_close($stmt);
         return $exists;
     }
-    
+
     // recupera il nome dell'utente data l'email
     public function getNome($email){
         $querySelect = "SELECT nome FROM persona WHERE email = ?";
@@ -275,11 +257,6 @@ class DBAccess{
         }
     }
     
-    //restituisce la variabile di connessione al DB
-    public function getConn() {
-        return $this->connection;
-    }
-
     //restituisce tutti gli items ordinati per tipo e per nome, FALSE se non ne trova
     public function getAllItems(){
         $querySelect = "SELECT * FROM item ORDER BY tipo, nome";
@@ -378,16 +355,6 @@ FUNZIONI PER SCRIVERE DATI
         $queryInsert = "INSERT INTO item_allergico(item, allergene) VALUES (?, ?)";
         $stmt = mysqli_prepare($this->connection, $queryInsert);
         mysqli_stmt_bind_param($stmt, "is", $idIitem, $allergeneItem); 
-    // Aggiorna i dati dell'utente (Nome, Cognome, Telefono)
-    public function updatePersona($vecchiaEmail, $nuovoNome, $nuovoCognome, $nuovoTelefono){
-        $query = "UPDATE persona SET nome=?, cognome=?, telefono=? WHERE email=?";
-        $stmt = mysqli_prepare($this->connection, $query);
-        mysqli_stmt_bind_param($stmt, "ssss", $nuovoNome, $nuovoCognome, $nuovoTelefono, $vecchiaEmail);
-        $success = mysqli_stmt_execute($stmt);
-        mysqli_stmt_close($stmt);
-        return $success;
-    }
-
         $success = mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
         if ($success) {
@@ -397,17 +364,6 @@ FUNZIONI PER SCRIVERE DATI
         }
     }
 
-    //inserisce una nuova riga in item_allergico nel DB
-    //restituisce l'oggetto mysqli_result se la query è andata a buon fine, altrimrnti FALSE
-    public function insertNewItemAllergico($idIitem, $allergeneItem){
-        if(!$this->allergeneExists($allergeneItem)){
-            return false;
-        }
-        $queryInsert = "INSERT INTO item_allergico(item, allergene) VALUES (?, ?)";
-        $stmt = mysqli_prepare($this->connection, $queryInsert);
-        mysqli_stmt_bind_param($stmt, "is", $idIitem, $allergeneItem); 
-    }
-    
     // Aggiorna i dati dell'utente (Nome, Cognome, Telefono)
     public function updatePersona($vecchiaEmail, $nuovoNome, $nuovoCognome, $nuovoTelefono){
         $query = "UPDATE persona SET nome=?, cognome=?, telefono=? WHERE email=?";

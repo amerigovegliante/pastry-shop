@@ -1,5 +1,5 @@
 RewriteEngine On
-RewriteBase  /gromanat/pastry-shop
+RewriteBase  /gdelucch/pastry-shop
 
 # 1. Se la richiesta è per un file che esiste davvero (es. un'immagine o CSS), caricalo normalmente
 RewriteCond %{REQUEST_FILENAME} -f [OR]

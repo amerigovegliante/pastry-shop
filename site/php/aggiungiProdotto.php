@@ -67,9 +67,7 @@ if(isset($_POST['submit'])){
     if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
         $messaggioErrore = '<p class="errore" role="alert">Errore di sicurezza: Token non valido. Riprova.</p>';
     } else {
-        
         // --- VALIDAZIONE CAMPI ---
-
         // Tipo
         if(isset($_POST['tipo']) && ($_POST['tipo'] === 'torta' || $_POST['tipo'] === 'pasticcino')){
             $tipo = $_POST['tipo'];
@@ -101,43 +99,44 @@ if(isset($_POST['submit'])){
             $errorePrezzo = '<p class="errore" role="alert">Inserisci un prezzo valido</p>';
         }
 
-   //immagine
-    if (isset($_FILES['immagine']) && $_FILES['immagine']['error'] === UPLOAD_ERR_OK) {
+        //immagine
+        if (isset($_FILES['immagine']) && $_FILES['immagine']['error'] === UPLOAD_ERR_OK) {
 
-        $fileTmpPath = $_FILES['immagine']['tmp_name'];     //percorso temporaneo dove PHP mette il file appena caricato
-        $fileName = $_FILES['immagine']['name'];
-        $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+            $fileTmpPath = $_FILES['immagine']['tmp_name'];     //percorso temporaneo dove PHP mette il file appena caricato
+            $fileName = $_FILES['immagine']['name'];
+            $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
 
-            $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp'];
+                $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp'];
 
-        if (!in_array($fileExtension, $allowedExtensions)) {
-            $erroreImmagine = '<p class="errore" role="alert">Formato immagine non consentito. Usa JPG, PNG o WEBP.</p>';
-        } else {
-            $uploadDir = '../img/'; //cartella dove salvare le immagini
-    
-            if (!is_dir($uploadDir)) {  //sela cartella non esiste la crea
-                mkdir($uploadDir, 0755, true);
-            }
-            $newFileName = uniqid('img_', true) . '.' . $fileExtension; //nomina il file in maniera univoca
-            $destPath = $uploadDir . $newFileName;
-            
-            if (move_uploaded_file($fileTmpPath, $destPath)) {  //sposta il file nella cartella definitiva
-                // salva solo il path relativo
-                $immagine = '../img/' . $newFileName;
+            if (!in_array($fileExtension, $allowedExtensions)) {
+                $erroreImmagine = '<p class="errore" role="alert">Formato immagine non consentito. Usa JPG, PNG o WEBP.</p>';
             } else {
-                $erroreImmagine = '<p class="errore" role="alert">Errore durante il caricamento dell\'immagine.</p>';
+                $uploadDir = '../img/'; //cartella dove salvare le immagini
+        
+                if (!is_dir($uploadDir)) {  //sela cartella non esiste la crea
+                    mkdir($uploadDir, 0755, true);
+                }
+                $newFileName = uniqid('img_', true) . '.' . $fileExtension; //nomina il file in maniera univoca
+                $destPath = $uploadDir . $newFileName;
+                
+                if (move_uploaded_file($fileTmpPath, $destPath)) {  //sposta il file nella cartella definitiva
+                    // salva solo il path relativo
+                    $immagine = '../img/' . $newFileName;
+                } else {
+                    $erroreImmagine = '<p class="errore" role="alert">Errore durante il caricamento dell\'immagine.</p>';
+                }
             }
+        } else {
+            $erroreImmagine = '<p class="errore" role="alert">Inserire l\'immagine</p>';
         }
-    } else {
-        $erroreImmagine = '<p class="errore" role="alert">Inserire l\'immagine</p>';
-    }
    
-    //testo alternativo
-    $testoAlternativo = pulisciInput($_POST['testoAlternativo']);
-    if(strlen($testoAlternativo) === 0){
-        $erroreTestoAlternativo = '<p class="errore" role="alert">Inserire il testo alternativo all\'immagine</p>';
-    } else if (strlen($testoAlternativo) > 255){
-        $erroreTestoAlternativo = '<p class="errore" role="alert">Il testo alternativo non può superare 255 caratteri</p>';
+        //testo alternativo
+        $testoAlternativo = pulisciInput($_POST['testoAlternativo']);
+        if(strlen($testoAlternativo) === 0){
+            $erroreTestoAlternativo = '<p class="errore" role="alert">Inserire il testo alternativo all\'immagine</p>';
+        } else if (strlen($testoAlternativo) > 255){
+            $erroreTestoAlternativo = '<p class="errore" role="alert">Il testo alternativo non può superare 255 caratteri</p>';
+        }
     }
 
     //INSERIMENTO VALORI NEL DATABASE solo se non ci sono errori in nessun campo
@@ -229,7 +228,7 @@ if(!$connessione){
             '<td>
                 <form method="post" onsubmit="return confirm(\'Vuoi davvero eliminare questo dolce?\');">
                     <input type="hidden" name="delete_id" value="' . htmlspecialchars($item['id']) . '">
-                    <button type="submit" name="delete" class="pulsanteCancella" aria-label="Elimina prodotto <?= htmlspecialchars($item[\'nome\']) ?>">
+                    <button type="submit" name="delete" class="pulsanteCancella" aria-label="Elimina prodotto ' . htmlspecialchars($item['nome']) . '">
                         &#x1F5D1;
                     </button>
                 </form>
