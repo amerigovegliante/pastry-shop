@@ -8,7 +8,7 @@ if (session_status() === PHP_SESSION_NONE){
 }
 
 if (isset($_SESSION['ruolo'])) {
-    header("Location: areaPersonale.php");
+    header("Location: area-personale");
     exit;
 }
   
@@ -76,7 +76,7 @@ if(isset($_POST['submit'])){
 
                     $db->closeDBConnection();
 
-                    header("Location: areaPersonale.php");
+                    header("Location: area-personale");
                     exit;
             }
         }

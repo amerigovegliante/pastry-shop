@@ -7,7 +7,7 @@ require_once "dbConnection.php";
 
 // Controllo accesso
 if (!isset($_SESSION['ruolo'])) {
-    header("Location: login.php");
+    header("Location: login");
     exit;
 }
 
@@ -131,10 +131,10 @@ if (isset($_SESSION['ruolo']) && $_SESSION['ruolo'] === 'admin') {
             <p>Accesso riservato allo staff</p>
         </div>
         <div class="admin-azioni">
-            <a href="ordiniAdmin.php" class="bottone-admin">
+            <a href="ordini-amministatore" class="bottone-admin">
                 <span class="icona-btn">📋</span> Gestione Ordini Clienti
             </a>
-            <a href="aggiungiProdotto.php" class="bottone-admin">
+            <a href="aggiungi-prodotto" class="bottone-admin">
                 <span class="icona-btn">🍰</span> Aggiungi Nuovo Prodotto
             </a>
         </div>

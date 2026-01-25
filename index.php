@@ -3,7 +3,7 @@ error_reporting(E_ALL); //attiva visualizzazione errori
 ini_set('display_errors', 1);
 
 
-session_start();
+session_start();//CONTROLLA
 
 //genero url base per i file non index
 require_once __DIR__ . '/db_config.php';
@@ -41,7 +41,7 @@ $whitelist = [
     'esito-invio-ordine' => ['file' => 'site/php/esito.php', 'permesso' => 'user_admin'],
 
     //Accessibili ad admin 
-    'ordini-amministatore'            => ['file' => 'site/php/OrdiniAdmin.php', 'permesso' => 'admin'],
+    'ordini-amministatore'            => ['file' => 'site/php/ordiniAdmin.php', 'permesso' => 'admin'],
     'aggiungi-prodotto' => ['file' => 'site/php/aggiungiProdotto.php', 'permesso' => 'admin']
 ];
 
