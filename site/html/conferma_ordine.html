@@ -22,10 +22,13 @@
     <header>
         <div class="contenuto">
             <button type="button" class="bottoneMenu" aria-label="Apri il menu principale">Menu</button>
-            <div id="logo">
-                <h1>Pasticceria Padovana</h1>
-                <p class="sirivennela-regular">La pasticceria tradizionale su misura per i tuoi eventi</p>
-            </div>
+             <a href="home" aria-label="Torna alla homepage">
+                <div id="logo">
+                    <h1>Pasticceria Padovana</h1>
+                    <p class="sirivennela-regular">La pasticceria tradizionale su misura per i tuoi eventi</p>
+                </div>
+             </a>
+            
             <div id="pulsantiMenu">
                 <a href="area-personale" class="bottoneProfilo" aria-label="Accedi alla tua area personale">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -65,7 +68,7 @@
         <section class="contenuto" id="confermaOrdine">
             <h2>Dati per il ritiro</h2>
 
-            <form action="checkout.php" method="POST" class="form-conferma">
+            <form action="checkout" method="POST" class="form-conferma">
 
                 <fieldset>
                     <legend>Intestatario Ordine</legend>

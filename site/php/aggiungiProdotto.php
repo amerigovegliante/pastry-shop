@@ -1,5 +1,9 @@
 <?php
-session_start();
+// Avvio sessione solo se non già avviata
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 error_reporting(E_ALL); 
 ini_set('display_errors', 1);
 
@@ -7,7 +11,7 @@ require_once "dbConnection.php";
 
 // 1. SICUREZZA: Controllo che l'utente sia loggato E sia ADMIN
 if (!isset($_SESSION['ruolo']) || $_SESSION['ruolo'] !== 'admin') {
-    header("Location: login.php");
+    header("Location: login");
     exit;
 }
 

@@ -1,10 +1,13 @@
 <?php
 // 1. AVVIO SESSIONE SUBITO
-session_start();
+// Avvio sessione solo se non già avviata
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // 2. SE L'UTENTE È GIÀ LOGGATO, NON DEVE STARE QUI
 if (isset($_SESSION['ruolo'])) {
-    header("Location: areaPersonale.php");
+    header("Location: areaPersonale");
     exit;
 }
 
@@ -143,7 +146,7 @@ if(isset($_POST['submit'])){
                     $_SESSION['cognome'] = $cognome;
                     $_SESSION['ruolo'] = 'user'; //il ruolo di default per la registrazione pubblica è user
 
-                    header("Location: areaPersonale.php");  //reindirizzamento all'area personale
+                    header("Location: areaPersonale");  //reindirizzamento all'area personale
                     exit;
                 }
             }

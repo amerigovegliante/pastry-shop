@@ -1,5 +1,5 @@
 <?php
-// Avvio sessione se non già avviata
+// Avvio sessione solo se non già avviata
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -116,7 +116,7 @@ if($connessione){
                 <td data-label='Stato'><span class='stato-tag s-{$o['stato']}'>$statoTesto</span></td>
                 <td data-label='Totale'>€$totaleFmt</td>
                 <td data-label='Azioni'>
-                     <a href='dettaglioOrdine.php?id={$o['id']}' class='link-dettaglio' aria-label='Vedi dettagli ordine numero {$o['numero']}'>Dettagli</a>
+                     <a href='dettaglio-ordine&id={$o['id']}' class='link-dettaglio' aria-label='Vedi dettagli ordine numero {$o['numero']}'>Dettagli</a>
                 </td>
             </tr>";
         }

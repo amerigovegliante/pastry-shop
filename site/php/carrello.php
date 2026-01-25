@@ -1,5 +1,9 @@
 <?php
-session_start();
+// Avvio sessione solo se non già avviata
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -74,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['ID'])) {
         }
     }
     // pattern PRG per evitare reinvio form al refresh
-    header("Location: carrello.php");
+    header("Location: carrello");
     exit;
 }
 
@@ -85,7 +89,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'rimuovi' && isset($_GET['index
         unset($_SESSION['carrello'][$index]);
         $_SESSION['carrello'] = array_values($_SESSION['carrello']);
     }
-    header("Location: carrello.php");
+    header("Location: carrello");
     exit;
 }
 
@@ -132,7 +136,7 @@ if (isset($_SESSION['carrello']) && count($_SESSION['carrello']) > 0) {
             <td data-label='Prezzo Unit.'>€$unitarioFormat</td>
             <td data-label='Totale'><strong>€$totaleRigaFormat</strong></td>
             <td data-label='Azioni'>
-                <a href='carrello.php?action=rimuovi&index=$index' class='link-rimuovi' aria-label='Rimuovi $nomeProdotto dal carrello'>Rimuovi</a>
+                <a href='carrello&action=rimuovi&index=$index' class='link-rimuovi' aria-label='Rimuovi $nomeProdotto dal carrello'>Rimuovi</a>
             </td>
         </tr>";
     }
@@ -144,13 +148,13 @@ if (isset($_SESSION['carrello']) && count($_SESSION['carrello']) > 0) {
     if (isset($_SESSION['ruolo'])) {
         $pulsanteProcedi = "
         <div class='box-checkout'>
-            <a href='conferma_ordine.php' class='pulsanteGenerico'>Procedi con l'ordine &rarr;</a>
+            <a href='conferma-ordine' class='pulsanteGenerico'>Procedi con l'ordine &rarr;</a>
         </div>";
     } else {
         $pulsanteProcedi = "
         <div class='login-alert'>
             <p>Per concludere l'ordine è necessario accedere.</p>
-            <a href='login.php' class='pulsanteGenerico'>Accedi o Registrati</a>
+            <a href='login' class='pulsanteGenerico'>Accedi o Registrati</a>
         </div>";
     }
 
@@ -181,7 +185,7 @@ if (isset($_SESSION['carrello']) && count($_SESSION['carrello']) > 0) {
         </table>
 
         <div class='azioniCarrello'>
-            <a href='torte-pasticcini.php?tipo=torte' class='link-indietro'>&larr; Continua acquisti</a>
+            <a href='torte' class='link-indietro'>&larr; Continua acquisti</a>
             $pulsanteProcedi
         </div>
     </div>";
@@ -192,8 +196,8 @@ if (isset($_SESSION['carrello']) && count($_SESSION['carrello']) > 0) {
     <div class='carrello-vuoto'>
         <p>Il tuo carrello è vuoto.</p>
         <div class='bottoni-vuoto'>
-            <a href='torte-pasticcini.php?tipo=torte' class='pulsanteGenerico'>Le nostre Torte</a>
-            <a href='torte-pasticcini.php?tipo=pasticcini' class='pulsanteGenerico'>I nostri Pasticcini</a>
+            <a href='torte' class='pulsanteGenerico'>Le nostre Torte</a>
+            <a href='pasticcini' class='pulsanteGenerico'>I nostri Pasticcini</a>
         </div>
     </div>";
 }

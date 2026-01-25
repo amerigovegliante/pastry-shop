@@ -1,5 +1,9 @@
 <?php
-session_start();
+// Avvio sessione solo se non già avviata
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -7,11 +11,11 @@ require_once "dbConnection.php";
 
 // controllo accesso
 if (!isset($_SESSION['ruolo'])) {
-    header("Location: login.php");
+    header("Location: login");
     exit;
 }
 if (!isset($_SESSION['carrello']) || count($_SESSION['carrello']) === 0) {
-    header("Location: carrello.php");
+    header("Location: carrello");
     exit;
 }
 
@@ -70,7 +74,7 @@ $paginaHTML = str_replace("[minDate]", $minDate, $paginaHTML);
 $paginaHTML = str_replace("[totale]", $totaleFormat, $paginaHTML);
 
 $inputToken = "<input type='hidden' name='csrf_token' value='$token'>";
-$paginaHTML = str_replace('<form action="checkout.php" method="POST" class="form-conferma">', '<form action="checkout.php" method="POST" class="form-conferma">' . $inputToken, $paginaHTML);
+$paginaHTML = str_replace('<form action="checkout" method="POST" class="form-conferma">', '<form action="checkout" method="POST" class="form-conferma">' . $inputToken, $paginaHTML);
 
 echo $paginaHTML;
 ?>

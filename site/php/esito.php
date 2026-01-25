@@ -1,9 +1,12 @@
 <?php
-session_start();
+// Avvio sessione solo se non già avviata
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // se l'utente prova ad aprire questa pagina direttamente senza passare dal checkout, lo rispediamo alla home
 if (!isset($_SESSION['risultato_esito'])) {
-    header("Location: ../../index.html");
+    header("Location: home");
     exit;
 }
 
@@ -20,7 +23,7 @@ if ($dati['successo'] === false) {
 
 // nel caso l'ordine sia andato a buon fine:
 if ($dati['successo'] === true) {
-    $paginaHTML = file_get_contents('../html/esito_positivo.html');
+    $paginaHTML = file_get_contents( __DIR__ .'/../html/esito_positivo.html');
 
     // Formattazione dati per la vista
     $totaleFormat = "€" . number_format($dati['totale'], 2, ',', '.');

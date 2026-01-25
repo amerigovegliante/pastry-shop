@@ -20,14 +20,12 @@
     <header>
         <div class="contenuto">
             <button type="button" class="bottoneMenu" aria-label="Apri il menu principale">Menu</button>
-
-            <a href="../../index.html" aria-label="Torna alla homepage">
+             <a href="home" aria-label="Torna alla homepage">
                 <div id="logo">
-                    <h1>Pasticceria Padovana</h1>
-                    <p class="sirivennela-regular">La pasticceria tradizionale su misura per i tuoi eventi</p>
-                </div>
-            </a>
-
+                <h1>Pasticceria Padovana</h1>
+                <p class="sirivennela-regular">La pasticceria tradizionale su misura per i tuoi eventi</p>
+            </div>
+             </a>
             <div id="pulsantiMenu">
                 <span class="bottoneProfilo attivo" aria-label="Sei nella tua area personale">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -82,7 +80,7 @@
                 <section class="box-profilo" aria-labelledby="titolo-dati">
                     <h3 id="titolo-dati">I miei Dati</h3>
 
-                    <form action="areaPersonale.php" method="POST">
+                    <form action="area-personale" method="POST">
                         <input type="hidden" name="action" value="modificaDati">
                         [csrfToken]
 
@@ -124,7 +122,7 @@
             <section class="zona-pericolo" aria-labelledby="titolo-pericolo">
                 <h3 id="titolo-pericolo">Gestione Account</h3>
                 <p>Desideri eliminare il tuo account? Questa azione è irreversibile.</p>
-                <form action="areaPersonale.php" method="POST"
+                <form action="area-personale" method="POST"
                     onsubmit="return confirm('Sei sicuro di voler eliminare il tuo account? Questa azione non può essere annullata.');">
                     <input type="hidden" name="action" value="eliminaAccount">
                     [csrfToken]

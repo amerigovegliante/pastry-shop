@@ -79,12 +79,12 @@ if($connessione){
 
         // SEZIONE FORM DI ACQUISTO
         $formAcquisto .= "<section class=\"acquistoItem\">
-                <form method=\"post\" action=\"carrello.php\">
+                <form method=\"post\" action=\"carrello\">
                     <input type=\"hidden\" name=\"ID\" value=\"".htmlspecialchars($Item['id'])."\">";
                     
         // --- LOGICA TORTE ---
         if($tipoItem === 'torta'){
-            $tipoBreadcrumb = "<a href=\"torte-pasticcini.php?tipo=torte\">Le nostre torte</a>";
+            $tipoBreadcrumb = "<a href=\"torte\">Le nostre torte</a>";
             
             // Box 1: Dimensione
             $formAcquisto .= "<fieldset class=\"opzioniTorta\">
@@ -115,7 +115,7 @@ if($connessione){
                     </fieldset>";
             
         } else if($tipoItem === 'pasticcino'){
-            $tipoBreadcrumb = "<a href=\"torte-pasticcini.php?tipo=pasticcini\">I nostri pasticcini</a>";
+            $tipoBreadcrumb = "<a href=\"pasticcini\">I nostri pasticcini</a>";
         }
 
         // --- BOX QUANTITÀ

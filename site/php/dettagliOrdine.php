@@ -21,8 +21,8 @@ $stati = [                   // Mappa stati ordine
 ];
 
 //TABELLA DETTAGLI ORDINE: Viene stampata una tabella con tutti i prodotti salvati nel DB fino a quel momento
-if (isset($_POST['id_ordine'])) {
-    $id_ordine = $_POST['id_ordine'];
+if (isset($_POST['id'])) {
+    $id_ordine = $_POST['id'];
     
     $db = new DBAccess();
     $connessione = $db->openDBConnection();

@@ -1,5 +1,9 @@
 <?php
-session_start();
+// Avvio sessione solo se non già avviata
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -8,19 +12,19 @@ require_once "dbConnection.php";
 
 // se non loggato -> Login
 if (!isset($_SESSION['ruolo'])) {
-    header("Location: login.php");
+    header("Location: login");
     exit;
 }
 
 // se carrello vuoto o inesistente -> Carrello
 if (!isset($_SESSION['carrello']) || count($_SESSION['carrello']) === 0) {
-    header("Location: carrello.php");
+    header("Location: carrello");
     exit;
 }
 
 // se non è una richiesta POST -> Carrello
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
-    header("Location: carrello.php");
+    header("Location: carrello");
     exit;
 }
 
@@ -41,7 +45,7 @@ $connessione = $db->getConn();
 // Se il DB non risponde, impostiamo l'errore in sessione e andiamo alla pagina di esito
 if (!$aperta || !$connessione) {
     $_SESSION['risultato_esito'] = ['successo' => false];
-    header("Location: esito.php");
+    header("Location: esito-ordine");
     exit;
 }
 
@@ -195,7 +199,7 @@ try {
 
     unset($_SESSION['carrello']);
     $db->closeDBConnection();
-    header("Location: esito.php");
+    header("Location: esito-ordine");
     exit;
 
 } catch (Exception $e) {
@@ -203,7 +207,7 @@ try {
     $connessione->rollback();
     $db->closeDBConnection();
     $_SESSION['risultato_esito'] = ['successo' => false];
-    header("Location: esito.php");
+    header("Location: esito-ordine");
     exit;
 }
 ?>
