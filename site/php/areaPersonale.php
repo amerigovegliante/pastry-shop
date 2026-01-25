@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
                 $esito = $db->deletePersona($_SESSION['email']);
                 if($esito){
                     session_destroy();
-                    header("Location: ../../index.html"); 
+                    header("Location: home"); 
                     exit;
                 } else {
                     $messaggioSistema = "<p class='errore' role='alert'>Non puoi eliminare l'account perché hai ordini in corso.</p>";
@@ -66,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
 }
 
 // caricamento template
-$paginaHTML = file_get_contents('../html/areaPersonale.html');
+$paginaHTML = file_get_contents( __DIR__ .'/../html/areaPersonale.html');
 if ($paginaHTML === false) die("Errore template");
 
 // Recupero Dati

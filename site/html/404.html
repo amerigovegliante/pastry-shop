@@ -3,12 +3,13 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Accedi - Pasticceria Padovana</title>
+    <title>Pagina non trovata</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Accedi al tuo account su Pasticceria Padovana per gestire ordini e preferenze.">
+    <meta name="keywords" content="Pasticceria Padovana, contattaci, email, domande, assistenza clienti, Padova">
+    <meta name="description" content="Errore 404: pagina non trovata">
 
     <base href="<?= BASE_URL ?>">
-    
+
     <link rel="stylesheet" href="site/css/style.css" media="screen">
     <link rel="stylesheet" href="site/css/mini.css" media="screen and (max-width:800px)">
     <link rel="stylesheet" href="site/css/print.css" media="print">
@@ -58,37 +59,16 @@
     </nav>
 
     <nav id="breadcrumb" aria-label="Percorso di navigazione">
-        <p class="contenuto">Ti trovi in: <a href="home"><span lang="en">Home</span></a> &gt; Accedi</p>
+        <p class="contenuto">Ti trovi in: 404 Pagina non trovata</p>
     </nav>
 
     <main>
-        <section id="sezioneLogin" class="contenuto" aria-labelledby="titolo-accesso">
-            <h2 id="titolo-accesso" class="sr-only">Accesso Area Riservata</h2>
-            <form id="formLogin" action="login.php" method="post" autocomplete="on" novalidate>
-                <fieldset>
-                    <legend>Accedi al tuo account</legend>
-                    <div class="campoDati">
-                        <label for="email">Email di registrazione</label>
-                        <input type="email" name="email" id="email" value="[valoreEmail]" 
-                        placeholder="Inserisci la tua email"
-                        required autocomplete="email">
-                    </div>
-                    [messaggioEmailMancante]
-
-                    <div class="campoDati">
-                        <label for="password">Password</label>
-                        <input type="password" name="password" id="password" value="[valorePassword]"
-                        placeholder="Inserisci la tua password" required autocomplete="current-password">
-                    </div>
-                    [messaggioPasswordMancante]
-                    
-                    <button type="submit" name="submit">Accedi</button>
-                </fieldset>
-                [messaggioErroreLogin]
-                [messaggioErroreDB]
-            </form>
-
-            <p>Non hai un account? <a href="registrazione">Registrati qui</a></p>
+        <section aria-labelledby="Pagina non trovata" class="contenuto">
+            <img src="site/img/404.gif" alt="Mascotte a forma di torta sommersa da una montagna di dolciumi">
+            <h1>404: Troppa dolcezza! Non riusciamo a trovare la pagina che cercavi.</h1>
+            <p>Sembra che tu ti sia perso tra le nostre bontà. </p>
+            <p>Non ti preoccupare, la pagina che cercavi non è qui.</p>
+            <p>Torna alla nostra <a href="home"><span lang="en">Home</span></a> e continua ad esplorare il nostro universo di <a href="torte">dolci</a> e <a href="pasticcini">pasticcini</a>.</p>   
         </section>
     </main>
 
@@ -107,7 +87,9 @@
             <div id="assistenzaClienti">
                 <h2>Assistenza clienti shop online</h2>
                 <p>Lun-Ven 8:30-13:00 14:00-17:30</p>
-                <p>Email: <a href="mailto:gestioneclienti@pasticceriapadovana.it">gestioneclienti@pasticceriapadovana.it</a></p>
+                <p>Email: <a
+                        href="mailto:gestioneclienti@pasticceriapadovana.it">gestioneclienti@pasticceriapadovana.it</a>
+                </p>
                 <p id="copyright">&copy; 2025 Pasticceria Padovana - Tutti i diritti riservati</p>
             </div>
         </div>

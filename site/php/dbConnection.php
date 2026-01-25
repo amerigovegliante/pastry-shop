@@ -1,6 +1,6 @@
 <?php
 // importiamo il file di configurazione che contiene le costanti per la connessione (DB_HOST, DB_USER, ecc..)
-require_once('../../db_config.php');
+require_once( __DIR__ .'/../../db_config.php');
 
 class DBAccess{
     

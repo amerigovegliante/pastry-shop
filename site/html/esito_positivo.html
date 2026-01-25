@@ -7,9 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Conferma dell'ordine avvenuta con successo.">
 
-    <link rel="stylesheet" href="../css/style.css" media="screen">
-    <link rel="stylesheet" href="../css/mini.css" media="screen and (max-width:800px)">
-    <link rel="stylesheet" href="../css/print.css" media="print">
+    <base href="<?= BASE_URL ?>">
+
+    <link rel="stylesheet" href="site/css/style.css" media="screen">
+    <link rel="stylesheet" href="site/css/mini.css" media="screen and (max-width:800px)">
+    <link rel="stylesheet" href="site/css/print.css" media="print">
 </head>
 
 <body>
@@ -23,14 +25,14 @@
                 <p class="sirivennela-regular">La pasticceria tradizionale su misura per i tuoi eventi</p>
             </div>
             <div id="pulsantiMenu">
-                <a href="../php/areaPersonale.php" class="bottoneProfilo" aria-label="Accedi alla tua area personale">
+                <a href="area-personale" class="bottoneProfilo" aria-label="Accedi alla tua area personale">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
                         <circle cx="12" cy="7" r="4" />
                     </svg>
                 </a>
-                <a href="../php/carrello.php" class="bottoneCarrello" aria-label="Vai al carrello">
+                <a href="carrello" class="bottoneCarrello" aria-label="Vai al carrello">
                     <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="16.5" cy="18.5" r="1.5" />
                         <circle cx="9.5" cy="18.5" r="1.5" />
@@ -43,16 +45,16 @@
 
     <nav id="menu" aria-label="Menu principale">
         <ul class="contenuto">
-            <li><a href="../../index.html"><span lang="en">Home</span></a></li>
-            <li><a href="../html/story.html">Chi siamo</a></li>
-            <li><a href="../php/torte-pasticcini.php?tipo=torte">Le nostre torte</a></li>
-            <li><a href="../php/torte-pasticcini.php?tipo=pasticcini">I nostri pasticcini </a></li>
-            <li><a href="../php/contattaci.php">Contattaci</a></li>
+            <li><a href="home"><span lang="en">Home</span></a></li>
+            <li><a href="chi-siamo">Chi siamo</a></li>
+            <li><a href="torte">Le nostre torte</a></li>
+            <li><a href="pasticcini">I nostri pasticcini </a></li>
+            <li><a href="contattaci">Contattaci</a></li>
         </ul>
     </nav>
 
     <nav id="breadcrumb" aria-label="Percorso">
-        <p class="contenuto">Ti trovi in: <a href="../../index.html"><span lang="en">Home</span></a> &gt; <a href="../php/carrello.php">Carrello</a> &gt; Ordine Confermato</p>
+        <p class="contenuto">Ti trovi in: <a href="home"><span lang="en">Home</span></a> &gt; <a href="carrelloì">Carrello</a> &gt; Ordine Confermato</p>
     </nav>
 
     <main id="main">
@@ -80,7 +82,7 @@
             </div>
             
             <div class="azioni-esito">
-                <a href="../../index.html" class="pulsanteGenerico">Torna alla Home</a>
+                <a href="home" class="pulsanteGenerico">Torna alla Home</a>
             </div>
 
         </section>

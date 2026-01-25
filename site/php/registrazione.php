@@ -13,7 +13,7 @@ ini_set('display_errors', 1);
 
 require_once "dbConnection.php";
 
-$paginaHTML = file_get_contents('../html/registrazione.html');
+$paginaHTML = file_get_contents( __DIR__ .'/../html/registrazione.html');
 if ($paginaHTML === false) {
     die("Errore: impossibile leggere il file template html/registrazione.html");
 }

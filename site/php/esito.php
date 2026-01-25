@@ -11,7 +11,7 @@ $dati = $_SESSION['risultato_esito'];
 
 // in caso di errore:
 if ($dati['successo'] === false) {
-    $paginaHTML = file_get_contents('../html/esito_negativo.html');
+    $paginaHTML = file_get_contents( __DIR__ .'/../html/esito_negativo.html');
     unset($_SESSION['risultato_esito']);
     
     echo $paginaHTML;

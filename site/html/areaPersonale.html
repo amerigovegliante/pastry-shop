@@ -7,9 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Gestisci il tuo account personale su Pasticceria Padovana, visualizza e modifica i tuoi dati e ordini.">
     
-    <link rel="stylesheet" href="../css/style.css" media="screen">
-    <link rel="stylesheet" href="../css/mini.css" media="screen and (max-width:800px)">
-    <link rel="stylesheet" href="../css/print.css" media="print">
+    <base href="<?= BASE_URL ?>">
+
+    <link rel="stylesheet" href="site/css/style.css" media="screen">
+    <link rel="stylesheet" href="site/css/mini.css" media="screen and (max-width:800px)">
+    <link rel="stylesheet" href="site/css/print.css" media="print">
 </head>
 
 <body>
@@ -30,7 +32,7 @@
                         <circle cx="12" cy="7" r="4" />
                     </svg>
                 </span>
-                <a href="../php/carrello.php" class="bottoneCarrello" aria-label="Vai al carrello">
+                <a href="carrello" class="bottoneCarrello" aria-label="Vai al carrello">
                     <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="16.5" cy="18.5" r="1.5" />
                         <circle cx="9.5" cy="18.5" r="1.5" />
@@ -44,16 +46,16 @@
 
     <nav id="menu" aria-label="Menu principale">
         <ul class="contenuto">
-            <li><a href="../../index.html"><span lang="en">Home</span></a></li>
-            <li><a href="../html/story.html">Chi siamo</a></li>
-            <li><a href="../php/torte-pasticcini.php?tipo=torte">Le nostre torte</a></li>
-            <li><a href="../php/torte-pasticcini.php?tipo=pasticcini">I nostri pasticcini </a></li>
-            <li><a href="../php/contattaci.php">Contattaci</a></li>
+            <li><a href="home"><span lang="en">Home</span></a></li>
+            <li><a href="chi-siamo">Chi siamo</a></li>
+            <li><a href="torte">Le nostre torte</a></li>
+            <li><a href="pasticcini">I nostri pasticcini </a></li>
+            <li><a href="contattaci">Contattaci</a></li>
         </ul>
     </nav>
 
     <nav id="breadcrumb" aria-label="Percorso di navigazione">
-        <p class="contenuto">Ti trovi in: <a href="../../index.html"><span lang="en">Home</span></a> &gt; Area Personale
+        <p class="contenuto">Ti trovi in: <a href="home"><span lang="en">Home</span></a> &gt; Area Personale
         </p>
     </nav>
 

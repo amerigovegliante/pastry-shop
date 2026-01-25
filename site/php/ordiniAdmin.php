@@ -15,7 +15,7 @@ if (!isset($_SESSION['ruolo']) || $_SESSION['ruolo'] !== 'admin') {
 
 require_once "dbConnection.php";
 
-$paginaHTML = file_get_contents('../html/ordiniAdmin.html');
+$paginaHTML = file_get_contents( __DIR__ .'/../html/ordiniAdmin.html');
 if ($paginaHTML === false) {
     die("Errore: impossibile leggere ordiniAdmin.html");
 }

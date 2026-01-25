@@ -14,7 +14,7 @@ if (isset($_SESSION['ruolo'])) {
   
 require_once "dbConnection.php";
 
-$paginaHTML = file_get_contents('../html/login.html');
+$paginaHTML = file_get_contents( __DIR__ .'/../html/login.html');
 if ($paginaHTML === false) {
     die("Errore: impossibile leggere login.html");
 }

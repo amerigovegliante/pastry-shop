@@ -17,7 +17,7 @@ if (empty($_SESSION['csrf_token'])) {
 }
 $token = $_SESSION['csrf_token'];
 
-$paginaHTML = file_get_contents('../html/aggiungiProdotto.html');
+$paginaHTML = file_get_contents( __DIR__ .'/../html/aggiungiProdotto.html');
 if ($paginaHTML === false) {
     die("Errore: impossibile leggere il file template html/aggiungiProdotto.html");
 }

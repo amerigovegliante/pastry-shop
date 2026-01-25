@@ -6,7 +6,7 @@ ini_set('display_errors', 1);
 require_once "dbConnection.php";
 
 // carico template HTML
-$paginaHTML = file_get_contents('../html/carrello.html');
+$paginaHTML = file_get_contents( __DIR__ .'/../html/carrello.html');
 if ($paginaHTML === false) {
     die("Errore: impossibile leggere il template carrello.html");
 }

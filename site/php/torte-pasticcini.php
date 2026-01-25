@@ -4,11 +4,10 @@ ini_set('display_errors', 1);
 
 require_once "dbConnection.php";
 
-$paginaHTML = file_get_contents('../html/torte-pasticcini.html');
+$paginaHTML = file_get_contents( __DIR__ .'/../html/torte-pasticcini.html');
 if ($paginaHTML === false) {
     die("Errore: impossibile leggere torte-pasticcini.html");
 }
-
 $db = new DBAccess();
 $connessione = $db->openDBConnection(); //tento la connessione
 
@@ -19,23 +18,33 @@ $tipo="";
 $titolo="";
 $LinkPagina="";
 $NessunaDisponibilità="";
-
+/*
 if (isset($_GET['tipo']) && $_GET['tipo']==='torte'){
 	$NessunaDisponibilità="nessuna torta disponibile";
 	$tipo="Torta";
     $titolo="Le nostre torte";
-	$LinkPagina="<li id='currentLink'>Le nostre torte</li><li><a href=\"../php/torte-pasticcini.php?tipo=pasticcini\">I nostri pasticcini</a></li>";
+	$LinkPagina="<li id='currentLink'>Le nostre torte</li><li><a href=\"pasticcini\">I nostri pasticcini</a></li>";
 }else if (isset($_GET['tipo']) && $_GET['tipo']==='pasticcini'){
 	$tipo="Pasticcino";
 	$NessunaDisponibilità="nessun pasticcino disponibile";
     $titolo="I nostri pasticcini";
-    $LinkPagina="<li><a href=\"../php/torte-pasticcini.php?tipo=torte\">Le nostre torte</a></li><li id='currentLink'>I nostri pasticcini</li>";
+    $LinkPagina="<li><a href=\"torte\">Le nostre torte</a></li><li id='currentLink'>I nostri pasticcini</li>";
 }else if (isset($_GET['tipo']) && $_GET['tipo']!=='pasticcini' && $_GET['tipo']!=='torte'){ //oppure si potrebbe andare su pag404
     $titolo="Le nostre scelte";
     $listaItem="Scegli tra la nostra selezione di <a href=\"../php/torte-pasticcini.php?tipo=torte\">torte</a> o <a href=\"../php/torte-pasticcini.php?tipo=pasticcini\">pasticcini</a>";
-    $LinkPagina="<li><a href=\"../php/torte-pasticcini.php?tipo=torte\">Le nostre torte</a></li><li><a href=\"../php/torte-pasticcini.php?tipo=pasticcini\">I nostri pasticcini</a></li>";
+    $LinkPagina="<li><a href=\"torte\">Le nostre torte</a></li><li><a href=\"pasticcini\">I nostri pasticcini</a></li>";
+}*/
+if ($page === 'torte'){
+    $NessunaDisponibilità="nessuna torta disponibile";
+	$tipo="Torta";
+    $titolo="Le nostre torte";
+	$LinkPagina="<li id='currentLink'>Le nostre torte</li><li><a href=\"pasticcini\">I nostri pasticcini</a></li>";
+}else if ($page === 'pasticcini'){
+	$tipo="Pasticcino";
+	$NessunaDisponibilità="nessun pasticcino disponibile";
+    $titolo="I nostri pasticcini";
+    $LinkPagina="<li><a href=\"torte\">Le nostre torte</a></li><li id='currentLink'>I nostri pasticcini</li>";
 }
-
 // leggo i dati delle torte
 if($connessione && empty($listaItem)){
     $Items = $db->getListOfItems($tipo);
