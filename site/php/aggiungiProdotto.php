@@ -150,6 +150,8 @@ if(isset($_POST['submit'])){
         $connessione = $db->openDBConnection();
         
         if(!$connessione){  
+            http_response_code(500);
+            include __DIR__ . '/500.php';
             $messaggioErrore = '<p class="errore" role="alert">Errore di connessione al database</p>';
         } else {
             $lastItemId = $db->insertNewItem($tipo, $nome, $descrizione, $prezzo, $immagine, $testoAlternativo);    //inserimento e recupero id ultimo item aggiunto  
