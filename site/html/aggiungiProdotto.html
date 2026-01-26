@@ -71,9 +71,9 @@
             <form id="formAggiungiProdotto" action="aggiungi-prodotto" method="post" enctype="multipart/form-data">
                 <fieldset>
                     <legend>Dettagli del prodotto</legend>
+                        
+                    <input type="hidden" name="csrf_token" value="[csrf_token]">
                     
-                    [csrfToken]
-
                     <div class="campoDati">
                         <label for="tipo">Tipo di prodotto:</label>
                         <select id="tipo" name="tipo" required>

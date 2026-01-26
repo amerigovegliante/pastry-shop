@@ -21,11 +21,11 @@ $NessunaDisponibilità="";
 /*
 if (isset($_GET['tipo']) && $_GET['tipo']==='torte'){
 	$NessunaDisponibilità="nessuna torta disponibile";
-	$tipo="Torta";
+	$tipo="torta";
     $titolo="Le nostre torte";
 	$LinkPagina="<li id='currentLink'>Le nostre torte</li><li><a href=\"pasticcini\">I nostri pasticcini</a></li>";
 }else if (isset($_GET['tipo']) && $_GET['tipo']==='pasticcini'){
-	$tipo="Pasticcino";
+	$tipo="pasticcino";
 	$NessunaDisponibilità="nessun pasticcino disponibile";
     $titolo="I nostri pasticcini";
     $LinkPagina="<li><a href=\"torte\">Le nostre torte</a></li><li id='currentLink'>I nostri pasticcini</li>";
@@ -36,11 +36,11 @@ if (isset($_GET['tipo']) && $_GET['tipo']==='torte'){
 }*/
 if ($page === 'torte'){
     $NessunaDisponibilità="nessuna torta disponibile";
-	$tipo="Torta";
+	$tipo="torta";
     $titolo="Le nostre torte";
 	$LinkPagina="<li id='currentLink'>Le nostre torte</li><li><a href=\"pasticcini\">I nostri pasticcini</a></li>";
 }else if ($page === 'pasticcini'){
-	$tipo="Pasticcino";
+	$tipo="pasticcino";
 	$NessunaDisponibilità="nessun pasticcino disponibile";
     $titolo="I nostri pasticcini";
     $LinkPagina="<li><a href=\"torte\">Le nostre torte</a></li><li id='currentLink'>I nostri pasticcini</li>";

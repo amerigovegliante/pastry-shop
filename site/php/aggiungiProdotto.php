@@ -1,5 +1,5 @@
 <?php
-// Avvio sessione solo se non già avviata
+//avvio sessione solo se non già avviata
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -31,7 +31,7 @@ $tipo = '';
 $nome = '';
 $descrizione = '';
 $prezzo = '';
-$immagineDB = ''; // Variabile per il database
+$immagine = ''; // Variabile per il database
 $testoAlternativo = '';
 
 $erroreTipo = '';
@@ -67,14 +67,19 @@ function inserisciAllergeni($db, $itemId, $allergeni) {
 //GESTIONE AGGIUNTA PRODOTTO
 if(isset($_POST['submit'])){
     
+    var_dump($_POST['csrf_token']);
+    var_dump($_SESSION['csrf_token']);
+
     // 3. SICUREZZA: Verifica CSRF Token
     if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
         $messaggioErrore = '<p class="errore" role="alert">Errore di sicurezza: Token non valido. Riprova.</p>';
     } else {
         // --- VALIDAZIONE CAMPI ---
         // Tipo
+        var_dump($tipo, $_POST['tipo']);
         if(isset($_POST['tipo']) && ($_POST['tipo'] === 'torta' || $_POST['tipo'] === 'pasticcino')){
             $tipo = $_POST['tipo'];
+            var_dump($tipo, $_POST['tipo']);
         } else {
             $erroreTipo = '<p class="errore" role="alert">Seleziona un tipo valido</p>';
         }
@@ -178,21 +183,26 @@ if(isset($_POST['submit'])){
 
 //GESTIONE ELIMINAZIONE PRODOTTO (l'item verrà segnato come inattivo e non cancellato dal database)
 if (isset($_POST['delete']) && !empty($_POST['delete_id'])){
-    $idDaCancellare = intval($_POST['delete_id']);  //intval rimuove tutto ciò che non è numero, restituendo un valore intero pulito.
-    $db = new DBAccess();
-    $connessione = $db->openDBConnection();
-
-    if ($connessione) {
-        $success = $db->deactivateItemById($idDaCancellare);
-        $db->closeDBConnection();
-
-        if ($success === true){
-            $messaggioConferma = '<div class="successo" role="status"><p>Prodotto eliminato con successo!</p></div>';
-        } else {
-            $messaggioErrore = '<p class="errore" role="alert">Errore durante l\'eliminazione del prodotto.</p>';
-        }
+    //controllo corrispondenza token CSRF
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $messaggioErrore = '<p class="errore" role="alert">Errore di sicurezza: Token non valido. Riprova.</p>';
     } else {
-        $messaggioErrore = '<p class="errore" role="alert">Errore di connessione al database durante l\'eliminazione.</p>';
+        $idDaCancellare = intval($_POST['delete_id']);  //intval rimuove tutto ciò che non è numero, restituendo un valore intero pulito.
+        $db = new DBAccess();
+        $connessione = $db->openDBConnection();
+
+        if ($connessione) {
+            $success = $db->deactivateItemById($idDaCancellare);
+            $db->closeDBConnection();
+
+            if ($success === true){
+                $messaggioConferma = '<div class="successo" role="status"><p>Prodotto eliminato con successo!</p></div>';
+            } else {
+                $messaggioErrore = '<p class="errore" role="alert">Errore durante l\'eliminazione del prodotto.</p>';
+            }
+        } else {
+            $messaggioErrore = '<p class="errore" role="alert">Errore di connessione al database durante l\'eliminazione.</p>';
+        }
     }
 }
 
@@ -231,6 +241,7 @@ if(!$connessione){
             '<td>' . number_format($item['prezzo'], 2, ',', '.') . '</td>' .
             '<td>
                 <form method="post" onsubmit="return confirm(\'Vuoi davvero eliminare questo prodotto?\');">
+                    <input type="hidden" name="csrf_token" value="' . htmlspecialchars($token) . '">
                     <input type="hidden" name="delete_id" value="' . htmlspecialchars($item['id']) . '">
                     <button type="submit" name="delete" class="pulsanteCancella" aria-label="Elimina prodotto ' . htmlspecialchars($item['nome']) . '">
                         &#x1F5D1;
@@ -243,6 +254,8 @@ if(!$connessione){
     }
 }
 //fa si che una volta inviato il form, giusto o sbagliato, vengono ricompilati i campi gia' scritti  dall'utente, evitando frustrazione
+$paginaHTML = str_replace('[csrf_token]', $token, $paginaHTML);
+
 $paginaHTML = str_replace('[valoreNome]', $nome, $paginaHTML);
 $paginaHTML = str_replace('[valoreDescrizione]', $descrizione, $paginaHTML);
 $paginaHTML = str_replace('[valorePrezzo]', $prezzo, $paginaHTML);

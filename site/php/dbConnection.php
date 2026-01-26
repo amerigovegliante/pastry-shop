@@ -54,6 +54,30 @@ class DBAccess{
         } 
     }
 
+   //restituisce TRUE se l'item con l'id passatogli è attivo, FALSE altrimenti
+    public function isActive($id_item){
+        $querySelect = "SELECT attivo FROM item WHERE id = ?";
+        $stmt = mysqli_prepare($this->connection, $querySelect);
+        
+        if (!$stmt) {
+            return false; // errore nella preparazione
+        }
+
+        mysqli_stmt_bind_param($stmt, "i", $id_item);
+        mysqli_stmt_execute($stmt);
+        $queryResult = mysqli_stmt_get_result($stmt);
+        
+        //se la query non ritorna risultati (id non esiste)
+        if (!$queryResult || mysqli_num_rows($queryResult) === 0) {
+            mysqli_stmt_close($stmt);
+            return false;
+        }
+
+        $row = mysqli_fetch_assoc($queryResult);
+        mysqli_stmt_close($stmt);
+        return (bool)$row['attivo']; // converte 0/1 in booleano
+    }
+
     // recupera il dettaglio completo di un singolo prodotto, inclusi gli allergeni
     public function getItemDetail($ID){
         $querySelect = "SELECT id, nome, prezzo, descrizione, immagine, tipo FROM item WHERE id=?";
@@ -397,21 +421,17 @@ FUNZIONI PER SCRIVERE DATI
     }
 
     //inserisce una nuova riga in item_allergico nel DB
-    //restituisce l'oggetto mysqli_result se la query è andata a buon fine, altrimrnti FALSE
+    //restituisce TRUE se la query è andata a buon fine, altrimrnti FALSE
     public function insertNewItemAllergico($idIitem, $allergeneItem){
         if(!$this->allergeneExists($allergeneItem)){
-            return false;
+            return false;               //non inserire se l'allergene non esiste nel database
         }
         $queryInsert = "INSERT INTO item_allergico(item, allergene) VALUES (?, ?)";
         $stmt = mysqli_prepare($this->connection, $queryInsert);
         mysqli_stmt_bind_param($stmt, "is", $idIitem, $allergeneItem); 
         $success = mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
-        if ($success) {
-            return mysqli_insert_id($this->connection);
-        } else {
-            return false;
-        }
+        return $success;
     }
 
     // Aggiorna i dati dell'utente (Nome, Cognome, Telefono)
