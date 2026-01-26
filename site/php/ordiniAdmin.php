@@ -80,6 +80,7 @@ if($connessione){
                     <th scope=\"col\" abbr=\"Tot\">Totale</th>
                     <th scope=\"col\" abbr=\"Note\">Annotazioni</th>
                     <th scope=\"col\">Stato</th>
+                    <th scope=\"col\">Dettagli</th>
                 </tr>
             </thead>
             <tbody>";
@@ -111,6 +112,7 @@ if($connessione){
                         </select>
                     </div>
                 </td>
+                <td><a href=\"dettaglio-ordine?id=".urlencode($Ordine['id'])."\" class=\"pulsanteGenerico\">Vedi Dettagli</a></td>
             </tr>";
         }
         $tabella .= "</tbody></table></form>";

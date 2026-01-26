@@ -116,8 +116,8 @@ if($connessione){
                 <td data-label='Stato'><span class='stato-tag s-{$o['stato']}'>$statoTesto</span></td>
                 <td data-label='Totale'>€$totaleFmt</td>
                 <td data-label='Azioni'>
-                     <a href='dettaglio-ordine&id={$o['id']}' class='link-dettaglio' aria-label='Vedi dettagli ordine numero {$o['numero']}'>Dettagli</a>
-                </td>
+                     <a href=\"dettaglio-ordine?id=".urlencode($o['id'])."\" class='link-dettaglio' aria-label='Vedi dettagli ordine numero {$o['numero']}'>Dettagli</a>
+                </td> 
             </tr>";
         }
         $tabellaOrdiniHTML .= "</tbody></table></div>";

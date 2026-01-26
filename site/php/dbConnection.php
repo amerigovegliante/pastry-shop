@@ -135,6 +135,37 @@ class DBAccess{
         mysqli_stmt_close($stmt);
         return $ordine;
     }
+    //restituisce tutti i dettagli di un determinato ordine, dato il suo id e email. FALSE se non presente.
+    public function getOrdineByIdAndEmail($id,$email){
+        $querySelect = "SELECT * FROM ordine WHERE id = ? AND persona=?";
+        $stmt = mysqli_prepare($this->connection, $querySelect);
+        mysqli_stmt_bind_param($stmt, "is", $id, $email);
+        mysqli_stmt_execute($stmt); 
+        $queryResult = mysqli_stmt_get_result($stmt);
+
+        if (mysqli_num_rows($queryResult) > 0) {
+            $ordine = mysqli_fetch_assoc($queryResult);
+        } else {
+            $ordine = false;
+        }
+
+        mysqli_stmt_close($stmt);
+        return $ordine;
+    }
+
+    //controlla che l'ordine esista
+    public function ordineEsiste($id) {
+    $sql = "SELECT id FROM ordine WHERE id = ?";
+    $stmt = mysqli_prepare($this->connection, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $id);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_store_result($stmt);
+
+    $esiste = mysqli_stmt_num_rows($stmt) > 0;
+    mysqli_stmt_close($stmt);
+
+    return $esiste;
+}
 
     // Recupera TUTTI i dati di un utente
     public function getPersona($email){
@@ -421,13 +452,13 @@ FUNZIONI PER SCRIVERE DATI
 
      public function  AggiornaStati($statiModificati) {
         // Verifico se la connessione è aperta, altrimenti provo ad aprirla
-        if (!$this->connection) {
+        /*if (!$this->connection) {
             if (!$this->openDBConnection()) {
                 return false;
             }
         }
         
-        $connessione = $this->connection; 
+        $connessione = $this->connection; */
 
         foreach($statiModificati as $idOrdine => $nuovoStato){
             $query = "UPDATE ordine SET stato=? WHERE id=?";

@@ -56,7 +56,7 @@ if($connessione && empty($listaItem)){
             $imgSrc = !empty($Item['immagine']) ? "../img/" . $Item['immagine'] : "../img/placeholder.jpeg";
             $altText = !empty($Item['testo_alternativo']) ? $Item['testo_alternativo'] : "Immagine non disponibile";
             $listaItem .="<li> <article class=\"cardTorta\">     
-                <a href=\"dettagli&ID=".urlencode($Item['id'])."\" style=\"text-decoration:none; color:inherit;\"> 
+                <a href=\"dettagli?ID=".urlencode($Item['id'])."\" style=\"text-decoration:none; color:inherit;\"> 
                    <img src=\"" . htmlspecialchars($imgSrc)
                    . "\" alt=\"" . htmlspecialchars($altText) . "\">
                     <div class=\"infoTorta\"> 
@@ -76,6 +76,8 @@ if($connessione && empty($listaItem)){
         $listaItem ="<p class='contenuto'>Al momento non abbiamo $NessunaDisponibilità, però se volete chiamarci siamo più che felici di ascoltare la vostra richiesta</p>";
     }
 } else {
+    http_response_code(500);
+    include __DIR__ . '/500.php';
     $listaItem = "<p class='errore contenuto'>I sistemi sono momentaneamente fuori servizio, ci scusiamo per il disagio.</p>";
 }
 

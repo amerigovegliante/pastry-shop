@@ -35,7 +35,7 @@ $whitelist = [
     //Accessibile a user e admin
     'area-personale'    => ['file' => 'site/php/areaPersonale.php', 'permesso' => 'user_admin'],
     'checkout'          => ['file' => 'site/php/checkout.php', 'permesso' => 'user_admin'],
-    'dettagli-ordine'   => ['file' => 'site/php/dettagliOrdine.php', 'permesso' => 'user_admin'],
+    'dettaglio-ordine'   => ['file' => 'site/php/dettagliOrdine.php', 'permesso' => 'user_admin'],
     'logout'            => ['file' => 'site/php/logout.php', 'permesso' => 'user_admin'],
     'conferma-ordine'   => ['file' => 'site/php/conferma_ordine.php', 'permesso' => 'user_admin'],
     'esito-ordine' => ['file' => 'site/php/esito.php', 'permesso' => 'user_admin'],
@@ -77,7 +77,7 @@ $file = __DIR__ . '/' . $info['file'];
 
 if (!file_exists($file)) {
     http_response_code(500);
-    echo "File non trovato: $file";
+    include __DIR__ . '/site/php/500.php';
     exit;
 }
 
