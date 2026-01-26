@@ -37,9 +37,9 @@ class DBAccess{
         return $this->connection;
     }
     
-    // recupera la lista di prodotti filtrata per categoria (torta o pasticcino)
-    public function getListOfItems($tipo){
-        $querySelect = "SELECT id, nome, prezzo, descrizione, immagine, testo_alternativo FROM item WHERE tipo=?";
+    //restituisce la lista di prodotti ATTIVI filtrata per categoria (torta o pasticcino), altrimenti ritorna lista vuota
+    public function getListOfActiveItems($tipo){
+        $querySelect = "SELECT id, nome, prezzo, descrizione, immagine, testo_alternativo FROM item WHERE tipo=? AND attivo=TRUE";
         $stmt = mysqli_prepare($this->connection, $querySelect);
         mysqli_stmt_bind_param($stmt, "s", $tipo); 
         mysqli_stmt_execute($stmt);
@@ -50,10 +50,8 @@ class DBAccess{
             while ($row = mysqli_fetch_assoc($queryResult)){ 
                 array_push($itemsArray, $row);
             }
-            return $itemsArray;
-        } else {
-            return null;
-        }
+            return $itemsArray;     
+        } 
     }
 
     // recupera il dettaglio completo di un singolo prodotto, inclusi gli allergeni
@@ -287,10 +285,31 @@ class DBAccess{
             return false;
         }
     }
-    
+/*
     //restituisce tutti gli items ordinati per tipo e per nome, FALSE se non ne trova
     public function getAllItems(){
         $querySelect = "SELECT * FROM item ORDER BY tipo, nome";
+        $stmt = mysqli_prepare($this->connection, $querySelect);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $items = array();
+
+        if (mysqli_num_rows($result) > 0){
+            while ($row = mysqli_fetch_assoc($result)){ //salvo riga per riga in un array associativo
+                $items[] = $row;
+            }
+        } else {
+            mysqli_stmt_close($stmt);
+            return false;   //nessun record trovato
+        }
+
+        mysqli_stmt_close($stmt);
+        return $items;
+    }
+*/
+     //restituisce tutti gli items ATTIVI ordinati per tipo e per nome, FALSE se non ne trova
+    public function getActiveItems(){
+        $querySelect = "SELECT * FROM item WHERE attivo = TRUE ORDER BY tipo, nome";
         $stmt = mysqli_prepare($this->connection, $querySelect);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
@@ -468,7 +487,7 @@ FUNZIONI PER SCRIVERE DATI
             mysqli_stmt_close($stmt);
         }
     }
-
+/*
     //elimina l'item con l'id passatogli
     //ritorna TRUE se l'eliminazione è andata a buon fine, FALSE se fallisce, "collegato" se c'è un ordine collegato e non può procedere
     public function deleteItemById($idItem){
@@ -500,6 +519,18 @@ FUNZIONI PER SCRIVERE DATI
         $righeEliminate = mysqli_stmt_affected_rows($stmt); //conta il numero di righe eliminate
         mysqli_stmt_close($stmt);
         return $righeEliminate > 0; //TRUE se ha eliminato almeno una riga
+    }
+*/
+    //disattiva l'item che ha l'id passatogli
+    //ritorna TRUE se la disattivazione è andata a buon fine, FALSE se fallisce
+    public function deactivateItemById($idItem){
+        $queryUpdateItem = "UPDATE item SET attivo = FALSE WHERE id = ?";
+        $stmt = mysqli_prepare($this->connection, $queryUpdateItem);
+        mysqli_stmt_bind_param($stmt, "i", $idItem);
+        mysqli_stmt_execute($stmt);
+        $righeModificate = mysqli_stmt_affected_rows($stmt); //conta il numero di righe eliminate
+        mysqli_stmt_close($stmt);
+        return $righeModificate > 0; //TRUE se ha eliminato almeno una riga
     }
 }  
 ?>

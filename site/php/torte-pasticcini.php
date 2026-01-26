@@ -47,7 +47,7 @@ if ($page === 'torte'){
 }
 // leggo i dati delle torte
 if($connessione && empty($listaItem)){
-    $Items = $db->getListOfItems($tipo);
+    $Items = $db->getListOfActiveItems($tipo);
     $db->closeDBConnection();
     
     if (!empty($Items)){

@@ -174,20 +174,18 @@ if(isset($_POST['submit'])){
     }
 }
 
-//GESTIONE ELIMINAZIONE PRODOTTO
+//GESTIONE ELIMINAZIONE PRODOTTO (l'item verrà segnato come inattivo e non cancellato dal database)
 if (isset($_POST['delete']) && !empty($_POST['delete_id'])){
     $idDaCancellare = intval($_POST['delete_id']);  //intval rimuove tutto ciò che non è numero, restituendo un valore intero pulito.
     $db = new DBAccess();
     $connessione = $db->openDBConnection();
 
     if ($connessione) {
-        $success = $db->deleteItemById($idDaCancellare);
+        $success = $db->deactivateItemById($idDaCancellare);
         $db->closeDBConnection();
 
         if ($success === true){
             $messaggioConferma = '<div class="successo" role="status"><p>Prodotto eliminato con successo!</p></div>';
-        } elseif ($success === "collegato"){  //se risulta collegato a degli ordini non posso cancellarlo
-            $messaggioErrore = '<p class="errore" role="alert">Impossibile eliminare il dolce: è presente in uno o più ordini.</p>';
         } else {
             $messaggioErrore = '<p class="errore" role="alert">Errore durante l\'eliminazione del prodotto.</p>';
         }
@@ -202,7 +200,7 @@ $connessione = $db->openDBConnection();
 if(!$connessione){  
     $messaggioErrore = '<p class="errore" role="alert">Errore di connessione al database</p>';
 } else {
-    $items = $db->getAllItems();
+    $items = $db->getActiveItems();
     $db->closeDBConnection();
     if(empty($items)){
         $tabellaItems = '<p class="errore" role="alert">Non sono stati trovati prodotti nel database</p>';
@@ -230,7 +228,7 @@ if(!$connessione){
             '<td>' . htmlspecialchars($item['descrizione']) . '</td>' .
             '<td>' . number_format($item['prezzo'], 2, ',', '.') . '</td>' .
             '<td>
-                <form method="post" onsubmit="return confirm(\'Vuoi davvero eliminare questo dolce?\');">
+                <form method="post" onsubmit="return confirm(\'Vuoi davvero eliminare questo prodotto?\');">
                     <input type="hidden" name="delete_id" value="' . htmlspecialchars($item['id']) . '">
                     <button type="submit" name="delete" class="pulsanteCancella" aria-label="Elimina prodotto ' . htmlspecialchars($item['nome']) . '">
                         &#x1F5D1;
