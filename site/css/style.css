@@ -902,6 +902,58 @@ tr:last-child td, tr:last-child th { border-bottom: none; }
     flex-wrap: wrap;
 }
 
+/* --- CONTROLLI QUANTITÀ (Form + Bottoni) --- */
+.qty-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-width: 120px;
+}
+
+/* Serve per allineare i form sulla stessa riga */
+.form-qty {
+    display: flex;
+    margin: 0;
+}
+
+.btn-qty {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background-color: #fff;
+    border: 1px solid var(--buttoncolor);
+    color: var(--buttoncolor);
+    border-radius: 50%; /* Cerchio */
+    font-size: 1.2em;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0; /* Reset padding browser */
+}
+
+.btn-qty:hover, .btn-qty:focus {
+    background-color: var(--buttoncolor);
+    color: #fff;
+    outline: 2px solid var(--menubgcolor);
+}
+
+.btn-qty:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-color: #ccc;
+    color: #ccc;
+}
+
+.qty-numero {
+    font-weight: bold;
+    font-size: 1.1em;
+    min-width: 1.5em;
+    text-align: center;
+}
+
 /*
 ====================================================================================================================================
 8. CONFERMA ORDINE (CHECKOUT FORM)

@@ -24,11 +24,18 @@ $db = new DBAccess();
 $connessione = $db->openDBConnection();
 $messaggioSistema = "";
 
-// gestione azioni post
+if (isset($_SESSION['msg_flash'])) {
+    $messaggioSistema = $_SESSION['msg_flash'];
+    unset($_SESSION['msg_flash']);
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
     // verifica token CSRF
     if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-        $messaggioSistema = "<p class='errore' role='alert'>Errore di sicurezza: Token non valido. Ricarica la pagina.</p>";
+        // Errore sicurezza -> Salvo in sessione e ricarico
+        $_SESSION['msg_flash'] = "<p class='errore' role='alert'>Errore di sicurezza: Token non valido. Ricarica la pagina.</p>";
+        header("Location: area-personale");
+        exit;
     } 
     else {
         // Logica Modifica Dati
@@ -38,19 +45,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
             $nuovoTelefono = htmlspecialchars(strip_tags(trim($_POST['telefono'])));
             
             if(empty($nuovoNome) || empty($nuovoCognome) || empty($nuovoTelefono)){
-                $messaggioSistema = "<p class='errore' role='alert'>Tutti i campi sono obbligatori.</p>";
+                $_SESSION['msg_flash'] = "<p class='errore' role='alert'>Tutti i campi sono obbligatori.</p>";
             } else {
                 if($connessione){
                     $esito = $db->updatePersona($_SESSION['email'], $nuovoNome, $nuovoCognome, $nuovoTelefono);
                     if($esito){
-                        $messaggioSistema = "<p class='successo' role='alert'>Dati aggiornati con successo!</p>";
                         $_SESSION['nome'] = $nuovoNome;
                         $_SESSION['cognome'] = $nuovoCognome;
+                        $_SESSION['msg_flash'] = "<p class='successo' role='alert'>Dati aggiornati con successo!</p>";
                     } else {
-                        $messaggioSistema = "<p class='errore' role='alert'>Errore durante l'aggiornamento dati.</p>";
+                        $_SESSION['msg_flash'] = "<p class='errore' role='alert'>Errore durante l'aggiornamento dati.</p>";
                     }
                 }
             }
+            // per evitare di rimandare il modulo al refresh al refresh
+            header("Location: area-personale");
+            exit;
         } 
         // Logica Elimina Account
         else if ($_POST['action'] === 'eliminaAccount') {
@@ -61,7 +71,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
                     header("Location: home"); 
                     exit;
                 } else {
-                    $messaggioSistema = "<p class='errore' role='alert'>Non puoi eliminare l'account perché hai ordini in corso.</p>";
+                    $_SESSION['msg_flash'] = "<p class='errore' role='alert'>Non puoi eliminare l'account perché hai ordini in corso.</p>";
+                    header("Location: area-personale");
+                    exit;
                 }
             }
         }

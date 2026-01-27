@@ -1,25 +1,18 @@
 <?php
-// Avvio sessione solo se non già avviata
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 require_once "dbConnection.php";
 
-// carico template HTML
 $paginaHTML = file_get_contents( __DIR__ .'/../html/carrello.html');
-if ($paginaHTML === false) {
-    die("Errore: impossibile leggere il template carrello.html");
-}
+if ($paginaHTML === false) die("Errore template");
 
 $db = new DBAccess();
 
-// gestione aggiunta articolo al carrello
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['ID'])) {
-    
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['ID']) && !isset($_POST['action'])) {
     $connessione = $db->openDBConnection();
     if ($connessione) {
         $idProdotto = $_POST['ID'];
@@ -28,18 +21,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['ID'])) {
 
         if ($itemDB) {
             $tipoItem = strtolower($itemDB['tipo']);
-            
-            // sanificazione input
             $quantitaInput = isset($_POST['quantita']) ? (int)$_POST['quantita'] : 1;
             if ($quantitaInput < 1) $quantitaInput = 1;
-
             $porzioneScelta = isset($_POST['porzione']) ? (int)$_POST['porzione'] : 0; 
             $testoTarga = isset($_POST['testoTarga']) ? trim($_POST['testoTarga']) : "";
-
-            // calcolo del prezzo per unità
+            
             $prezzoBaseItem = (float)$itemDB['prezzo'];
             $prezzoPerUnita = $prezzoBaseItem; 
-            
             if ($tipoItem === 'torta' && $porzioneScelta > 0) {
                 $prezzoPerUnita = $prezzoBaseItem * $porzioneScelta;
             }
@@ -54,17 +42,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['ID'])) {
                 'targa' => $testoTarga
             );
 
-            if (!isset($_SESSION['carrello'])) {
-                $_SESSION['carrello'] = array();
-            }
+            if (!isset($_SESSION['carrello'])) $_SESSION['carrello'] = array();
 
-            // uniamo i prodotti identici
             $trovato = false;
             foreach ($_SESSION['carrello'] as &$itemCarrello) {
                 if ($itemCarrello['id'] == $nuovoElemento['id'] &&
                     $itemCarrello['porzione'] == $nuovoElemento['porzione'] &&
                     $itemCarrello['targa'] === $nuovoElemento['targa']) {
-                    
                     $itemCarrello['quantita'] += $quantitaInput;
                     $trovato = true;
                     break;
@@ -77,23 +61,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['ID'])) {
             }
         }
     }
-    // pattern PRG per evitare reinvio form al refresh
     header("Location: carrello");
     exit;
 }
 
-// rimoizone articolo dal carrello
-if (isset($_GET['action']) && $_GET['action'] == 'rimuovi' && isset($_GET['index'])) {
-    $index = (int)$_GET['index'];
-    if (isset($_SESSION['carrello'][$index])) {
-        unset($_SESSION['carrello'][$index]);
-        $_SESSION['carrello'] = array_values($_SESSION['carrello']);
+// AGGIORNAMENTO QUANTITÀ
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && isset($_POST['index'])) {
+    
+    $index = (int)$_POST['index'];
+    
+    if (isset($_SESSION['carrello']) && isset($_SESSION['carrello'][$index])) {
+        
+        if ($_POST['action'] == 'rimuovi') {
+            unset($_SESSION['carrello'][$index]);
+            $_SESSION['carrello'] = array_values($_SESSION['carrello']); 
+        }
+        
+        elseif ($_POST['action'] == 'piu') {
+            $_SESSION['carrello'][$index]['quantita']++;
+        }
+        
+        elseif ($_POST['action'] == 'meno') {
+            if ($_SESSION['carrello'][$index]['quantita'] > 1) {
+                $_SESSION['carrello'][$index]['quantita']--;
+            }
+        }
     }
+    // Ricarica la pagina per vedere le modifiche
     header("Location: carrello");
     exit;
 }
 
-// generazione contenuto carrello
 $contenutoGenerato = "";
 
 if (isset($_SESSION['carrello']) && count($_SESSION['carrello']) > 0) {
@@ -110,50 +108,70 @@ if (isset($_SESSION['carrello']) && count($_SESSION['carrello']) > 0) {
         $dettagliExtra = "";
         $infoParts = [];
         if ($item['tipo'] === 'torta') {
-            if ($item['porzione'] > 0) {
-                $infoParts[] = "Formato: " . $item['porzione'] . " persone";
-            }
-            if (!empty($item['targa'])) {
-                $infoParts[] = "Targa: <em>" . htmlspecialchars($item['targa']) . "</em>";
-            }
+            if ($item['porzione'] > 0) $infoParts[] = "Formato: " . $item['porzione'] . " persone";
+            if (!empty($item['targa'])) $infoParts[] = "Targa: <em>" . htmlspecialchars($item['targa']) . "</em>";
         }
         $numDettagli = count($infoParts);
-
-        if ($numDettagli === 0) {
-            // CASO 0: Nessun dettaglio
-            $dettagliExtra = "<span aria-hidden='true'>-</span><span class='sr-only'>Nessun dettaglio extra</span>";
-        
-        } elseif ($numDettagli === 1) {
-            // CASO 1: Un solo dettaglio
-            $dettagliExtra = "<span class='dettaglio-singolo'>" . $infoParts[0] . "</span>";
-        
-        } else {
-            // CASO 2: dettagli >1 (Lista non ordinata)
+        if ($numDettagli === 0) $dettagliExtra = "<span aria-hidden='true'>-</span><span class='sr-only'>Nessun dettaglio extra</span>";
+        elseif ($numDettagli === 1) $dettagliExtra = "<span class='dettaglio-singolo'>" . $infoParts[0] . "</span>";
+        else {
             $dettagliExtra = "<ul class='lista-extra-carrello'>";
-            foreach ($infoParts as $info) {
-                $dettagliExtra .= "<li>" . $info . "</li>";
-            }
+            foreach ($infoParts as $info) $dettagliExtra .= "<li>" . $info . "</li>";
             $dettagliExtra .= "</ul>";
         }
+
         $unitarioFormat = number_format($prezzoUnitario, 2, ',', '.');
         $totaleRigaFormat = number_format($prezzoTotaleRiga, 2, ',', '.');
         $nomeProdotto = htmlspecialchars($item['nome']);
 
+        // attributo disabled per il bottone meno se qtà è 1
+        $disabledMeno = ($item['quantita'] <= 1) ? 'disabled' : '';
+
+        // Form per il tasto MENO
+        $formMeno = "
+        <form action='carrello' method='POST' class='form-qty'>
+            <input type='hidden' name='action' value='meno'>
+            <input type='hidden' name='index' value='$index'>
+            <button type='submit' class='btn-qty' $disabledMeno aria-label='Diminuisci quantità di $nomeProdotto' title='Diminuisci'>-</button>
+        </form>";
+
+        // Form per il tasto PIU
+        $formPiu = "
+        <form action='carrello' method='POST' class='form-qty'>
+            <input type='hidden' name='action' value='piu'>
+            <input type='hidden' name='index' value='$index'>
+            <button type='submit' class='btn-qty' aria-label='Aumenta quantità di $nomeProdotto' title='Aumenta'>+</button>
+        </form>";
+
+        // form per il tasto rimuovi
+        $formRimuovi = "
+        <form action='carrello' method='POST'>
+            <input type='hidden' name='action' value='rimuovi'>
+            <input type='hidden' name='index' value='$index'>
+            <button type='submit' class='link-rimuovi' aria-label='Rimuovi $nomeProdotto dal carrello'>Rimuovi</button>
+        </form>";
+
         $righeProdotti .= "<tr>
             <th scope='row' data-label='Prodotto'>$nomeProdotto</th>
-            <td data-label='Dettagli'>$dettagliExtra</td>
-            <td data-label='Quantità'>" . $item['quantita'] . "</td>
-            <td data-label='Prezzo Unit.'>€$unitarioFormat</td>
-            <td data-label='Totale'><strong>€$totaleRigaFormat</strong></td>
+            <td data-label='Info Extra'>$dettagliExtra</td>
+            <td data-label='Quantità'>
+                <div class='qty-container'>
+                    $formMeno
+                    <span class='qty-numero'>" . $item['quantita'] . "</span>
+                    $formPiu
+                </div>
+            </td>
+            <td data-label='Prezzo Unit.' class='cella-numerica'>€$unitarioFormat</td>
+            <td data-label='Totale' class='cella-numerica'><strong>€$totaleRigaFormat</strong></td>
             <td data-label='Azioni'>
-                <a href='carrello&action=rimuovi&index=$index' class='link-rimuovi' aria-label='Rimuovi $nomeProdotto dal carrello'>Rimuovi</a>
+                $formRimuovi
             </td>
         </tr>";
     }
 
     $totaleGeneraleFormat = "€" . number_format($totaleCarrello, 2, ',', '.');
 
-    // logica di login
+    // Controllo Login
     $pulsanteProcedi = "";
     if (isset($_SESSION['ruolo'])) {
         $pulsanteProcedi = "
@@ -204,7 +222,7 @@ if (isset($_SESSION['carrello']) && count($_SESSION['carrello']) > 0) {
     // Caso Carrello Vuoto
     $contenutoGenerato = "
     <div class='carrello-vuoto'>
-        <p>Il tuo carrello è vuoto.</p>
+        <p class='messaggio-vuoto'>Il tuo carrello è vuoto.</p>
         <div class='bottoni-vuoto'>
             <a href='torte' class='pulsanteGenerico'>Le nostre Torte</a>
             <a href='pasticcini' class='pulsanteGenerico'>I nostri Pasticcini</a>
