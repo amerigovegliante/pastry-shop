@@ -1,43 +1,50 @@
-/* File: site/js/script.js */
+document.addEventListener('DOMContentLoaded', function () {
 
-function gestisciAutocompilazione(datiUtente) {
     const box = document.getElementById('box-autocompilazione');
-    const checkbox = document.getElementById('usaDatiProfilo');
-    const campoNome = document.getElementById('nome');
-    const campoCognome = document.getElementById('cognome');
-    const campoTel = document.getElementById('telefono');
+    
+    if (box) {
+        const checkbox = document.getElementById('usaDatiProfilo');
+        const campoNome = document.getElementById('nome');
+        const campoCognome = document.getElementById('cognome');
+        const campoTel = document.getElementById('telefono');
 
-    // Controllo sicurezza
-    if (!box || !checkbox || !campoNome || !campoCognome || !campoTel) return;
+        // Controllo che tutti i campi input esistano
+        if (checkbox && campoNome && campoCognome && campoTel) {
+            
+            // 1. Recupero i dati dal DATASET dell'HTML (che sono stati scritti da PHP)
+            const datiUtente = {
+                nome: box.dataset.nome || "",
+                cognome: box.dataset.cognome || "",
+                telefono: box.dataset.telefono || ""
+            };
 
-    // 1. Mostriamo il box (Progressive Enhancement: se JS è disattivo, il box resta invisibile)
-    box.style.display = 'flex';
+            // 2. Mostro il box dell'autocompilazione
+            box.style.display = 'flex';
 
-    // Funzione interna per applicare i dati
-    function applicaDati() {
-        if (checkbox.checked) {
-            // Salvo i valori attuali (se l'utente aveva scritto qualcosa a mano)
-            if (campoNome.value !== datiUtente.nome) campoNome.dataset.old = campoNome.value;
-            if (campoCognome.value !== datiUtente.cognome) campoCognome.dataset.old = campoCognome.value;
-            if (campoTel.value !== datiUtente.telefono) campoTel.dataset.old = campoTel.value;
+            function applicaDati() {
+                if (checkbox.checked) {
+                    if (campoNome.value !== datiUtente.nome) campoNome.dataset.old = campoNome.value;
+                    if (campoCognome.value !== datiUtente.cognome) campoCognome.dataset.old = campoCognome.value;
+                    if (campoTel.value !== datiUtente.telefono) campoTel.dataset.old = campoTel.value;
 
-            // Scrivo i dati del profilo
-            campoNome.value = datiUtente.nome;
-            campoCognome.value = datiUtente.cognome;
-            campoTel.value = datiUtente.telefono;
-        } else {
-            // Ripristino i vecchi valori o svuoto
-            campoNome.value = campoNome.dataset.old || "";
-            campoCognome.value = campoCognome.dataset.old || "";
-            campoTel.value = campoTel.dataset.old || "";
+                    // Scrivo i dati del profilo
+                    campoNome.value = datiUtente.nome;
+                    campoCognome.value = datiUtente.cognome;
+                    campoTel.value = datiUtente.telefono;
+                } else {
+                    // Ripristino i vecchi valori o svuoto
+                    campoNome.value = campoNome.dataset.old || "";
+                    campoCognome.value = campoCognome.dataset.old || "";
+                    campoTel.value = campoTel.dataset.old || "";
+                }
+            }
+
+            // 3. Ascolto il click dell'utente
+            checkbox.addEventListener('change', applicaDati);
+
+            applicaDati();
         }
     }
+    
 
-    // 2. Ascolto il click dell'utente
-    checkbox.addEventListener('change', applicaDati);
-
-    // 3. ESECUZIONE IMMEDIATA: Se il checkbox parte già selezionato, compilo subito!
-    if (checkbox.checked) {
-        applicaDati();
-    }
-}
+});

@@ -107,24 +107,34 @@ if (isset($_SESSION['carrello']) && count($_SESSION['carrello']) > 0) {
         $prezzoTotaleRiga = $prezzoUnitario * $item['quantita'];
         $totaleCarrello += $prezzoTotaleRiga;
 
-        // Dettagli extra
         $dettagliExtra = "";
+        $infoParts = [];
         if ($item['tipo'] === 'torta') {
-            $infoParts = [];
             if ($item['porzione'] > 0) {
                 $infoParts[] = "Formato: " . $item['porzione'] . " persone";
             }
             if (!empty($item['targa'])) {
                 $infoParts[] = "Targa: <em>" . htmlspecialchars($item['targa']) . "</em>";
             }
-            if (!empty($infoParts)) {
-                $dettagliExtra = "<span class='info-extra'>" . implode("<br>", $infoParts) . "</span>";
-            }
         }
-        if (empty($dettagliExtra)) {
-            $dettagliExtra = "<span aria-hidden='true'>-</span><span class='sr-only'>Nessun dettaglio extra</span>";
-        }
+        $numDettagli = count($infoParts);
 
+        if ($numDettagli === 0) {
+            // CASO 0: Nessun dettaglio
+            $dettagliExtra = "<span aria-hidden='true'>-</span><span class='sr-only'>Nessun dettaglio extra</span>";
+        
+        } elseif ($numDettagli === 1) {
+            // CASO 1: Un solo dettaglio
+            $dettagliExtra = "<span class='dettaglio-singolo'>" . $infoParts[0] . "</span>";
+        
+        } else {
+            // CASO 2: dettagli >1 (Lista non ordinata)
+            $dettagliExtra = "<ul class='lista-extra-carrello'>";
+            foreach ($infoParts as $info) {
+                $dettagliExtra .= "<li>" . $info . "</li>";
+            }
+            $dettagliExtra .= "</ul>";
+        }
         $unitarioFormat = number_format($prezzoUnitario, 2, ',', '.');
         $totaleRigaFormat = number_format($prezzoTotaleRiga, 2, ',', '.');
         $nomeProdotto = htmlspecialchars($item['nome']);

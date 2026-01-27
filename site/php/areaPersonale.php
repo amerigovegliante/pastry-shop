@@ -93,7 +93,7 @@ if($connessione){
                 <caption>Storico degli ordini effettuati con stato e totale</caption>
                 <thead>
                     <tr>
-                        <th scope='col'>N. Ordine</th>
+                        <th scope='col'>ID ordine</th>
                         <th scope='col'>Data</th>
                         <th scope='col'>Stato</th>
                         <th scope='col'>Totale</th>
@@ -111,12 +111,12 @@ if($connessione){
             
             $tabellaOrdiniHTML .= "
             <tr>
-                <th scope='row' data-label='Numero'>#{$o['numero']}</th>
+                <th scope='row' data-label='Numero'>#{$o['id']}</th> 
                 <td data-label='Data'>$dataIta</td>
                 <td data-label='Stato'><span class='stato-tag s-{$o['stato']}'>$statoTesto</span></td>
                 <td data-label='Totale'>€$totaleFmt</td>
                 <td data-label='Azioni'>
-                     <a href=\"dettaglio-ordine?id=".urlencode($o['id'])."\" class='link-dettaglio' aria-label='Vedi dettagli ordine numero {$o['numero']}'>Dettagli</a>
+                     <a href=\"dettaglio-ordine?id=".urlencode($o['id'])."\" class='link-dettaglio' aria-label='Vedi dettagli ordine numero {$o['id']}'>Dettagli</a>
                 </td> 
             </tr>";
         }

@@ -25,9 +25,9 @@ if (empty($_SESSION['csrf_token'])) {
 }
 $token = $_SESSION['csrf_token'];
 
-$paginaHTML = file_get_contents( __DIR__ .'/../html/conferma_ordine.html');
+$paginaHTML = file_get_contents( __DIR__ .'/../html/confermaOrdine.html');
 if ($paginaHTML === false) {
-    die("Errore: impossibile leggere il template conferma_ordine.html");
+    die("Errore: impossibile leggere il template confermaOrdine.html");
 }
 
 $db = new DBAccess();

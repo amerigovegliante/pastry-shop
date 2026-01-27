@@ -35,7 +35,6 @@ CREATE TABLE ordine (
   id int NOT NULL AUTO_INCREMENT,
   ritiro datetime NOT NULL,
   ordinazione datetime,
-  numero int,
   persona varchar(60),
   nome varchar(20),
   cognome varchar(20),
@@ -110,12 +109,12 @@ INSERT INTO item (id, tipo ,nome, descrizione, prezzo, immagine, testo_alternati
 (12, 'pasticcino', 'Frollino al Mandorlato', 'Pasta frolla croccante arricchita da pezzetti di mandorlato di Cologna Veneta, dolce natalizio veneto a base di mandorle e miele.', 0.50 ,NULL,''),
 (13, 'pasticcino', 'Bigné alla crema', 'Classico della pasticceria: bignè gonfi e dorati, ripieni di crema pasticcera o chantilly e spolverati di zucchero a velo.', 1.50 ,NULL,'');
 
-INSERT INTO ordine (id, ritiro, ordinazione, numero, persona, nome, cognome, telefono, annotazioni, stato, totale ) VALUES 
-(1, '2024-12-19 12:30:00', '2024-12-18 15:30:00', 1, 'user', 'user', 'user', '3456789012', 'aggiungere una candelina', 4, 99.00),
-(2, '2024-12-19 13:15:00', '2024-12-18 16:45:00', 2, 'user', 'user', 'user', '3456789012', NULL, 4, 49.50),
-(3, '2024-12-19 14:45:00', '2024-12-18 17:30:00', 3, 'user', 'user', 'user', '3456789012', 'voglio delle decorazioni al cioccolato', 4, 53.00),
-(4, '2024-12-20 09:30:00', '2024-12-19 18:35:00', 4, 'admin', 'admin', 'admin', '3456789345', NULL, 1, 40.00),
-(5, '2024-12-20 11:00:00', '2024-12-19 19:55:37', 5, 'admin', 'admin', 'admin', '3456759345', NULL, 1, 23.00);
+INSERT INTO ordine (id, ritiro, ordinazione, persona, nome, cognome, telefono, annotazioni, stato, totale ) VALUES 
+(1, '2024-12-19 12:30:00', '2024-12-18 15:30:00', 'user', 'user', 'user', '3456789012', 'aggiungere una candelina', 4, 99.00),
+(2, '2024-12-19 13:15:00', '2024-12-18 16:45:00', 'user', 'user', 'user', '3456789012', NULL, 4, 49.50),
+(3, '2024-12-19 14:45:00', '2024-12-18 17:30:00', 'user', 'user', 'user', '3456789012', 'voglio delle decorazioni al cioccolato', 4, 53.00),
+(4, '2024-12-20 09:30:00', '2024-12-19 18:35:00', 'admin', 'admin', 'admin', '3456789345', NULL, 1, 40.00),
+(5, '2024-12-20 11:00:00', '2024-12-19 19:55:37', 'admin', 'admin', 'admin', '3456759345', NULL, 1, 23.00);
 
 INSERT INTO ordine_torta (torta, ordine, porzioni, targa, numero_torte) VALUES 
 (1, 1, 8, 'Auguri Sara', 1),

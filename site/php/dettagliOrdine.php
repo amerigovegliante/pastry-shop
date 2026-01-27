@@ -71,7 +71,6 @@ if (isset($_GET['id'])) {
         $listaDettagliOrdine  = '<h2>Dettagli ordine <span aria-label="Numero">#</span>' . htmlspecialchars($ordine['id']) . '</h2>';
         $listaDettagliOrdine .= '<ul>';
         $listaDettagliOrdine .= '<li><strong>Stato:</strong> ' . htmlspecialchars($statoTesto) . '</li>';
-        $listaDettagliOrdine .= '<li><strong>Quantità:</strong> ' . htmlspecialchars($ordine['numero']) . '</li>';
         $listaDettagliOrdine .= '<li><strong>Data di ordinazione:</strong> ' . htmlspecialchars($ordine['ordinazione']) . '</li>';
         $listaDettagliOrdine .= '<li><strong>Data di ritiro:</strong> ' . htmlspecialchars($ordine['ritiro']) . '</li>';
         $listaDettagliOrdine .= '<li><strong>Annotazioni:</strong> ' . htmlspecialchars($ordine['annotazioni'] ?? '')  . '</li>';

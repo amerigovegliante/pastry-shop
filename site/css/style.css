@@ -443,7 +443,7 @@ button, .pulsanteGenerico{
     padding: 0.7em;
     border: var(--bgcolor) 1px solid;
     cursor: pointer;
-    transition: all 0.3s ease; /* effetto di transizione */
+    transition: all 0.3s ease;
 }
 button:hover, .pulsanteGenerico:hover{
     background-color: var(--buttoncolor);
@@ -522,7 +522,7 @@ PAGINA DETTAGLI ORDINE (dettaglioOrdine.html)
 AIUTI COMPILAZIONE FORM
 ------------------------------------------------------------------------------------------------------------------------------------
 */
-.campoDati small{                   /*nasconde i suggerimenti*/
+.campoDati small{
     position: absolute;
     clip: rect(0 0 0 0);
     clip-path: inset(50%);
@@ -532,7 +532,7 @@ AIUTI COMPILAZIONE FORM
     white-space: nowrap;
 }
 
-.campoDati:focus-within small {     /*quando il campo dati riceve il focus il suggerimento torna visibile*/
+.campoDati:focus-within small { 
     position: static;
     clip: auto;
     clip-path: none;
@@ -714,7 +714,6 @@ PAGINA TORTE e PASTICCINI (torte-pasticcini.html)
 }
 .porzioni input[type="radio"] { position: absolute; opacity: 0; pointer-events: none; }
 
-
 /*
 ====================================================================================================================================
 7. STILI UNIFICATI PER LE TABELLE (Carrello, Ordini, Riepilogo)
@@ -739,7 +738,7 @@ PAGINA TORTE e PASTICCINI (torte-pasticcini.html)
     border: 1px solid #ddd;
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     margin-bottom: 2em;
-    min-width: 600px;
+    min-width: 600px; /* Evita che la tabella si schiacci troppo su mobile */
 }
 
 /* CAPTION (Titolo della tabella) */
@@ -767,6 +766,7 @@ PAGINA TORTE e PASTICCINI (torte-pasticcini.html)
     text-align: left;
     border-bottom: 2px solid var(--menubgcolor);
 }
+
 /* CELLE DI RIGA */
 .tabella-carrello tbody th, .tabella-carrello tbody td,
 .tabella-ordini tbody th, .tabella-ordini tbody td,
@@ -790,6 +790,45 @@ PAGINA TORTE e PASTICCINI (torte-pasticcini.html)
 
 tr:last-child td, tr:last-child th { border-bottom: none; }
 
+/* Utility per celle numeriche (Prezzi, Quantità) - Allineamento a destra o centro */
+.cella-numerica {
+    text-align: center !important; /* O right se preferisci */
+    white-space: nowrap; /* Evita che il prezzo vada a capo */
+}
+
+
+/* --- STILE DETTAGLI EXTRA (Torte/Pasticcini) --- */
+
+/* Caso Lista (più elementi) */
+.lista-extra-carrello {
+    list-style-type: none; /* Niente pallini */
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+
+.lista-extra-carrello li {
+    margin-bottom: 0.2em;
+    font-size: 0.9em;
+    color: #555;
+}
+
+/* Caso Singolo elemento */
+.dettaglio-singolo {
+    display: block; 
+    font-size: 0.9em;
+    color: #555;
+    text-align: left;
+}
+
+/* Stile per la targa (comune a entrambi) */
+.lista-extra-carrello li em,
+.dettaglio-singolo em {
+    font-style: normal;
+    font-weight: bold;
+    color: var(--buttoncolor);
+}
+
 
 /* --- SPECIFICHE CARRELLO --- */
 
@@ -803,37 +842,10 @@ tr:last-child td, tr:last-child th { border-bottom: none; }
     font-weight: bold; 
     font-size: 1.4em; 
     color: var(--buttoncolor); 
+    text-align: center; /* Allineato con le celle numeriche */
 }
 
-/* Controlli Quantità (+ e -) */
-.controllo-quantita {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.form-inline { display: inline; margin: 0; }
-
-.btn-qty {
-    background-color: #eee;
-    border: 1px solid #ccc;
-    color: #333;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 1.2em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.3s;
-    padding: 0;
-    line-height: 1;
-}
-.btn-qty:hover { background-color: #ddd; }
-.qty-numero { font-weight: bold; font-size: 1.1em; min-width: 20px; text-align: center; }
-
-/* Link rimuovi e azioni */
+/* Link rimuovi */
 .link-rimuovi {
     color: var(--txterrorcolor); 
     background: none;
@@ -841,7 +853,13 @@ tr:last-child td, tr:last-child th { border-bottom: none; }
     font-weight: bold;
     cursor: pointer;
     text-decoration: underline;
+    font-size: 0.9em;
 }
+.link-rimuovi:hover {
+    color: #a00;
+}
+
+/* Contenitore azioni sotto la tabella */
 .azioniCarrello {
     display: flex;
     justify-content: space-between;
@@ -850,16 +868,39 @@ tr:last-child td, tr:last-child th { border-bottom: none; }
     padding: 1em;
     background-color: var(--contentbgcolorchiaro);
     border-radius: 8px;
+    flex-wrap: wrap; /* Su mobile vanno a capo */
+    gap: 1em;
 }
+
+.link-indietro {
+    font-weight: bold;
+    color: var(--contenttxtcolorscuro);
+    text-decoration: none;
+}
+.link-indietro:hover {
+    text-decoration: underline;
+}
+
+/* Messaggio Carrello Vuoto */
 .carrello-vuoto {
     text-align: center;
-    padding: 4em;
+    padding: 4em 2em;
     background-color: white;
     border: 2px dashed #ccc;
     border-radius: 10px;
     margin-top: 1em;
 }
-
+.messaggio-vuoto {
+    font-size: 1.2em;
+    margin-bottom: 2em;
+    color: #555;
+}
+.bottoni-vuoto {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    flex-wrap: wrap;
+}
 
 /*
 ====================================================================================================================================
@@ -932,7 +973,6 @@ tr:last-child td, tr:last-child th { border-bottom: none; }
 #confermaOrdine .opzione-autocompilazione input[type="checkbox"] { flex-shrink: 0; width: 20px; height: 20px; }
 #confermaOrdine .opzione-autocompilazione label { margin: 0; flex-grow: 1; cursor: pointer; }
 
-
 /*
 ====================================================================================================================================
 9. SPECIFICHE AREA PERSONALE (Layout, Griglie, Admin)
@@ -970,24 +1010,52 @@ tr:last-child td, tr:last-child th { border-bottom: none; }
 }
 .header-area-personale h2 { margin: 0; color: var(--buttoncolor); }
 
+
+/* --- LAYOUT RESPONSIVE FLEXBOX --- */
 .griglia-area-personale {
-    display: grid;
-    grid-template-columns: 1fr 2fr; 
+    display: flex;
+    flex-wrap: wrap;
     gap: 2em;
     align-items: start;
 }
-.box-profilo, .box-ordini {
+
+/* Box Profilo (I miei Dati) */
+.box-profilo {
+    flex: 1 1 300px; /* Occupa 1 quota di spazio, larghezza minima ideale 300px */
     background-color: var(--contentbgcolorchiaro);
     padding: 1.5em;
     border-radius: 8px;
     border: 1px solid #ccc;
 }
+
+/* Box Ordini (I miei Ordini) */
+.box-ordini {
+    flex: 2 1 450px; /* Occupa 2 quote di spazio (più largo), min ideale 450px */
+    background-color: var(--contentbgcolorchiaro);
+    padding: 1.5em;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    /* Se lo schermo è piccolo, questo box andrà a capo sotto al profilo */
+}
+
 .box-profilo h3, .box-ordini h3 {
     color: var(--buttoncolor);
     margin-bottom: 1em;
     border-bottom: 1px dashed var(--buttoncolor);
     padding-bottom: 0.5em;
 }
+
+/* Etichette statiche per dati non modificabili */
+.etichetta-statica {
+    font-weight: bold;
+    font-size: 0.9em;
+    color: #555;
+}
+.valore-statico {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
 
 /* Badge Stato Ordine */
 .stato-tag {
@@ -1050,69 +1118,124 @@ tr:last-child td, tr:last-child th { border-bottom: none; }
 }
 .bottone-admin:hover { background-color: var(--hoverbgcolor); color: var(--txtcolor); }
 
-
 /*
 ====================================================================================================================================
-10. SPECIFICHE ESITO (Layout, Messaggi)
-   La tabella riepilogo è gestita nella sezione 7
+10. SPECIFICHE ESITO (Layout, Messaggi e Riepilogo)
 ====================================================================================================================================
 */
-#esitoPositivo, #esitoNegativo {
+#esitoOrdine {
     text-align: center;
     padding: 2em;
 }
 
-.box-riepilogo-esito {
+/* Titoli Dinamici (iniettati da PHP) */
+.titolo-successo {
+    color: var(--txtsuccesscolor);
+    font-size: 2em;
+    margin-bottom: 0.5em;
+}
+
+.titolo-errore {
+    color: var(--txterrorcolor);
+    font-size: 2em;
+    margin-bottom: 0.5em;
+}
+
+/* Contenitore principale del messaggio (unico per successo ed errore) */
+.box-esito {
     background-color: var(--contentbgcolorchiaro);
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 2em;
     margin: 1em auto 2em auto;
-    max-width: 800px;
+    max-width: 600px; /* Larghezza controllata per l'effetto "scontrino" */
     text-align: left;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
 }
 
-/* Dettagli prodotto in lista pulita */
-ul.dettagli-prodotto {
-    list-style-type: none !important;
-    padding-left: 0;
+/* --- STILI PER LA DESCRIPTION LIST (<dl>) - ACCESSIBILITÀ --- */
+/* Questo sostituisce la vecchia tabella prodotti */
+
+.dati-riepilogo {
+    margin: 1.5em 0;
+    border-top: 2px dashed var(--buttoncolor);    /* Effetto strappo scontrino */
+    border-bottom: 2px dashed var(--buttoncolor); /* Effetto strappo scontrino */
+    padding: 1.5em 0;
+}
+
+/* Flexbox per affiancare dt (Etichetta) e dd (Valore) */
+.riga-dati {
+    display: flex;
+    justify-content: space-between; /* Spinge gli elementi ai lati opposti */
+    align-items: baseline;          /* Allinea il testo sulla linea base */
+    padding: 0.5em 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05); /* Separatore leggerissimo */
+}
+
+.riga-dati:last-child {
+    border-bottom: none;
+}
+
+.dati-riepilogo dt {
+    font-weight: bold;
+    color: var(--contenttxtcolorscuro);
+    width: 45%; /* Riserva spazio per l'etichetta */
+}
+
+.dati-riepilogo dd {
     margin: 0;
+    text-align: right;
+    width: 55%;
+    font-family: 'Courier New', Courier, monospace; /* Font monospaziato per i dati */
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #333;
 }
-ul.dettagli-prodotto li {
-    font-size: 0.9em;
-    color: #555;
-    margin-bottom: 0.2em;
-}
-/* Rimuoviamo eventuali pallini colorati */
-ul.dettagli-prodotto li::before { content: none !important; }
 
-/* Messaggi Esito */
-.successo { color: var(--txtsuccesscolor); font-size: 2em; margin-bottom: 0.5em; }
-.numero-ordine {
-    font-size: 1.2em;
+/* Evidenziazione Totale (classe specifica) */
+.prezzo-evidenza {
+    color: var(--buttoncolor);
+    font-size: 1.4em !important;
+}
+
+/* --- MESSAGGI TESTUALI --- */
+.messaggio-intro { 
+    font-size: 1.1em; 
+    margin-bottom: 1em; 
+    text-align: center;
+}
+
+.nota-finale { 
+    font-size: 0.9em; 
+    font-style: italic; 
+    color: #555; 
+    text-align: center; 
+    margin-top: 1em; 
+}
+
+.messaggio-errore { 
+    font-size: 1.2em; 
     margin-bottom: 1em;
-    padding-bottom: 0.5em;
-    border-bottom: 2px solid var(--primary-color);
+    font-weight: bold;
 }
-.dettagli-esito { list-style: none; padding: 0; margin-bottom: 2em; }
-.dettagli-esito li { margin-bottom: 0.5em; font-size: 1.1em; }
 
-.box-errore {
-    background-color: #fff;
-    padding: 2em;
-    border: 1px solid #ddd;
-    border-left: 6px solid var(--txterrorcolor);
-    margin: 2em auto;
-    max-width: 800px;
-    text-align: left;
-}
-.titolo-errore { color: var(--txterrorcolor); font-size: 2em; margin-bottom: 0.5em; }
-.azioni-esito, .azioni-errore {
+/* --- AZIONI (Pulsanti) --- */
+.azioni-esito, .azioni-errore-interne {
     display: flex;
     justify-content: center;
     gap: 1.5em;
-    flex-wrap: wrap;
     margin-top: 2em;
+}
+
+/* Link interno al box di errore */
+.azioni-errore-interne a {
+    color: var(--buttoncolor);
+    font-weight: bold;
+    text-decoration: underline;
+    font-size: 1.1em;
+}
+.azioni-errore-interne a:hover {
+    color: var(--contenttxtcolorscuro);
 }
 
 

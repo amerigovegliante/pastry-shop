@@ -7,7 +7,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // 2. SE L'UTENTE È GIÀ LOGGATO, NON DEVE STARE QUI
 if (isset($_SESSION['ruolo'])) {
-    header("Location: areaPersonale");
+    header("Location: area-personale");
     exit;
 }
 
@@ -146,7 +146,7 @@ if(isset($_POST['submit'])){
                     $_SESSION['cognome'] = $cognome;
                     $_SESSION['ruolo'] = 'user'; //il ruolo di default per la registrazione pubblica è user
 
-                    header("Location: areaPersonale");  //reindirizzamento all'area personale
+                    header("Location: area-personale");  //reindirizzamento all'area personale
                     exit;
                 }
             }

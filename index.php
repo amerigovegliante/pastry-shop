@@ -37,7 +37,7 @@ $whitelist = [
     'checkout'          => ['file' => 'site/php/checkout.php', 'permesso' => 'user_admin'],
     'dettaglio-ordine'   => ['file' => 'site/php/dettagliOrdine.php', 'permesso' => 'user_admin'],
     'logout'            => ['file' => 'site/php/logout.php', 'permesso' => 'user_admin'],
-    'conferma-ordine'   => ['file' => 'site/php/conferma_ordine.php', 'permesso' => 'user_admin'],
+    'conferma-ordine'   => ['file' => 'site/php/confermaOrdine.php', 'permesso' => 'user_admin'],
     'esito-ordine' => ['file' => 'site/php/esito.php', 'permesso' => 'user_admin'],
 
     //Accessibili ad admin 

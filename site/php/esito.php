@@ -1,10 +1,10 @@
 <?php
-// Avvio sessione solo se non già avviata
+// Avvio sessione
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// se l'utente prova ad aprire questa pagina direttamente senza passare dal checkout, lo rispediamo alla home
+// Redirect home se non c'è esito
 if (!isset($_SESSION['risultato_esito'])) {
     header("Location: home");
     exit;
@@ -12,33 +12,73 @@ if (!isset($_SESSION['risultato_esito'])) {
 
 $dati = $_SESSION['risultato_esito'];
 
-// in caso di errore:
-if ($dati['successo'] === false) {
-    $paginaHTML = file_get_contents( __DIR__ .'/../html/esito_negativo.html');
-    unset($_SESSION['risultato_esito']);
-    
-    echo $paginaHTML;
-    exit;
+// Carichiamo il template
+$paginaHTML = file_get_contents( __DIR__ .'/../html/esito.html');
+if ($paginaHTML === false) {
+    die("Errore: Template esito.html non trovato");
 }
 
-// nel caso l'ordine sia andato a buon fine:
+$titoloPagina = "";
+$classeEsito = "";
+$contenutoEsito = "";
+
 if ($dati['successo'] === true) {
-    $paginaHTML = file_get_contents( __DIR__ .'/../html/esito_positivo.html');
-
-    // Formattazione dati per la vista
-    $totaleFormat = "€" . number_format($dati['totale'], 2, ',', '.');
-    $dataRitiroFormat = date('d/m/Y', strtotime($dati['data_ritiro']));
+    // --- CASO POSITIVO ---
+    $titoloPagina = "Ordine Confermato!";
+    $classeEsito = "titolo-successo";
     
-    // Sostituzione Placeholder
-    $paginaHTML = str_replace("[numeroOrdine]", $dati['numero_ordine'], $paginaHTML);
-    $paginaHTML = str_replace("[nomeCognome]", htmlspecialchars($dati['nome_cognome']), $paginaHTML);
-    $paginaHTML = str_replace("[totale]", $totaleFormat, $paginaHTML);
-    $paginaHTML = str_replace("[dataRitiro]", $dataRitiroFormat, $paginaHTML);
-    $paginaHTML = str_replace("[ListaProdotti]", $dati['lista_prodotti'], $paginaHTML);
+    $totaleFormat = "€" . number_format($dati['totale'], 2, ',', '.');
+    $dataRitiroFormat = date('d/m/Y H:i', strtotime($dati['data_ritiro'])); 
 
-    // puliamo la sessione cosí se l'utente ricarica la pagina verrà reindirizzato in homee, questo impedisce di vedere la conferma all'infinito o di ri-ordinare per sbaglio.
-    unset($_SESSION['risultato_esito']);
-    echo $paginaHTML;
-    exit;
+    $contenutoEsito = "
+        <p class='messaggio-intro'>Grazie! Il tuo ordine è stato registrato correttamente.</p>
+        
+        <dl class='dati-riepilogo'>
+            <div class='riga-dati'>
+                <dt>Numero Ordine</dt>
+                <dd>#{$dati['id_ordine']}</dd>
+            </div>
+            
+            <div class='riga-dati'>
+                <dt>Intestatario</dt>
+                <dd>" . htmlspecialchars($dati['nome_cognome']) . "</dd>
+            </div>
+            
+            <div class='riga-dati'>
+                <dt>Ritiro previsto</dt>
+                <dd>{$dataRitiroFormat}</dd>
+            </div>
+            
+            <div class='riga-dati'>
+                <dt>Totale da pagare</dt>
+                <dd class='prezzo-evidenza'>{$totaleFormat}</dd>
+            </div>
+        </dl>
+        
+        <p class='nota-finale'>Ti aspettiamo in negozio per il ritiro. Ricorda di portare il numero dell'ordine.</p>
+    ";
+
+} else {
+    // --- CASO NEGATIVO ---
+    $titoloPagina = "Errore Ordine";
+    $classeEsito = "titolo-errore";
+
+    $contenutoEsito = "
+        <p class='messaggio-errore'>Ops! Non siamo riusciti a completare il tuo ordine a causa di un problema tecnico.</p>
+        <p>Ti consigliamo di riprovare tra qualche minuto.</p>
+        <div class='azioni-errore-interne'>
+            <a href='carrello'>Torna al Carrello</a>
+        </div>
+    ";
 }
+
+// Sostituzione segnaposto nel template
+$paginaHTML = str_replace("[titoloPagina]", $titoloPagina, $paginaHTML);
+$paginaHTML = str_replace("[classeEsito]", $classeEsito, $paginaHTML);
+$paginaHTML = str_replace("[contenutoEsito]", $contenutoEsito, $paginaHTML);
+
+// Pulizia sessione
+unset($_SESSION['risultato_esito']);
+
+echo $paginaHTML;
 ?>

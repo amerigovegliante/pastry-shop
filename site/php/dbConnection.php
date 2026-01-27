@@ -118,8 +118,9 @@ class DBAccess{
                         FROM ordine 
                         WHERE ritiro >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) 
                         ORDER BY ritiro ASC, stato ASC";
-        
-        $queryResult = mysqli_query($this->connection, $querySelect);
+        $stmt = mysqli_prepare($this->connection, $querySelect);
+        mysqli_stmt_execute($stmt);
+        $queryResult = mysqli_stmt_get_result($stmt);
         
         if (mysqli_num_rows($queryResult) > 0){
             $Ritirati = array();
@@ -134,8 +135,10 @@ class DBAccess{
                     array_push($NonRitirati, $row);
                 }
             }
+            mysqli_stmt_close($stmt);
             return array_merge($NonRitirati, $Ritirati);
         } else {
+            mysqli_stmt_close($stmt);
             return null;
         }
     }
@@ -201,7 +204,7 @@ class DBAccess{
 
     // Recupera ordini di un singolo utente (Storico)
     public function getOrdiniUtente($email){
-        $query = "SELECT id, ritiro, ordinazione, stato, totale, numero 
+        $query = "SELECT id, ritiro, ordinazione, stato, totale 
                   FROM ordine 
                   WHERE persona = ? 
                   ORDER BY ordinazione DESC";
@@ -446,47 +449,55 @@ FUNZIONI PER SCRIVERE DATI
 
     // Elimina utente
     public function deletePersona($email) {
-        // Verifico se la connessione è aperta, altrimenti provo ad aprirla
         if (!$this->connection) {
             if (!$this->openDBConnection()) {
                 return false;
             }
         }
         
-        $connessione = $this->connection; 
-        
-        // 1. Controllo se ci sono ordini ATTIVI (Stato 1, 2, 3)
-        $queryCheck = "SELECT id FROM ordine WHERE persona = ? AND stato IN (1, 2, 3)";
-        $stmtCheck = mysqli_prepare($connessione, $queryCheck);
-        
-        if (!$stmtCheck) {
-            return false;
-        }
+        try {
+            // Iniziamo la transazione: blocchiamo lo stato attuale
+            $this->connection->begin_transaction();
 
-        mysqli_stmt_bind_param($stmtCheck, "s", $email);
-        mysqli_stmt_execute($stmtCheck);
-        mysqli_stmt_store_result($stmtCheck);
+            // 1. Controllo se ci sono ordini ATTIVI (Stato 1, 2, 3)
+            $queryCheck = "SELECT id FROM ordine WHERE persona = ? AND stato IN (1, 2, 3)";
+            $stmtCheck = mysqli_prepare($this->connection, $queryCheck);
+            
+            if (!$stmtCheck) throw new Exception("Errore prepare check");
 
-        // Se ci sono ordini attivi, NON cancello e ritorno false
-        if(mysqli_stmt_num_rows($stmtCheck) > 0){
+            mysqli_stmt_bind_param($stmtCheck, "s", $email);
+            mysqli_stmt_execute($stmtCheck);
+            mysqli_stmt_store_result($stmtCheck);
+
+            // Se ci sono ordini attivi, ANNULLO tutto e ritorno false
+            if(mysqli_stmt_num_rows($stmtCheck) > 0){
+                mysqli_stmt_close($stmtCheck);
+                $this->connection->rollback(); // Annulla
+                return false; 
+            }
             mysqli_stmt_close($stmtCheck);
-            return false; 
-        }
-        mysqli_stmt_close($stmtCheck);
 
-        $queryDelete = "DELETE FROM persona WHERE email = ?";
-        $stmtDelete = mysqli_prepare($connessione, $queryDelete);
-        
-        if (!$stmtDelete) {
+            // 2. Procedo con l'eliminazione
+            $queryDelete = "DELETE FROM persona WHERE email = ?";
+            $stmtDelete = mysqli_prepare($this->connection, $queryDelete);
+            
+            if (!$stmtDelete) throw new Exception("Errore prepare delete");
+
+            mysqli_stmt_bind_param($stmtDelete, "s", $email);
+            $result = mysqli_stmt_execute($stmtDelete);
+            mysqli_stmt_close($stmtDelete);
+            
+            if ($result) {
+                $this->connection->commit(); // Confermo le modifiche definitivamente
+                return true;
+            } else {
+                throw new Exception("Errore execute delete");
+            }
+
+        } catch (Exception $e) {
+            $this->connection->rollback(); // In caso di errore, torno indietro come se nulla fosse successo
             return false;
         }
-
-        mysqli_stmt_bind_param($stmtDelete, "s", $email);
-        $result = mysqli_stmt_execute($stmtDelete);
-        
-        mysqli_stmt_close($stmtDelete);
-        
-        return $result;
     }
 
      public function  AggiornaStati($statiModificati) {

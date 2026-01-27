@@ -3,9 +3,9 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Ordine Confermato - Pasticceria Padovana</title>
+    <title>[titoloPagina] - Pasticceria Padovana</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Conferma dell'ordine avvenuta con successo.">
+    <meta name="description" content="Esito della procedura di ordine.">
 
     <base href="<?= BASE_URL ?>">
 
@@ -56,33 +56,18 @@
     </nav>
 
     <nav id="breadcrumb" aria-label="Percorso">
-        <p class="contenuto">Ti trovi in: <a href="home"><span lang="en">Home</span></a> &gt; <a href="carrello">Carrello</a> &gt; Ordine Confermato</p>
+        <p class="contenuto">Ti trovi in: <a href="home"><span lang="en">Home</span></a> &gt; <a href="carrello">Carrello</a> &gt; Esito Ordine</p>
     </nav>
 
     <main id="main">
-        <section class="contenuto" id="esitoPositivo">
+        <section class="contenuto" id="esitoOrdine">
 
-            <h2 class="successo">Ordine Confermato!</h2>
+            <h2 class="[classeEsito]">[titoloPagina]</h2>
             
-            <div class="box-riepilogo-esito">
-                <p class="numero-ordine">Numero Ordine: <strong>#[numeroOrdine]</strong></p>
-                
-                <ul class="dettagli-esito">
-                    <li><strong>Intestatario:</strong> [nomeCognome]</li>
-                    <li><strong>Totale da pagare (in cassa):</strong> [totale]</li>
-                    <li><strong>Ritiro previsto:</strong> [dataRitiro] (dalle 10:00)</li>
-                </ul>
-
-                <h3>Riepilogo Prodotti:</h3>
-                
-                <div class="table-container">
-                    [ListaProdotti]
-                </div>
-
-                <hr>
-                <p>Abbiamo ricevuto la tua richiesta. Ti aspettiamo in negozio!</p>
+            <div class="box-esito">
+                [contenutoEsito]
             </div>
-            
+
             <div class="azioni-esito">
                 <a href="home" class="pulsanteGenerico">Torna alla Home</a>
             </div>

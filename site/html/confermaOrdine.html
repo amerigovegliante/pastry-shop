@@ -31,18 +31,17 @@
             
             <div id="pulsantiMenu">
                 <a href="area-personale" class="bottoneProfilo" aria-label="Accedi alla tua area personale">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
                         <circle cx="12" cy="7" r="4" />
                     </svg>
                 </a>
                 <a href="carrello" class="bottoneCarrello" aria-label="Torna al carrello">
-                    <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg aria-hidden="true" focusable="false" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="16.5" cy="18.5" r="1.5" />
                         <circle cx="9.5" cy="18.5" r="1.5" />
-                        <path
-                            d="M18 16H8a1 1 0 0 1-.958-.713L4.256 6H3a1 1 0 0 1 0-2h2 a1 1 0 0 1 .958.713L6.344 6H21a1 1 0 0 1 .937 1.352l-3 8 A1 1 0 0 1 18 16zm-9.256-2h8.563l2.25-6H6.944z" />
+                        <path d="M18 16H8a1 1 0 0 1-.958-.713L4.256 6H3a1 1 0 0 1 0-2h2 a1 1 0 0 1 .958.713L6.344 6H21a1 1 0 0 1 .937 1.352l-3 8 A1 1 0 0 1 18 16zm-9.256-2h8.563l2.25-6H6.944z" />
                     </svg>
                 </a>
             </div>
@@ -73,24 +72,14 @@
                 <fieldset>
                     <legend>Intestatario Ordine</legend>
 
-                    <div id="box-autocompilazione" class="opzione-autocompilazione">
-                        <input type="checkbox" id="usaDatiProfilo" checked>
+                    <div id="box-autocompilazione" 
+                         class="opzione-autocompilazione"
+                         data-nome="[valoreNome]"
+                         data-cognome="[valoreCognome]"
+                         data-telefono="[valoreTelefono]"> <input type="checkbox" id="usaDatiProfilo" checked>
                         <label for="usaDatiProfilo">Usa i dati del mio profilo ([valoreNome] [valoreCognome])</label>
                     </div>
 
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function () {
-                            const datiUtentePHP = {
-                                nome: "[valoreNome]",
-                                cognome: "[valoreCognome]",
-                                telefono: "[valoreTelefono]"
-                            };
-                            if (typeof gestisciAutocompilazione === 'function') {
-                                gestisciAutocompilazione(datiUtentePHP);
-                            }
-                        });
-                    </script>
-                    
                     <div class="riga-input">
                         <div>
                             <label for="nome">Nome:</label>
@@ -111,15 +100,22 @@
                 <fieldset>
                     <legend>Dettagli Ritiro</legend>
 
-                    <div>
-                        <label for="dataRitiro">Data di Ritiro (minimo 48h di preavviso):</label>
-                        <input type="date" id="dataRitiro" name="dataRitiro" min="[minDate]" value="[minDate]" required>
+                    <div class="riga-input"> 
+                        <div>
+                            <label for="dataRitiro">Data (minimo 48h preavviso):</label>
+                            <input type="date" id="dataRitiro" name="dataRitiro" min="[minDate]" value="[minDate]" required>
+                        </div>
+                        
+                        <div>
+                            <label for="oraRitiro">Orario (08:00 - 19:30):</label>
+                            <input type="time" id="oraRitiro" name="oraRitiro" min="08:00" max="19:30" value="10:00" required>
+                        </div>
                     </div>
 
                     <div>
                         <label for="annotazioni">Note aggiuntive (facoltativo):</label>
                         <textarea id="annotazioni" name="annotazioni" rows="3"
-                            placeholder="Es. intolleranze particolari, orario preferito..."></textarea>
+                            placeholder="Es. intolleranze particolari, nome sul citofono..."></textarea>
                     </div>
                 </fieldset>
 
@@ -156,5 +152,4 @@
         </div>
     </footer>
 </body>
-
 </html>
