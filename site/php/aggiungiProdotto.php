@@ -66,9 +66,6 @@ function inserisciAllergeni($db, $itemId, $allergeni) {
 
 //GESTIONE AGGIUNTA PRODOTTO
 if(isset($_POST['submit'])){
-    
-    var_dump($_POST['csrf_token']);
-    var_dump($_SESSION['csrf_token']);
 
     // 3. SICUREZZA: Verifica CSRF Token
     if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
@@ -76,10 +73,8 @@ if(isset($_POST['submit'])){
     } else {
         // --- VALIDAZIONE CAMPI ---
         // Tipo
-        var_dump($tipo, $_POST['tipo']);
         if(isset($_POST['tipo']) && ($_POST['tipo'] === 'torta' || $_POST['tipo'] === 'pasticcino')){
             $tipo = $_POST['tipo'];
-            var_dump($tipo, $_POST['tipo']);
         } else {
             $erroreTipo = '<p class="errore" role="alert">Seleziona un tipo valido</p>';
         }
