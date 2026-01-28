@@ -6,7 +6,10 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once __DIR__ . '/db_config.php';
+$configFile = __DIR__ . '/db_config.php';
+if (file_exists($configFile)) {
+    require_once $configFile;
+}
 
 $scriptPath = dirname($_SERVER['SCRIPT_NAME']);
 $baseUrl = rtrim($scriptPath, '/\\') . '/';

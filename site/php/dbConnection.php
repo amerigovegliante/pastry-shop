@@ -7,18 +7,18 @@ class DBAccess{
     private $connection;
 
     public function openDBConnection(){
-        // configurazione per la segnalazione degli errori di mysqli, utile per il debug
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
         try {
-            // tentativo di apertura della connessione usando le costanti definite in db_config.php
-            $this->connection = mysqli_connect(
-                DB_HOST, 
-                DB_USER,
-                DB_PASSWORD,
-                DB_NAME,
-                DB_PORT
-            );
+            $host = getenv('MYSQLHOST')     ?: (defined('DB_HOST')     ? DB_HOST     : null);
+            $user = getenv('MYSQLUSER')     ?: (defined('DB_USER')     ? DB_USER     : null);
+            $pass = getenv('MYSQLPASSWORD') ?: (defined('DB_PASSWORD') ? DB_PASSWORD : null);
+            $db   = getenv('MYSQLDATABASE') ?: (defined('DB_NAME')     ? DB_NAME     : null);
+            $port = getenv('MYSQLPORT')     ?: (defined('DB_PORT')     ? DB_PORT     : 3306); 
+            
+            $this->connection = mysqli_connect($host, $user, $pass, $db, (int)$port);
+            $this->connection->set_charset("utf8mb4");
+
             return true;
         } catch (mysqli_sql_exception $e) {
             return false;
