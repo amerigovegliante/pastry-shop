@@ -1,4 +1,6 @@
-<?phpclass DBAccess{
+<?php
+
+class DBAccess{
     
     private $connection;
 
