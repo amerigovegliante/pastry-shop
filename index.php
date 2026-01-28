@@ -1,14 +1,18 @@
 <?php
-error_reporting(E_ALL); //attiva visualizzazione errori
+error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-session_start();//CONTROLLA
-
-//genero url base per i file non index
 require_once __DIR__ . '/db_config.php';
 
-define('BASE_URL', '/' . DB_USER . '/pastry-shop/');
+$scriptPath = dirname($_SERVER['SCRIPT_NAME']);
+$baseUrl = rtrim($scriptPath, '/\\') . '/';
+
+// Definisco la costante solo se serve ad altri file PHP inclusi
+define('BASE_URL', $baseUrl);
 
 //  Pagina richiesta
 $page = $_GET['page'] ?? 'home';
@@ -20,10 +24,8 @@ if (!preg_match('/^[a-z0-9-]+$/i', $page)) {
     exit;
 }
 
-
 $whitelist = [
-    //Accessibili a tutti 
-    'home'              => ['file' => 'index.html', 'permesso' => 'public'],
+    'home'              => ['file' => 'site/html/home.html', 'permesso' => 'public'],
     'chi-siamo'         => ['file' => 'site/html/story.html', 'permesso' => 'public'],
     'contattaci'        => ['file' => 'site/php/contattaci.php', 'permesso' => 'public'],
     'torte'             => ['file' => 'site/php/torte-pasticcini.php', 'permesso' => 'public'],
@@ -32,17 +34,16 @@ $whitelist = [
     'registrazione'     => ['file' => 'site/php/registrazione.php', 'permesso' => 'public'],
     'dettagli'          => ['file' => 'site/php/dettagli.php', 'permesso' => 'public'],
     'carrello'          => ['file' => 'site/php/carrello.php', 'permesso' => 'public'],
-    //Accessibile a user e admin
+    
     'area-personale'    => ['file' => 'site/php/areaPersonale.php', 'permesso' => 'user_admin'],
     'checkout'          => ['file' => 'site/php/checkout.php', 'permesso' => 'user_admin'],
-    'dettaglio-ordine'   => ['file' => 'site/php/dettagliOrdine.php', 'permesso' => 'user_admin'],
+    'dettaglio-ordine'  => ['file' => 'site/php/dettagliOrdine.php', 'permesso' => 'user_admin'],
     'logout'            => ['file' => 'site/php/logout.php', 'permesso' => 'user_admin'],
     'conferma-ordine'   => ['file' => 'site/php/confermaOrdine.php', 'permesso' => 'user_admin'],
-    'esito-ordine' => ['file' => 'site/php/esito.php', 'permesso' => 'user_admin'],
+    'esito-ordine'      => ['file' => 'site/php/esito.php', 'permesso' => 'user_admin'],
 
-    //Accessibili ad admin 
-    'ordini-amministratore'            => ['file' => 'site/php/ordiniAdmin.php', 'permesso' => 'admin'],
-    'aggiungi-prodotto' => ['file' => 'site/php/aggiungiProdotto.php', 'permesso' => 'admin']
+    'ordini-amministratore' => ['file' => 'site/php/ordiniAdmin.php', 'permesso' => 'admin'],
+    'aggiungi-prodotto'     => ['file' => 'site/php/aggiungiProdotto.php', 'permesso' => 'admin']
 ];
 
 if (!isset($whitelist[$page])) {
@@ -56,20 +57,26 @@ $ruoloUtente = $_SESSION['ruolo'] ?? 'public';
 
 // Controllo permessi
 $autorizzato = false;
-
 if ($info['permesso'] === 'public') {
-        $autorizzato = true;
-    } elseif ($info['permesso'] === 'user_admin' && ($ruoloUtente === 'user' || $ruoloUtente === 'admin')) {
-        $autorizzato = true;
-    } elseif ($info['permesso'] === 'admin' && $ruoloUtente === 'admin') {
-        $autorizzato = true;
-    }elseif ($info['permesso'] === 'user' && $ruoloUtente === 'user') {
-        $autorizzato = true;
-    }
+    $autorizzato = true;
+} elseif ($info['permesso'] === 'user_admin' && ($ruoloUtente === 'user' || $ruoloUtente === 'admin')) {
+    $autorizzato = true;
+} elseif ($info['permesso'] === 'admin' && $ruoloUtente === 'admin') {
+    $autorizzato = true;
+} elseif ($info['permesso'] === 'user' && $ruoloUtente === 'user') {
+    $autorizzato = true;
+}
 
+// Gestione mancata autorizzazione, da dedcidere se togliere la pagina 403 e quindi togliere questo blocco
 if (!$autorizzato) {
-    header('Location: index.php?page=login');
-    exit;
+    if (!isset($_SESSION['ruolo'])) {
+        header("Location: " . $baseUrl . "login");
+        exit;
+    } 
+    else {
+        include __DIR__ . '/site/php/403.php';
+        exit;
+    }
 }
 
 // Caricamento pagina
@@ -81,9 +88,15 @@ if (!file_exists($file)) {
     exit;
 }
 
+ob_start();
+
 if (pathinfo($file, PATHINFO_EXTENSION) === 'php') {
     include $file;
 } else {
     echo file_get_contents($file);
 }
+
+$contenutoPagina = ob_get_clean();
+
+echo str_replace('[BASE_URL]', $baseUrl, $contenutoPagina);
 ?>

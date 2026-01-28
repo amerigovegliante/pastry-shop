@@ -53,7 +53,7 @@ if($connessione && empty($listaItem)){
     if (!empty($Items)){
         $listaItem .= '<ul id="grigliaTorte" class="contenuto">';
         foreach($Items as $Item){
-            $imgSrc = !empty($Item['immagine']) ? "../img/" . $Item['immagine'] : "../img/placeholder.jpeg";
+            $imgSrc = !empty($Item['immagine']) ? "site/img/" . $Item['immagine'] : "site/img/placeholder.jpeg";
             $altText = !empty($Item['testo_alternativo']) ? $Item['testo_alternativo'] : "Immagine non disponibile";
             $listaItem .="<li> <article class=\"cardTorta\">     
                 <a href=\"dettagli?ID=".urlencode($Item['id'])."\" style=\"text-decoration:none; color:inherit;\"> 

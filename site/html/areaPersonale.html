@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Gestisci il tuo account personale su Pasticceria Padovana, visualizza e modifica i tuoi dati e ordini.">
     
-    <base href="<?= BASE_URL ?>">
+    <base href="[BASE_URL]">
 
     <link rel="stylesheet" href="site/css/style.css" media="screen">
     <link rel="stylesheet" href="site/css/mini.css" media="screen and (max-width:800px)">
@@ -65,7 +65,10 @@
         <div class="contenuto">
 
             <div class="header-area-personale">
-                <h2>Benvenuto [NomeUtente]</h2>
+                <div class="benvenuto-container">
+                    <img src="site/img/mascotte.gif" alt="" class="img-mascotte">
+                    <h2>Benvenuto, [NomeUtente]</h2>
+                </div>
                 <a href="logout" class="pulsanteSecondario" id="pulsante-logout">Disconnettiti</a>
             </div>
 

@@ -31,6 +31,10 @@ if ($dati['successo'] === true) {
     $dataRitiroFormat = date('d/m/Y H:i', strtotime($dati['data_ritiro'])); 
 
     $contenutoEsito = "
+        <div class='box-img-esito'>
+            <img src='site/img/ordineInviato.gif' alt='Conferma ordine inviato' class='img-esito-gif'>
+        </div>
+        
         <p class='messaggio-intro'>Grazie! Il tuo ordine è stato registrato correttamente.</p>
         
         <dl class='dati-riepilogo'>
