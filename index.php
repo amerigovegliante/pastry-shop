@@ -18,7 +18,24 @@ $baseUrl = rtrim($scriptPath, '/\\') . '/';
 define('BASE_URL', $baseUrl);
 
 //  Pagina richiesta
-$page = $_GET['page'] ?? 'home';
+//$page = $_GET['page'] ?? 'home';
+//--------- da cancellare per la consegna (de-commenta la riga sopra) --------------
+if (isset($_GET['page'])) {
+    $page = $_GET['page'];
+}
+else {
+    $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    if (strpos($requestUri, $scriptPath) === 0) {
+        $page = substr($requestUri, strlen($scriptPath));
+    } else {
+        $page = $requestUri;
+    }
+    $page = trim($page, '/');
+}
+if (empty($page)) {
+    $page = 'home';
+}
+// ---------------------------------------------------------------------------
 
 // Protezione input
 if (!preg_match('/^[a-z0-9-]+$/i', $page)) {
