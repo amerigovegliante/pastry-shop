@@ -115,17 +115,17 @@ if(isset($_POST['submit'])){
             if (!in_array($fileExtension, $allowedExtensions)) {
                 $erroreImmagine = '<p class="errore" role="alert">Formato immagine non consentito. Usa JPG, PNG o WEBP.</p>';
             } else {
-                $uploadDir = '../img/'; //cartella dove salvare le immagini
+                $uploadDir = 'site/img/'; //cartella dove salvare le immagini
         
                 if (!is_dir($uploadDir)) {  //sela cartella non esiste la crea
                     mkdir($uploadDir, 0755, true);
                 }
-                $newFileName = uniqid('img_', true) . '.' . $fileExtension; //nomina il file in maniera univoca
+                $newFileName = $nome . '.' . $fileExtension; //nomina il file in maniera univoca
                 $destPath = $uploadDir . $newFileName;
                 
                 if (move_uploaded_file($fileTmpPath, $destPath)) {  //sposta il file nella cartella definitiva
                     // salva solo il path relativo
-                    $immagine = '../img/' . $newFileName;
+                    $immagine = $newFileName;
                 } else {
                     $erroreImmagine = '<p class="errore" role="alert">Errore durante il caricamento dell\'immagine.</p>';
                 }
