@@ -1290,6 +1290,31 @@ tr:last-child td, tr:last-child th { border-bottom: none; }
     color: var(--contenttxtcolorscuro);
 }
 
+/* 1. Mascotte in Area Personale */
+.benvenuto-container {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.img-mascotte {
+    height: 3.75em; 
+    width: auto;
+    object-fit: contain;
+}
+
+/* 2. GIF Ordine Inviato in Esito */
+.box-img-esito {
+    text-align: center;
+    margin-bottom: 1.5em;
+}
+
+.img-esito-gif {
+    max-width: 9.5em; 
+    width: 100%;
+    height: auto;
+    display: inline-block;
+}
 
 /*
 ====================================================================================================================================
@@ -1311,3 +1336,41 @@ footer .contenuto{
 #contatti{ grid-column: 1; }
 #assistenzaClienti{ grid-column: 2; }
 footer a { color: #fff; text-decoration: underline; }
+
+/* --- PAGINE DI ERRORE (404, 403, 500) --- */
+
+.pagina-errore {
+    text-align: center;
+    padding: 3em 1em;
+}
+
+/* Gestione Mascotte */
+.img-errore {
+    max-width: 20em; 
+    width: 100%;    
+    height: auto;
+    margin-bottom: 2em; 
+    display: inline-block;
+}
+
+/* Titoli */
+.pagina-errore h1 {
+    color: var(--buttoncolor);
+    margin-bottom: 0.5em;
+    line-height: 1.2;
+}
+
+/* Paragrafi */
+.pagina-errore p {
+    font-size: 1.2em;
+    margin-bottom: 1em;
+    max-width: 40em; 
+    margin-left: auto;  
+    margin-right: auto; 
+}
+
+/* Link */
+.pagina-errore a {
+    font-weight: bold;
+    text-decoration: underline;
+}

@@ -60,9 +60,9 @@ if($connessione){
         // IMMAGINE
         $imgSrc = ""; 
         if (!empty($Item['immagine'])) {
-            $imgSrc = "../img/" . $Item['immagine'];
+            $imgSrc = "site/img/" . $Item['immagine'];
         } else {
-            $imgSrc = "../img/placeholder.jpeg";
+            $imgSrc = "site/img/placeholder.jpeg";
         }
 
         // SEZIONE DETTAGLI VISIVI

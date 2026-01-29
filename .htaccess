@@ -1,5 +1,4 @@
 RewriteEngine On
-RewriteBase  /gdelucch/pastry-shop
 
 # 1. Se la richiesta è per un file che esiste davvero (es. un'immagine o CSS), caricalo normalmente
 RewriteCond %{REQUEST_FILENAME} -f [OR]
@@ -8,4 +7,4 @@ RewriteRule ^ - [L]
 
 # 2. Altrimenti, prendi tutto quello che l'utente ha scritto dopo lo slash e passalo a index.php
 # Esempio: /ordini diventa index.php?page=ordini
-RewriteRule ^([^/]+)$ index.php?page=$1 [L,QSA]
+RewriteRule ^(.*)$ index.php?page=$1 [L,QSA]

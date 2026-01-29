@@ -3,12 +3,12 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Pagina non trovata</title>
+    <title>Errore del Server - Pasticceria Padovana</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords" content="Pasticceria Padovana, contattaci, email, domande, assistenza clienti, Padova">
-    <meta name="description" content="Errore 404: pagina non trovata">
+    <meta name="keywords" content="Pasticceria Padovana, errore server, assistenza, Padova">
+    <meta name="description" content="Errore 500: Si è verificato un problema tecnico sul server.">
 
-    <base href="<?= BASE_URL ?>">
+    <base href="[BASE_URL]">
 
     <link rel="stylesheet" href="site/css/style.css" media="screen">
     <link rel="stylesheet" href="site/css/mini.css" media="screen and (max-width:800px)">
@@ -28,7 +28,7 @@
             
             <div id="pulsantiMenu">
                 <a href="login" class="bottoneProfilo" aria-label="Accedi alla tua area personale">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
                         <circle cx="12" cy="7" r="4" />
@@ -36,7 +36,7 @@
                 </a>
 
                 <a href="carrello" class="bottoneCarrello" aria-label="Vai al carrello">
-                    <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg aria-hidden="true" focusable="false" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="16.5" cy="18.5" r="1.5" />
                         <circle cx="9.5" cy="18.5" r="1.5" />
                         <path d="M18 16H8a1 1 0 0 1-.958-.713L4.256 6H3a1 1 0 0 1 0-2h2
@@ -60,21 +60,26 @@
     </nav>
 
     <nav id="breadcrumb" aria-label="Percorso di navigazione">
-        <p class="contenuto">Ti trovi in: 404 Pagina non trovata</p>
+        <p class="contenuto">Ti trovi in: Errore 500 (Problema Tecnico)</p>
     </nav>
 
     <main>
-        <section aria-labelledby="Pagina non trovata" class="contenuto">
-            <img src="site/img/ErroreServer.gif" alt="Mascotte a forma di torta triste di fronte a una torta caduta">
-            <h1>Ops! Qualcosa è andato storto in cucina</h1>
-            <p>Il nostro server ha fatto un pasticcio.</p>
-            <p>Nel frattempo puoi:</p>
-            <ul>
-                <li>tornare alla <a href="home"><span lang="en">Home</span></a></li>
-                <li>scoprire qualcosa in più su di noi nella pagina <a href="chi-siamo">Chi siamo</a></li>
-            </ul>
+        <section aria-labelledby="titolo-500" class="contenuto pagina-errore">
+            
+            <img src="site/img/500.gif" alt="Mascotte a forma di torta triste di fronte a una torta caduta" class="img-errore">
+            
+            <h1 id="titolo-500">Ops! Qualcosa è andato storto in cucina</h1>
+            
+            <p>Il nostro server ha fatto un pasticcio e stiamo lavorando per sistemarlo.</p>
+            
+            <p>
+                Nel frattempo, puoi tornare alla <a href="home"><span lang="en">Home</span></a> 
+                o leggere la nostra storia nella pagina <a href="chi-siamo">Chi siamo</a>.
+            </p>
 
-            <p>Se invece hai un'urgenza, chiamaci pure al  <a href="tel:+390498765432">+39 049 8765432</a>: siamo sempre a disposizione.</p>   
+            <p>
+                Se hai un'urgenza, chiamaci pure al <a href="tel:+390498765432">+39 049 8765432</a>: siamo sempre a disposizione.
+            </p>   
         </section>
     </main>
 
@@ -101,5 +106,4 @@
         </div>
     </footer>
 </body>
-
 </html>
