@@ -16,7 +16,6 @@
 
 <body>
     <a href="#main" class="salta-contenuto">Salta al contenuto principale</a>
-
     <header>
         <div class="contenuto">
             <button type="button" class="bottoneMenu" aria-label="Apri il menu principale">Menu</button>
@@ -87,28 +86,35 @@
                         <input type="hidden" name="action" value="modificaDati">
                         [csrfToken]
 
-                        <div class="campoDati">
-                            <span class="etichetta-statica">Email:</span>
-                            <span class="valore-statico">[valoreEmail]</span>
-                        </div>
+                         <fieldset>
+                            <legend>Dati personali</legend>
 
-                        <div class="campoDati">
-                            <label for="nome">Nome</label>
-                            <input type="text" id="nome" name="nome" value="[valoreNome]" required
-                                autocomplete="given-name">
-                        </div>
+                            <div class="campoDati">
+                                <span class="etichetta-statica">Email</span>
+                                <span class="valore-statico">[valoreEmail]</span>
+                            </div>
 
-                        <div class="campoDati">
-                            <label for="cognome">Cognome</label>
-                            <input type="text" id="cognome" name="cognome" value="[valoreCognome]" required
-                                autocomplete="family-name">
-                        </div>
+                            <div class="campoDati">
+                                <label for="nome">Nome <span aria-hidden="true">*</span></label>
+                                <input type="text" id="nome" name="nome" value="[valoreNome]" required aria-describedby="nome-help"
+                                    autocomplete="given-name">
+                                <small id="nome-help">Inserisci il tuo nome</small>
+                            </div>
 
-                        <div class="campoDati">
-                            <label for="telefono">Telefono</label>
-                            <input type="tel" id="telefono" name="telefono" value="[valoreTelefono]" pattern="[0-9]{10}"
-                                required autocomplete="tel">
-                        </div>
+                            <div class="campoDati">
+                                <label for="cognome">Cognome <span aria-hidden="true">*</span></label>
+                                <input type="text" id="cognome" name="cognome" value="[valoreCognome]" required aria-describedby="cognome-help"
+                                    autocomplete="family-name">
+                                <small id="cognome-help">Inserisci il tuo cognome</small>
+                            </div>
+
+                            <div class="campoDati">
+                                <label for="telefono">Telefono <span aria-hidden="true">*</span></label>
+                                <input type="tel" id="telefono" name="telefono" value="[valoreTelefono]" pattern="[0-9]{10}" aria-describedby="tel-help"
+                                    required autocomplete="tel">
+                                <small id="tel-help">Inserisci il tuo numero di telefono senza prefissi, spazi o trattini</small>
+                            </div>
+                        </fieldset>
 
                         <button type="submit" class="pulsanteGenerico">Salva Modifiche</button>
                     </form>

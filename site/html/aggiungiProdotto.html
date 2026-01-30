@@ -15,6 +15,7 @@
 </head>
 
 <body>
+    <a href="#main" class="sr-only">Salta al contenuto principale</a>
     <header>
         <div class="contenuto">
             <button type="button" class="bottoneMenu" aria-label="Apri il menu principale">Menu</button>
@@ -60,86 +61,89 @@
         <p class="contenuto">Ti trovi in: <a href="home"><span lang="en">Home</span></a> &gt; <a href="area-personale">Area personale</a> &gt; Aggiungi prodotto</p>
     </nav>
 
-    <main id="aggiungiProdotto" class="contenuto">
-        <div id="messaggi">
-            [messaggioErroreDB]
-            [messaggioConferma]
-        </div>
-        <section id="sezioneAggiungiProdotto">
-            <h2>Aggiungi un nuovo prodotto</h2>
+    <main id="main">
+        <div id="aggiungiProdotto" class="contenuto">
+            <div id="messaggi">
+                [messaggioErroreDB]
+                [messaggioConferma]
+            </div>
+            <section id="sezioneAggiungiProdotto">
+                <h2>Aggiungi un nuovo prodotto</h2>
 
-            <form id="formAggiungiProdotto" action="aggiungi-prodotto" method="post" enctype="multipart/form-data">
-                <fieldset>
-                    <legend>Dettagli del prodotto</legend>
+                <form id="formAggiungiProdotto" action="aggiungi-prodotto" method="post" enctype="multipart/form-data">
+                    <fieldset>
+                        <legend>Dettagli del prodotto</legend>
+                            
+                        <input type="hidden" name="csrf_token" value="[csrf_token]">
                         
-                    <input type="hidden" name="csrf_token" value="[csrf_token]">
-                    
-                    <div class="campoDati">
-                        <label for="tipo">Tipo di prodotto:</label>
-                        <select id="tipo" name="tipo" required>
-                            <option value="">-- Seleziona un tipo --</option>   <!--opzione non valida-->
-                            <option value="torta" [selTorta]>Torta</option>
-                            <option value="pasticcino" [selPasticcino]>Pasticcino</option>
-                        </select>
-                    </div>
-                    [messaggioErroreTipo]
+                        <div class="campoDati">
+                            <label for="tipo">Tipo di prodotto <span aria-hidden="true">*</span></label>
+                            <select id="tipo" name="tipo" required aria-describedby="type-help">
+                                <option value="">-- Seleziona un tipo --</option>   <!--opzione non valida-->
+                                <option value="torta" [selTorta]>Torta</option>
+                                <option value="pasticcino" [selPasticcino]>Pasticcino</option>
+                            </select>
+                            <small id="type-help">Seleziona il tipo di prodotto da aggiungere</small>
+                        </div>
+                        [messaggioErroreTipo]
 
-                    <div class="campoDati">
-                        <label for="nome">Nome del prodotto:</label>
-                        <input type="text" id="nome" name="nome" maxlength="30" required aria-describedby="name-help" value="[valoreNome]">
-                        <small id="name-help">Massimo 30 caratteri</small>
-                    </div>
-                    [messaggioErroreNome]
+                        <div class="campoDati">
+                            <label for="nome">Nome del prodotto <span aria-hidden="true">*</span></label>
+                            <input type="text" id="nome" name="nome" maxlength="30" required aria-describedby="name-help" value="[valoreNome]">
+                            <small id="name-help">Puoi inserire al massimo 30 caratteri</small>
+                        </div>
+                        [messaggioErroreNome]
 
-                    <div class="campoDati">
-                        <label for="descrizione">Descrizione del prodotto:</label>
-                        <textarea id="descrizione" name="descrizione" maxlength="255" required aria-describedby="desc-help">[valoreDescrizione]</textarea>
-                        <small id="desc-help">Massimo 255 caratteri</small>
-                    </div>
-                    [messaggioErroreDescrizione]
+                        <div class="campoDati">
+                            <label for="descrizione">Descrizione del prodotto <span aria-hidden="true">*</span></label>
+                            <textarea id="descrizione" name="descrizione" maxlength="255" required aria-describedby="desc-help">[valoreDescrizione]</textarea>
+                            <small id="desc-help">Puoi inserire al massimo 255 caratteri</small>
+                        </div>
+                        [messaggioErroreDescrizione]
 
-                    <div class="campoDati">
-                        <label for="prezzo">Prezzo (€):</label>
-                        <input type="number" id="prezzo" name="prezzo" step="0.01" min="0" max="99999999.99" required aria-describedby="price-help" value="[valorePrezzo]">
-                        <small id="price-help">Per le torte indicare il prezzo a porzione.</small>
-                    </div>
-                    [messaggioErrorePrezzo]
+                        <div class="campoDati">
+                            <label for="prezzo">Prezzo (€) <span aria-hidden="true">*</span></label>
+                            <input type="number" id="prezzo" name="prezzo" step="0.01" min="0" max="99999999.99" required aria-describedby="price-help" value="[valorePrezzo]">
+                            <small id="price-help">Per le torte indicare il prezzo a porzione</small>
+                        </div>
+                        [messaggioErrorePrezzo]
 
-                    <div class="campoDati">
-                        <label for="immagine">Immagine del prodotto:</label>
-                        <input type="file" id="immagine" name="immagine" accept=".jpg,.jpeg,.png,.webp" required aria-describedby="img-help">
-                        <small id="img-help">Solo file JPG, PNG, WEBP con dimensione massima di 1 <span lang="en">megabyte</span></small>
-                    </div>
-                    [messaggioErroreImmagine]
+                        <div class="campoDati">
+                            <label for="immagine">Immagine del prodotto <span aria-hidden="true">*</span></label>
+                            <input type="file" id="immagine" name="immagine" accept=".jpg,.jpeg,.png,.webp" required aria-describedby="img-help">
+                            <small id="img-help">Carica un file JPG, PNG o WEBP di massimo 1 <span lang="en">megabyte</span></small>
+                        </div>
+                        [messaggioErroreImmagine]
 
-                    <div class="campoDati">
-                        <label for="testoAlternativo">Testo alternativo (ALT):</label>
-                        <textarea id="testoAlternativo" name="testoAlternativo" maxlength="255" required aria-describedby="alt-help">[valoreTestoAlternativo]</textarea>
-                        <small id="alt-help">Descrizione dell'immagine per non vedenti.</small>
-                    </div>
-                    [messaggioErroreTestoAlternativo]
+                        <div class="campoDati">
+                            <label for="testoAlternativo">Testo alternativo (ALT) <span aria-hidden="true">*</span></label>
+                            <textarea id="testoAlternativo" name="testoAlternativo" maxlength="255" required aria-describedby="alt-help">[valoreTestoAlternativo]</textarea>
+                            <small id="alt-help">Inserisci una breve descrizione dell’immagine (testo alternativo)</small>
+                        </div>
+                        [messaggioErroreTestoAlternativo]
 
-                    <div class="campoDati">
-                        <fieldset>
-                            <legend>Allergeni contenuti:</legend>
-                            <label><input type="checkbox" name="allergeni[]" value="Glutine" [checkedGlutine]> Glutine</label><br>
-                            <label><input type="checkbox" name="allergeni[]" value="Uova" [checkedUova]> Uova</label><br>
-                            <label><input type="checkbox" name="allergeni[]" value="Latte" [checkedLatte]> Latte</label><br>
-                            <label><input type="checkbox" name="allergeni[]" value="Frutta a guscio" [checkedFrutta]> Frutta a guscio</label><br>
-                            <label><input type="checkbox" name="allergeni[]" value="Arachidi" [checkedArachidi]> Arachidi</label><br>
-                            <label><input type="checkbox" name="allergeni[]" value="Soia" [checkedSoia]> Soia</label><br>
-                            <label><input type="checkbox" name="allergeni[]" value="Sesamo" [checkedSesamo]> Sesamo</label><br>
-                        </fieldset>
-                    </div>
+                        <div class="campoDati">
+                            <fieldset>
+                                <legend>Allergeni contenuti:</legend>
+                                <label><input type="checkbox" name="allergeni[]" value="Glutine" [checkedGlutine]> Glutine</label><br>
+                                <label><input type="checkbox" name="allergeni[]" value="Uova" [checkedUova]> Uova</label><br>
+                                <label><input type="checkbox" name="allergeni[]" value="Latte" [checkedLatte]> Latte</label><br>
+                                <label><input type="checkbox" name="allergeni[]" value="Frutta a guscio" [checkedFrutta]> Frutta a guscio</label><br>
+                                <label><input type="checkbox" name="allergeni[]" value="Arachidi" [checkedArachidi]> Arachidi</label><br>
+                                <label><input type="checkbox" name="allergeni[]" value="Soia" [checkedSoia]> Soia</label><br>
+                                <label><input type="checkbox" name="allergeni[]" value="Sesamo" [checkedSesamo]> Sesamo</label><br>
+                            </fieldset>
+                        </div>
 
-                    <button type="submit" name="submit">Aggiungi prodotto</button>
-                </fieldset>
-            </form>
-        </section>
+                        <button type="submit" name="submit">Aggiungi prodotto</button>
+                    </fieldset>
+                </form>
+            </section>
 
-        <section id="sezioneTabellaProdotti">
-            [tabellaProdotti]
-        </section>
+            <section id="sezioneTabellaProdotti">
+                [tabellaProdotti]
+            </section>
+        </div>
     </main>
 
     <footer>

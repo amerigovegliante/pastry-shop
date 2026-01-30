@@ -15,6 +15,7 @@
 </head>
 
 <body>
+    <a href="#main" class="sr-only">Salta al contenuto principale</a>
     <header>
         <div class="contenuto">
             <button type="button" class="bottoneMenu" aria-label="Apri il menu principale">Menu</button>
@@ -63,20 +64,29 @@
         <p class="contenuto">Ti trovi in: <a href="home"><span lang="en">Home</span></a> &gt; Contattaci</p>
     </nav>
 
-    <main>
-        <section id="sezioneContattaci" class="contenuto" aria-labelledby="titolo-contattaci">
+    <main id="main">
+        <section id="sezioneContattaci" class="contenuto">
             <form id="formContattaci" action="contattaci" method="post">
                 <fieldset>
                     <legend>Contattaci</legend>
                     <div class="campoDati">
-                        <label for="email">Email</label>
-                        <input type="text" id="email" name="email" value="[valoreEmail]" placeholder="La tua email" required autocomplete="email">
+                        <label for="email">Email <span aria-hidden="true">*</span></label>
+                        <input type="text" id="email" name="email" value="[valoreEmail]" placeholder="La tua email" 
+                        aria-describedby="mail-help" required autocomplete="email">
+                        <small id="mail-help">Inserisci il tuo indirizzo di posta elettronica</small>
                     </div>
                     [messaggioErroreEmail]
 
                     <div class="campoDati">
-                        <label for="domanda">Domanda</label>
-                        <textarea name="domanda" id="domanda" rows="7" maxlength="500" placeholder="Scrivi qui (max 500 caratteri)..." required>[valoreDomanda]</textarea>
+                        <label for="domanda">Domanda <span aria-hidden="true">*</span></label>
+                        <textarea name="domanda" id="domanda" rows="7" maxlength="500" placeholder="Scrivi qui (max 500 caratteri)..." 
+                        aria-describedby="dom-help" required>
+                            [valoreDomanda]
+                        </textarea>
+                         <small id="dom-help">
+                            <div>Inserisci domande e consigli</div>
+                            <div>Puoi inserire al massimo 500 caratteri</div>
+                        </small>
                     </div>
                     [messaggioErroreDomanda]
 

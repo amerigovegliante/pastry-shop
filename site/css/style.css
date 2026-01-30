@@ -595,7 +595,6 @@ AIUTI COMPILAZIONE FORM
     display: block;
     margin-top: 0.25rem;
     color: #555;
-    font-size: 0.9em;
 }
 /*
 ====================================================================================================================================
@@ -700,6 +699,7 @@ PAGINA TORTE e PASTICCINI (torte-pasticcini.html)
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
     gap: 1.5em;
     padding: 1.5em;
+    list-style-type: none;
 }
 #grigliaTorte .cardTorta{
     color: var(--contenttxtcolorscuro);
