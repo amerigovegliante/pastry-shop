@@ -303,8 +303,7 @@ fieldset{ border: none; padding: 0; margin: 0; }
 }
 .campoDati label{ font-weight: bolder; }
 .campoDati input, .campoDati textarea, .campoDati select{
-    max-width: 100%;
-    width: 20em;
+    width: min(20em, 100%);
     border: 1px solid grey;
     border-radius: 4px;
     padding: 0.5em;
@@ -503,7 +502,7 @@ TABELLA PRODOTTI in aggiungiProdotto.html
 }
 
 #aggiungiProdotto tr:hover{
-    background-color: var(--#dadada);
+    background-color: #dadada;
 }
 
 #aggiungiProdotto td:first-child {
@@ -511,19 +510,72 @@ TABELLA PRODOTTI in aggiungiProdotto.html
     color: #555;
 }/*
 ====================================================================================================================================
-PAGINA DETTAGLI ORDINE (dettaglioOrdine.html)
+PAGINA DETTAGLIO ORDINE (dettaglioOrdine.html)
 ====================================================================================================================================
 */
-#dettagliOrdine ul{
-    padding-left: 1.5em;
+#dettagliOrdine {
+    padding-top: 1.5em;
 }
+#dettagliOrdine h3, #dettagliOrdine h4 {
+    color: var(--primary-color);
+}
+#dettagliOrdine h3{
+    padding: 1em 0;
+}
+.dolce-ordinato {
+    list-style: none;
+    background-color: var(--contentbgcolorchiaro);
+    border: 1px solid black;
+    padding: 0.5em 1em;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    max-width: 800px;            /*limite orizzontale */
+    width: 90%;                  /*per adattarsi su schermi piccoli */
+    margin-bottom: 1em;
+    margin-left: 1.5em;
+}
+.contenitore-dolce {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5em;
+}
+
+/*immagini a dimensioni fisse */
+.immagine-dolce img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.dettagli-dolce dt, .dettagli-ordine dt{
+    font-weight: bold;
+    display: inline;    
+}
+
+.dettagli-ordine dt{
+    margin-left: 1.5em;    
+}
+
+.dettagli-dolce dd, .dettagli-ordine dd{
+    display: inline;
+    margin-left: 0.5em;
+    word-wrap: break-word;
+}
+
+.dettagli-dolce dd::after, .dettagli-ordine dd:after{     /*andare a capo dopo ogni data definition*/
+    content: "";
+    display: block;
+}
+
 /*
 ------------------------------------------------------------------------------------------------------------------------------------
 AIUTI COMPILAZIONE FORM
 ------------------------------------------------------------------------------------------------------------------------------------
 */
 .campoDati small{
-    position: absolute;
+    position: relative; 
     clip: rect(0 0 0 0);
     clip-path: inset(50%);
     height: 1px;
@@ -558,9 +610,11 @@ main section {
 
 main section h2 {
     color: var(--buttoncolor);
+    /*
     border-bottom: 2px solid var(--menubgcolor);
     padding-bottom: 0.2em;
-    margin-bottom: 0.8em;
+    */
+    margin-bottom: 0.5em;
 }
 
 

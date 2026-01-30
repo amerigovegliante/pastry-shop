@@ -178,7 +178,7 @@ class DBAccess{
 
     //dato l'id dell'ordine restituisce tutte le torte con relativi dettagli legati all'ordine, altrimenti ritorna un array vuoto
     public function getOrdiniTortaById($id) {
-        $query = "SELECT ot.torta,
+        $querySelect = "SELECT ot.torta,
             ot.ordine,
             ot.porzioni,
             ot.targa,
@@ -189,20 +189,19 @@ class DBAccess{
             FROM ordine_torta AS ot
             JOIN item AS i ON ot.torta = i.id
             WHERE ot.ordine = ? ";
-        $stmt = mysqli_prepare($this->connection, $query);
+        $stmt = mysqli_prepare($this->connection, $querySelect);
         mysqli_stmt_bind_param($stmt, "i", $id);
         mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
+        $queryResult = mysqli_stmt_get_result($stmt);
 
         $torte = [];
-        while ($row = mysqli_fetch_assoc($result)) {
+        while ($row = mysqli_fetch_assoc($queryResult)) {
             $torte[] = $row;
         }
 
         mysqli_stmt_close($stmt);
         return $torte; 
     }
-
 
     //dato l'id dell'ordine restituisce tutte i pasticcini con relativi dettagli legati all'ordine, altrimenti ritorna un array vuoto
     public function getOrdiniPasticcinoById($id) {

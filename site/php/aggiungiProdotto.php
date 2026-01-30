@@ -31,8 +31,11 @@ $tipo = '';
 $nome = '';
 $descrizione = '';
 $prezzo = '';
-$immagine = ''; // Variabile per il database
+$immagine = ''; 
 $testoAlternativo = '';
+$allergeni = [];    //array per gli allergeni selezionati
+$selTorta = '';
+$selPasticcino = '';
 
 $erroreTipo = '';
 $erroreNome = '';
@@ -75,6 +78,8 @@ if(isset($_POST['submit'])){
         // Tipo
         if(isset($_POST['tipo']) && ($_POST['tipo'] === 'torta' || $_POST['tipo'] === 'pasticcino')){
             $tipo = $_POST['tipo'];
+            $selTorta = ($tipo === 'torta') ? 'selected' : '';
+            $selPasticcino = ($tipo === 'pasticcino') ? 'selected' : '';
         } else {
             $erroreTipo = '<p class="errore" role="alert">Seleziona un tipo valido</p>';
         }
@@ -109,15 +114,22 @@ if(isset($_POST['submit'])){
             $fileTmpPath = $_FILES['immagine']['tmp_name'];     //percorso temporaneo dove PHP mette il file appena caricato
             $fileName = $_FILES['immagine']['name'];
             $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+            $fileSize = $_FILES['immagine']['size'];            //dimensione in byte del file caricato
 
-                $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp'];
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp'];
+            $maxSize = 1 * 1024 * 1024; //dimensione massima per le immagini caricate: 1 MB
 
+            //controllo formato file
             if (!in_array($fileExtension, $allowedExtensions)) {
                 $erroreImmagine = '<p class="errore" role="alert">Formato immagine non consentito. Usa JPG, PNG o WEBP.</p>';
+            } else 
+            //controllo dimensione file
+            if ($fileSize > $maxSize) {
+                $erroreImmagine = '<p class="errore" role="alert">L\'immagine non può superare ' . $maxSize/(1024*1024) . ' MB di dimensione.</p>';
             } else {
                 $uploadDir = 'site/img/'; //cartella dove salvare le immagini
         
-                if (!is_dir($uploadDir)) {  //sela cartella non esiste la crea
+                if (!is_dir($uploadDir)) {  //se la cartella non esiste la crea
                     mkdir($uploadDir, 0755, true);
                 }
                 $newFileName = $nome . '.' . $fileExtension; //nomina il file in maniera univoca
@@ -141,6 +153,10 @@ if(isset($_POST['submit'])){
         } else if (strlen($testoAlternativo) > 255){
             $erroreTestoAlternativo = '<p class="errore" role="alert">Il testo alternativo non può superare 255 caratteri</p>';
         }
+
+        //allergeni
+        $allergeni = isset($_POST['allergeni']) && is_array($_POST['allergeni']) ? $_POST['allergeni'] : [];
+        $allergeni = array_map('htmlspecialchars', $allergeni);
     }
 
     //INSERIMENTO VALORI NEL DATABASE solo se non ci sono errori in nessun campo
@@ -149,10 +165,10 @@ if(isset($_POST['submit'])){
         $db = new DBAccess();
         $connessione = $db->openDBConnection();
         
-        if(!$connessione){  
+        if(!$connessione){  //errore di connessione al database
             http_response_code(500);
             include __DIR__ . '/500.php';
-            $messaggioErrore = '<p class="errore" role="alert">Errore di connessione al database</p>';
+            exit;
         } else {
             $lastItemId = $db->insertNewItem($tipo, $nome, $descrizione, $prezzo, $immagine, $testoAlternativo);    //inserimento e recupero id ultimo item aggiunto  
 
@@ -164,8 +180,7 @@ if(isset($_POST['submit'])){
                         </div>';
             }
 
-            //Inserimento allergeni
-            $allergeni = $_POST['allergeni'];     //recupero array degli allergeni selezionati
+            //inserimento degli allergeni
             $successAllergeni = inserisciAllergeni($db, $lastItemId, $allergeni);
             $db->closeDBConnection();
             if(!$successAllergeni){
@@ -251,10 +266,20 @@ if(!$connessione){
 //fa si che una volta inviato il form, giusto o sbagliato, vengono ricompilati i campi gia' scritti  dall'utente, evitando frustrazione
 $paginaHTML = str_replace('[csrf_token]', $token, $paginaHTML);
 
+$paginaHTML = str_replace('[selTorta]', $selTorta, $paginaHTML);
+$paginaHTML = str_replace('[selPasticcino]', $selPasticcino, $paginaHTML);
 $paginaHTML = str_replace('[valoreNome]', $nome, $paginaHTML);
 $paginaHTML = str_replace('[valoreDescrizione]', $descrizione, $paginaHTML);
 $paginaHTML = str_replace('[valorePrezzo]', $prezzo, $paginaHTML);
 $paginaHTML = str_replace('[valoreTestoAlternativo]', $testoAlternativo, $paginaHTML);
+
+$paginaHTML = str_replace('[checkedGlutine]', in_array('Glutine', $allergeni) ? 'checked' : '', $paginaHTML);
+$paginaHTML = str_replace('[checkedUova]', in_array('Uova', $allergeni) ? 'checked' : '', $paginaHTML);
+$paginaHTML = str_replace('[checkedLatte]', in_array('Latte', $allergeni) ? 'checked' : '', $paginaHTML);
+$paginaHTML = str_replace('[checkedFrutta]', in_array('Frutta a guscio', $allergeni) ? 'checked' : '', $paginaHTML);
+$paginaHTML = str_replace('[checkedArachidi]', in_array('Arachidi', $allergeni) ? 'checked' : '', $paginaHTML);
+$paginaHTML = str_replace('[checkedSoia]', in_array('Soia', $allergeni) ? 'checked' : '', $paginaHTML);
+$paginaHTML = str_replace('[checkedSesamo]', in_array('Sesamo', $allergeni) ? 'checked' : '', $paginaHTML);
 
 // 3. Gestione Select "Tipo" (Per mantenerla selezionata in caso di errore)
 $selTorta = ($tipo === 'torta') ? 'selected' : '';

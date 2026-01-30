@@ -78,8 +78,8 @@
                         <label for="tipo">Tipo di prodotto:</label>
                         <select id="tipo" name="tipo" required>
                             <option value="">-- Seleziona un tipo --</option>   <!--opzione non valida-->
-                            <option value="torta">Torta</option>
-                            <option value="pasticcino">Pasticcino</option>
+                            <option value="torta" [selTorta]>Torta</option>
+                            <option value="pasticcino" [selPasticcino]>Pasticcino</option>
                         </select>
                     </div>
                     [messaggioErroreTipo]
@@ -107,8 +107,8 @@
 
                     <div class="campoDati">
                         <label for="immagine">Immagine del prodotto:</label>
-                        <input type="file" id="immagine" name="immagine" accept="image/*" required aria-describedby="img-help">
-                        <small id="img-help">Formati ammessi: JPG, PNG, WEBP.</small>
+                        <input type="file" id="immagine" name="immagine" accept=".jpg,.jpeg,.png,.webp" required aria-describedby="img-help">
+                        <small id="img-help">Solo file JPG, PNG, WEBP con dimensione massima di 1 <span lang="en">megabyte</span></small>
                     </div>
                     [messaggioErroreImmagine]
 
@@ -122,13 +122,13 @@
                     <div class="campoDati">
                         <fieldset>
                             <legend>Allergeni contenuti:</legend>
-                            <label><input type="checkbox" name="allergeni[]" value="Glutine"> Glutine</label><br>
-                            <label><input type="checkbox" name="allergeni[]" value="Uova"> Uova</label><br>
-                            <label><input type="checkbox" name="allergeni[]" value="Latte"> Latte</label><br>
-                            <label><input type="checkbox" name="allergeni[]" value="Frutta a guscio"> Frutta a guscio</label><br>
-                            <label><input type="checkbox" name="allergeni[]" value="Arachidi"> Arachidi</label><br>
-                            <label><input type="checkbox" name="allergeni[]" value="Soia"> Soia</label><br>
-                            <label><input type="checkbox" name="allergeni[]" value="Sesamo"> Sesamo</label><br>
+                            <label><input type="checkbox" name="allergeni[]" value="Glutine" [checkedGlutine]> Glutine</label><br>
+                            <label><input type="checkbox" name="allergeni[]" value="Uova" [checkedUova]> Uova</label><br>
+                            <label><input type="checkbox" name="allergeni[]" value="Latte" [checkedLatte]> Latte</label><br>
+                            <label><input type="checkbox" name="allergeni[]" value="Frutta a guscio" [checkedFrutta]> Frutta a guscio</label><br>
+                            <label><input type="checkbox" name="allergeni[]" value="Arachidi" [checkedArachidi]> Arachidi</label><br>
+                            <label><input type="checkbox" name="allergeni[]" value="Soia" [checkedSoia]> Soia</label><br>
+                            <label><input type="checkbox" name="allergeni[]" value="Sesamo" [checkedSesamo]> Sesamo</label><br>
                         </fieldset>
                     </div>
 

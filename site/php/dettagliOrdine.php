@@ -46,34 +46,37 @@ if (isset($_GET['id'])) {
 
     $db = new DBAccess();
     $connessione = $db->openDBConnection();
-    if(!$connessione){  
+
+    if(!$connessione){  //se avviene errore di connessione al database
         http_response_code(500);
         include __DIR__ . '/500.php';
-        $messaggioErrore = '<p class="errore" role="alert">Errore di connessione al database</p>';
         exit;
-    } else {
-        if (!$db->ordineEsiste($id_ordine)) {
-            http_response_code(404);
-            $messaggioErrore = "<p class='errore'>Ordine non trovato.</p>";
-        }else{
-            if ($ruolo === 'admin') {
-                $ordine = $db->getOrdineById($id_ordine);
+        } else {
+            if (!$db->ordineEsiste($id_ordine)) {   //se l'ordine non esiste nel database 
+                http_response_code(404);
+                include __DIR__ . '/404.php';
+                $db->closeDBConnection();
+                exit;
             } else {
-                // l'utente può vedere SOLO i suoi ordini
-                $ordine = $db->getOrdineByIdAndEmail($id_ordine, $email);
-            }
+                if ($ruolo === 'admin') {
+                    $ordine = $db->getOrdineById($id_ordine);                       //admin puo vedere gli ordini di tutti
+                } else {
+                    $ordine = $db->getOrdineByIdAndEmail($id_ordine, $email);       //un utente user può vedere SOLO i suoi ordini
+                }
 
-            if (!$ordine) {
-                http_response_code(403);
-                include __DIR__ . '/403.php';
-                die('Accesso non autorizzato');
-            } else {    //recupero dettagli di torte e pasticcini ordinati
-                $torteOrdinate = $db->getOrdiniTortaById($id_ordine);
-                $pasticciniOrdinati = $db->getOrdiniPasticcinoById($id_ordine);
+                if (!$ordine) {     //l'ordine esiste ma non si hanno i permessi per visualizzarlo. es: user che prova ad accedere ad un ordine non effettuato da lui
+                    http_response_code(403);
+                    include __DIR__ . '/403.php';
+                    $db->closeDBConnection();
+                    exit;
+                } else {    //TUTTO OK: recupero dettagli di torte e pasticcini ordinati
+                    $torteOrdinate = $db->getOrdiniTortaById($id_ordine);
+                    $pasticciniOrdinati = $db->getOrdiniPasticcinoById($id_ordine);
+                    $db->closeDBConnection();
+                }
             }
         }
-        $db->closeDBConnection();
-    }
+    
 
     //COSTRUZIONE HTML DETTAGLI ORDINE
     if(empty($ordine)){
@@ -82,30 +85,34 @@ if (isset($_GET['id'])) {
     $statoTesto = isset($stati[$ordine['stato']]) ? $stati[$ordine['stato']] : 'Sconosciuto';   //se non trova uno stato corrispondente gli da "Sconosciuto"
 
     $listaDettagliOrdine  = '<h2>Dettagli ordine <span aria-label="Numero">#</span>' . htmlspecialchars($ordine['id']) . '</h2>
-                            <dl>
-                                <dt><strong>Stato: </strong></dt>
-                                <dd>'. htmlspecialchars($statoTesto) . '</dd>
-                                <dt><strong>Data di ordinazione: </strong></dt>
-                                <dd>'. htmlspecialchars($ordine['ordinazione']) . '</dd>
-                                <dt><strong>Data di ritiro: </strong></dt>
-                                <dd>'. htmlspecialchars($ordine['ritiro']) . '</dd>
-                                <dt><strong>Annotazioni: </strong></dt>
-                                <dd>'. htmlspecialchars($ordine['annotazioni'] ?? 'nessuna annotazione inserita') . '</dd>
-                                <dt><strong>Totale (€): </strong></dt>
-                                <dd>'. htmlspecialchars($ordine['totale']) . '</dd>
-                            </dl>';
+                            <div class="dettagli-ordine">
+                                <dl>
+                                    <dt><strong>Stato:</strong></dt>
+                                    <dd>'. htmlspecialchars($statoTesto) . '</dd>
+                                    <dt><strong>Data di ordinazione:</strong></dt>
+                                    <dd>'. htmlspecialchars($ordine['ordinazione']) . '</dd>
+                                    <dt><strong>Data di ritiro:</strong></dt>
+                                    <dd>'. htmlspecialchars($ordine['ritiro']) . '</dd>
+                                    <dt><strong>Annotazioni:</strong></dt>
+                                    <dd>'. htmlspecialchars($ordine['annotazioni'] ?? 'nessuna annotazione inserita') . '</dd>
+                                    <dt><strong>Totale (€):</strong></dt>
+                                    <dd>'. htmlspecialchars($ordine['totale']) . '</dd>
+                                </dl>
+                            </div>';
 
     $listaDettagliOrdine .= '<h3>Ordine creato da:</h3>
-                            <dl>
-                                <dt><strong>Email: </strong></dt>
-                                <dd>' . htmlspecialchars($ordine['persona']) . '</dd>
-                                <dt><strong>Nome: </strong></dt>
-                                <dd>'. htmlspecialchars($ordine['nome']) . '</dd>
-                                <dt><strong>Cognome: </strong></dt>
-                                <dd>'. htmlspecialchars($ordine['cognome']) . '</dd>
-                                <dt><strong>Telefono: </strong></dt>
-                                <dd>'. htmlspecialchars($ordine['telefono']) . '</dd>
-                            </dl>';
+                            <div class="dettagli-ordine">
+                                <dl>
+                                    <dt><strong>Email:</strong></dt>
+                                    <dd>' . htmlspecialchars($ordine['persona']) . '</dd>
+                                    <dt><strong>Nome:</strong></dt>
+                                    <dd>'. htmlspecialchars($ordine['nome']) . '</dd>
+                                    <dt><strong>Cognome:</strong></dt>
+                                    <dd>'. htmlspecialchars($ordine['cognome']) . '</dd>
+                                    <dt><strong>Telefono:</strong></dt>
+                                    <dd>'. htmlspecialchars($ordine['telefono']) . '</dd>
+                                </dl>
+                            </div>';
 
     $listaDolciOrdinati =  '<h3>Dolci ordinati:</h3>';
     if(empty($torteOrdinate) && empty($pasticciniOrdinati)){
@@ -116,31 +123,46 @@ if (isset($_GET['id'])) {
             foreach ($torteOrdinate as $torta){
                 $imgSrc = !empty($torta['immagine']) ? "site/img/" . $torta['immagine'] : "site/img/placeholder.jpeg";
                 $altText = !empty($torta['testo_alternativo']) ? $torta['testo_alternativo'] : "Immagine non disponibile";
-                $listaDolciOrdinati .= '<li>
+                $listaDolciOrdinati .= '<li class="dolce-ordinato">
                                             <h4>' . $torta['nome'] . '</h4>
-                                            <img src="' . htmlspecialchars($imgSrc) . '" alt="' . htmlspecialchars($altText) .'"/>
-                                            <dl>
-                                                <dt><strong>Quantità: </strong></dt>
-                                                <dd>'. htmlspecialchars($torta['numero_torte']) . '</dd>
-                                                <dt><strong>Porzioni per torta: </strong></dt>
-                                                <dd>'. htmlspecialchars($torta['porzioni']) . '</dd>
-                                                <dt><strong>Scritta sulla targa: </strong></dt>
-                                                <dd>'. htmlspecialchars($torta['targa']) . '</dd>
-                                            </dl>
-                                        </li>';
+                                            <div class="contenitore-dolce">
+                                                <div class="immagine-dolce">
+                                                    <img src="' . htmlspecialchars($imgSrc) . '" alt="' . htmlspecialchars($altText) .'"/>
+                                                </div>
+                                                <div class="dettagli-dolce">
+                                                    <dl>
+                                                        <dt><strong>Quantità:</strong></dt>
+                                                        <dd>'. htmlspecialchars($torta['numero_torte']) . '</dd>
+                                                        <dt><strong>Porzioni per torta:</strong></dt>
+                                                        <dd>'. htmlspecialchars($torta['porzioni']) . '</dd>';
+                $targaTorta = htmlspecialchars($torta['targa']);    //se vuota non mostro la vote della targa
+                if(!empty($targaTorta)){
+                    $listaDolciOrdinati .= '<dt><strong>Scritta sulla targa:</strong></dt>
+                    <dd>'. $targaTorta . '</dd>';
+                }
+                $listaDolciOrdinati .= '</dl>
+                                    </div>
+                                </div>
+                            </li>';
             }
         }
         if(!empty($pasticciniOrdinati)){     //se è stata ordinata almeno una torta
             foreach ($pasticciniOrdinati as $pasticcino){
                 $imgSrc = !empty($pasticcino['immagine']) ? "site/img/" . $pasticcino['immagine'] : "site/img/placeholder.jpeg";
                 $altText = !empty($pasticcino['testo_alternativo']) ? $pasticcino['testo_alternativo'] : "Immagine non disponibile";
-                $listaDolciOrdinati .= '<li>
-                                            <h4>' . $pasticcino['nome'] . '</h4>
-                                            <img src="' . htmlspecialchars($imgSrc) . '" alt="' . htmlspecialchars($altText) .'"/>
-                                            <dl>
-                                                <dt><strong>Quantità: </strong></dt>
-                                                <dd>'. htmlspecialchars($pasticcino['quantita']) . '</dd>
-                                            </dl>
+                $listaDolciOrdinati .= '<li class="dolce-ordinato">
+                                            <h4>' . htmlspecialchars($pasticcino['nome']) . '</h4>
+                                            <div class="contenitore-dolce">
+                                                <div class="immagine-dolce">
+                                                    <img src="' . htmlspecialchars($imgSrc) . '" alt="' . htmlspecialchars($altText) . '"/>
+                                                </div>
+                                                <div class="dettagli-dolce">
+                                                    <dl>
+                                                        <dt><strong>Quantità:</strong></dt>
+                                                        <dd>' . htmlspecialchars($pasticcino['quantita']) . '</dd>
+                                                    </dl>
+                                                </div>
+                                            </div>
                                         </li>';
             }
         }
