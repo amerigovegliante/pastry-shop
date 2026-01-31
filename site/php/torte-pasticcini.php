@@ -66,7 +66,7 @@ if($connessione && empty($listaItem)){
                 </a>
 
                 <div class=\"infoTorta\">
-                    <a href=\"dettagli&ID=".urlencode($Item['id'])."\" class=\"pulsanteGenerico\">Vedi Dettagli</a>
+                    <a href=\"dettagli?ID=".urlencode($Item['id'])."\" class=\"pulsanteGenerico\">Vedi Dettagli</a>
                 </div>
 
              </article> </li>";

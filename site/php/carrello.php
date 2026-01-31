@@ -187,15 +187,18 @@ if (isset($_SESSION['carrello']) && count($_SESSION['carrello']) > 0) {
     }
 
     $contenutoGenerato = "
+    <p id=\"descrizioneCarrello\" class=\"visually-hidden\">Tabella organizzata per colonne che elenca i prodotti all'interno del carrello. 
+                    Ogni riga descrive un prodotto con nome, informazioni aggiuntive sull'ordine, quantità, prezzo unitario e totale parziale. 
+                    Alla fine della tabella è mostrato il totale complessivo dell'ordine. </p>
     <div id='contenitoreTabella'>
-        <table class='tabella-carrello'>
-            <caption>Riepilogo prodotti nel tuo carrello</caption>
+        <table class='tabella-carrello' airia-describedby='descrizioneCarrello'>
+            <caption>Riepilogo prodotti nel carrello</caption>
             <thead>
                 <tr>
                     <th scope='col'>Prodotto</th>
-                    <th scope='col'>Info Extra</th>
-                    <th scope='col'>Qtà</th>
-                    <th scope='col'>Prezzo Unit.</th>
+                    <th scope='col' abbr='Informazioni'>Informazioni Aggiuntive</th>
+                    <th scope='col'>Quantità</th>
+                    <th scope='col' abbr='Prezzo'>Prezzo Unitario</th>
                     <th scope='col'>Totale</th>
                     <th scope='col'><span class='sr-only'>Azioni</span></th>
                 </tr>

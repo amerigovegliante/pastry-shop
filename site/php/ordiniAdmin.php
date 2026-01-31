@@ -63,22 +63,22 @@ if($connessione){
     $db->closeDBConnection();
     
     if ($Ordini != null){ 
-        $tabella .= "<p id=\"descr\" class=\"visually-hidden\">Tabella che elenca tutte le ordinazioni ancora da ritirare ordinate in base a data e ora di ritiro. 
+        $tabella .= "<p id=\"descr\" class=\"visually-hidden\">Tabella organizzata per colonne che mostra tutti gli ordini la cui data di ritiro risale al massimo a sette giorni fa.
                     Ogni riga descrive un'ordinazione con numero identificativo dell'ordine, data di ritiro, nominativo e telefono del cliente,
-                     costo totale, eventuali annotazioni e stato dell'ordine. Lo stato dell'ordine può essere: in attesa, in preparazione, completato o ritirato</p>
+                     costo totale, eventuali annotazioni e stato di avanzamento dell'ordine. Lo stato dell'ordine può essere: in attesa, in preparazione, completato o ritirato</p>
         <form method=\"post\" action=\"ordini-amministratore\">
         <button type=\"submit\">Aggiorna tabella</button>
         <table class=\"contenuto\" aria-describedby=\"descr\">    
-            <caption>Elenco degli ordini dal </caption>
+            <caption>Ordini con data di ritiro negli ultimi 7 giorni</caption>
             
             <thead>
                 <tr>
-                    <th scope=\"col\" abbr=\"ID\">ID Ordine</th>
+                    <th scope=\"col\" abbr=\"Numero\">Numero Ordine</th>
                     <th scope=\"col\" abbr=\"Ritiro\">Data di ritiro</th>                
-                    <th scope=\"col\" abbr=\"Nome\">Nominativo</th>
-                    <th scope=\"col\" abbr=\"Tel\">Telefono</th>
-                    <th scope=\"col\" abbr=\"Tot\">Totale</th>
-                    <th scope=\"col\" abbr=\"Note\">Annotazioni</th>
+                    <th scope=\"col\">Nominativo</th>
+                    <th scope=\"col\">Telefono</th>
+                    <th scope=\"col\">Totale</th>
+                    <th scope=\"col\">Annotazioni</th>
                     <th scope=\"col\">Stato</th>
                     <th scope=\"col\">Dettagli</th>
                 </tr>

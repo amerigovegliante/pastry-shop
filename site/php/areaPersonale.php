@@ -101,11 +101,13 @@ if($connessione){
     
     if(!empty($ordini)){
         $tabellaOrdiniHTML = "
-        <div class='table-container' tabindex='0'> <table class='tabella-ordini'>
-                <caption>Storico degli ordini effettuati con stato e totale</caption>
+        <p id=\"descr\" class=\"visually-hidden\">Tabella organizzata per colonne che mostra lo storico degli ordini effettuati dall'utente.
+        Ogni riga descrive un'ordine con numero identificativo, data di ritiro, stato, prezzo totale, azioni.</p>
+        <div class='table-container' tabindex='0'> <table class='tabella-ordini' aria-describedby='descr'>
+                <caption>Storico degli ordini effettuati</caption>
                 <thead>
                     <tr>
-                        <th scope='col'>ID ordine</th>
+                        <th scope='col' abbr='Numero'>Numero ordine</th>
                         <th scope='col'>Data</th>
                         <th scope='col'>Stato</th>
                         <th scope='col'>Totale</th>
