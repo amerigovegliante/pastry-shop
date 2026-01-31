@@ -83,7 +83,7 @@
                                 <option value="torta" [selTorta]>Torta</option>
                                 <option value="pasticcino" [selPasticcino]>Pasticcino</option>
                             </select>
-                            <small id="type-help">Seleziona il tipo di prodotto da aggiungere</small>
+                            <small id="type-help" class="sr-only">Seleziona il tipo di prodotto da aggiungere</small>
                         </div>
                         [messaggioErroreTipo]
 
@@ -102,7 +102,7 @@
                         [messaggioErroreDescrizione]
 
                         <div class="campoDati">
-                            <label for="prezzo">Prezzo (€) <span aria-hidden="true">*</span></label>
+                            <label for="prezzo">Prezzo (<span aria-hidden="true">€</span><span class="sr-only">euro</span>) <span aria-hidden="true">*</span></label>
                             <input type="number" id="prezzo" name="prezzo" step="0.01" min="0" max="99999999.99" required aria-describedby="price-help" value="[valorePrezzo]">
                             <small id="price-help">Per le torte indicare il prezzo a porzione</small>
                         </div>

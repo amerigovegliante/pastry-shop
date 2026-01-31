@@ -68,7 +68,6 @@ if($connessione){
         // SEZIONE DETTAGLI VISIVI
         $Itemdetails .= "<figure>
                          <img src=\"" . htmlspecialchars($imgSrc) . "\" alt=\"\" class=\"cornice\">
-                         <figcaption>".htmlspecialchars($Item['nome'])."</figcaption>
                       </figure>
                       <section class=\"infoItem\">
                           <h2>".htmlspecialchars($Item['nome'])."</h2> 
@@ -119,11 +118,19 @@ if($connessione){
         }
 
         // --- BOX QUANTITÀ
+        $maxQuantita = '';
+        if($tipoItem === 'torta'){
+            $maxQuantita = 10;
+        } elseif($tipoItem === 'pasticcino'){
+            $maxQuantita = 50;
+        }             
+
         $formAcquisto .= "<fieldset class=\"boxQuantita\">
                             <legend>Quantità</legend>
                             <div class=\"campoQuantita\">
                                 <label for=\"quantita\">" . $labelQuantita . "</label>
-                                <input type=\"number\" id=\"quantita\" min=\"1\" value=\"1\" name=\"quantita\" required>
+                                <input type=\"number\" id=\"quantita\" min=\"1\" max=\"$maxQuantita\" value=\"1\" name=\"quantita\" required>
+                                <small>(max $maxQuantita)</small>
                             </div>
                           </fieldset>";
 

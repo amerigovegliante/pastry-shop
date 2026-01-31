@@ -98,21 +98,21 @@
                                 <label for="nome">Nome <span aria-hidden="true">*</span></label>
                                 <input type="text" id="nome" name="nome" value="[valoreNome]" required aria-describedby="nome-help"
                                     autocomplete="given-name">
-                                <small id="nome-help">Inserisci il tuo nome</small>
+                                <small id="nome-help" class="sr-only">Inserisci il tuo nome</small>
                             </div>
 
                             <div class="campoDati">
                                 <label for="cognome">Cognome <span aria-hidden="true">*</span></label>
                                 <input type="text" id="cognome" name="cognome" value="[valoreCognome]" required aria-describedby="cognome-help"
                                     autocomplete="family-name">
-                                <small id="cognome-help">Inserisci il tuo cognome</small>
+                                <small id="cognome-help" class="sr-only">Inserisci il tuo cognome</small>
                             </div>
 
                             <div class="campoDati">
                                 <label for="telefono">Telefono <span aria-hidden="true">*</span></label>
                                 <input type="tel" id="telefono" name="telefono" value="[valoreTelefono]" pattern="[0-9]{10}" aria-describedby="tel-help"
                                     required autocomplete="tel">
-                                <small id="tel-help">Inserisci il tuo numero di telefono senza prefissi, spazi o trattini</small>
+                                <small id="tel-help">Il numero di telefono senza prefissi, spazi o trattini</small>
                             </div>
                         </fieldset>
 

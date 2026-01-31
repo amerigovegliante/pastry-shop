@@ -63,12 +63,8 @@ if($connessione && empty($listaItem)){
                         <h2>".htmlspecialchars($Item['nome'])."</h2> 
                         <span class=\"prezzoTorta\">€".number_format($Item['prezzo'], 2, ',', '.')."</span> 
                     </div>
+                    <p>Vedi Dettagli</p>
                 </a>
-
-                <div class=\"infoTorta\">
-                    <a href=\"dettagli?ID=".urlencode($Item['id'])."\" class=\"pulsanteGenerico\">Vedi Dettagli</a>
-                </div>
-
              </article> </li>";
         }
         $listaItem .= '</ul>';

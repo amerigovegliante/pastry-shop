@@ -172,46 +172,41 @@ if(isset($_POST['submit'])){
         } else {
             $lastItemId = $db->insertNewItem($tipo, $nome, $descrizione, $prezzo, $immagine, $testoAlternativo);    //inserimento e recupero id ultimo item aggiunto  
 
-            if(!$lastItemId){  
-                $messaggioErrore = '<p class="errore" role="alert">Errore durante la scrittura nel database</p>';
-            } else {
-                $messaggioConferma = '<div class="successo" role="status">
-                        <p>Prodotto inserito con successo!</p>
-                        </div>';
-            }
-
-            //inserimento degli allergeni
-            $successAllergeni = inserisciAllergeni($db, $lastItemId, $allergeni);
-            $db->closeDBConnection();
-            if(!$successAllergeni){
-                $messaggioErrore = '<p class="errore" role="alert">Errore durante la scrittura degli allergeni</p>';
-                $messaggioConferma = '';
+            //INSERIMENTO DEGLI ALLERGENI (solo se l'item è stato inserito correttamente)
+            if($lastItemId){  
+                $successAllergeni = inserisciAllergeni($db, $lastItemId, $allergeni);
+                $db->closeDBConnection();
+                $messaggioConferma = '<div class="successo" role="status"><p>Prodotto inserito con successo!</p></div>';
+                } else {
+                    $messaggioErrore = '<p class="errore" role="alert">Errore durante la scrittura nel database</p>';
             }
         }
     }
 }
 
-//GESTIONE ELIMINAZIONE PRODOTTO (l'item verrà segnato come inattivo e non cancellato dal database)
-if (isset($_POST['delete']) && !empty($_POST['delete_id'])){
+//GESTIONE CAMBIO STATO PRODOTTO (l'item passerà da attivo a inattivo e viceversa)
+if (isset($_POST['cambiaStato']) && !empty($_POST['id_cambioStato'])){
     //controllo corrispondenza token CSRF
     if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
         $messaggioErrore = '<p class="errore" role="alert">Errore di sicurezza: Token non valido. Riprova.</p>';
     } else {
-        $idDaCancellare = intval($_POST['delete_id']);  //intval rimuove tutto ciò che non è numero, restituendo un valore intero pulito.
+        $idCambio = intval($_POST['id_cambioStato']);  //intval rimuove tutto ciò che non è numero, restituendo un valore intero pulito.
         $db = new DBAccess();
         $connessione = $db->openDBConnection();
 
         if ($connessione) {
-            $success = $db->deactivateItemById($idDaCancellare);
+            $result = $db->changeItemStateById($idCambio);
             $db->closeDBConnection();
 
-            if ($success === true){
-                $messaggioConferma = '<div class="successo" role="status"><p>Prodotto eliminato con successo!</p></div>';
+            if ($result === 1){
+                $messaggioConferma = '<div class="sr-only" role="status"><p>Prodotto attivato con successo!</p></div>';
+            } elseif($result === 0) {
+                 $messaggioConferma = '<div class="sr-only" role="status"><p>Prodotto disattivato con successo!</p></div>';
             } else {
-                $messaggioErrore = '<p class="errore" role="alert">Errore durante l\'eliminazione del prodotto.</p>';
+                $messaggioErrore = '<p class="errore" role="alert">Errore durante la modifica dello stato del prodotto.</p>';
             }
         } else {
-            $messaggioErrore = '<p class="errore" role="alert">Errore di connessione al database durante l\'eliminazione.</p>';
+            $messaggioErrore = '<p class="errore" role="alert">Errore di connessione al database durante la modifica.</p>';
         }
     }
 }
@@ -222,13 +217,14 @@ $connessione = $db->openDBConnection();
 if(!$connessione){  
     $messaggioErrore = '<p class="errore" role="alert">Errore di connessione al database</p>';
 } else {
-    $items = $db->getActiveItems();
+    $items = $db->getAllItems();
     $db->closeDBConnection();
     if(empty($items)){
         $tabellaItems = '<p class="errore" role="alert">Non sono stati trovati prodotti nel database</p>';
     } else {    //se ho recuperato almeno un prodotto dal DB
         $tabellaItems = '<p id="descr" class="sr-only">Tabella contenente la lista di dolci registrati. Ogni riga descrive un dolce con numero 
-                        identificativo, tipologia, nome, descrizione e prezzo. L\'ultima colonna consente di eliminare il dolce corrispondente dal database.</p>
+                        identificativo, tipologia, nome, descrizione, prezzo e stato. L\'ultima colonna consente di vedere lo stato di un prodotto e di cambiarlo.
+                        Solo i prodotti con stato attivo sono visionabili dalla clientela.</p>
                         <table aria-describedby="descr">
                             <caption>Tabella dei prodotti disponibili</caption>
                             <thead>
@@ -238,24 +234,26 @@ if(!$connessione){
                                     <th scope="col">Nome</th>
                                     <th scope="col">Descrizione</th>
                                     <th scope="col">Prezzo (€)</th>
-                                    <th scope="col">Elimina</th>
+                                    <th scope="col">Stato</th>
                                 </tr>
                             </thead>
                             <tbody>';
         foreach ($items as $item){
+            $statoTesto = $item['attivo'] ? '<span aria-hidden="true">🟢</span> Attivo' : '<span aria-hidden="true">🔴</span> Inattivo';
+
             $tabellaItems .= '<tr>' .
-            '<td>' . htmlspecialchars($item['id']) . '</td>' .
+            '<td scope="row">' . htmlspecialchars($item['id']) . '</td>' .
             '<td>' . htmlspecialchars($item['tipo']) . '</td>' .
             '<td>' . htmlspecialchars($item['nome']) . '</td>' .
             '<td>' . htmlspecialchars($item['descrizione']) . '</td>' .
             '<td>' . number_format($item['prezzo'], 2, ',', '.') . '</td>' .
             '<td>
-                <form method="post" onsubmit="return confirm(\'Vuoi davvero eliminare questo prodotto?\');">
+                <form method="post" onsubmit="return confirm(\'Vuoi davvero cambiare lo stato di questo prodotto?\');">
                     <input type="hidden" name="csrf_token" value="' . htmlspecialchars($token) . '">
-                    <input type="hidden" name="delete_id" value="' . htmlspecialchars($item['id']) . '">
-                    <button type="submit" name="delete" class="pulsanteCancella" aria-label="Elimina prodotto ' . htmlspecialchars($item['nome']) . '">
-                        &#x1F5D1;
-                    </button>
+                    <input type="hidden" name="id_cambioStato" value="' . htmlspecialchars($item['id']) . '">
+                    <button type="submit" name="cambiaStato" aria-label="Cambia stato ' . htmlspecialchars($item['nome']) . '">'
+                        . $statoTesto .
+                    '</button>
                 </form>
             </td>' .
             '</tr>';
@@ -266,8 +264,6 @@ if(!$connessione){
 //fa si che una volta inviato il form, giusto o sbagliato, vengono ricompilati i campi gia' scritti  dall'utente, evitando frustrazione
 $paginaHTML = str_replace('[csrf_token]', $token, $paginaHTML);
 
-$paginaHTML = str_replace('[selTorta]', $selTorta, $paginaHTML);
-$paginaHTML = str_replace('[selPasticcino]', $selPasticcino, $paginaHTML);
 $paginaHTML = str_replace('[valoreNome]', $nome, $paginaHTML);
 $paginaHTML = str_replace('[valoreDescrizione]', $descrizione, $paginaHTML);
 $paginaHTML = str_replace('[valorePrezzo]', $prezzo, $paginaHTML);

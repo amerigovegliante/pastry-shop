@@ -312,6 +312,7 @@ class DBAccess{
         }
     }
 
+    // recupera il cognome dell'utente data l'email
     public function getCognome($email){
         $querySelect = "SELECT cognome FROM persona WHERE email = ?";
         $stmt = mysqli_prepare($this->connection, $querySelect);
@@ -327,6 +328,7 @@ class DBAccess{
         }
     }
 
+    // recupera la password (salvata come hash) dell'utente data l'email
     public function getHash($email){
         $querySelect = "SELECT password FROM persona WHERE email = ?";
         $stmt = mysqli_prepare($this->connection, $querySelect);
@@ -342,12 +344,14 @@ class DBAccess{
         }
     }
 
+    // restituisce TRUE se la password inserita corrisponde all'hash salvato, FALSE altrimenti
     public function correctLogin($email, $password){
         $hash = $this->getHash($email);
         if($hash === false || $hash === null){ return false; }
         if (password_verify($password, $hash)){ return true; } else { return false; }
     }
 
+    // recupera il ruolo dell'utente data l'email: 'user' o 'admin'
     public function getRuolo($email){
         $querySelect = "SELECT ruolo FROM persona WHERE email = ?";
         $stmt = mysqli_prepare($this->connection, $querySelect);
@@ -362,8 +366,8 @@ class DBAccess{
             return false;
         }
     }
-/*
-    //restituisce tutti gli items ordinati per tipo e per nome, FALSE se non ne trova
+
+    // restituisce tutti gli items ordinati per tipo e per nome, FALSE se non ne trova
     public function getAllItems(){
         $querySelect = "SELECT * FROM item ORDER BY tipo, nome";
         $stmt = mysqli_prepare($this->connection, $querySelect);
@@ -383,7 +387,7 @@ class DBAccess{
         mysqli_stmt_close($stmt);
         return $items;
     }
-*/
+
      //restituisce tutti gli items ATTIVI ordinati per tipo e per nome, FALSE se non ne trova
     public function getActiveItems(){
         $querySelect = "SELECT * FROM item WHERE attivo = TRUE ORDER BY tipo, nome";
@@ -403,6 +407,22 @@ class DBAccess{
 
         mysqli_stmt_close($stmt);
         return $items;
+    }
+
+    // recupera lo stato di un item, FALSE altrimenti
+    public function getAttivo($idItem){
+        $querySelect = "SELECT attivo FROM item WHERE id = ?";
+        $stmt = mysqli_prepare($this->connection, $querySelect);
+        mysqli_stmt_bind_param($stmt, "i", $idItem);
+        mysqli_stmt_execute($stmt); 
+        mysqli_stmt_bind_result($stmt, $attivo);
+        if (mysqli_stmt_fetch($stmt)) {
+            mysqli_stmt_close($stmt);
+            return $attivo;
+        } else {
+            mysqli_stmt_close($stmt);
+            return false;
+        }
     }
 
     //restituisce il numero di domande fatte da un ip nella data odierna 
@@ -601,7 +621,6 @@ FUNZIONI PER SCRIVERE DATI
         mysqli_stmt_close($stmt);
         return $righeEliminate > 0; //TRUE se ha eliminato almeno una riga
     }
-*/
     //disattiva l'item che ha l'id passatogli
     //ritorna TRUE se la disattivazione è andata a buon fine, FALSE se fallisce
     public function deactivateItemById($idItem){
@@ -612,6 +631,23 @@ FUNZIONI PER SCRIVERE DATI
         $righeModificate = mysqli_stmt_affected_rows($stmt); //conta il numero di righe eliminate
         mysqli_stmt_close($stmt);
         return $righeModificate > 0; //TRUE se ha eliminato almeno una riga
+        }
+*/
+    //cambia lo stato dell'item che ha l'id passatogli portandolo da 0(inattivo) a 1(attivo) e viceversa
+    //ritorna lo stato come numero se la modifica è andata a buon fine, FALSE se fallisce
+    public function changeItemStateById($idItem){
+        $queryUpdateItem = "UPDATE item SET attivo = NOT attivo WHERE id = ?"; //Inverte il valore di 'attivo' (0 -> 1, 1 -> 0)
+        $stmt = mysqli_prepare($this->connection, $queryUpdateItem);
+        mysqli_stmt_bind_param($stmt, "i", $idItem);
+        mysqli_stmt_execute($stmt);
+        $righeModificate = mysqli_stmt_affected_rows($stmt); 
+        mysqli_stmt_close($stmt);
+        if ($righeModificate > 0){
+            $attivo = $this->getAttivo($idItem);
+            return $attivo? 1 : 0;
+        } else{
+            return false;
+        }
     }
 }  
 ?>
