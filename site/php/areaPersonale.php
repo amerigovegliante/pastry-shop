@@ -107,7 +107,7 @@ if($connessione){
                 <caption>Storico degli ordini effettuati</caption>
                 <thead>
                     <tr>
-                        <th scope='col' abbr='Numero'>Numero ordine</th>
+                        <th scope='col'>Numero</th>
                         <th scope='col'>Data</th>
                         <th scope='col'>Stato</th>
                         <th scope='col'>Totale</th>
