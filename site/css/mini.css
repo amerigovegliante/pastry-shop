@@ -354,6 +354,14 @@
     }
 }
 
+.cornice {
+    width: 100%;
+}
+
+.product-container {
+    width: 100%;
+}
+
 .user-area-content {
         padding: 2rem 1rem;
     }

@@ -67,7 +67,7 @@ if($connessione){
 
         // SEZIONE DETTAGLI VISIVI
         $Itemdetails .= "<figure>
-                         <img src=\"" . htmlspecialchars($imgSrc) . "\" alt=\"\" class=\"cornice\">
+                         <img src=\"" . htmlspecialchars($imgSrc) . "\" class=\"cornice\">
                       </figure>
                       <section class=\"infoItem\">
                           <h2>".htmlspecialchars($Item['nome'])."</h2> 
@@ -83,7 +83,7 @@ if($connessione){
                     
         // --- LOGICA TORTE ---
         if($tipoItem === 'torta'){
-            $tipoBreadcrumb = "<a href=\"torte\">Le nostre torte</a>";
+            $tipoBreadcrumb = "<a href=\"torte\">Torte</a>";
             
             // Box 1: Dimensione
             $formAcquisto .= "<fieldset class=\"opzioniTorta\">
@@ -114,7 +114,7 @@ if($connessione){
                     </fieldset>";
             
         } else if($tipoItem === 'pasticcino'){
-            $tipoBreadcrumb = "<a href=\"pasticcini\">I nostri pasticcini</a>";
+            $tipoBreadcrumb = "<a href=\"pasticcini\">Pasticcini</a>";
         }
 
         // --- BOX QUANTITÀ
