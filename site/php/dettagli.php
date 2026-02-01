@@ -58,10 +58,17 @@ if($connessione){
         $labelQuantita = ($tipoItem === 'torta') ? "Numero Torte" : "Numero Pezzi";
 
         // IMMAGINE
-        
+        $imgSrc = ""; 
+        if (!empty($Item['immagine'])) {
+            $imgSrc = "site/img/" . $Item['immagine'];
+        } else {
+            $imgSrc = "site/img/placeholder.jpeg";
+        }
 
         // SEZIONE DETTAGLI VISIVI
-        $Itemdetails .= "
+        $Itemdetails .= "<figure>
+                         <img src=\"" . htmlspecialchars($imgSrc) . "\" class=\"cornice\">
+                      </figure>
                       <section class=\"infoItem\">
                           <h2>".htmlspecialchars($Item['nome'])."</h2> 
                           <data value=\"" . $Item['prezzo'] . "\" class=\"prezzoItem\">€" . $prezzoFormatted . " <small>" . $etichettaUnit . "</small></data> 

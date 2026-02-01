@@ -121,14 +121,10 @@ if (isset($_GET['id'])) {
         $listaDolciOrdinati .= '<ul>';
         if(!empty($torteOrdinate)){     //se è stata ordinata almeno una torta
             foreach ($torteOrdinate as $torta){
-                $imgSrc = !empty($torta['immagine']) ? "site/img/" . $torta['immagine'] : "site/img/placeholder.jpeg";
-                $altText = !empty($torta['testo_alternativo']) ? $torta['testo_alternativo'] : "Immagine non disponibile";
+    
                 $listaDolciOrdinati .= '<li class="dolce-ordinato">
                                             <h4>' . $torta['nome'] . '</h4>
                                             <div class="contenitore-dolce">
-                                                <div class="immagine-dolce">
-                                                    <img src="' . htmlspecialchars($imgSrc) . '" alt="' . htmlspecialchars($altText) .'"/>
-                                                </div>
                                                 <div class="dettagli-dolce">
                                                     <dl>
                                                         <dt><strong>Quantità:</strong></dt>
@@ -148,14 +144,9 @@ if (isset($_GET['id'])) {
         }
         if(!empty($pasticciniOrdinati)){     //se è stata ordinata almeno una torta
             foreach ($pasticciniOrdinati as $pasticcino){
-                $imgSrc = !empty($pasticcino['immagine']) ? "site/img/" . $pasticcino['immagine'] : "site/img/placeholder.jpeg";
-                $altText = !empty($pasticcino['testo_alternativo']) ? $pasticcino['testo_alternativo'] : "Immagine non disponibile";
                 $listaDolciOrdinati .= '<li class="dolce-ordinato">
                                             <h4>' . htmlspecialchars($pasticcino['nome']) . '</h4>
                                             <div class="contenitore-dolce">
-                                                <div class="immagine-dolce">
-                                                    <img src="' . htmlspecialchars($imgSrc) . '" alt="' . htmlspecialchars($altText) . '"/>
-                                                </div>
                                                 <div class="dettagli-dolce">
                                                     <dl>
                                                         <dt><strong>Quantità:</strong></dt>
