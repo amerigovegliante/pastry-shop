@@ -917,14 +917,14 @@ button[type="submit"]:active {
     height: 500px;
 }
 
-.cornice{
-    width: 500px;
+.product-container{
+    width: 40%;
     height: auto;
     display: block;
     margin: auto;
     border: 1px solid var(--text-dark);
     border-radius: 20px;
-    margin-bottom: 0.1rem;
+    margin-bottom: 0.3rem;
     object-fit: cover;
     object-position: center;
     transition: transform 0.4s ease;
@@ -939,6 +939,7 @@ button[type="submit"]:active {
     border-radius: 20px;
     padding: 2.5rem;
     box-shadow: 0 10px 40px var(--shadow);
+    border: 1px solid var(--text-dark);
 }
 
 .infoItem h2 {
@@ -982,7 +983,7 @@ button[type="submit"]:active {
 }
 
 .listaAllergeni::before {
-    content: "⚠️ Allergeni:";
+    content: "Allergeni:";
     display: block;
     font-weight: 700;
     color: var(--primary);
