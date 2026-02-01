@@ -692,6 +692,14 @@ aside a:hover::after {
     border: 1px solid var(--primary);
 }
 
+.auth-header {
+    text-align: center;
+}
+
+.auth-footer {
+    text-align: center;
+}
+
 @keyframes slideUp {
     from {
         opacity: 0;

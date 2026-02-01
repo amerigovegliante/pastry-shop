@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <base href="[BASE_URL]">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-   <link rel="stylesheet" href="site/css/style.css">
+    <link rel="stylesheet" href="site/css/style.css">
     <link rel="stylesheet" href="site/css/mini.css" media="screen and (max-width:800px)">
     <link rel="stylesheet" href="site/css/print.css" media="print" />
     <script src="site/js/script.js"></script>
@@ -62,14 +62,6 @@
         <div class="auth-page-container">
             <div class="auth-card">
                 <div class="auth-header">
-                    <div class="auth-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
-                            <circle cx="8.5" cy="7" r="4"/>
-                            <line x1="20" y1="8" x2="20" y2="14"/>
-                            <line x1="23" y1="11" x2="17" y2="11"/>
-                        </svg>
-                    </div>
                     <h2>Crea un nuovo account</h2>
                     <p class="auth-subtitle">Unisciti a noi e scopri tutte le dolcezze della tradizione padovana</p>
                 </div>
@@ -77,7 +69,7 @@
                 [messaggioErroreDB]
                 [messaggioConferma]
 
-                <form id="formRegistrazione" action="registrazione" method="post" autocomplete="on">
+                <form id="formRegistrazione" action="registrazione" method="post" autocomplete="on" class="register-container">
                     <fieldset>
                         <legend class="visually-hidden">Dati di registrazione</legend>
                         
