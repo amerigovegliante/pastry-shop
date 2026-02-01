@@ -1,79 +1,87 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
-    <meta charset="utf-8">
-    <title>Dettagli Torte e Pasticcini - Pasticceria Padovana</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords" content="pasticceria padovana, pasticceria, dolci, torta, pasticcini, padova, dolce">
-    <meta name="description" content="Pagina dei dettagli sulle torte e pasticcini della Pasticceria Padovana">
-
-    <base href="[BASE_URL]">
-
-    <link rel="stylesheet" href="site/css/style.css" media="screen">
-    <link rel="stylesheet" href="site/css/mini.css" media="screen and (max-width:800px)">
-    <link rel="stylesheet" href="site/css/print.css" media="print">
+    <meta charset="utf-8" />
+    <title>Dettagli Prodotto - Pasticceria Padovana</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="keywords" content="pasticceria padovana, pasticceria, dolci, torta, pasticcini, padova, dolce" />
+    <meta name="description" content="Pagina dei dettagli sulle torte e pasticcini della Pasticceria Padovana" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="site/css/style.css" />
+    <link rel="stylesheet" href="site/css/mini.css" media="screen and (max-width:800px)" />
+    <link rel="stylesheet" href="site/css/print.css" />
+    <script src="site/js/script.js"></script>
 </head>
-
 <body>
-    <a href="#main" class="sr-only">Salta al contenuto principale</a>
-    <header>
-        <div class="contenuto">
-            <button type="button" class="bottoneMenu" aria-label="Apri il menu principale">Menu</button>
+    <a href="#main" class="skip-link">Salta al contenuto principale</a>
+    
+    <header id="header">
+        <div class="header-content">
+            <div id="logo">
+                <h1>Pasticceria Padovana</h1>
+                <p>La tradizione su misura per te</p>
+            </div>
 
-            <a href="home" aria-label="Torna alla homepage">
-                <div id="logo">
-                    <h1>Pasticceria Padovana</h1>
-                    <p class="sirivennela-regular">La pasticceria tradizionale su misura per i tuoi eventi</p>
-                </div>
-            </a>
+            <nav id="menu" aria-label="Menu principale">
+                <ul>
+                    <li><a href="home"><span lang="en">Home</span></a></li>
+                    <li><a href="chi-siamo">Chi siamo</a></li>
+                    <li><a href="torte">Torte</a></li>
+                    <li><a href="pasticcini">Pasticcini</a></li>
+                    <li><a href="contattaci">Contattaci</a></li>
+                </ul>
+            </nav>
 
-            <div id="pulsantiMenu">
-                <a href="login" class="bottoneProfilo" aria-label="Accedi alla tua area personale">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
-                        <circle cx="12" cy="7" r="4" />
+            <div class="header-icons">
+                <a href="login" class="icon-btn" aria-label="Accedi alla tua area personale">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
                     </svg>
                 </a>
-
-                <a href="carrello" class="bottoneCarrello" aria-label="Vai al carrello">
-                    <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="16.5" cy="18.5" r="1.5" />
-                        <circle cx="9.5" cy="18.5" r="1.5" />
-                        <path d="M18 16H8a1 1 0 0 1-.958-.713L4.256 6H3a1 1 0 0 1 0-2h2
-                     a1 1 0 0 1 .958.713L6.344 6H21a1 1 0 0 1 .937 1.352l-3 8
-                     A1 1 0 0 1 18 16zm-9.256-2h8.563l2.25-6H6.944z" />
+                <a href="carrello" class="icon-btn" aria-label="Vai al carrello">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"/>
+                        <circle cx="20" cy="21" r="1"/>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
                     </svg>
                 </a>
             </div>
 
+            <button class="menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
 
-    <nav id="menu" aria-label="Menu principale">
-        <ul class="contenuto">
-            <li><a href="home"><span lang="en">Home</span></a></li>
-            <li><a href="chi-siamo">Chi siamo</a></li>
-            <li><a href="torte">Le nostre torte</a></li>
-            <li><a href="pasticcini">I nostri pasticcini </a></li>
-            <li><a href="contattaci">Contattaci</a></li>
-        </ul>
-    </nav>
-
     <nav id="breadcrumb" aria-label="Percorso di navigazione">
-        <p class="contenuto">Ti trovi in: <a href="home"><span lang="en">Home</span></a> &gt; [tipoBreadcrumb] &gt; [Item] </p>
+        <p>Ti trovi in: <a href="home"><span lang="en">Home</span></a> &gt; [tipoBreadcrumb] &gt; [Item]</p>
     </nav>
 
     <main id="main">
-        <article class="dettagliItem contenuto">
+        <div class="dettagliItem">
             [DettagliItem]
             [formAcquisto]
-        </article>
+        </div>
     </main>
 
     <footer>
-        <div class="contenuto">
+        <div class="footer-content">
+            <div id="navigazione-footer">
+                <h2>Navigazione</h2>
+                <ul>
+                    <li><a href="home">Home</a></li>
+                    <li><a href="chi-siamo">Chi siamo</a></li>
+                    <li><a href="torte">Torte</a></li>
+                    <li><a href="pasticcini">Pasticcini</a></li>
+                    <li><a href="contattaci">Contattaci</a></li>
+                </ul>
+            </div>
+
             <div id="contatti">
                 <h2>Contatti</h2>
                 <address>
@@ -85,11 +93,14 @@
             </div>
 
             <div id="assistenzaClienti">
-                <h2>Assistenza clienti shop online</h2>
-                <p>Lun-Ven 8:30-13:00 14:00-17:30</p>
+                <h2>Assistenza clienti</h2>
+                <p>Lun-Ven 8:30-13:00 | 14:00-17:30</p>
                 <p>Email: <a href="mailto:gestioneclienti@pasticceriapadovana.it">gestioneclienti@pasticceriapadovana.it</a></p>
-                <p id="copyright">&copy; 2025 Pasticceria Padovana - Tutti i diritti riservati</p>
             </div>
+        </div>
+        <div style="text-align: center;">
+            <a href="#main" class="back-to-top">Torna su ↑</a>
+            <p id="copyright">&copy; 2025 Pasticceria Padovana - Tutti i diritti riservati</p>
         </div>
     </footer>
 </body>
