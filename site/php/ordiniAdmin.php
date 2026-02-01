@@ -127,7 +127,7 @@ if($connessione){
     }
 } else {
     http_response_code(500);
-    nclude __DIR__ . '/500.php';
+    include __DIR__ . '/500.php';
     exit;
 }
 
