@@ -220,7 +220,7 @@
     }
 
     tbody td::before {
-        content: attr(data-title) ": ";
+        content: attr(data-title) ":";
         font-weight: 700;
         color: var(--primary);
         display: inline-block;
