@@ -268,7 +268,7 @@ main {
     opacity: 0.9;
 }
 
-.hero-text strong {
+strong.hero-text  {
     color: var(--primary-light);
 }
 

@@ -1,0 +1,217 @@
+/*
+====================================================================================================================================
+TUTTE LE PAGINE
+====================================================================================================================================
+*/
+*{
+    padding: 0em;
+    margin: 0em;
+}
+
+@page {
+  margin: 2cm;  /* MARGINI PER LA STAMPA */
+}
+
+body {
+    font-family: "Georgia", "Times New Roman", Times, serif;
+    color: black;
+    background: none;
+    font-size: 12pt;
+    line-height: 1.5;
+    overflow-x: hidden;
+}
+
+nav#menu, button, .back-to-top, .skip-link, .header-icons, #navigazione-footer
+{
+    display: none;
+}
+/* ====================================
+   INTESTAZIONI
+   ==================================== */
+h1, h2, h3, h4, h5, h6 {
+    color: black;
+}
+
+h1 {
+    font-size: 18pt; 
+}
+
+h2 {
+    font-size: 16pt;
+}
+
+h3, h4, h5, h6{
+    font-size: 14pt;
+}
+
+/* ====================================
+   LINK
+   ==================================== */
+a{
+    text-decoration: none;
+    color: black;
+}
+
+/* ====================================
+   HEADER
+   ==================================== */
+#logo h1 {
+    font-size: 20pt;
+    color: black;
+}
+
+#logo p {
+    color: black;
+}
+
+.header-content {
+    max-width: 100%;
+    padding: 1.2rem 2rem;
+    display: block;
+}
+
+/* ====================================
+   HOMEPAGE - HERO
+   ==================================== */
+.hero {
+    display: block;
+    position: static;
+    height: auto;
+    overflow: visible;
+    page-break-inside: avoid;
+}
+
+.hero-content {
+    display: block;             
+    max-width: 100%;           
+    margin: 0;                   
+    padding: 0;                 
+}
+
+.hero-text {
+    page-break-inside: avoid;  
+    break-inside: avoid;
+    border: none;
+    background: none;
+    padding: 0;
+    margin-bottom: 1cm;
+    color: black;
+    font-size: 12pt;
+}
+
+.hero-text strong {
+    color: black;
+}
+
+.hero-text h2{
+    color: black;
+    font-size: 16pt;
+    page-break-after: avoid;
+}
+.hero-image img {
+    max-width: 8cm;
+    height: auto;
+    border: none;
+}
+
+.cta-button{
+    display: none;
+}
+
+/* ====================================
+   HOMEPAGE - FAMOUS SWEETS
+   ==================================== */
+   
+.famous-sweets {
+    background: none;
+    border: none;
+    page-break-inside: avoid;
+}
+.section-header {
+    text-align: left;
+    max-width: 100%;
+}
+.section-header h2 {
+    margin-top: 0.5cm;
+    font-size: 16pt;
+    color: black;
+    margin-bottom: none;
+}
+
+.sweets-grid {
+    max-width: 100%;
+}
+
+.sweet-card {
+    overflow: visible;
+    border: 1px solid black;
+    page-break-inside: avoid;
+}
+
+.sweet-card dt {
+    font-size: 14pt;
+    color: black;
+}
+
+.sweet-card dd {
+    color: black;
+    opacity: none;
+}
+
+.category-badge {
+    background: none;
+    color: black;
+    font-size: 10pt;
+}
+
+
+/* ====================================
+   CHI SIAMO - PAGE HERO
+   ==================================== */
+.page-hero {
+    background: none;
+    color: black;
+    border: 1px solid black;
+}
+
+.page-hero h2 {
+    font-size: 16pt;
+}
+
+.page-hero p {
+    font-size: 12pt;
+    opacity: none;
+}
+
+
+/* ====================================
+   FOOTER
+   ==================================== */
+footer {
+    background: none;
+    color: black;
+}
+
+.footer-content {
+    max-width: 100%;
+    page-break-inside: avoid;
+}
+
+footer h2 {
+    color: black;
+    font-size: 16pt;
+}
+
+footer a {
+    color: black;
+}
+
+#navigazione-footer a {
+    display: inline-block;
+    position: relative;
+}
+
+#copyright {
+    border-top: 1px solid black;
+    opacity: 0.7;
+}
