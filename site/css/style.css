@@ -32,6 +32,8 @@
     --success: #1B5E20;         /* Verde scuro (AAA su bianco) */
 }
 
+
+
 body {
     font-family: 'Inter', sans-serif;
     color: var(--text-dark);
@@ -47,21 +49,23 @@ h1, h2, h3 {
 /* ====================================
    ACCESSIBILITY
    ==================================== */
-a.skip-link {
-    position: absolute;
-    top: -40px;
-    left: 0;
-    background: var(--primary);
-    color: white;
-    padding: 8px;
-    text-decoration: none;
-    z-index: 100;
+.skip-link {
+  position: absolute;
+  top: -40px;   /* fuori dallo schermo inizialmente */
+  left: 0;
+  background: var(--primary);
+  color: #fff;
+  padding: 8px;
+  z-index: 100;
+  transition: top 0.3s;
+  font-size: 14px;
 }
 
-a.skip-link:focus {
-    top: 0;
+.skip-link:focus {
+  top: 0; 
+  z-index: 9999;
+        /* appare quando l’utente ci tabba sopra */
 }
-
 .visually-hidden {
     position: absolute;
     left: -10000px;
