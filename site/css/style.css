@@ -2444,4 +2444,10 @@ footer address {
     padding: 0.7rem;
     border: 1px solid var(--text-dark);
     border-radius: 20px;
+    width: 70%;
+    margin: auto;
+}
+
+#dettagliOrdine li{
+    list-style: none;
 }
