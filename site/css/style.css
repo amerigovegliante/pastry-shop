@@ -1715,7 +1715,7 @@ footer address {
 
 /* Header Area Personale */
 .personal-area-header {
-    background: var(--text-dark);
+    background: var(--primary);
     border-radius: 20px;
     padding: 2.5rem;
     margin-bottom: 2rem;
@@ -1854,7 +1854,6 @@ footer address {
     justify-content: center;
     width: 48px;
     height: 48px;
-    background: var(--primary);
     border-radius: 12px;
 }
 
