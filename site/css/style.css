@@ -917,7 +917,7 @@ button[type="submit"]:active {
     height: 500px;
 }
 
-.product-container{
+.cornice{
     width: 40%;
     height: auto;
     display: block;
@@ -928,6 +928,11 @@ button[type="submit"]:active {
     object-fit: cover;
     object-position: center;
     transition: transform 0.4s ease;
+}
+
+.product-container
+{
+    width: 75%;
 }
 
 .product-image-section figure:hover .cornice {
@@ -983,7 +988,7 @@ button[type="submit"]:active {
 }
 
 .listaAllergeni::before {
-    content: "Allergeni:";
+    content: "⚠️ Allergeni:";
     display: block;
     font-weight: 700;
     color: var(--primary);

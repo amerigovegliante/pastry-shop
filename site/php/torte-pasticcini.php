@@ -38,12 +38,12 @@ if ($page === 'torte'){
     $NessunaDisponibilità="nessuna torta disponibile";
 	$tipo="torta";
     $titolo="Le nostre torte";
-	$LinkPagina="<li id='currentLink'>Le nostre torte</li><li><a href=\"pasticcini\">I nostri pasticcini</a></li>";
+	$LinkPagina="<li id='currentLink'>Torte</li><li><a href=\"pasticcini\">Pasticcini</a></li>";
 }else if ($page === 'pasticcini'){
 	$tipo="pasticcino";
 	$NessunaDisponibilità="nessun pasticcino disponibile";
     $titolo="I nostri pasticcini";
-    $LinkPagina="<li><a href=\"torte\">Le nostre torte</a></li><li id='currentLink'>I nostri pasticcini</li>";
+    $LinkPagina="<li><a href=\"torte\">Torte</a></li><li id='currentLink'>Pasticcini</li>";
 }
 // leggo i dati delle torte
 if($connessione && empty($listaItem)){
