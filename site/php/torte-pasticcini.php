@@ -62,8 +62,8 @@ if($connessione && empty($listaItem)){
                     <div class=\"infoTorta\"> 
                         <h2>".htmlspecialchars($Item['nome'])."</h2> 
                         <span class=\"prezzoTorta\">€".number_format($Item['prezzo'], 2, ',', '.')."</span> 
+                        <a class=\"pulsanteGenerico\">Vedi Dettagli</a>
                     </div>
-                    <a class=\"pulsanteGenerico\">Vedi Dettagli</a>
                 </a>
              </article> </li>";
         }
