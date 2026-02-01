@@ -3,14 +3,13 @@
 TUTTE LE PAGINE
 ====================================================================================================================================
 */
-*{
-    padding: 0em;
-    margin: 0em;
+@media print{
+    *{
+        padding: 0;
+        margin: 0;
+    }
 }
 
-@page {
-  margin: 2cm;  /* MARGINI PER LA STAMPA */
-}
 
 body {
     font-family: "Georgia", "Times New Roman", Times, serif;
@@ -55,6 +54,14 @@ a{
 /* ====================================
    HEADER
    ==================================== */
+header {
+    position: static;
+}
+
+body > header + * header {
+    display: none;
+}
+
 #logo h1 {
     font-size: 20pt;
     color: black;
@@ -71,26 +78,31 @@ a{
 }
 
 /* ====================================
+   MAIN CONTENT
+   ==================================== */
+main {
+    margin-top: 0.5cm;
+    min-height: none;
+    padding: 0;
+}
+
+/* ====================================
    HOMEPAGE - HERO
    ==================================== */
 .hero {
     display: block;
     position: static;
-    height: auto;
     overflow: visible;
-    page-break-inside: avoid;
+    margin: 0;                   
+    padding: 0;
 }
 
 .hero-content {
     display: block;             
-    max-width: 100%;           
-    margin: 0;                   
-    padding: 0;                 
+    max-width: 100%;              
 }
 
 .hero-text {
-    page-break-inside: avoid;  
-    break-inside: avoid;
     border: none;
     background: none;
     padding: 0;
@@ -106,8 +118,14 @@ a{
 .hero-text h2{
     color: black;
     font-size: 16pt;
-    page-break-after: avoid;
 }
+
+.hero-image {
+    display: block;             
+    text-align: center;          
+    page-break-inside: avoid; 
+}
+
 .hero-image img {
     max-width: 8cm;
     height: auto;
@@ -123,34 +141,40 @@ a{
    ==================================== */
    
 .famous-sweets {
+    padding: 0.5cm;
     background: none;
     border: none;
-    page-break-inside: avoid;
 }
 .section-header {
     text-align: left;
     max-width: 100%;
+    margin: 0
 }
 .section-header h2 {
-    margin-top: 0.5cm;
     font-size: 16pt;
     color: black;
-    margin-bottom: none;
+    margin-bottom: 0;
 }
 
 .sweets-grid {
     max-width: 100%;
+    display: block;
 }
 
 .sweet-card {
+    display: block;
+    margin-bottom: 0.5cm;
+    background: none;
     overflow: visible;
     border: 1px solid black;
     page-break-inside: avoid;
+    padding: 0.3cm;
 }
 
 .sweet-card dt {
     font-size: 14pt;
     color: black;
+    margin-bottom: 0.3cm;
 }
 
 .sweet-card dd {
@@ -162,6 +186,7 @@ a{
     background: none;
     color: black;
     font-size: 10pt;
+    margin-bottom: 0;
 }
 
 
@@ -171,18 +196,150 @@ a{
 .page-hero {
     background: none;
     color: black;
-    border: 1px solid black;
+    padding: 0;
+    text-align: left;
+    border: none;
 }
 
 .page-hero h2 {
     font-size: 16pt;
+    margin-bottom: 0.5cm;
 }
 
 .page-hero p {
     font-size: 12pt;
+    max-width: 100%;
     opacity: none;
 }
 
+/* ====================================
+   CHI SIAMO - CONTENT
+   ==================================== */
+.content-wrapper {
+    max-width: 100%;
+    margin: 0;
+    padding:0;
+}
+
+section {
+    margin-bottom: 0;
+}
+
+section h2 {
+    font-size: 16pt;
+    color: black;
+    margin-bottom: 0.3cm;
+    position: static;
+    display: inline-block;
+}
+
+section p {
+    font-size: 12pt;
+    color: black;
+    opacity: none;
+}
+
+section strong {
+    color: black;
+}
+
+section em {
+    color: black;
+    font-style: italic;
+}
+
+.values-list {
+    list-style: disc;
+    display: block;
+    margin-top: 0.2cm;
+}
+
+.values-list li {
+    background: none;
+    padding: 0.2cm;
+    border: none;
+}
+
+.values-list li strong {
+    display: block;
+    font-size: 14pt;
+    color: black;
+    margin-bottom: 0;
+}
+
+.griglia-team {
+    list-style: circle;
+    display: inline-block;
+}
+
+.griglia-team li {
+    background: none;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px var(--shadow);
+    border: 1px solid var(black);
+    margin-bottom: 0.5cm;
+}
+
+.griglia-team figure {
+    margin: 0;
+}
+
+.griglia-team img {
+    width: 4cm;
+    height: auto;
+    object-fit: contain;
+    display: inline-block;
+}
+
+.griglia-team figcaption {
+    display: inline-block;
+    padding: 0;
+    
+}
+
+.griglia-team figcaption p{
+    font-size: 12pt;
+    color: black;
+    margin-bottom: 0;
+}
+
+.griglia-team figcaption p strong {
+    color: black;
+}
+
+aside {
+    background: linear-gradient(135deg, var(--bg-cream) 0%, #FFF 100%);
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px var(--shadow);
+    text-align: center;
+    margin-top: 4rem;
+}
+
+aside h2 {
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+}
+
+aside p {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+aside a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.story-description {
+    border: none;
+    padding: 0;
+}
 
 /* ====================================
    FOOTER
@@ -207,8 +364,8 @@ footer a {
 }
 
 #navigazione-footer a {
-    display: inline-block;
-    position: relative;
+    display: block;
+    position: static;
 }
 
 #copyright {
