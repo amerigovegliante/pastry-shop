@@ -932,7 +932,7 @@ button[type="submit"]:active {
 
 .product-container
 {
-    width: 75%;
+    width: 70%;
     margin: auto;
 }
 
@@ -989,7 +989,7 @@ button[type="submit"]:active {
 }
 
 .listaAllergeni::before {
-    content: "⚠️ Allergeni:";
+    content: "Allergeni:";
     display: block;
     font-weight: 700;
     color: var(--primary);
