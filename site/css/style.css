@@ -112,6 +112,7 @@ header.scrolled {
     font-style: italic;
 }
 
+
 /* ====================================
    NAVIGATION
    ==================================== */
@@ -155,6 +156,10 @@ nav#menu a:hover::after {
 
 nav#menu #currentlink::after, nav#menu #currentLink::after {
     width: 100%;
+}
+#menu a:visited {
+    text-decoration: underline;
+    text-decoration-style: dotted; /* sottolineatura a puntini */
 }
 
 .header-icons {
