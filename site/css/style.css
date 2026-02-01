@@ -922,6 +922,9 @@ button[type="submit"]:active {
     height: auto;
     display: block;
     margin: auto;
+    border: 1px solid var(--text-dark);
+    border-radius: 20px;
+    padding: 0.2rem;
     object-fit: cover;
     object-position: center;
     transition: transform 0.4s ease;
