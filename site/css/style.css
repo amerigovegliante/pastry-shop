@@ -3,6 +3,7 @@
    ==================================== */
 
 /* Reset e Variabili */
+@media screen {
 * {
     margin: 0;
     padding: 0;
@@ -2434,3 +2435,22 @@ footer address {
         padding: 1.2rem;
     }
 }
+
+/* ====================================
+   DETTAGLI ORDINE
+   ==================================== */
+
+#dettagliOrdine {
+    background-color: white;
+    padding: 0.7rem;
+    border: 1px solid var(--text-dark);
+    border-radius: 20px;
+    width: 70%;
+    margin: auto;
+}
+
+#dettagliOrdine li{
+    list-style: none;
+}
+}
+
