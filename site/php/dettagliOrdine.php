@@ -52,6 +52,7 @@ if (isset($_GET['id'])) {
         include __DIR__ . '/500.php';
         exit;
         } else {
+
             if (!$db->ordineEsiste($id_ordine)) {   //se l'ordine non esiste nel database 
                 http_response_code(404);
                 include __DIR__ . '/404.php';
@@ -63,10 +64,9 @@ if (isset($_GET['id'])) {
                 } else {
                     $ordine = $db->getOrdineByIdAndEmail($id_ordine, $email);       //un utente user può vedere SOLO i suoi ordini
                 }
-
                 if (!$ordine) {     //l'ordine esiste ma non si hanno i permessi per visualizzarlo. es: user che prova ad accedere ad un ordine non effettuato da lui
-                    http_response_code(403);
-                    include __DIR__ . '/403.php';
+                    http_response_code(404);
+                    include __DIR__ . '/404.php';
                     $db->closeDBConnection();
                     exit;
                 } else {    //TUTTO OK: recupero dettagli di torte e pasticcini ordinati

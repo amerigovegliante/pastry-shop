@@ -16,7 +16,9 @@ require_once "dbConnection.php";
 
 $paginaHTML = file_get_contents( __DIR__ .'/../html/login.html');
 if ($paginaHTML === false) {
-    die("Errore: impossibile leggere login.html");
+    http_response_code(500);
+    include __DIR__ . '/500.php';
+    exit;
 }
 
 //DICHIARAZIONE VARIABILI
@@ -57,7 +59,10 @@ if(isset($_POST['submit'])){
         $db = new DBAccess();
         $connessione = $db->openDBConnection(); 
         if(!$connessione){  
-            $erroreDB = '<p class="errore" role="alert">Siamo spiacenti, si è verificato un problema di connessione. Riprova più tardi.</p>';
+            http_response_code(404);
+            include __DIR__ . '/404.php';
+            $db->closeDBConnection();
+            exit;
         } else {
             if(!$db->correctLogin($email, $password)){        
                 $erroreLogin = '<div class="errore" role="alert"><p>Accesso non riuscito</p>

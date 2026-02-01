@@ -6,7 +6,9 @@ require_once "dbConnection.php";
 
 $paginaHTML = file_get_contents( __DIR__ .'/../html/torte-pasticcini.html');
 if ($paginaHTML === false) {
-    die("Errore: impossibile leggere torte-pasticcini.html");
+    http_response_code(500);
+    include __DIR__ . '/500.php';
+    exit;
 }
 $db = new DBAccess();
 $connessione = $db->openDBConnection(); //tento la connessione
@@ -74,7 +76,7 @@ if($connessione && empty($listaItem)){
 } else {
     http_response_code(500);
     include __DIR__ . '/500.php';
-    $listaItem = "<p class='errore contenuto'>I sistemi sono momentaneamente fuori servizio, ci scusiamo per il disagio.</p>";
+    exit;
 }
 
 //RIMPIAZZO I SEGNAPOSTO [...]

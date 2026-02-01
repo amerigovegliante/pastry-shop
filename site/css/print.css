@@ -51,6 +51,10 @@ a{
     text-decoration: none;
     color: black;
 }
+a::after {
+    content: " (" attr(href) ")";
+    font-size: 90%;
+}
 
 /* ====================================
    HEADER
@@ -69,6 +73,18 @@ a{
     padding: 1.2rem 2rem;
     display: block;
 }
+
+/* Nascondi elementi non necessari */
+    header,
+    .menu-toggle,
+    .header-icons,
+    nav,
+    .skip-link,
+    .back-to-top,
+    footer,
+    .cta-button {
+        display: none !important;
+    }
 
 /* ====================================
    HOMEPAGE - HERO
@@ -137,33 +153,45 @@ a{
     color: black;
     margin-bottom: none;
 }
+/* ===============================
+       Reset totale per tutti i <dl> e figli
+       =============================== */
 
-.sweets-grid {
-    max-width: 100%;
-}
+    dl, dl * {
+        all: unset !important; /* ignora tutti gli stili precedenti */
+        display: block;
+        margin: 0 0 0.5em 0;
+        padding: 0;
+        color: #000;
+        font-family: "Playfair Display", serif;
+        font-size: 12pt;
+        line-height: 1.4;
+    }
 
-.sweet-card {
-    overflow: visible;
-    border: 1px solid black;
-    page-break-inside: avoid;
-}
+    dt {
+        font-weight: bold;
+        font-size: 12pt;
+        margin: 0.3em 0 0.1em 1em;
+        display: list-item;
+        list-style-type: disc;
+    }
 
-.sweet-card dt {
-    font-size: 14pt;
-    color: black;
-}
+    dd {
+        margin-left: 2em;
+        font-size: 11pt;
+        margin-bottom: 0.5em;
+    }
 
-.sweet-card dd {
-    color: black;
-    opacity: none;
-}
+    /* Rimuove eventuali badge o decorazioni */
+    dl .category-badge,
+    dl .badge {
+        display: none !important;
+    }
 
-.category-badge {
-    background: none;
-    color: black;
-    font-size: 10pt;
-}
-
+    /* Evita tagli indesiderati nelle immagini e tabelle */
+    img, table, pre {
+        page-break-inside: avoid;
+    }
 
 /* ====================================
    CHI SIAMO - PAGE HERO

@@ -18,7 +18,9 @@ require_once "dbConnection.php";
 
 $paginaHTML = file_get_contents( __DIR__ .'/../html/registrazione.html');
 if ($paginaHTML === false) {
-    die("Errore: impossibile leggere il file template html/registrazione.html");
+    http_response_code(500);
+    include __DIR__ . '/500.php';
+    exit;
 }
 
 //DICHIARAZIONE VARIABILI
@@ -127,7 +129,9 @@ if(isset($_POST['submit'])){
         $connessione = $db->openDBConnection();
         
         if(!$connessione){  
-            $messaggioErrore = '<p class="errore" role="alert">Problema di connessione. Riprova più tardi.</p>';
+            http_response_code(500);
+            include __DIR__ . '/500.php';
+            exit;
         } else {
             if($db->emailExists($email)){        
                 $erroreEmail = '<div class="errore" role="alert"><p>L\'indirizzo email è già registrato.</p>
