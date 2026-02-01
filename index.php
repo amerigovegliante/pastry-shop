@@ -47,7 +47,7 @@ if (!preg_match('/^[a-z0-9-]+$/i', $page)) {
 $whitelist = [
     'home'              => ['file' => 'site/html/home.html', 'permesso' => 'public'],
     'chi-siamo'         => ['file' => 'site/html/story.html', 'permesso' => 'public'],
-    'contattaci'        => ['file' => 'site/php/contattaci.php', 'permesso' => 'public'],
+    'contattaci'        => ['file' => 'site/php/ciao.php', 'permesso' => 'public'],
     'torte'             => ['file' => 'site/php/torte-pasticcini.php', 'permesso' => 'public'],
     'pasticcini'        => ['file' => 'site/php/torte-pasticcini.php', 'permesso' => 'public'],
     'login'             => ['file' => 'site/php/login.php', 'permesso' => 'public'],
