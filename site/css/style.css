@@ -886,9 +886,6 @@ button[type="submit"]:active {
 }
 
 /* ====================================
-   PRODUCT DETAILS
-   ==================================== */
-/* ====================================
    DETTAGLI PRODOTTO
    ==================================== */
 
@@ -915,12 +912,16 @@ button[type="submit"]:active {
     overflow: hidden;
     box-shadow: 0 20px 60px rgba(139, 69, 19, 0.2);
     margin-bottom: 2rem;
+    max-width: 600px;
+    max-height: 500px;
 }
 
 .product-image-section .cornice {
     width: 100%;
+    max-height: 500px;
     height: auto;
     display: block;
+    object-fit: cover;
     transition: transform 0.4s ease;
 }
 
