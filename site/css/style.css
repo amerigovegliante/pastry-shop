@@ -1698,77 +1698,460 @@ footer address {
    AREA PERSONALE
    ==================================== */
 
-.user-area-content {
-    max-width: 800px;
+.personal-area-container {
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 4rem 2rem;
-    text-align: center;
+    padding: 2rem;
 }
 
-.user-welcome {
-    background: linear-gradient(135deg, var(--bg-cream) 0%, #FFF 100%);
+/* Header Area Personale */
+.personal-area-header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
     border-radius: 20px;
-    padding: 4rem 2rem;
-    margin-bottom: 3rem;
-    box-shadow: 0 10px 40px var(--shadow);
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 10px 40px rgba(139, 69, 19, 0.2);
 }
 
-.welcome-icon {
-    display: inline-flex;
+.welcome-section {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.welcome-avatar {
+    display: flex;
     align-items: center;
     justify-content: center;
-    width: 100px;
-    height: 100px;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
     border-radius: 50%;
-    margin-bottom: 2rem;
 }
 
-.welcome-icon svg {
+.welcome-avatar svg {
     stroke: white;
 }
 
-.user-welcome h2 {
-    font-size: 2.5rem;
-    color: var(--primary);
-    margin-bottom: 1rem;
+.welcome-text h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: white;
+    margin-bottom: 0.3rem;
 }
 
-.user-welcome .user-name {
-    color: var(--primary-light);
+.welcome-text .user-name {
+    color: var(--accent);
     font-weight: 700;
 }
 
-.user-welcome p {
-    font-size: 1.1rem;
-    color: var(--text-dark);
-    opacity: 0.8;
+.welcome-text p {
+    color: white;
+    opacity: 0.9;
+    font-size: 1rem;
 }
 
-.user-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    max-width: 400px;
-    margin: 0 auto;
-}
-
-.logout-btn {
+.btn-logout {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    background: linear-gradient(135deg, var(--error) 0%, #E53935 100%) !important;
+    gap: 0.8rem;
+    padding: 1rem 2rem;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
-.logout-btn:hover {
-    background: linear-gradient(135deg, #C62828 0%, var(--error) 100%) !important;
+.btn-logout:hover {
+    background: white;
+    color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-.logout-btn svg {
+.btn-logout svg {
     flex-shrink: 0;
 }
 
-li {
-    list-style-type: none;
+/* Messaggi Sistema */
+.system-messages {
+    margin-bottom: 2rem;
+}
+
+.system-messages .errore,
+.system-messages .success-message {
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+}
+
+.system-messages .errore {
+    background: #FFEBEE;
+    color: var(--error);
+    border-left: 4px solid var(--error);
+}
+
+.system-messages .success-message {
+    background: #E8F5E9;
+    color: var(--success);
+    border-left: 4px solid var(--success);
+}
+
+/* Griglia Contenuti */
+.personal-area-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Card Comuni */
+.profile-card,
+.orders-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 10px 40px var(--shadow);
+    transition: all 0.3s ease;
+}
+
+.profile-card:hover,
+.orders-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 50px rgba(139, 69, 19, 0.25);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--bg-cream);
+}
+
+.card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--bg-cream) 0%, #FFF 100%);
+    border-radius: 12px;
+}
+
+.card-icon svg {
+    stroke: var(--primary);
+}
+
+.card-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--primary);
+    margin: 0;
+}
+
+/* Form Profilo */
+.profile-form fieldset {
+    border: none;
+    padding: 0;
+}
+
+.profile-form .campoDati {
+    margin-bottom: 1.5rem;
+}
+
+.profile-form label {
+    display: block;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.6rem;
+    font-size: 0.95rem;
+}
+
+.profile-form .required {
+    color: var(--error);
+}
+
+.profile-form input[type="text"],
+.profile-form input[type="tel"] {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #E5E5E5;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.profile-form input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
+}
+
+.readonly-field {
+    background: var(--bg-cream);
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.readonly-field label {
+    display: block;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.readonly-value {
+    color: var(--text-dark);
+    font-size: 1rem;
+}
+
+.field-hint {
+    display: block;
+    margin-top: 0.4rem;
+    font-size: 0.85rem;
+    color: var(--text-dark);
+    opacity: 0.7;
+}
+
+.btn-save {
+    width: 100%;
+    padding: 1.1rem 2rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(139, 69, 19, 0.3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-top: 1rem;
+}
+
+.btn-save:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(139, 69, 19, 0.4);
+}
+
+.btn-save svg {
+    flex-shrink: 0;
+}
+
+/* Tabella Ordini */
+.orders-content {
+    overflow-x: auto;
+}
+
+.orders-content table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.orders-content th,
+.orders-content td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #E5E5E5;
+}
+
+.orders-content th {
+    background: var(--bg-cream);
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.orders-content tr:hover {
+    background: var(--bg-cream);
+}
+
+.orders-content a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.orders-content a:hover {
+    color: var(--primary-light);
+    text-decoration: underline;
+}
+
+/* Messaggio vuoto ordini */
+.orders-content .no-orders {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-dark);
+    opacity: 0.7;
+}
+
+.orders-content .no-orders svg {
+    width: 64px;
+    height: 64px;
+    stroke: var(--primary);
+    opacity: 0.3;
+    margin-bottom: 1rem;
+}
+
+/* Zona Pericolo */
+.danger-zone {
+    background: #FFEBEE;
+    border: 2px solid var(--error);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-top: 3rem;
+}
+
+.danger-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.danger-header svg {
+    stroke: var(--error);
+    flex-shrink: 0;
+}
+
+.danger-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--error);
+    margin: 0;
+}
+
+.danger-zone p {
+    color: var(--text-dark);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.btn-danger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem 2rem;
+    background: var(--error);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(211, 47, 47, 0.3);
+}
+
+.btn-danger:hover {
+    background: #C62828;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(211, 47, 47, 0.4);
+}
+
+.btn-danger svg {
+    flex-shrink: 0;
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+    .personal-area-container {
+        padding: 2rem 1rem;
+    }
+
+    .personal-area-header {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 2rem;
+    }
+
+    .welcome-section {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .welcome-text h2 {
+        font-size: 1.8rem;
+    }
+
+    .btn-logout {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .personal-area-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .profile-card,
+    .orders-card {
+        padding: 1.5rem;
+    }
+
+    .card-header h3 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .personal-area-header {
+        padding: 1.5rem;
+    }
+
+    .welcome-avatar {
+        width: 64px;
+        height: 64px;
+    }
+
+    .welcome-avatar svg {
+        width: 36px;
+        height: 36px;
+    }
+
+    .welcome-text h2 {
+        font-size: 1.6rem;
+    }
+
+    .profile-card,
+    .orders-card {
+        padding: 1.2rem;
+    }
+
+    .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .card-header h3 {
+        font-size: 1.4rem;
+    }
+
+    .danger-zone {
+        padding: 1.5rem;
+    }
+
+    .danger-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }
