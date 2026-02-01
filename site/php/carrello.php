@@ -8,7 +8,11 @@ ini_set('display_errors', 1);
 require_once "dbConnection.php";
 
 $paginaHTML = file_get_contents( __DIR__ .'/../html/carrello.html');
-if ($paginaHTML === false) die("Errore template");
+if ($paginaHTML === false){
+    http_response_code(500);
+    include __DIR__ . '/500.php';
+    exit;
+} 
 
 $db = new DBAccess();
 
@@ -59,10 +63,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['ID']) && !isset($_POST
             if (!$trovato) {
                 $_SESSION['carrello'][] = $nuovoElemento;
             }
+        }else{
+            http_response_code(404);
+            include __DIR__ . '/404.php';
+            $db->closeDBConnection();
+            exit;
         }
+    }else{
+        //header("Location: carrello");
+        http_response_code(500);
+        include __DIR__ . '/500.php';
+        exit;
     }
-    header("Location: carrello");
-    exit;
 }
 
 // AGGIORNAMENTO QUANTITÀ

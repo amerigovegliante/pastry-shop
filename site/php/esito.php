@@ -15,7 +15,9 @@ $dati = $_SESSION['risultato_esito'];
 // Carichiamo il template
 $paginaHTML = file_get_contents( __DIR__ .'/../html/esito.html');
 if ($paginaHTML === false) {
-    die("Errore: Template esito.html non trovato");
+    http_response_code(500);
+    include __DIR__ . '/500.php';
+    exit;
 }
 
 $titoloPagina = "";
