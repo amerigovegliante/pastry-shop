@@ -933,6 +933,7 @@ button[type="submit"]:active {
 .product-container
 {
     width: 75%;
+    margin: auto;
 }
 
 .product-image-section figure:hover .cornice {
