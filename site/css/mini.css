@@ -354,6 +354,10 @@
     }
 }
 
+.cornice {
+    width: 100%;
+}
+
 .user-area-content {
         padding: 2rem 1rem;
     }
