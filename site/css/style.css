@@ -1,1436 +1,1611 @@
-/*
-====================================================================================================================================
-1. RESET E VARIABILI GLOBALI
-====================================================================================================================================
-*/
-*{  
-    padding: 0;
+/* ====================================
+   PASTICCERIA PADOVANA - MAIN STYLES
+   ==================================== */
+
+/* Reset e Variabili */
+* {
     margin: 0;
-    box-sizing: border-box; 
+    padding: 0;
+    box-sizing: border-box;
 }
 
-:root{
-    /* Palette Colori */
-    --bgcolor: #8b5437; /* Marrone scuro */
-    --primary-color: #8b5437; 
-    --hoverbgcolor: color-mix(in srgb, var(--bgcolor) 80%, white);
-    
-    --txtcolor:#38382f; 
-    --txtsuccesscolor: #2e7d32; 
-    --txterrorcolor:  #c0392b; 
+:root {
+    /* Colori primari */
+    --primary: #5D2906;         /* Marrone molto scuro (invece di #8B4513) */
+    --primary-light: #A0522D;   /* Marrone siena (contrasto migliore) */
 
-    /* HEADER e MENU */
-    --menubgcolor:#ffe09a;
-    --menutextcolor: #1c0101;
-    --menubgcurrentpage:#8b5437;
-    --menutextcurrentpage:#8b5437;
+    /* Colori di sfondo e superfici */
+    --bg-cream: #fff9e3;        /* Cremoso leggermente più chiaro */
+    --surface-light: #FFF8E7;   /* Il tuo colore originale come variante */
 
-    /* BREADCRUMB */
-    --breadcolor:#8b5437;
-    --breadtxtcolor:#fffff1;
+    /* Colori di testo */
+    --text-dark: #1A0D07;       /* Quasi nero-marrone (AAA su sfondo chiaro) */
+    --text-light: #FFFFFF;      /* Bianco puro (AAA su sfondo scuro) */
 
-    /* MAIN */
-    --mainbgcolor: #EAE3C9;
+    /* Colori accent */
+    --accent: #B8860B;          /* Oro scuro (DarkGoldenrod - accessibile) */
+    --accent-bright: #FFAA00;   /* Oro brillante solo per elementi non testuali */
 
-    /* CONTENUTO */
-    --contentbgcolorscuro:#1c0101;
-    --contenttxtcolorscuro:#1c0101;
-    --contentbgcolorchiaro:#EAE3C9;
-    --contenttxtcolorchiaro:#EAE3C9;
-
-    /* PULSANTI */
-     --buttoncolor: #8b5437;
-     
-    /* LINK */
-    --visitedcolor: #3455db;
-    --activecolor: #FF0000;
+    /* Colori di stato */
+    --error: #B71C1C;           /* Rosso scuro (AAA su bianco) */
+    --success: #1B5E20;         /* Verde scuro (AAA su bianco) */
 }
 
-/* PER NASCONDERE ELEMENTI (SCREEN READER) */
-.sr-only, .visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip-path: inset(50%); 
-  white-space: nowrap;
-  border: 0;
-}
-
-/* LINK "SALTA AL CONTENUTO" */
-.salta-contenuto {
-    position: absolute;
-    top: -100px;
-    left: 0;
-    background: #000;
-    color: #fff;
-    padding: 0.5em;
-    z-index: 9999;
-    text-decoration: none;
-    font-weight: bold;
-    transition: top 0.3s;
-}
-.salta-contenuto:focus { top: 0; }
-
-html, body{
-    font-size: 100%;
-    font-family: "Lexend", Roboto, sans-serif; 
-    line-height: 1.5em;
-}
-
-/* LAYOUT PRINCIPALE (Flexbox Verticale) */
 body {
-    background-color: var(--bgcolor);
-    color: var(--txtcolor);
-    min-height: 100vh; 
-    display: flex;
-    flex-direction: column;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-dark);
+    line-height: 1.6;
+    overflow-x: hidden;
+    background-color: var(--bg-cream);
 }
 
-header, #menu, #breadcrumb, footer {
-    flex-shrink: 0; 
-    width: 100%;
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
 }
 
-main {
-    flex-grow: 1; 
-    width: 100%;
-    background-color: var(--mainbgcolor);
-    display: block; 
+/* ====================================
+   ACCESSIBILITY
+   ==================================== */
+a.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--primary);
+    color: white;
+    padding: 8px;
+    text-decoration: none;
+    z-index: 100;
 }
 
-.contenuto{
-    max-width: 1200px; 
+a.skip-link:focus {
+    top: 0;
+}
+
+.visually-hidden {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+/* ====================================
+   HEADER
+   ==================================== */
+header {
+    position: fixed;
+    top: 0;
     width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    box-shadow: 0 2px 20px var(--shadow);
+    transition: all 0.3s ease;
+    border-bottom: 1px solid var(--primary);
+}
+
+header.scrolled {
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 4px 30px var(--shadow);
+}
+
+.header-content {
+    max-width: 1400px;
     margin: 0 auto;
-}
-
-/*
-====================================================================================================================================
-2. HEADER
-====================================================================================================================================
-*/
-header{
-    background-color: var(--menubgcolor);
-    position: relative;
-    border: none;
-}
-header::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 30px;
-  background-image: url("../img/bordo_header.png");
-  background-repeat: repeat-x;
-  background-size: auto 30px;
-}
-
-header .contenuto{
-    display: grid;
-    grid-template-areas: "t l p";
-    grid-template-columns: 1fr auto 1fr; 
-    width: 100%;
+    padding: 1.2rem 2rem;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
 }
-header .contenuto > a {
-    grid-area: l;
-    display: block;         
-    text-align: center;
-    text-decoration: none;
+
+#logo h1 {
+    font-size: 1.8rem;
+    color: var(--primary);
+    font-weight: 700;
+    margin-bottom: 0.2rem;
 }
-#logo{
-    grid-area: l;
-    text-align: center;
-    padding-top:0.4em; 
-    padding-bottom: 29px;
-}
-#logo h1{
-    background-image: url("../img/logo_compresso.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    text-indent: -999em;
-    font-size: 5em;
-    line-height: 1.5em; 
-}
-#logo p{
+
+#logo p {
+    font-size: 0.9rem;
+    color: var(--primary-light);
     font-style: italic;
-    font-weight: 800;
-    font-size: larger;
-    color: #8b5437;
-}
-.sirivennela-regular {
-  font-family: "Sirivennela", sans-serif;
-  font-weight: bold;
 }
 
-.bottoneMenu{
-    display: none; 
-    grid-area: t;
-}
-#pulsantiMenu{
-    grid-area: p;
+/* ====================================
+   NAVIGATION
+   ==================================== */
+nav#menu {
     display: flex;
-    justify-content: flex-end;
-    gap: 1.5em;
-    padding-right: 0.5em;
-}
-.bottoneCarrello svg, .bottoneProfilo svg{
-    width: 2.5em;
-    height: 2.5em;
-}
-.bottoneCarrello:hover, .bottoneProfilo:hover{
-    transform: scale(1.3);
-    transition: transform 0.3s ease;
+    align-items: center;
 }
 
-/*
-====================================================================================================================================
-3. MENU DI NAVIGAZIONE
-====================================================================================================================================
-*/
-#menu{
-    background-color: var(--menubgcolor);
-    padding: 0.2em;
-}
-#menu .contenuto{
+nav#menu ul {
     display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    font-size: 1.3em;
-    color: var(--menutextcolor);
+    gap: 2rem;
+    list-style: none;
 }
-#menu ul{
-    list-style-type: none;
-    text-align: center;
-    justify-content: center; 
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-}
-#menu ul li{
+
+nav#menu a, nav#menu li, nav#menu span {
+    color: var(--text-dark);
+    text-decoration: none;
+    font-weight: 500;
     position: relative;
-    font-weight: bold;
-    padding: 0 1em 0.5em 1em;
+    transition: color 0.3s ease;
 }
 
-#menu ul li a { text-decoration: none; color: inherit; }
-#menu ul li a:active { color: var(--activecolor); }
-#menu ul li a:visited { color: var(--visitedcolor); }
-#menu ul li a:hover { color: var(--menubgcurrentpage); }
-#menu ul #currentlink{ color: var(--menubgcurrentpage); }
+nav#menu a:hover, nav#menu #currentlink, nav#menu #currentLink {
+    color: var(--primary);
+}
 
-/* Animazione Sottolineatura */
-#menu ul li a::after, #menu ul #currentlink::after{
-    content: "";
-    position: absolute; 
-    left: 50%;
-    bottom: 0;  
-    width: 0;   
-    height: 0.4em;
-    background-color: var(--menubgcurrentpage);
-    transform: translateX(-50%);    
+nav#menu a::after, nav#menu #currentlink::after, nav#menu #currentLink::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
     transition: width 0.3s ease;
 }
-#menu ul li a:hover::after, #menu ul #currentlink::after { width: 100%; }
 
-/*
-====================================================================================================================================
-4. BREADCRUMB
-====================================================================================================================================
-*/
-#breadcrumb{
-    background-color: var(--breadcolor);
-    color: var(--breadtxtcolor);
-    font-size: 1.1em;
-    border: 1px solid black;
-    padding: 0.5em 0em 0.5em 1.0em;
-}
-#breadcrumb .contenuto{ text-align: left; }
-#breadcrumb a { color: var(--breadtxtcolor); text-decoration: underline; }
-
-/*
-====================================================================================================================================
-5. ELEMENTI COMUNI
-====================================================================================================================================
-*/
-button, .pulsanteGenerico{
-    display: inline-block;
-    margin: 0.2em 0;
-    background-color: transparent;
-    color: var(--contenttxtcolorscuro);
-    text-transform: uppercase;
-    font-weight: bold;
-    padding: 0.7em;
-    border: var(--bgcolor) 1px solid;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-}
-button:hover, .pulsanteGenerico:hover{
-    background-color: var(--buttoncolor);
-    color: var(--contenttxtcolorchiaro);
+nav#menu a:hover::after {
+    width: 100%;
 }
 
-.pulsanteSecondario {
-    display: inline-block;
-    text-decoration: none;
-    color: var(--contenttxtcolorscuro);
-    border-bottom: 1px solid currentColor;
-    font-weight: bold;
-    padding: 0.5em;
-    cursor: pointer;
+nav#menu #currentlink::after, nav#menu #currentLink::after {
+    width: 100%;
+}
+
+.header-icons {
+    display: flex;
+    gap: 1rem;
+}
+
+.icon-btn {
     background: none;
     border: none;
-}
-.pulsanteSecondario:hover { color: var(--buttoncolor); }
-
-/* Form Generici */
-#sezioneLogin, #sezioneRegistrazione, #sezioneAggiungiProdotto{ padding: 1em 0 1em 1.5em; }
-#sezioneContattaci{ padding: 1em 0 0.5em 1.5em; }
-#formLogin, #formRegistrazione, #formContattaci, #formAggiungiProdotto{ max-width: 100%; }
-fieldset > legend{ font-size: 1.5em; font-weight: bold; }
-fieldset{ border: none; padding: 0; margin: 0; }
-
-.campoDati{
-    display: flex;
-    flex-direction: column;
-    padding: 0.3em 0;
-}
-.campoDati label{ font-weight: bolder; }
-.campoDati input, .campoDati textarea, .campoDati select{
-    width: min(20em, 100%);
-    border: 1px solid grey;
-    border-radius: 4px;
-    padding: 0.5em;
-}
-
-.errore{ color: var(--txterrorcolor); font-size: 0.9em; font-weight: bold; }
-.successo{ color: var(--txtsuccesscolor); font-size: 1em; font-weight: bold; }
-
-/*
-====================================================================================================================================
-6. PAGINE SPECIFICHE (Index, Chi Siamo, Prodotti)
-====================================================================================================================================
-*/
-
-/* INDEX */
-#presentazionePasticceria .contenuto{
-    display: grid;
-    grid-template-columns: 1fr 2fr; 
-    padding: 1.5em;
-    color:var(--contenttxtcolorscuro);
-    gap: 2em;
-}
-#presentazionePasticceria img{
-    grid-column: 1;
-    width: 20em;
-    max-width: 100%;
-    background-color: white;
-    border: solid 1px black;
-    justify-self: start; 
-}
-.cornice{
-    width: 20%;
-    float: left;
-    background: linear-gradient(45deg, var(--breadcolor), var(--contentbgcolorchiaro));
-    padding: 0.5em;
-}
-#presentazionePasticceria .testo{ grid-column: 2; align-content: center; }
-
-#prodottiPrincipali{
-    background-color: var(--contentbgcolorchiaro);
-    color: var(--contenttxtcolorscuro);
-    padding: 1.5em;
-}
-#prodottiPrincipali .contenuto{
-    display: grid;
-    grid-template-columns: 2fr 1fr; 
-    padding: 1.5em;
-    gap: 2em;
-}
-#prodottiPrincipali .immagini{
-    grid-column: 2;
-    display: flex;            
-    flex-direction: column;
-    gap: 1em; 
-}
-#prodottiPrincipali .immagini img{  
-    width: 20em;
-    max-width: 100%;
-    background-color: white;
-    border: solid 1px black;
-}
-/*
-------------------------------------------------------------------------------------------------------------------------------------
-PAGINA CHI SIAMO (story.html)
-------------------------------------------------------------------------------------------------------------------------------------
-*/
-/*
-------------------------------------------------------------------------------------------------------------------------------------
-PAGINA CONTATTACI (contattaci.html)
-PAGINA LOGIN (login.html) e REGISTRAZIONE (registrazione.html)
-PAGINA AGGIUNGI PRODOTTO (aggiungiProdotto.html)
-------------------------------------------------------------------------------------------------------------------------------------
-*/
-#sezioneLogin, #sezioneRegistrazione{
-    padding: 1em 0 1em 1.5em;
-}
-#sezioneContattaci{
-    padding: 1em 0 0.5em 1.5em;
-}
-#formLogin, #formRegistrazione, #formContattaci{
-    max-width: 30%;
-}
-fieldset > legend{
-    font-size: 1.5em;    
-    font-weight: bold;     
-}
-fieldset{
-    border: none;
-}
-.campoDati{
-    display: flex;
-    flex-direction: column;
-    padding: 0.3em 0 0.3em 0;;
-}
-.campoDati label{
-    font-weight: bolder;
-}
-.campoDati input, .campoDati textarea, .campoDati select{
-    max-width: 20em;
-    border: 1px solid grey;
-    border-radius: 4px;
-    padding: 0.3em;
-}
-
-#aggiungiProdotto{
-    display: grid;
-    grid-template-areas:"m m"
-                        "f t";
-    grid-template-columns: 30% 70%;
-    gap: 0.5em;
-}
-#messaggi{
-    grid-area: m;
-    text-align: center;
-}
-#sezioneAggiungiProdotto{
-    grid-area: f;
-    padding-left: 1.5em;
-}
-#sezioneTabellaProdotti{
-    grid-area: t;
-    padding-right: 1.5em;
-}
-/*
-------------------------------------------------------------------------------------------------------------------------------------
-QUALSIASI PULSANTE
-------------------------------------------------------------------------------------------------------------------------------------
-*/
-button, .pulsanteGenerico{
-    display: inline-block;
-    margin: 0.2em 0 0.2em 0;
-    background-color: transparent;
-    color: var(--contenttxtcolorscuro);
-    text-transform: uppercase;
-    font-weight: bold;
-    padding: 0.7em;
-    border: var(--bgcolor) 1px solid;
     cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
     transition: all 0.3s ease;
-}
-button:hover, .pulsanteGenerico:hover{
-    background-color: var(--buttoncolor);
-    color: var(--contenttxtcolorchiaro);
-}
-
-.pulsanteCancella {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.2em;
-  color: #c00;
-  transition: color 0.2s ease;
-}
-.pulsanteCancella:hover {
-  color: #ff0000;
-  transform: scale(1.2);
-}
-/*
-------------------------------------------------------------------------------------------------------------------------------------
-TABELLA PRODOTTI in aggiungiProdotto.html
-------------------------------------------------------------------------------------------------------------------------------------
-*/
-#aggiungiProdotto table {
-    border-collapse: separate; 
-    border-spacing: 0;
-    width: 100%;
-    margin-top: 20px;
-    background-color: #fff;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    overflow: hidden;
-    border-radius: 8px;
-    word-wrap: break-word; /* va a capo su testo lungo */
-}
-
-#aggiungiProdotto th, #aggiungiProdotto td {
-    border-bottom: 1px solid #ddd;
-    text-align: left;
-    vertical-align: top;
-    padding: 0 8px;
-}
-
-#aggiungiProdotto th {
-    background-color: var(--bgcolor);
-    color: #fff;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-#aggiungiProdotto tr:last-child td {
-    border-bottom: none;
-}
-
-#aggiungiProdotto tr {
-    transition: background-color 0.3s ease;
-}
-
-#aggiungiProdotto tr:hover{
-    background-color: #dadada;
-}
-
-#aggiungiProdotto td:first-child {
-    font-weight: bold;
-    color: #555;
-}/*
-====================================================================================================================================
-PAGINA DETTAGLIO ORDINE (dettaglioOrdine.html)
-====================================================================================================================================
-*/
-#dettagliOrdine {
-    padding-top: 1.5em;
-}
-#dettagliOrdine h3, #dettagliOrdine h4 {
-    color: var(--primary-color);
-}
-#dettagliOrdine h3{
-    padding: 1em 0;
-}
-.dolce-ordinato {
-    list-style: none;
-    background-color: var(--contentbgcolorchiaro);
-    border: 1px solid black;
-    padding: 0.5em 1em;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    max-width: 800px;            /*limite orizzontale */
-    width: 90%;                  /*per adattarsi su schermi piccoli */
-    margin-bottom: 1em;
-    margin-left: 1.5em;
-}
-.contenitore-dolce {
     display: flex;
-    align-items: flex-start;
-    gap: 1.5em;
+    align-items: center;
+    justify-content: center;
 }
 
-/*immagini a dimensioni fisse */
-.immagine-dolce img {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+.icon-btn svg {
+    width: 28px;
+    height: 28px;
+    stroke: var(--primary);
+    stroke-width: 1.5;
+    transition: stroke 0.3s ease;
 }
 
-.dettagli-dolce dt, .dettagli-ordine dt{
-    font-weight: bold;
-    display: inline;    
+.icon-btn:hover {
+    background: var(--bg-cream);
+    transform: translateY(-2px);
 }
 
-.dettagli-ordine dt{
-    margin-left: 1.5em;    
+.icon-btn:hover svg {
+    stroke: var(--primary-light);
 }
 
-.dettagli-dolce dd, .dettagli-ordine dd{
-    display: inline;
-    margin-left: 0.5em;
-    word-wrap: break-word;
-}
-
-.dettagli-dolce dd::after, .dettagli-ordine dd:after{     /*andare a capo dopo ogni data definition*/
-    content: "";
-    display: block;
-}
-
-/*
-------------------------------------------------------------------------------------------------------------------------------------
-AIUTI COMPILAZIONE FORM
-------------------------------------------------------------------------------------------------------------------------------------
-*/
-/*
-.campoDati small{
-    position: relative; 
-    clip: rect(0 0 0 0);
-    clip-path: inset(50%);
-    height: 1px;
-    width: 1px;
-    overflow: hidden;
-    white-space: nowrap;
-}
-
-.campoDati small { 
-    position: static;
-    clip: auto;
-    clip-path: none;
-    height: auto;
-    width: auto;
-    overflow: visible;
-    white-space: normal;
-    display: block;
-    margin-top: 0.25rem;
-    color: #555;
-}
-*/
-/*
-====================================================================================================================================
-PAGINA CHI SIAMO (story.html)
-====================================================================================================================================
-*/
-
-main section {
-    margin-bottom: 3em;
-    line-height: 1.8em;
-}
-
-main section h2 {
-    color: var(--buttoncolor);
-    /*
-    border-bottom: 2px solid var(--menubgcolor);
-    padding-bottom: 0.2em;
-    */
-    margin-bottom: 0.5em;
-}
-
-
-#valori ul {
-    margin-left: 1.5em;
-}
-#valori li {
-    margin-bottom: 0.5em;
-}
-
-.griglia-team {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
-    gap: 2em;
-    list-style: none;
-    padding: 0;
-    margin-top: 2em;
-}
-.griglia-team figure {
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    height: 100%;
-    transition: transform 0.3s ease;
-}
-.griglia-team figure:hover { transform: translateY(-5px); }
-.griglia-team img {
-    width: 100%;
-    height: 32em;
-    object-fit: cover;
-    background-color: #f0f0f0;
-}
-.griglia-team figcaption { padding: 1.5em; text-align: center; }
-.griglia-team figcaption p:first-child {
-    font-size: 1.2em;
-    color: var(--buttoncolor);
-    margin-bottom: 0.5em;
-}
-aside[aria-labelledby="info-visita"] {
-    background-color: var(--menubgcolor);
-    padding: 2em;
-    border-radius: 15px;
-    text-align: center;
-    border: 2px dashed var(--buttoncolor);
-    margin-top: 4em;
-}
-
-aside[aria-labelledby="info-visita"] h2 {
-    color: var(--buttoncolor);
-    margin-top: 0;
-}
-
-aside[aria-labelledby="info-visita"] a {
-    font-weight: bold;
-    color: var(--buttoncolor);
-    text-decoration: underline;
-}
-
-/*
-------------------------------------------------------------------------------------------------------------------------------------
-TESTO DI ERRORE E DI SUCCESSO
-------------------------------------------------------------------------------------------------------------------------------------
-*/
-.errore{
-    color: var(--txterrorcolor);
-    font-size: 1em;
-    font-weight: bold;
-}
-.successo{
-    color: var(--txtsuccesscolor);
-    font-size: 1em;
-    font-weight: bold;
-}
-/*
-------------------------------------------------------------------------------------------------------------------------------------
-PAGINA TORTE e PASTICCINI (torte-pasticcini.html)
-------------------------------------------------------------------------------------------------------------------------------------
-*/
-#grigliaTorte{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
-    gap: 1.5em;
-    padding: 1.5em;
-    list-style-type: none;
-}
-#grigliaTorte .cardTorta{
-    color: var(--contenttxtcolorscuro);
-    background-color: var(--contentbgcolorchiaro);
-    border: solid black 1px;
-    border-radius: 20px;
-    overflow: hidden;   
-    box-shadow: 10px 4px 10px rgba(0,0,0,0.1);
-    text-decoration: none;    
-    transition: transform 0.3s ease; 
-    display: flex;
-    flex-direction: column;
-}
-#grigliaTorte .cardTorta p{
-    text-align: center;
-    padding-bottom: 0.3em;
-}
-#grigliaTorte .cardTorta:hover{
-    transform: translateY(-0.5em);    
-    box-shadow: 0 8px 16px rgba(0,0,0,0.15); 
-    background: var(--hoverbgcolor);
-}
-#grigliaTorte img{ width: 100%; height: 200px; object-fit: cover; }
-#grigliaTorte .infoTorta{ padding: 1em; }
-
-/* Dettaglio Item */
-.dettagliItem {
-    display: flex;
-    gap: 3em;
-    padding: 1.5em;
-    align-items: flex-start;
-}
-.dettagliItem figure { flex: 1 1 40%; margin: 0; }
-.dettagliItem img { width: 100%; border-radius: 10px; border: 1px solid #ccc; }
-.dettagliItem figcaption {
-    text-align: center;
-    font-size: 0.9em;
-    margin-top: 0.5em;
-    color: var(--contenttxtcolor);
-}
-.infoItem {
-    flex: 1 1 60%; 
-    display: flex;
-    flex-direction: column;
-    gap: 1em;
-}
-.prezzoItem{ font-size: 1.6em; font-weight: bold; color: var(--buttoncolor); }
-
-.porzioni {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.7em;
-    margin-top: 0.5em;
-}
-.porzioni label {
-    cursor: pointer;
-    padding: 0.6em 1em;
-    border: 2px solid var(--buttoncolor);
-    border-radius: 10px;
-    font-weight: bold;
-    text-align: center;
-    background-color: transparent;
-    color: var(--contenttxtcolorscuro);
-    min-width: 6.5em;
-}
-.porzioni input[type="radio"]:checked + label {
-    background-color: var(--buttoncolor);
-    color: var(--contenttxtcolorchiaro);
-    border-color: var(--buttoncolor);
-}
-.porzioni input[type="radio"] { position: absolute; opacity: 0; pointer-events: none; }
-
-/*
-====================================================================================================================================
-7. STILI UNIFICATI PER LE TABELLE (Carrello, Ordini, Riepilogo)
-====================================================================================================================================
-*/
-
-.table-container, 
-#contenitoreTabella {
-    width: 100%;
-    overflow-x: auto;
-    border-radius: 8px;
-    margin-bottom: 2em;
-}
-
-/* Stile Base Comune per tutte le tabelle */
-.tabella-carrello, 
-.tabella-ordini, 
-.tabella-riepilogo {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: white;
-    border: 1px solid #ddd;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    margin-bottom: 2em;
-    min-width: 600px; /* Evita che la tabella si schiacci troppo su mobile */
-}
-
-/* CAPTION (Titolo della tabella) */
-.tabella-carrello caption,
-.tabella-ordini caption,
-.tabella-riepilogo caption {
-    text-align: left;
-    font-weight: bold;
-    font-size: 1.1em;
-    color: var(--buttoncolor);
-    padding: 0.5em 0;
-    caption-side: top;
-}
-
-/* INTESTAZIONE COLONNE */
-.tabella-carrello thead th, 
-.tabella-ordini thead th, 
-.tabella-riepilogo thead th {
-    background-color: var(--bgcolor); 
-    color: white;
-    text-transform: uppercase;
-    font-size: 0.9em;
-    font-weight: bold;
-    padding: 1em;
-    text-align: left;
-    border-bottom: 2px solid var(--menubgcolor);
-}
-
-/* CELLE DI RIGA */
-.tabella-carrello tbody th, .tabella-carrello tbody td,
-.tabella-ordini tbody th, .tabella-ordini tbody td,
-.tabella-riepilogo tbody th, .tabella-riepilogo tbody td,
-.tabella-carrello tfoot td {
-    padding: 1em;
-    text-align: left;
-    border-bottom: 1px solid #eee;
-    vertical-align: middle;
-    color: var(--txtcolor);
-}
-
-/* INTESTAZIONE DI RIGA (La prima colonna - TRASPARENTE) */
-.tabella-carrello tbody th, 
-.tabella-ordini tbody th, 
-.tabella-riepilogo tbody th {
-    background-color: transparent !important;
-    color: var(--txtcolor) !important;
-    font-weight: bold; 
-}
-
-tr:last-child td, tr:last-child th { border-bottom: none; }
-
-/* Utility per celle numeriche (Prezzi, Quantità) - Allineamento a destra o centro */
-.cella-numerica {
-    text-align: center !important; /* O right se preferisci */
-    white-space: nowrap; /* Evita che il prezzo vada a capo */
-}
-
-
-/* --- STILE DETTAGLI EXTRA (Torte/Pasticcini) --- */
-
-/* Caso Lista (più elementi) */
-.lista-extra-carrello {
-    list-style-type: none; /* Niente pallini */
-    margin: 0;
-    padding: 0;
-    text-align: left;
-}
-
-.lista-extra-carrello li {
-    margin-bottom: 0.2em;
-    font-size: 0.9em;
-    color: #555;
-}
-
-/* Caso Singolo elemento */
-.dettaglio-singolo {
-    display: block; 
-    font-size: 0.9em;
-    color: #555;
-    text-align: left;
-}
-
-/* Stile per la targa (comune a entrambi) */
-.lista-extra-carrello li em,
-.dettaglio-singolo em {
-    font-style: normal;
-    font-weight: bold;
-    color: var(--buttoncolor);
-}
-
-
-/* --- SPECIFICHE CARRELLO --- */
-
-/* Totali nel footer del carrello */
-.tabella-carrello .totaleLabel { 
-    text-align: right; 
-    font-weight: bold; 
-    font-size: 1.2em; 
-}
-.tabella-carrello .totaleValore { 
-    font-weight: bold; 
-    font-size: 1.4em; 
-    color: var(--buttoncolor); 
-    text-align: center; /* Allineato con le celle numeriche */
-}
-
-/* Link rimuovi */
-.link-rimuovi {
-    color: var(--txterrorcolor); 
+.menu-toggle {
+    display: none;
     background: none;
     border: none;
-    font-weight: bold;
     cursor: pointer;
-    text-decoration: underline;
-    font-size: 0.9em;
-}
-.link-rimuovi:hover {
-    color: #a00;
+    padding: 0.5rem;
 }
 
-/* Contenitore azioni sotto la tabella */
-.azioniCarrello {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1.5em;
-    padding: 1em;
-    background-color: var(--contentbgcolorchiaro);
-    border-radius: 8px;
-    flex-wrap: wrap; /* Su mobile vanno a capo */
-    gap: 1em;
+.menu-toggle span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: var(--primary);
+    margin: 5px 0;
+    transition: 0.3s;
 }
 
-.link-indietro {
-    font-weight: bold;
-    color: var(--contenttxtcolorscuro);
-    text-decoration: none;
-}
-.link-indietro:hover {
-    text-decoration: underline;
-}
-
-/* Messaggio Carrello Vuoto */
-.carrello-vuoto {
-    text-align: center;
-    padding: 4em 2em;
-    background-color: white;
-    border: 2px dashed #ccc;
-    border-radius: 10px;
-    margin-top: 1em;
-}
-.messaggio-vuoto {
-    font-size: 1.2em;
-    margin-bottom: 2em;
-    color: #555;
-}
-.bottoni-vuoto {
-    display: flex;
-    justify-content: center;
-    gap: 1em;
-    flex-wrap: wrap;
+/* ====================================
+   MAIN CONTENT
+   ==================================== */
+main {
+    margin-top: 80px;
+    min-height: calc(100vh - 400px);
+    padding: 4rem 2rem;
 }
 
-/* --- CONTROLLI QUANTITÀ (Form + Bottoni) --- */
-.qty-container {
+/* ====================================
+   HOMEPAGE - HERO
+   ==================================== */
+.hero {
+    height: 90vh;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
-    min-width: 120px;
+    position: relative;
+    overflow: hidden;
 }
 
-/* Serve per allineare i form sulla stessa riga */
-.form-qty {
-    display: flex;
-    margin: 0;
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 800px;
+    height: 800px;
+    border-radius: 50%;
 }
 
-.btn-qty {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    background-color: #fff;
-    border: 1px solid var(--buttoncolor);
-    color: var(--buttoncolor);
-    border-radius: 50%; /* Cerchio */
-    font-size: 1.2em;
-    line-height: 1;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    padding: 0; /* Reset padding browser */
-}
-
-.btn-qty:hover, .btn-qty:focus {
-    background-color: var(--buttoncolor);
-    color: #fff;
-    outline: 2px solid var(--menubgcolor);
-}
-
-.btn-qty:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    border-color: #ccc;
-    color: #ccc;
-}
-
-.qty-numero {
-    font-weight: bold;
-    font-size: 1.1em;
-    min-width: 1.5em;
-    text-align: center;
-}
-
-/*
-====================================================================================================================================
-8. CONFERMA ORDINE (CHECKOUT FORM)
-====================================================================================================================================
-*/
-#confermaOrdine .form-conferma {
+.hero-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2em;
-    align-items: start;
+    gap: 4rem;
+    align-items: center;
 }
-#confermaOrdine fieldset {
+
+.hero-text {
+    padding: 2rem;
+    border: 1px solid var(--primary);
+    border-radius: 20px;
     background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 1.5em;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    height: 100%;
-}
-#confermaOrdine legend {
-    font-size: 1.2em;
-    color: var(--buttoncolor);
-    font-weight: bold;
-    padding: 0 0.5em;
-    margin-bottom: 0.5em;
-}
-#confermaOrdine label { margin-top: 1em; display: block; font-size: 0.9em; color: #555; }
-#confermaOrdine input:not([type="checkbox"]), #confermaOrdine textarea {
-    width: 100%;
-    padding: 0.7em;
-    margin-top: 0.3em;
-    border: 1px solid #aaa;
-    border-radius: 4px;
-    background-color: #fff;
-}
-.riepilogo-totale, .azioni-conferma { grid-column: 1 / -1; }
-
-.riepilogo-totale {
-    margin-top: 2em; 
-    padding: 1em; 
-    background: #fff3cd; 
-    border: 1px solid #ffeeba;
-    border-radius: 5px;
-    font-size: 1.1em;
-    text-align: center;
-}
-.azioni-conferma {
-    display: flex;
-    justify-content: center;
-    gap: 2em;
-    margin-top: 1em;
 }
 
-/* Checkbox Autocompilazione */
-#confermaOrdine .opzione-autocompilazione {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    justify-content: flex-start !important;
-    width: 100%;
-    background-color: var(--contentbgcolorchiaro);
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 1em;
-    margin-bottom: 1em;
-    gap: 10px;
-}
-#box-autocompilazione { display: none; }
-#confermaOrdine .opzione-autocompilazione input[type="checkbox"] { flex-shrink: 0; width: 20px; height: 20px; }
-#confermaOrdine .opzione-autocompilazione label { margin: 0; flex-grow: 1; cursor: pointer; }
-
-/*
-====================================================================================================================================
-9. SPECIFICHE AREA PERSONALE (Layout, Griglie, Admin)
-   La tabella ordini è gestita nella sezione 7
-====================================================================================================================================
-*/
-
-/* --- Tasto Logout Rosso --- */
-#pulsante-logout {
-    color: var(--txterrorcolor);
-    border: 1px solid var(--txterrorcolor);
-    padding: 0.5em 1em;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-    display: inline-block;
-}
-
-#pulsante-logout:hover {
-    background-color: var(--txterrorcolor);
-    color: white;
-    border-color: var(--txterrorcolor);
-}
-
-.header-area-personale {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1em;
-    margin-bottom: 2em;
-    padding-bottom: 1em;
-    border-bottom: 2px solid var(--menubgcolor);
-}
-.header-area-personale h2 { margin: 0; color: var(--buttoncolor); }
-
-
-/* --- LAYOUT RESPONSIVE FLEXBOX --- */
-.griglia-area-personale {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2em;
-    align-items: start;
-}
-
-/* Box Profilo (I miei Dati) */
-.box-profilo {
-    flex: 1 1 300px; /* Occupa 1 quota di spazio, larghezza minima ideale 300px */
-    background-color: var(--contentbgcolorchiaro);
-    padding: 1.5em;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-}
-
-/* Box Ordini (I miei Ordini) */
-.box-ordini {
-    flex: 2 1 450px; /* Occupa 2 quote di spazio (più largo), min ideale 450px */
-    background-color: var(--contentbgcolorchiaro);
-    padding: 1.5em;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    /* Se lo schermo è piccolo, questo box andrà a capo sotto al profilo */
-}
-
-.box-profilo h3, .box-ordini h3 {
-    color: var(--buttoncolor);
-    margin-bottom: 1em;
-    border-bottom: 1px dashed var(--buttoncolor);
-    padding-bottom: 0.5em;
-}
-
-/* Etichette statiche per dati non modificabili */
-.etichetta-statica {
-    font-weight: bold;
-    font-size: 0.9em;
-    color: #555;
-}
-.valore-statico {
-    font-weight: bold;
-    font-size: 1.1em;
-}
-
-
-/* Badge Stato Ordine */
-.stato-tag {
-    display: inline-block;
-    padding: 0.25em 0.8em;
-    border-radius: 15px;
-    font-size: 0.85em;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: white;
-}
-.s-1 { background-color: #f39c12; } /* In attesa */
-.s-2 { background-color: #3498db; } /* In preparazione */
-.s-3 { background-color: var(--txtsuccesscolor); } /* Pronto */
-.s-4 { background-color: #7f8c8d; } /* Ritirato */
-
-/* Zona Eliminazione Account */
-.zona-pericolo {
-    margin-top: 3em;
-    padding: 1.5em;
-    border: 2px dashed var(--txterrorcolor);
-    background-color: #fff0f0; 
-    border-radius: 8px;
-    text-align: center;
-}
-.bottone-elimina {
-    background: none;
-    color: var(--txterrorcolor);
-    border: 1px solid var(--txterrorcolor);
-    padding: 0.7em 1.5em;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 4px;
-}
-.bottone-elimina:hover { background-color: var(--txterrorcolor); color: white; }
-
-/* Pannello Admin */
-.pannello-admin {
-    background-color: white;
-    border: 2px solid var(--menubgcolor);
-    border-radius: 8px;
-    padding: 1.5em;
-    margin-bottom: 2em;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1em;
-}
-.admin-header h3 { margin: 0; color: var(--bgcolor); text-transform: uppercase; }
-.bottone-admin {
-    display: inline-block;
-    padding: 0.7em 1.2em;
-    background-color: var(--bgcolor);
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 5px;
-    transition: background 0.3s;
-}
-.bottone-admin:hover { background-color: var(--hoverbgcolor); color: var(--txtcolor); }
-
-/*
-====================================================================================================================================
-10. SPECIFICHE ESITO (Layout, Messaggi e Riepilogo)
-====================================================================================================================================
-*/
-#esitoOrdine {
-    text-align: center;
-    padding: 2em;
-}
-
-/* Titoli Dinamici (iniettati da PHP) */
-.titolo-successo {
-    color: var(--txtsuccesscolor);
-    font-size: 2em;
-    margin-bottom: 0.5em;
-}
-
-.titolo-errore {
-    color: var(--txterrorcolor);
-    font-size: 2em;
-    margin-bottom: 0.5em;
-}
-
-/* Contenitore principale del messaggio (unico per successo ed errore) */
-.box-esito {
-    background-color: var(--contentbgcolorchiaro);
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 2em;
-    margin: 1em auto 2em auto;
-    max-width: 600px; /* Larghezza controllata per l'effetto "scontrino" */
-    text-align: left;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-}
-
-/* --- STILI PER LA DESCRIPTION LIST (<dl>) - ACCESSIBILITÀ --- */
-/* Questo sostituisce la vecchia tabella prodotti */
-
-.dati-riepilogo {
-    margin: 1.5em 0;
-    border-top: 2px dashed var(--buttoncolor);    /* Effetto strappo scontrino */
-    border-bottom: 2px dashed var(--buttoncolor); /* Effetto strappo scontrino */
-    padding: 1.5em 0;
-}
-
-/* Flexbox per affiancare dt (Etichetta) e dd (Valore) */
-.riga-dati {
-    display: flex;
-    justify-content: space-between; /* Spinge gli elementi ai lati opposti */
-    align-items: baseline;          /* Allinea il testo sulla linea base */
-    padding: 0.5em 0;
-    border-bottom: 1px solid rgba(0,0,0,0.05); /* Separatore leggerissimo */
-}
-
-.riga-dati:last-child {
-    border-bottom: none;
-}
-
-.dati-riepilogo dt {
-    font-weight: bold;
-    color: var(--contenttxtcolorscuro);
-    width: 45%; /* Riserva spazio per l'etichetta */
-}
-
-.dati-riepilogo dd {
-    margin: 0;
-    text-align: right;
-    width: 55%;
-    font-family: 'Courier New', Courier, monospace; /* Font monospaziato per i dati */
-    font-weight: bold;
-    font-size: 1.1em;
-    color: #333;
-}
-
-/* Evidenziazione Totale (classe specifica) */
-.prezzo-evidenza {
-    color: var(--buttoncolor);
-    font-size: 1.4em !important;
-}
-
-/* --- MESSAGGI TESTUALI --- */
-.messaggio-intro { 
-    font-size: 1.1em; 
-    margin-bottom: 1em; 
-    text-align: center;
-}
-
-.nota-finale { 
-    font-size: 0.9em; 
-    font-style: italic; 
-    color: #555; 
-    text-align: center; 
-    margin-top: 1em; 
-}
-
-.messaggio-errore { 
-    font-size: 1.2em; 
-    margin-bottom: 1em;
-    font-weight: bold;
-}
-
-/* --- AZIONI (Pulsanti) --- */
-.azioni-esito, .azioni-errore-interne {
-    display: flex;
-    justify-content: center;
-    gap: 1.5em;
-    margin-top: 2em;
-}
-
-/* Link interno al box di errore */
-.azioni-errore-interne a {
-    color: var(--buttoncolor);
-    font-weight: bold;
-    text-decoration: underline;
-    font-size: 1.1em;
-}
-.azioni-errore-interne a:hover {
-    color: var(--contenttxtcolorscuro);
-}
-
-/* 1. Mascotte in Area Personale */
-.benvenuto-container {
-    display: flex;
-    align-items: center;
-    gap: 1em;
-}
-
-.img-mascotte {
-    height: 3.75em; 
-    width: auto;
-    object-fit: contain;
-}
-
-/* 2. GIF Ordine Inviato in Esito */
-.box-img-esito {
-    text-align: center;
-    margin-bottom: 1.5em;
-}
-
-.img-esito-gif {
-    max-width: 9.5em; 
-    width: 100%;
-    height: auto;
-    display: inline-block;
-}
-
-/*
-====================================================================================================================================
-11. FOOTER
-====================================================================================================================================
-*/
-footer{
-    background-color: var(--breadcolor);
-    color: var(--breadtxtcolor);
-    padding: 1.5em;
-    border-top: 1px solid black;
-    margin-top: auto;
-}
-footer .contenuto{
-    display: grid;
-    grid-template-columns: 1fr 1fr; 
-    align-items: start;
-}
-#contatti{ grid-column: 1; }
-#assistenzaClienti{ grid-column: 2; }
-footer a { color: #fff; text-decoration: underline; }
-
-/* --- PAGINE DI ERRORE (404, 403, 500) --- */
-
-.pagina-errore {
-    text-align: center;
-    padding: 3em 1em;
-}
-
-/* Gestione Mascotte */
-.img-errore {
-    max-width: 20em; 
-    width: 100%;    
-    height: auto;
-    margin-bottom: 2em; 
-    display: inline-block;
-}
-
-/* Titoli */
-.pagina-errore h1 {
-    color: var(--buttoncolor);
-    margin-bottom: 0.5em;
+.hero-text h2 {
+    font-size: 3.5rem;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
     line-height: 1.2;
 }
 
-/* Paragrafi */
-.pagina-errore p {
-    font-size: 1.2em;
-    margin-bottom: 1em;
-    max-width: 40em; 
-    margin-left: auto;  
-    margin-right: auto; 
+.hero-text p {
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+    opacity: 0.9;
 }
 
-/* Link */
-.pagina-errore a {
-    font-weight: bold;
+.hero-text strong {
+    color: var(--primary-light);
+}
+
+.hero-image {
+    position: relative;
+}
+
+.hero-image img {
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(139, 69, 19, 0.2);
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+.cta-button {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 1rem 2.5rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(139, 69, 19, 0.3);
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(139, 69, 19, 0.4);
+}
+
+/* ====================================
+   HOMEPAGE - FAMOUS SWEETS
+   ==================================== */
+.famous-sweets {
+    padding: 6rem 2rem;
+    background: white;
+    border-radius: 20px;
+    border: 1px solid var(--primary);
+}
+
+.section-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 4rem;    
+}
+
+.section-header h2 {
+    font-size: 3rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.section-header::after {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 4px;
+    background: var(--accent);
+    margin: 1rem auto;
+    border-radius: 2px;
+}
+
+.sweets-grid {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.sweet-card {
+    background: var(--bg-cream);
+    border-radius: 20px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--primary);
+}
+
+.sweet-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.sweet-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px var(--shadow);
+}
+
+.sweet-card:hover::before {
+    transform: scaleX(1);
+}
+
+.sweet-card dt {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.sweet-card dd {
+    color: var(--text-dark);
+    line-height: 1.8;
+    opacity: 0.9;
+}
+
+.category-badge {
+    display: inline-block;
+    padding: 0.3rem 1rem;
+    background: white;
+    color: var(--primary);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+/* ====================================
+   CHI SIAMO - PAGE HERO
+   ==================================== */
+.page-hero {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    padding: 5rem 2rem;
+    text-align: center;
+    border: 1px solid var(--primary);
+    border-radius: 20px;
+}
+
+.page-hero h2 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+}
+
+.page-hero p {
+    font-size: 1.3rem;
+    max-width: 800px;
+    margin: 0 auto;
+    opacity: 0.95;
+}
+
+
+/* ====================================
+   CHI SIAMO - CONTENT
+   ==================================== */
+.content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+}
+
+section {
+    margin-bottom: 5rem;
+}
+
+section h2 {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: inline-block;
+}
+
+section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: var(--accent);
+    border-radius: 2px;
+}
+
+section p {
+    font-size: 1.1rem;
+    line-height: 1.9;
+    margin-bottom: 1.5rem;
+    color: var(--text-dark);
+    opacity: 0.9;
+}
+
+section strong {
+    color: var(--primary-light);
+    font-weight: 600;
+}
+
+section em {
+    color: var(--primary);
+    font-style: italic;
+}
+
+.values-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.values-list li {
+    background: var(--bg-cream);
+    padding: 2rem;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    border-left: 4px solid var(--primary);
+    border-right: 1px solid var(--primary);
+    border-top: 1px solid var(--primary);
+    border-bottom: 1px solid var(--primary);
+}
+
+.values-list li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px var(--shadow);
+}
+
+.values-list li strong {
+    display: block;
+    font-size: 1.3rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.griglia-team {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+    margin-top: 3rem;
+}
+
+.griglia-team li {
+    background: var(--bg-cream);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px var(--shadow);
+    transition: all 0.3s ease;
+    border: 1px solid var(--primary);
+}
+
+.griglia-team li:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 60px rgba(139, 69, 19, 0.2);
+}
+
+.griglia-team figure {
+    margin: 0;
+}
+
+.griglia-team img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+}
+
+.griglia-team figcaption {
+    padding: 2rem;
+}
+
+.griglia-team figcaption p:first-child {
+    font-size: 1.4rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.griglia-team figcaption p:last-child {
+    font-size: 1rem;
+    color: var(--text-dark);
+    opacity: 0.8;
+    margin: 0;
+}
+
+aside {
+    background: linear-gradient(135deg, var(--bg-cream) 0%, #FFF 100%);
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px var(--shadow);
+    text-align: center;
+    margin-top: 4rem;
+}
+
+aside h2 {
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+}
+
+aside h2::after {
+    display: none;
+}
+
+aside p {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+aside a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+aside a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary-light);
+    transition: width 0.3s ease;
+}
+
+aside a:hover::after {
+    width: 100%;
+}
+
+.story-description {
+    border: 1px solid var(--primary);
+    padding: 1rem;
+    border-radius: 20px;
+    background-color: white;
+}
+
+
+/* ====================================
+   CONTATTACI
+   ==================================== */
+.contact-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+    padding: 4rem 2rem;
+}
+
+.contact-info {
+    background: white;
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px var(--shadow);
+    border: 1px solid var(--primary);
+}
+
+.contact-info h2 {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.contact-info p {
+    color: var(--text-dark);
+    opacity: 0.9;
+    margin-bottom: 2rem;
+    line-height: 1.8;
+}
+
+.info-block {
+    margin-bottom: 2rem;
+}
+
+.info-block h3 {
+    font-size: 1.3rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.info-block svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--primary-light);
+}
+
+.info-block address {
+    font-style: normal;
+    line-height: 2;
+}
+
+.info-block a {
+    color: var(--text-dark);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.info-block a:hover {
+    color: var(--primary-light);
+}
+
+/* ====================================
+   FORMS
+   ==================================== */
+.form-container, .login-container, .register-container {
+    background: white;
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px var(--shadow);
+    animation: slideUp 0.6s ease;
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+    border: 1px solid var(--primary);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-container fieldset,
+.login-container fieldset,
+.register-container fieldset {
+    border: none;
+}
+
+.form-container legend,
+.login-container legend,
+.register-container legend {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    width: 100%;
+}
+
+.welcome-text {
+    color: var(--text-dark);
+    opacity: 0.8;
+    margin-bottom: 2rem;
+    font-size: 1rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.campoDati {
+    margin-bottom: 1.5rem;
+}
+
+.campoDati.full-width {
+    grid-column: 1 / -1;
+}
+
+.campoDati label {
+    display: block;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.campoDati input,
+.campoDati textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #E5E5E5;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+    border: 2px solid var(--primary);
+}
+
+.campoDati input:focus,
+.campoDati textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
+}
+
+.campoDati input::placeholder,
+.campoDati textarea::placeholder {
+    color: #999;
+}
+
+.campoDati textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+.password-wrapper {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    color: var(--text-dark);
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+.toggle-password:hover {
+    opacity: 1;
+}
+
+.toggle-password svg {
+    display: block;
+}
+
+.password-requirements {
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 0.5rem;
+    padding-left: 0.5rem;
+}
+
+.error-message {
+    background: #FFEBEE;
+    color: var(--error);
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    border-left: 4px solid var(--error);
+    animation: shake 0.4s ease;
+}
+
+.success-message {
+    background: #E8F5E9;
+    color: var(--success);
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    border-left: 4px solid var(--success);
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 1.2rem 2rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(139, 69, 19, 0.3);
+    margin-top: 1rem;
+}
+
+button[type="submit"]:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(139, 69, 19, 0.4);
+}
+
+button[type="submit"]:active {
+    transform: translateY(-1px);
+}
+
+.register-link, .login-link {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #E5E5E5;
+    color: var(--text-dark);
+}
+
+.register-link a, .login-link a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.register-link a:hover, .login-link a:hover {
+    color: var(--primary-light);
     text-decoration: underline;
+}
+
+/* ====================================
+   PRODUCT DETAILS
+   ==================================== */
+.product-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+    padding: 4rem 2rem;
+}
+
+.product-image {
+    position: sticky;
+    top: 120px;
+}
+
+.product-image img {
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(139, 69, 19, 0.2);
+    animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.product-details {
+    background: white;
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px var(--shadow);
+}
+
+.product-badge {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.product-details h1 {
+    font-size: 3rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.product-price {
+    font-size: 2rem;
+    color: var(--primary-light);
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+
+.product-description {
+    color: var(--text-dark);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.product-info {
+    background: var(--bg-cream);
+    padding: 2rem;
+    border-radius: 15px;
+    margin-bottom: 2rem;
+}
+
+.product-info h3 {
+    font-size: 1.3rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.info-item svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--primary-light);
+    flex-shrink: 0;
+}
+
+.info-item span {
+    font-size: 0.95rem;
+}
+
+.purchase-form {
+    background: white;
+    padding: 2rem 0;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.quantity-btn {
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--primary);
+    background: white;
+    color: var(--primary);
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quantity-btn:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.quantity-input {
+    width: 60px;
+    height: 40px;
+    text-align: center;
+    border: 2px solid #E5E5E5;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.size-selector {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.size-option {
+    padding: 0.8rem 1.5rem;
+    border: 2px solid #E5E5E5;
+    background: white;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.size-option:hover,
+.size-option.active {
+    border-color: var(--primary);
+    background: var(--bg-cream);
+    color: var(--primary);
+}
+
+.add-to-cart {
+    width: 100%;
+    padding: 1.2rem 2rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(139, 69, 19, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.add-to-cart:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(139, 69, 19, 0.4);
+}
+
+.add-to-cart svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* ====================================
+   ORDINI ADMIN
+   ==================================== */
+.orders-container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+}
+
+.page-header {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.page-header h1 {
+    font-size: 3rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.page-header p {
+    color: var(--text-dark);
+    opacity: 0.8;
+    font-size: 1.1rem;
+}
+
+#descr {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.orders-table-wrapper {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px var(--shadow);
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+caption {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--primary);
+    padding: 2rem;
+    text-align: left;
+    font-weight: 600;
+}
+
+thead {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+}
+
+thead th {
+    padding: 1.2rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+tbody tr {
+    border-bottom: 1px solid #E5E5E5;
+    transition: all 0.3s ease;
+}
+
+tbody tr:hover {
+    background: var(--bg-cream);
+}
+
+tbody th,
+tbody td {
+    padding: 1.5rem 1rem;
+    text-align: left;
+}
+
+tbody th {
+    font-weight: 700;
+    color: var(--primary);
+}
+
+tbody td a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+tbody td a:hover {
+    color: var(--primary-light);
+    text-decoration: underline;
+}
+
+.stato-ordine {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.stato-ordine button {
+    width: 32px;
+    height: 32px;
+    border: 2px solid var(--primary);
+    background: white;
+    color: var(--primary);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+}
+
+.stato-ordine button:hover {
+    background: var(--primary);
+    color: white;
+    transform: scale(1.1);
+}
+
+.stato-ordine button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.stato-ordine select {
+    padding: 0.6rem 1rem;
+    border: 2px solid #E5E5E5;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+    min-width: 150px;
+}
+
+.stato-ordine select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
+}
+
+.progresso-stato {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--primary);
+    font-weight: 600;
+}
+
+/* ====================================
+   CATALOG (Torte/Pasticcini)
+   ==================================== */
+.page-title {
+    text-align: center;
+    margin-bottom: 4rem;
+    animation: fadeInDown 0.6s ease;
+}
+
+.page-title h1 {
+    font-size: 3.5rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.page-title p {
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    opacity: 0.8;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#grigliaTorte {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    list-style: none;
+    padding: 4rem 2rem;
+}
+
+.cardTorta {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px var(--shadow);
+    transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    animation: fadeInUp 0.6s ease backwards;
+    border: 1px solid var(--primary);
+}
+
+.cardTorta:nth-child(1) { animation-delay: 0.1s; }
+.cardTorta:nth-child(2) { animation-delay: 0.2s; }
+.cardTorta:nth-child(3) { animation-delay: 0.3s; }
+.cardTorta:nth-child(4) { animation-delay: 0.4s; }
+.cardTorta:nth-child(5) { animation-delay: 0.5s; }
+.cardTorta:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.cardTorta:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 60px rgba(139, 69, 19, 0.25);
+}
+
+.cardTorta > a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.cardTorta img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    object-position: bottom;
+    transition: transform 0.4s ease;
+}
+
+.cardTorta:hover img {
+    transform: scale(1.1);
+}
+
+.infoTorta {
+    padding: 2rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.infoTorta h2 {
+    font-size: 1.7rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+    transition: color 0.3s ease;
+}
+
+.cardTorta:hover .infoTorta h2 {
+    color: var(--primary-light);
+}
+
+.prezzoTorta {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-light);
+    margin-bottom: 1.5rem;
+}
+
+.pulsanteGenerico {
+    padding: 0.8rem 1.5rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(139, 69, 19, 0.3);
+    text-align: center;
+    display: inline-block;
+    margin-bottom: 0.8rem;
+}
+
+.pulsanteGenerico:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(139, 69, 19, 0.4);
+}
+
+.infoTorta button.pulsanteGenerico {
+    width: 100%;
+    margin-top: auto;
+    margin-bottom: 0;
+}
+
+/* ====================================
+   CARRELLO
+   ==================================== */
+.cart-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.cart-container .page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.cart-container .page-header h2 {
+    font-size: 3rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.cart-container .page-header p {
+    color: var(--text-dark);
+    opacity: 0.8;
+    font-size: 1.1rem;
+}
+
+.carrello-vuoto {
+    width: 100%;
+    text-align: center; /* Centra il testo orizzontalmente */
+    margin: 0 auto; /* Centra il contenitore stesso se ha una larghezza definita */
+}
+
+.messaggio-vuoto {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 20px; /* Spazio sotto il messaggio */
+}
+
+.bottoni-vuoto {
+    display: flex;
+    gap: 15px;
+    justify-content: center; /* Centra i bottoni orizzontalmente */
+    flex-wrap: wrap; /* Per andare a capo su schermi piccoli */
+}
+
+/* ====================================
+   FOOTER
+   ==================================== */
+footer {
+    background: var(--text-dark);
+    color: var(--text-light);
+    padding: 4rem 2rem 2rem;
+}
+
+.footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+    margin-bottom: 2rem;
+}
+
+footer h2 {
+    color: var(--accent-bright);
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+footer a {
+    color: var(--text-light);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: var(--accent);
+}
+
+footer address {
+    font-style: normal;
+    line-height: 2;
+}
+
+#navigazione-footer ul {
+    list-style: none;
+    line-height: 2.5;
+}
+
+#navigazione-footer a {
+    display: inline-block;
+    position: relative;
+}
+
+#navigazione-footer a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+}
+
+#navigazione-footer a:hover::after {
+    width: 100%;
+}
+
+#copyright {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    opacity: 0.7;
+    margin-top: 2rem;
+}
+
+.back-to-top {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 0.8rem 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.back-to-top:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+}
+
+/* ====================================
+   AREA PERSONALE
+   ==================================== */
+
+.user-area-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.user-welcome {
+    background: linear-gradient(135deg, var(--bg-cream) 0%, #FFF 100%);
+    border-radius: 20px;
+    padding: 4rem 2rem;
+    margin-bottom: 3rem;
+    box-shadow: 0 10px 40px var(--shadow);
+}
+
+.welcome-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    border-radius: 50%;
+    margin-bottom: 2rem;
+}
+
+.welcome-icon svg {
+    stroke: white;
+}
+
+.user-welcome h2 {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.user-welcome .user-name {
+    color: var(--primary-light);
+    font-weight: 700;
+}
+
+.user-welcome p {
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    opacity: 0.8;
+}
+
+.user-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.logout-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, var(--error) 0%, #E53935 100%) !important;
+}
+
+.logout-btn:hover {
+    background: linear-gradient(135deg, #C62828 0%, var(--error) 100%) !important;
+}
+
+.logout-btn svg {
+    flex-shrink: 0;
+}
+
+li {
+    list-style-type: none;
 }

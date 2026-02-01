@@ -1,0 +1,377 @@
+/* ====================================
+   PASTICCERIA PADOVANA - RESPONSIVE STYLES (mini.css)
+   ==================================== */
+
+/* TABLET - max-width: 968px */
+@media (max-width: 968px) {
+    .header-content {
+        padding: 1rem;
+    }
+
+    #logo h1 {
+        font-size: 1.4rem;
+    }
+
+    #logo p {
+        font-size: 0.75rem;
+    }
+
+    .menu-toggle {
+        display: block;
+        z-index: 1001;
+    }
+
+    nav#menu {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 80%;
+        max-width: 400px;
+        height: 100vh;
+        background: white;
+        transition: left 0.3s ease;
+        padding: 6rem 2rem 2rem;
+        box-shadow: 2px 0 20px var(--shadow);
+        overflow-y: auto;
+    }
+
+    nav#menu.active {
+        left: 0;
+        border-right: 1px solid var(--primary);
+    }
+
+    nav#menu ul {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    nav#menu a, nav#menu li, nav#menu span {
+        font-size: 1.2rem;
+    }
+
+    /* Homepage Hero */
+    .hero {
+        margin-top: 0;
+        height: auto;
+        min-height: auto;
+        padding: 3rem 0;
+    }
+
+    .hero-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 0 1rem;
+    }
+
+    .hero-text h2 {
+        font-size: 2.5rem;
+    }
+
+    .hero-text p {
+        font-size: 1.1rem;
+    }
+
+    .hero-image {
+        order: -1;
+    }
+
+    /* Famous Sweets */
+    .famous-sweets {
+        padding: 3rem 1rem;
+    }
+
+    .section-header {
+        margin-bottom: 2rem;
+    }
+
+    .section-header h2 {
+        font-size: 2rem;
+    }
+
+    .sweets-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .sweet-card {
+        padding: 1.5rem;
+    }
+
+    /* Chi Siamo */
+    .page-hero h2 {
+        font-size: 2.5rem;
+    }
+
+    .page-hero p {
+        font-size: 1.1rem;
+    }
+
+    .content-wrapper {
+        padding: 2rem 1rem;
+    }
+
+    section h2 {
+        font-size: 2rem;
+    }
+
+    .values-list {
+        grid-template-columns: 1fr;
+    }
+
+    .griglia-team {
+        grid-template-columns: 1fr;
+    }
+
+    /* Contattaci */
+    .contact-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 0 1rem;
+    }
+
+    .contact-info,
+    .form-container {
+        padding: 2rem;
+    }
+
+    .contact-info h2,
+    .form-container legend {
+        font-size: 2rem;
+    }
+
+    /* Login/Register */
+    .login-container,
+    .register-container {
+        padding: 2rem;
+    }
+
+    .login-container legend,
+    .register-container legend {
+        font-size: 2rem;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Product Details */
+    .product-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .product-image {
+        position: static;
+    }
+
+    .product-details {
+        padding: 2rem;
+    }
+
+    .product-details h1 {
+        font-size: 2.2rem;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Ordini Admin */
+    main {
+        padding: 2rem 1rem;
+    }
+
+    .page-header h1 {
+        font-size: 2.5rem;
+    }
+
+    caption {
+        font-size: 1.4rem;
+        padding: 1.5rem;
+    }
+
+    thead {
+        display: none;
+    }
+
+    tbody tr {
+        display: block;
+        margin-bottom: 1.5rem;
+        border: 2px solid #E5E5E5;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    tbody tr:hover {
+        border-color: var(--primary);
+    }
+
+    tbody th,
+    tbody td {
+        display: block;
+        text-align: left;
+        padding: 1rem 1.5rem;
+    }
+
+    tbody th {
+        background: var(--primary);
+        color: white;
+        font-size: 1.2rem;
+    }
+
+    tbody td::before {
+        content: attr(data-title) ": ";
+        font-weight: 700;
+        color: var(--primary);
+        display: inline-block;
+        margin-right: 0.5rem;
+    }
+
+    tbody td:not(:last-child) {
+        border-bottom: 1px solid #E5E5E5;
+    }
+
+    /* Catalog */
+    .page-title h1 {
+        font-size: 2.5rem;
+    }
+
+    #grigliaTorte {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 2rem;
+        padding: 0 1rem;
+    }
+
+    /* Footer */
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+/* MOBILE - max-width: 480px */
+@media (max-width: 480px) {
+    #logo h1 {
+        font-size: 1.2rem;
+    }
+
+    #logo p {
+        display: none;
+    }
+
+    .icon-btn svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    /* Homepage Hero */
+    .hero-text h2 {
+        font-size: 2rem;
+    }
+
+    .hero-text p {
+        font-size: 1rem;
+    }
+
+    /* Chi Siamo */
+    .page-hero {
+        padding: 3rem 1rem;
+    }
+
+    .page-hero h2 {
+        font-size: 2rem;
+    }
+
+    section h2 {
+        font-size: 1.8rem;
+    }
+
+    aside {
+        padding: 2rem;
+    }
+
+    /* Contattaci */
+    main {
+        padding: 2rem 1rem;
+    }
+
+    .contact-info,
+    .form-container {
+        padding: 1.5rem;
+    }
+
+    .contact-info h2,
+    .form-container legend {
+        font-size: 1.8rem;
+    }
+
+    /* Login/Register */
+    .login-container,
+    .register-container {
+        padding: 1.5rem;
+    }
+
+    .login-container legend,
+    .register-container legend {
+        font-size: 1.8rem;
+    }
+
+    /* Product Details */
+    .product-details {
+        padding: 1.5rem;
+    }
+
+    .product-details h1 {
+        font-size: 1.8rem;
+    }
+
+    .product-price {
+        font-size: 1.5rem;
+    }
+
+    /* Ordini Admin */
+    .page-header h1 {
+        font-size: 2rem;
+    }
+
+    .stato-ordine {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .stato-ordine select {
+        width: 100%;
+    }
+
+    /* Catalog */
+    .page-title h1 {
+        font-size: 2rem;
+    }
+
+    #grigliaTorte {
+        grid-template-columns: 1fr;
+        padding: 0 1rem;
+    }
+}
+
+.user-area-content {
+        padding: 2rem 1rem;
+    }
+
+    .user-welcome {
+        padding: 3rem 1.5rem;
+    }
+
+    .user-welcome h2 {
+        font-size: 2rem;
+    }
+
+    .welcome-icon {
+        width: 80px;
+        height: 80px;
+    }
+
+    .welcome-icon svg {
+        width: 48px;
+        height: 48px;
+    }
