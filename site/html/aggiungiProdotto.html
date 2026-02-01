@@ -1,153 +1,257 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
     <meta charset="utf-8">
     <title>Aggiungi Prodotto - Pasticceria Padovana</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Aggiungi un nuovo prodotto al catalogo della Pasticceria Padovana.">
-
     <base href="[BASE_URL]">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="site/css/style.css" media="screen">
     <link rel="stylesheet" href="site/css/mini.css" media="screen and (max-width:800px)">
     <link rel="stylesheet" href="site/css/print.css" media="print">
+    <script src="site/js/script.js"></script>
 </head>
-
 <body>
-    <a href="#main" class="sr-only">Salta al contenuto principale</a>
-    <header>
-        <div class="contenuto">
-            <button type="button" class="bottoneMenu" aria-label="Apri il menu principale">Menu</button>
-            <a href="home" aria-label="Torna alla homepage">
-                <div id="logo">
-                    <h1>Pasticceria Padovana</h1>
-                    <p class="sirivennela-regular">La pasticceria tradizionale su misura per i tuoi eventi</p>
-                </div>
-            </a>
-            <!-- per ora ho messo dei pulsanti presi da internet, penso siano da sistemare perché hanno grandezza fissa se non erro -->
-            <div id="pulsantiMenu">
-                <a href="area-personale" class="bottoneProfilo" aria-label="Torna all'area personale">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
-                        <circle cx="12" cy="7" r="4" />
+    <a href="#main" class="skip-link">Salta al contenuto principale</a>
+    
+    <header id="header">
+        <div class="header-content">
+            <div id="logo">
+                <h1>Pasticceria Padovana</h1>
+                <p>La tradizione su misura per te</p>
+            </div>
+
+            <nav id="menu" aria-label="Menu principale">
+                <ul>
+                    <li><a href="home"><span lang="en">Home</span></a></li>
+                    <li><a href="chi-siamo">Chi siamo</a></li>
+                    <li><a href="torte">Torte</a></li>
+                    <li><a href="pasticcini">Pasticcini</a></li>
+                    <li><a href="contattaci">Contattaci</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-icons">
+                <a href="area-personale" class="icon-btn" aria-label="Torna all'area personale">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
                     </svg>
                 </a>
-
-                <a href="carrello" class="bottoneCarrello" aria-label="Vai al carrello">
-                    <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="16.5" cy="18.5" r="1.5" />
-                        <circle cx="9.5" cy="18.5" r="1.5" />
-                        <path
-                            d="M18 16H8a1 1 0 0 1-.958-.713L4.256 6H3a1 1 0 0 1 0-2h2 a1 1 0 0 1 .958.713L6.344 6H21a1 1 0 0 1 .937 1.352l-3 8 A1 1 0 0 1 18 16zm-9.256-2h8.563l2.25-6H6.944z" />
+                <a href="carrello" class="icon-btn" aria-label="Vai al carrello">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"/>
+                        <circle cx="20" cy="21" r="1"/>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
                     </svg>
                 </a>
             </div>
+
+            <button class="menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
 
-    <nav id="menu" aria-label="Menu principale">
-        <ul class="contenuto">
-            <li><a href="home"><span lang="en">Home</span></a></li>
-            <li><a href="chi-siamo">Chi siamo</a></li>
-            <li><a href="torte">Le nostre torte</a></li>
-            <li><a href="pasticcini">I nostri pasticcini </a></li>
-            <li><a href="contattaci">Contattaci</a></li>
-        </ul>
-    </nav>
-
-    <nav id="breadcrumb" aria-label="Percorso di navigazione">
-        <p class="contenuto">Ti trovi in: <a href="home"><span lang="en">Home</span></a> &gt; <a href="area-personale">Area personale</a> &gt; Aggiungi prodotto</p>
-    </nav>
-
     <main id="main">
-        <div id="aggiungiProdotto" class="contenuto">
-            <div id="messaggi">
+        <div class="admin-page-container">
+            
+            <!-- Page Header -->
+            <div class="admin-page-header">
+                <div class="header-content-wrapper">
+                    <div class="header-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"/>
+                            <line x1="5" y1="12" x2="19" y2="12"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Aggiungi Prodotto</h2>
+                        <p>Inserisci un nuovo dolce nel catalogo</p>
+                    </div>
+                </div>
+                <a href="area-personale" class="btn-back">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    </svg>
+                    Torna indietro
+                </a>
+            </div>
+
+            <!-- Messaggi Sistema -->
+            <div class="system-messages">
                 [messaggioErroreDB]
                 [messaggioConferma]
             </div>
-            <section id="sezioneAggiungiProdotto">
-                <h2>Aggiungi un nuovo prodotto</h2>
 
-                <form id="formAggiungiProdotto" action="aggiungi-prodotto" method="post" enctype="multipart/form-data">
-                    <fieldset>
-                        <legend>Dettagli del prodotto</legend>
+            <!-- Form e Tabella in Grid -->
+            <div class="admin-content-grid">
+                
+                <!-- Sezione Form -->
+                <section class="form-section">
+                    <div class="section-header">
+                        <h3>Dettagli del Prodotto</h3>
+                    </div>
+
+                    <form id="formAggiungiProdotto" action="aggiungi-prodotto" method="post" enctype="multipart/form-data">
+                        <fieldset>
+                            <legend class="visually-hidden">Dettagli del prodotto</legend>
                             
-                        <input type="hidden" name="csrf_token" value="[csrf_token]">
-                        
-                        <div class="campoDati">
-                            <label for="tipo">Tipo di prodotto <span aria-hidden="true">*</span></label>
-                            <select id="tipo" name="tipo" required aria-describedby="type-help">
-                                <option value="">-- Seleziona un tipo --</option>   <!--opzione non valida-->
-                                <option value="torta" [selTorta]>Torta</option>
-                                <option value="pasticcino" [selPasticcino]>Pasticcino</option>
-                            </select>
-                            <small id="type-help" class="sr-only">Seleziona il tipo di prodotto da aggiungere</small>
-                        </div>
-                        [messaggioErroreTipo]
+                            <input type="hidden" name="csrf_token" value="[csrf_token]">
+                            
+                            <!-- Tipo Prodotto -->
+                            <div class="campoDati">
+                                <label for="tipo">Tipo di prodotto <span class="required">*</span></label>
+                                <select id="tipo" name="tipo" required aria-describedby="type-help">
+                                    <option value="">-- Seleziona un tipo --</option>
+                                    <option value="torta" [selTorta]>Torta</option>
+                                    <option value="pasticcino" [selPasticcino]>Pasticcino</option>
+                                </select>
+                                <small id="type-help" class="visually-hidden">Seleziona il tipo di prodotto da aggiungere</small>
+                                [messaggioErroreTipo]
+                            </div>
 
-                        <div class="campoDati">
-                            <label for="nome">Nome del prodotto <span aria-hidden="true">*</span></label>
-                            <input type="text" id="nome" name="nome" maxlength="30" required aria-describedby="name-help" value="[valoreNome]">
-                            <small id="name-help">Puoi inserire al massimo 30 caratteri</small>
-                        </div>
-                        [messaggioErroreNome]
+                            <!-- Nome -->
+                            <div class="campoDati">
+                                <label for="nome">Nome del prodotto <span class="required">*</span></label>
+                                <input type="text" id="nome" name="nome" maxlength="30" required aria-describedby="name-help" value="[valoreNome]" placeholder="Es. Torta Pazientina">
+                                <small id="name-help" class="field-hint">Massimo 30 caratteri</small>
+                                [messaggioErroreNome]
+                            </div>
 
-                        <div class="campoDati">
-                            <label for="descrizione">Descrizione del prodotto <span aria-hidden="true">*</span></label>
-                            <textarea id="descrizione" name="descrizione" maxlength="255" required aria-describedby="desc-help">[valoreDescrizione]</textarea>
-                            <small id="desc-help">Puoi inserire al massimo 255 caratteri</small>
-                        </div>
-                        [messaggioErroreDescrizione]
+                            <!-- Descrizione -->
+                            <div class="campoDati">
+                                <label for="descrizione">Descrizione del prodotto <span class="required">*</span></label>
+                                <textarea id="descrizione" name="descrizione" maxlength="255" required aria-describedby="desc-help" rows="4" placeholder="Descrivi il prodotto...">[valoreDescrizione]</textarea>
+                                <small id="desc-help" class="field-hint">Massimo 255 caratteri</small>
+                                [messaggioErroreDescrizione]
+                            </div>
 
-                        <div class="campoDati">
-                            <label for="prezzo">Prezzo (<span aria-hidden="true">€</span><span class="sr-only">euro</span>) <span aria-hidden="true">*</span></label>
-                            <input type="number" id="prezzo" name="prezzo" step="0.01" min="0" max="99999999.99" required aria-describedby="price-help" value="[valorePrezzo]">
-                            <small id="price-help">Per le torte indicare il prezzo a porzione</small>
-                        </div>
-                        [messaggioErrorePrezzo]
+                            <!-- Prezzo -->
+                            <div class="campoDati">
+                                <label for="prezzo">Prezzo (€) <span class="required">*</span></label>
+                                <div class="input-with-icon">
+                                    <span class="input-icon">€</span>
+                                    <input type="number" id="prezzo" name="prezzo" step="0.01" min="0" max="99999999.99" required aria-describedby="price-help" value="[valorePrezzo]" placeholder="0.00">
+                                </div>
+                                <small id="price-help" class="field-hint">Per le torte indicare il prezzo a porzione</small>
+                                [messaggioErrorePrezzo]
+                            </div>
 
-                        <div class="campoDati">
-                            <label for="immagine">Immagine del prodotto <span aria-hidden="true">*</span></label>
-                            <input type="file" id="immagine" name="immagine" accept=".jpg,.jpeg,.png,.webp" required aria-describedby="img-help">
-                            <small id="img-help">Carica un file JPG, PNG o WEBP di massimo 1 <span lang="en">megabyte</span></small>
-                        </div>
-                        [messaggioErroreImmagine]
+                            <!-- Immagine -->
+                            <div class="campoDati">
+                                <label for="immagine">Immagine del prodotto <span class="required">*</span></label>
+                                <div class="file-upload-wrapper">
+                                    <input type="file" id="immagine" name="immagine" accept=".jpg,.jpeg,.png,.webp" required aria-describedby="img-help">
+                                    <label for="immagine" class="file-upload-label">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                                            <polyline points="21 15 16 10 5 21"/>
+                                        </svg>
+                                        Scegli file
+                                    </label>
+                                    <span class="file-name">Nessun file selezionato</span>
+                                </div>
+                                <small id="img-help" class="field-hint">JPG, PNG o WEBP - massimo 1MB</small>
+                                [messaggioErroreImmagine]
+                            </div>
 
-                        <div class="campoDati">
-                            <label for="testoAlternativo">Testo alternativo (ALT) <span aria-hidden="true">*</span></label>
-                            <textarea id="testoAlternativo" name="testoAlternativo" maxlength="255" required aria-describedby="alt-help">[valoreTestoAlternativo]</textarea>
-                            <small id="alt-help">Inserisci una breve descrizione dell’immagine (testo alternativo)</small>
-                        </div>
-                        [messaggioErroreTestoAlternativo]
+                            <!-- Testo Alternativo -->
+                            <div class="campoDati">
+                                <label for="testoAlternativo">Testo alternativo (ALT) <span class="required">*</span></label>
+                                <textarea id="testoAlternativo" name="testoAlternativo" maxlength="255" required aria-describedby="alt-help" rows="2" placeholder="Descrivi l'immagine per l'accessibilità...">[valoreTestoAlternativo]</textarea>
+                                <small id="alt-help" class="field-hint">Breve descrizione dell'immagine per screen reader</small>
+                                [messaggioErroreTestoAlternativo]
+                            </div>
 
-                        <div class="campoDati">
-                            <fieldset>
-                                <legend>Allergeni contenuti:</legend>
-                                <label><input type="checkbox" name="allergeni[]" value="Glutine" [checkedGlutine]> Glutine</label><br>
-                                <label><input type="checkbox" name="allergeni[]" value="Uova" [checkedUova]> Uova</label><br>
-                                <label><input type="checkbox" name="allergeni[]" value="Latte" [checkedLatte]> Latte</label><br>
-                                <label><input type="checkbox" name="allergeni[]" value="Frutta a guscio" [checkedFrutta]> Frutta a guscio</label><br>
-                                <label><input type="checkbox" name="allergeni[]" value="Arachidi" [checkedArachidi]> Arachidi</label><br>
-                                <label><input type="checkbox" name="allergeni[]" value="Soia" [checkedSoia]> Soia</label><br>
-                                <label><input type="checkbox" name="allergeni[]" value="Sesamo" [checkedSesamo]> Sesamo</label><br>
-                            </fieldset>
-                        </div>
+                            <!-- Allergeni -->
+                            <div class="campoDati allergeni-section">
+                                <fieldset class="allergeni-fieldset">
+                                    <legend>Allergeni contenuti</legend>
+                                    <div class="allergeni-grid">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="allergeni[]" value="Glutine" [checkedGlutine]>
+                                            <span class="checkbox-custom"></span>
+                                            Glutine
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="allergeni[]" value="Uova" [checkedUova]>
+                                            <span class="checkbox-custom"></span>
+                                            Uova
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="allergeni[]" value="Latte" [checkedLatte]>
+                                            <span class="checkbox-custom"></span>
+                                            Latte
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="allergeni[]" value="Frutta a guscio" [checkedFrutta]>
+                                            <span class="checkbox-custom"></span>
+                                            Frutta a guscio
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="allergeni[]" value="Arachidi" [checkedArachidi]>
+                                            <span class="checkbox-custom"></span>
+                                            Arachidi
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="allergeni[]" value="Soia" [checkedSoia]>
+                                            <span class="checkbox-custom"></span>
+                                            Soia
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="allergeni[]" value="Sesamo" [checkedSesamo]>
+                                            <span class="checkbox-custom"></span>
+                                            Sesamo
+                                        </label>
+                                    </div>
+                                </fieldset>
+                            </div>
 
-                        <button type="submit" name="submit">Aggiungi prodotto</button>
-                    </fieldset>
-                </form>
-            </section>
+                            <button type="submit" name="submit" class="btn-submit">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="12" y1="5" x2="12" y2="19"/>
+                                    <line x1="5" y1="12" x2="19" y2="12"/>
+                                </svg>
+                                Aggiungi Prodotto
+                            </button>
+                        </fieldset>
+                    </form>
+                </section>
 
-            <section id="sezioneTabellaProdotti">
-                [tabellaProdotti]
-            </section>
+                <!-- Sezione Tabella Prodotti -->
+                <section class="products-list-section">
+                    <div class="section-header">
+                        <h3>Prodotti Esistenti</h3>
+                    </div>
+                    <div class="products-table-wrapper">
+                        [tabellaProdotti]
+                    </div>
+                </section>
+
+            </div>
         </div>
     </main>
 
     <footer>
-        <div class="contenuto">
+        <div class="footer-content">
+            <div id="navigazione-footer">
+                <h2>Navigazione</h2>
+                <ul>
+                    <li><a href="home">Home</a></li>
+                    <li><a href="chi-siamo">Chi siamo</a></li>
+                    <li><a href="torte">Torte</a></li>
+                    <li><a href="pasticcini">Pasticcini</a></li>
+                    <li><a href="contattaci">Contattaci</a></li>
+                </ul>
+            </div>
+
             <div id="contatti">
                 <h2>Contatti</h2>
                 <address>
@@ -159,12 +263,23 @@
             </div>
 
             <div id="assistenzaClienti">
-                <h2>Assistenza clienti shop online</h2>
-                <p>Lun-Ven 8:30-13:00 14:00-17:30</p>
+                <h2>Assistenza clienti</h2>
+                <p>Lun-Ven 8:30-13:00 | 14:00-17:30</p>
                 <p>Email: <a href="mailto:gestioneclienti@pasticceriapadovana.it">gestioneclienti@pasticceriapadovana.it</a></p>
-                <p id="copyright">&copy; 2025 Pasticceria Padovana - Tutti i diritti riservati</p>
             </div>
         </div>
+        <div style="text-align: center;">
+            <a href="#main" class="back-to-top">Torna su ↑</a>
+            <p id="copyright">&copy; 2025 Pasticceria Padovana - Tutti i diritti riservati</p>
+        </div>
     </footer>
+
+    <script>
+    // File upload name display
+    document.getElementById('immagine').addEventListener('change', function(e) {
+        const fileName = e.target.files[0]?.name || 'Nessun file selezionato';
+        document.querySelector('.file-name').textContent = fileName;
+    });
+    </script>
 </body>
 </html>
