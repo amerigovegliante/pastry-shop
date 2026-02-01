@@ -311,6 +311,11 @@ main {
     box-shadow: 0 15px 40px rgba(139, 69, 19, 0.4);
 }
 
+.header-add-product
+{
+    text-align: center;
+}
+
 /* ====================================
    HOMEPAGE - FAMOUS SWEETS
    ==================================== */
@@ -327,7 +332,7 @@ main {
     margin: 0 auto 4rem;    
 }
 
-.section-header h2 {
+.section-header h3 {
     font-size: 3rem;
     color: var(--primary);
     margin-bottom: 1rem;
@@ -661,6 +666,7 @@ aside a:hover::after {
     align-items: center;
     gap: 0.5rem;
 }
+
 
 .info-block svg {
     width: 24px;
