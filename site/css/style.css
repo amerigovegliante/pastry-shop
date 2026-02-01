@@ -917,7 +917,7 @@ button[type="submit"]:active {
     height: 500px;
 }
 
-.product-image-section .cornice  img{
+.cornice{
     width: 100%;
     height: auto;
     max-width: 100%;
