@@ -3,6 +3,7 @@
    ==================================== */
 
 /* Reset e Variabili */
+@media screen {
 * {
     margin: 0;
     padding: 0;
@@ -2451,3 +2452,5 @@ footer address {
 #dettagliOrdine li{
     list-style: none;
 }
+}
+
