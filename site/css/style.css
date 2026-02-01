@@ -268,7 +268,7 @@ main {
     opacity: 0.9;
 }
 
-strong.hero-text  {
+.hero-text strong {
     color: var(--primary-light);
 }
 
@@ -544,17 +544,14 @@ section em {
     padding: 2rem;
 }
 
-.griglia-team figcaption p:first-child {
+.griglia-team figcaption p{
     font-size: 1.4rem;
-    color: var(--primary);
+    color: var(--text-dark);
     margin-bottom: 0.5rem;
 }
 
-.griglia-team figcaption p:last-child {
-    font-size: 1rem;
-    color: var(--text-dark);
-    opacity: 0.8;
-    margin: 0;
+.griglia-team figcaption p strong {
+    color: var(--primary);
 }
 
 aside {
@@ -934,6 +931,7 @@ button[type="submit"]:active {
 {
     width: 70%;
     margin: auto;
+
 }
 
 .product-image-section figure:hover .cornice {
