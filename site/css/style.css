@@ -1483,7 +1483,7 @@ tbody td a:hover {
 }
 
 .cardTorta {
-    background: white;
+    background: var(--surface-light);
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 10px 40px var(--shadow);
@@ -1556,11 +1556,12 @@ tbody td a:hover {
 .cardTorta > a h2 {
     text-decoration: underline;
     text-decoration-style: solid;
+    border: 1px dotted var(--surface-light);
 }
 
 /* stato visited */
 .cardTorta > a:visited h2 {
-    text-decoration-style: dotted;
+    border-color: var(--primary);
 }
 
 .cardTorta:hover .infoTorta h2 {
