@@ -548,7 +548,7 @@ section h3, section h2  {
     display: inline-block;
 }
 
-section h2::after {
+section h2::after, section h3::after {
     content: '';
     position: absolute;
     bottom: -10px;
