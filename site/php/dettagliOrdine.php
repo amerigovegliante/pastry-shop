@@ -114,50 +114,47 @@ if (isset($_GET['id'])) {
                                 </dl>
                             </div>';
 
-    $listaDolciOrdinati =  '<h3 class="titolo-ordine">Dolci ordinati:</h3>';
     if(empty($torteOrdinate) && empty($pasticciniOrdinati)){
         $listaDolciOrdinati .= '<p>Ordine vuoto</p>';
     } else {
-        $listaDolciOrdinati .= '<ul>';
+        $listaDolciOrdinati .= '<table>
+                                    <caption><h3>Elenco dei Prodotti</h3></caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Nome</th>
+                                            <th scope="col">Dettagli</th>
+                                            <th scope="col">Quantità</th>
+                                            <th scope="col">Prezzo <abbr title="Euro">(€)</abbr></th>
+                                        </tr>
+                                    </thead>
+                                <tbody>';
         if(!empty($torteOrdinate)){     //se è stata ordinata almeno una torta
             foreach ($torteOrdinate as $torta){
     
-                $listaDolciOrdinati .= '<li class="dolce-ordinato">
-                                            <h4>' . $torta['nome'] . '</h4>
-                                            <div class="contenitore-dolce">
-                                                <div class="dettagli-dolce">
-                                                    <dl>
-                                                        <dt><strong>Quantità:</strong></dt>
-                                                        <dd>'. htmlspecialchars($torta['numero_torte']) . '</dd>
-                                                        <dt><strong>Porzioni per torta:</strong></dt>
-                                                        <dd>'. htmlspecialchars($torta['porzioni']) . '</dd>';
-                $targaTorta = htmlspecialchars($torta['targa']);    //se vuota non mostro la vote della targa
-                if(!empty($targaTorta)){
-                    $listaDolciOrdinati .= '<dt><strong>Scritta sulla targa:</strong></dt>
-                    <dd>'. $targaTorta . '</dd>';
-                }
-                $listaDolciOrdinati .= '</dl>
-                                    </div>
-                                </div>
-                            </li>';
+                $listaDolciOrdinati .= '<tr>
+                                            <th scope="row" data-label="Nome">' . htmlspecialchars($torta['nome']) . '</th>
+                                            <td data-label="Dettagli">
+                                                <ul>
+                                                    <li>Porzioni: ' . htmlspecialchars($torta['porzioni']) . '</li>
+                                                    <li>Targa: ' . htmlspecialchars($torta['targa'] ?: 'Nessuna') . '</li>
+                                                </ul>;
+                                            </td>
+                                            <td data-label="Quantità">' . htmlspecialchars($torta['numero_torte']) . '</td>
+                                            <td data-label="Prezzo">€' . number_format($torta['prezzo_totale'], 2, ',', '.') . '</td>
+                                        </tr>';
             }
         }
         if(!empty($pasticciniOrdinati)){     //se è stata ordinata almeno una torta
             foreach ($pasticciniOrdinati as $pasticcino){
-                $listaDolciOrdinati .= '<li class="dolce-ordinato">
-                                            <h4>' . htmlspecialchars($pasticcino['nome']) . '</h4>
-                                            <div class="contenitore-dolce">
-                                                <div class="dettagli-dolce">
-                                                    <dl>
-                                                        <dt><strong>Quantità:</strong></dt>
-                                                        <dd>' . htmlspecialchars($pasticcino['quantita']) . '</dd>
-                                                    </dl>
-                                                </div>
-                                            </div>
-                                        </li>';
+                $listaDolciOrdinati .= '<tr>
+                                            <th scope="row" data-label="Nome">' . htmlspecialchars($pasticcino['nome']) . '</th>
+                                            <td data-label="Dettagli">-</td>
+                                            <td data-label="Quantità">' . htmlspecialchars($pasticcino['quantita']) . '</td>
+                                            <td data-label="Prezzo">€' . number_format($pasticcino['prezzo_totale'], 2, ',', '.') . '</td>
+                                        </tr>';
             }
         }
-        $listaDolciOrdinati .= '</ul>';
+        $listaDolciOrdinati .= '</tbody></table>';
     }
 }
 
