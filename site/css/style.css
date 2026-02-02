@@ -741,7 +741,7 @@ aside a:hover::after {
    FORMS
    ==================================== */
 .form-container, .login-container, .register-container {
-    background: var(--bg-cream);
+    background: white;
     padding: 3rem;
     border-radius: 20px;
     box-shadow: 0 10px 40px var(--shadow);
