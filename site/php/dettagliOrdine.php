@@ -137,7 +137,7 @@ if (isset($_GET['id'])) {
                                                 <ul>
                                                     <li>Porzioni: ' . htmlspecialchars($torta['porzioni']) . '</li>
                                                     <li>Targa: ' . htmlspecialchars($torta['targa'] ?: 'Nessuna') . '</li>
-                                                </ul>;
+                                                </ul>
                                             </td>
                                             <td data-label="Quantità">' . htmlspecialchars($torta['numero_torte']) . '</td>
                                             <td data-label="Prezzo">€' . number_format($torta['prezzo_totale'], 2, ',', '.') . '</td>
