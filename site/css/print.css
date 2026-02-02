@@ -143,6 +143,7 @@ a::after {
     background: none;
     border: none;
     page-break-inside: avoid;
+    width: 100%;
 }
 .section-header {
     text-align: left;
