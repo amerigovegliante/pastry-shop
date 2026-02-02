@@ -2720,6 +2720,7 @@ footer address {
 }
 
 .contenuto {
-    width: 70%;
+    /*width: 70%;*/
+    max-width: 1400px;
     margin: auto;
 }
