@@ -153,10 +153,10 @@ if (isset($_SESSION['ruolo']) && $_SESSION['ruolo'] === 'admin') {
         </div>
         <div class="admin-azioni">
             <a href="ordini-amministratore" class="bottone-admin">
-                <span class="icona-btn">📋</span> Gestione Ordini Clienti
-            </a>
+                Gestione Ordini Clienti
+            </a><br>
             <a href="aggiungi-prodotto" class="bottone-admin">
-                <span class="icona-btn">🍰</span> Aggiungi Nuovo Prodotto
+                Aggiungi Nuovo Prodotto
             </a>
         </div>
     </section>';

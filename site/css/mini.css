@@ -74,6 +74,9 @@
     .hero-image {
         order: -1;
     }
+    .header-icons a .icon-text {
+        display: none;
+    }
 
     /* Famous Sweets */
     .famous-sweets {
