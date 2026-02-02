@@ -2269,7 +2269,6 @@ footer address {
     align-items: center;
     justify-content: center;
     padding: 4rem 2rem;
-    background: var(--primary);
 }
 
 .error-content {
