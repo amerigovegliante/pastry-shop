@@ -816,10 +816,6 @@ aside a:hover::after {
     font-size: 0.95rem;
 }
 
-textarea{
-    resize: none;
-}
-
 .campoDati input,
 .campoDati textarea {
     width: 100%;
@@ -846,7 +842,7 @@ textarea{
 }
 
 .campoDati textarea {
-    resize: vertical;
+    resize: none;
     min-height: 150px;
 }
 
@@ -1191,7 +1187,7 @@ button[type="submit"]:active {
     font-family: 'Inter', sans-serif;
     font-size: 1rem;
     transition: all 0.3s ease;
-    resize: vertical;
+    resize: none;
 }
 
 #testoTarga:focus {
