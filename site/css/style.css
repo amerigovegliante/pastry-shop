@@ -267,7 +267,7 @@ main {
     min-height: calc(100vh - 400px);
     padding: 4rem 2rem;
 }
-.button{
+.generic-button{
     display: inline-block;
     padding: 1rem 2.5rem;
     background: var(--primary);
@@ -279,7 +279,7 @@ main {
     box-shadow: 0 10px 30px rgba(139, 69, 19, 0.3);
 }
 
-.button:hover{
+.generic-button:hover{
     transform: translateY(-3px);
     box-shadow: 0 15px 40px rgba(139, 69, 19, 0.4);
 }
