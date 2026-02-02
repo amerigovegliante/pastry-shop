@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['ID']) && !isset($_POST
             $quantitaInput = isset($_POST['quantita']) ? (int)$_POST['quantita'] : 1;
             if ($quantitaInput < 1) $quantitaInput = 1;
             $porzioneScelta = isset($_POST['porzione']) ? (int)$_POST['porzione'] : 0; 
-            $testoTarga = isset($_POST['testoTarga']) ? trim($_POST['testoTarga']) : "";
+            $testoTarga = isset($_POST['testoTarga']) ? trim(strip_tags($_POST['testoTarga'])) : "";
             
             $prezzoBaseItem = (float)$itemDB['prezzo'];
             $prezzoPerUnita = $prezzoBaseItem; 
@@ -63,8 +63,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['ID']) && !isset($_POST
             if (!$trovato) {
                 $_SESSION['carrello'][] = $nuovoElemento;
             }
-            $paginaRitorno = $_POST['paginaRitorno'] ?? 'carrello';
-            header("Location: $paginaRitorno");
+            
+            header("Location: carrello");
             exit;
         }else{
             http_response_code(404);
@@ -124,7 +124,7 @@ if (isset($_SESSION['carrello']) && count($_SESSION['carrello']) > 0) {
         $infoParts = [];
         if ($item['tipo'] === 'torta') {
             if ($item['porzione'] > 0) $infoParts[] = "Formato: " . $item['porzione'] . " persone";
-            if (!empty($item['targa'])) $infoParts[] = "Targa: <em>" . htmlspecialchars($item['targa']) . "</em>";
+            if (!empty($item['targa'])) $infoParts[] = "Targa: <em>" . htmlspecialchars($item['targa'], ENT_QUOTES, 'UTF-8') . "</em>";
         }
         $numDettagli = count($infoParts);
         if ($numDettagli === 0) $dettagliExtra = "<span aria-hidden='true'>-</span><span class='sr-only'>Nessun dettaglio extra</span>";
@@ -137,7 +137,7 @@ if (isset($_SESSION['carrello']) && count($_SESSION['carrello']) > 0) {
 
         $unitarioFormat = number_format($prezzoUnitario, 2, ',', '.');
         $totaleRigaFormat = number_format($prezzoTotaleRiga, 2, ',', '.');
-        $nomeProdotto = htmlspecialchars($item['nome']);
+        $nomeProdotto = htmlspecialchars($item['nome'], ENT_QUOTES, 'UTF-8');
 
         // attributo disabled per il bottone meno se qtà è 1
         $disabledMeno = ($item['quantita'] <= 1) ? 'disabled' : '';
@@ -206,7 +206,7 @@ if (isset($_SESSION['carrello']) && count($_SESSION['carrello']) > 0) {
                     Ogni riga descrive un prodotto con nome, informazioni aggiuntive sull'ordine, quantità, prezzo unitario e totale parziale. 
                     Alla fine della tabella è mostrato il totale complessivo dell'ordine. </p>
     <div id='contenitoreTabella'>
-        <table class='tabella-carrello' airia-describedby='descrizioneCarrello'>
+        <table class='tabella-carrello' aria-describedby='descrizioneCarrello'>
             <caption>Riepilogo prodotti nel carrello</caption>
             <thead>
                 <tr>
@@ -223,9 +223,9 @@ if (isset($_SESSION['carrello']) && count($_SESSION['carrello']) > 0) {
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan='4' class='totaleLabel'>Totale Complessivo:</td>
+                    <th scope='row' colspan='4' class='totaleLabel'>Totale Complessivo:</th>
                     <td class='totaleValore'>$totaleGeneraleFormat</td>
-                    <td></td>
+                     <td></td>
                 </tr>
             </tfoot>
         </table>
