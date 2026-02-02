@@ -71,15 +71,17 @@ if($connessione){
         }
 
         // SEZIONE DETTAGLI VISIVI
-        $Itemdetails .= "<figure>
-                         <img src=\"" . htmlspecialchars($imgSrc) . "\" class=\"cornice\">
-                      </figure>
+        $Itemdetails .= "<div class=\"product-info-section\">
                       <section class=\"infoItem\">
                           <h2>".htmlspecialchars($Item['nome'])."</h2> 
                           <data value=\"" . $Item['prezzo'] . "\" class=\"prezzoItem\">€" . $prezzoFormatted . " <small>" . $etichettaUnit . "</small></data> 
                           <p>".htmlspecialchars($Item['descrizione'])."</p>
                           " . $listaAllergeni . "
-                      </section>";
+                      </section>
+                      <figure>
+                         <img src=\"" . htmlspecialchars($imgSrc) . "\" class=\"cornice\">
+                      </figure>
+                      </div>";
 
         // SEZIONE FORM DI ACQUISTO
         $formAcquisto .= "<section class=\"acquistoItem\">
