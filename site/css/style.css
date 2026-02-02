@@ -540,13 +540,12 @@ section {
     margin-bottom: 5rem;
 }
 
-section h2 {
+section h3, section h2  {
     font-size: 2.5rem;
-    /*color: var(--primary);*/
+    color: var(--primary);
     margin-bottom: 1.5rem;
     position: relative;
     display: inline-block;
-    color: red;
 }
 
 section h2::after {
