@@ -2,10 +2,11 @@
 error_reporting(E_ALL); 
 ini_set('display_errors', 1);
 
-require_once "dbConnection.php";
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-/*var_dump(scandir(__DIR__ . '/../html'));
-die;*/
+require_once "dbConnection.php";
 
 $paginaHTML = file_get_contents( __DIR__ .'/../html/dettagli.html');
 if ($paginaHTML === false) {
@@ -39,14 +40,14 @@ if($connessione){
     $db->closeDBConnection(); 
     
     if ($Item != null){
-        $nome = htmlspecialchars($Item['nome']);
+        $nome = htmlspecialchars($Item['nome'], ENT_QUOTES, 'UTF-8');
         
         // GESTIONE ALLERGENI
         $allergeniArray = $Item['allergeni']; 
         if(!empty($allergeniArray)){
             $listaAllergeni = "<ul class=\"listaAllergeni\">Allergeni:"; 
             foreach($allergeniArray as $allergene){
-                $listaAllergeni .= "<li>".htmlspecialchars($allergene)."</li>";
+                $listaAllergeni .= "<li>".htmlspecialchars($allergene, ENT_QUOTES, 'UTF-8')."</li>";
             }
             $listaAllergeni .= "</ul>";
         } else {
@@ -62,40 +63,29 @@ if($connessione){
         // Etichetta specifica per l'input dentro il box quantità
         $labelQuantita = ($tipoItem === 'torta') ? "Numero Torte" : "Numero Pezzi";
 
-        // IMMAGINE
-        $imgSrc = ""; 
-        $altText = "";
-
-        if (!empty($Item['immagine'])) {
-            $imgSrc = "site/img/" . $Item['immagine'];
-            
-            if (!empty($Item['testo_alternativo'])) {
-                $altText = $Item['testo_alternativo'];
-            } else {
-                $altText = "Foto del dolce " . $Item['nome'];
-            }
-        } else {
-            $imgSrc = "site/img/placeholder.jpeg";
-            $altText = "Immagine non disponibile per " . $Item['nome'];
-        }
+        // IMMAGINE E ALT TEXT
+        $imgSrc = !empty($Item['immagine']) ? "site/img/" . $Item['immagine'] : "site/img/placeholder.jpeg";
+        // Usa testo alternativo DB se c'è, altrimenti fallback
+        $altText = !empty($Item['testo_alternativo']) ? $Item['testo_alternativo'] : "Foto del dolce " . $Item['nome'];
 
         // SEZIONE DETTAGLI VISIVI
         $Itemdetails .= "<div class=\"product-info-section\">
                       <section class=\"infoItem\">
-                          <h2>".htmlspecialchars($Item['nome'])."</h2> 
+                          <h2>".htmlspecialchars($Item['nome'], ENT_QUOTES, 'UTF-8')."</h2> 
                           <data value=\"" . $Item['prezzo'] . "\" class=\"prezzoItem\">€" . $prezzoFormatted . " <small>" . $etichettaUnit . "</small></data> 
-                          <p>".htmlspecialchars($Item['descrizione'])."</p>
+                          <p>".htmlspecialchars($Item['descrizione'], ENT_QUOTES, 'UTF-8')."</p>
                           " . $listaAllergeni . "
                       </section>
                       <figure>
-                         <img src=\"" . htmlspecialchars($imgSrc) . "\" alt=\"" . htmlspecialchars($altText) . "\" class=\"cornice\">
+                         <img src=\"" . htmlspecialchars($imgSrc, ENT_QUOTES, 'UTF-8') . "\" alt=\"" . htmlspecialchars($altText, ENT_QUOTES, 'UTF-8') . "\" class=\"cornice\">
                       </figure>
                       </div>";
 
         // SEZIONE FORM DI ACQUISTO
         $formAcquisto .= "<section class=\"acquistoItem\">
                 <form method=\"post\" action=\"carrello\">
-                    <input type=\"hidden\" name=\"ID\" value=\"".htmlspecialchars($Item['id'])."\">";
+                    <input type=\"hidden\" name=\"ID\" value=\"".htmlspecialchars($Item['id'], ENT_QUOTES, 'UTF-8')."\">";
+        
         // --- LOGICA TORTE ---
         if($tipoItem === 'torta'){
             $tipoBreadcrumb = "<a href=\"torte\">Torte</a>";
@@ -149,7 +139,7 @@ if($connessione){
                             </div>
                           </fieldset>";
 
-        $formAcquisto .= "<button type=\"submit\" aria-label=\"Aggiungi ".htmlspecialchars($Item['nome'])." al carrello\">Aggiungi al carrello</button>
+        $formAcquisto .= "<button type=\"submit\" aria-label=\"Aggiungi ".htmlspecialchars($Item['nome'], ENT_QUOTES, 'UTF-8')." al carrello\">Aggiungi al carrello</button>
                         </form>
                         </section>";
     } else {
@@ -157,11 +147,17 @@ if($connessione){
         $nome = "Errore";
     }
 } else {
-    //$Itemdetails = "<p class='errore'>Errore di connessione al database.</p>";
     http_response_code(500);
     include __DIR__ . '/500.php';
     exit;
 }
+
+// GESTIONE BASE URL E URI
+$baseUrl = defined('BASE_URL') ? BASE_URL : '/';
+$uriCorrente = $_SERVER['REQUEST_URI'];
+
+$paginaHTML = str_replace("[BASE_URL]", $baseUrl, $paginaHTML);
+$paginaHTML = str_replace("[URI_CORRENTE]", htmlspecialchars($uriCorrente, ENT_QUOTES, 'UTF-8'), $paginaHTML);
 
 $paginaHTML = str_replace("[DettagliItem]", $Itemdetails, $paginaHTML);
 $paginaHTML = str_replace("[tipoBreadcrumb]", $tipoBreadcrumb, $paginaHTML);

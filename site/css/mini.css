@@ -250,6 +250,18 @@
         grid-template-columns: 1fr;
         gap: 2rem;
     }
+
+    table td::before {
+        content: attr(data-label) ":";
+    }
+
+    table td[data-label="Azioni"]::before {
+        content: none;
+    }
+
+    table td[data-label="Stato"]::before {
+        content: none;
+    }
 }
 
 /* MOBILE - max-width: 480px */
@@ -355,6 +367,7 @@
         grid-template-columns: 1fr;
         padding: 0 1rem;
     }
+
 }
 
 .cornice {
@@ -364,7 +377,15 @@
 .product-container {
     width: 100%;
 }
+    .caption-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
 
+    .aggiorna-tabella {
+        align-self: flex-end;
+    }
 .user-area-content {
         padding: 2rem 1rem;
     }
@@ -385,18 +406,4 @@
     .welcome-icon svg {
         width: 48px;
         height: 48px;
-    }
-
-    .tabella-ordini td::before {
-        content: attr(data-label) ":";
-    }
-
-    .tabella-ordini td[data-label="Azioni"]::before {
-        content: none;
-    }
-
-    .tabella-ordini .link-dettaglio {
-        text-align: center;
-        display: block;
-        width: 100%;
     }

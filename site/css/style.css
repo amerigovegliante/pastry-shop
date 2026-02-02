@@ -340,6 +340,8 @@ main {
 }
 
 
+
+
 /* ====================================
    HOMEPAGE - HERO
    ==================================== */
@@ -581,7 +583,7 @@ section {
     margin-bottom: 5rem;
 }
 
-section h2 {
+section h3, section h2  {
     font-size: 2.5rem;
     color: var(--primary);
     margin-bottom: 1.5rem;
@@ -589,7 +591,7 @@ section h2 {
     display: inline-block;
 }
 
-section h2::after {
+section h2::after, section h3::after {
     content: '';
     position: absolute;
     bottom: -10px;
@@ -1003,6 +1005,18 @@ button[type="submit"] {
     transition: all 0.3s ease;
     box-shadow: 0 10px 30px rgba(139, 69, 19, 0.3);
     margin-top: 1rem;
+}
+button[type="submit"].aggiorna-tabella {
+    width: auto;
+    margin-top: 0;
+    white-space: nowrap;
+}
+
+.aggiorna-tabella {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    white-space: nowrap;
 }
 
 button[type="submit"]:hover {
@@ -1483,6 +1497,21 @@ caption {
     text-align: left;
     font-weight: 600;
 }
+
+.caption-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    caption-side: top;
+    padding: 0.5rem 0;
+    font-weight: 600;
+}
+
+.caption-text {
+    text-align: left;
+}
+
+
 /*
 thead {
     background: var(--table-bg-head);
@@ -1627,7 +1656,7 @@ tbody td a:hover {
 
 #grigliaTorte {
     max-width: 1400px;
-    margin: 0 auto;
+    margin: 1.5rem auto;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 2rem;
@@ -1636,7 +1665,7 @@ tbody td a:hover {
 }
 
 .cardTorta {
-    background: white;
+    background: var(--box-bg);
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 10px 40px var(--shadow);
@@ -1685,7 +1714,7 @@ tbody td a:hover {
     width: 100%;
     height: 280px;
     object-fit: cover;
-    object-position: bottom;
+    object-position: center;
     transition: transform 0.4s ease;
 }
 
@@ -1700,24 +1729,24 @@ tbody td a:hover {
     flex-direction: column;
 }
 
-.infoTorta h2 {
+.infoTorta h3 {
     font-size: 1.7rem;
     color: var(--primary);
     margin-bottom: 1rem;
     transition: color 0.3s ease;
 }
-.cardTorta > a h2 {
+.cardTorta > a h3 {
     text-decoration: underline;
     text-decoration-style: solid;
     border: 1px dotted var(--surface-light);
 }
 
 /* stato visited */
-.cardTorta > a:visited h2 {
+.cardTorta > a:visited h3 {
     border-color: var(--primary);
 }
 
-.cardTorta:hover .infoTorta h2 {
+.cardTorta:hover .infoTorta h3 {
     color: var(--primary-light);
 }
 
@@ -1793,6 +1822,53 @@ tbody td a:hover {
     font-size: 1.2rem;
     color: #666;
     margin-bottom: 20px; /* Spazio sotto il messaggio */
+}
+.azioniCarrello {
+    margin-top: 1.5rem; /* Spazio sopra i bottoni */
+}
+.btn-qty-meno{
+    float: right;
+}
+.btn-qty-piu{
+    float: left;
+}
+.qty-container {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 0.6rem;
+}
+
+.form-qty {
+    margin: 0;
+}
+
+.qty-numero {
+    min-width: 2.5rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.btn-qty-meno,
+.btn-qty-piu {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--primary);
+    background: white;
+    color: var(--primary);
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-qty-meno:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
 }
 
 .bottoni-vuoto {
@@ -1909,7 +1985,14 @@ footer address {
     flex-wrap: wrap;
     gap: 1em;
 }
-.admin-header h3 { margin: 0; color: var(--primary); text-transform: uppercase; }
+/*
+.admin-header h3 { margin: 0; color: var(--primary); text-transform: uppercase; }*/
+
+.admin-azioni {
+    display: flex;
+    gap: 1em;
+    flex-wrap: wrap;
+}
 /*
 .bottone-admin {
     display: inline-block;
@@ -2678,6 +2761,7 @@ footer address {
 }
 
 .contenuto {
-    width: 70%;
+    /*width: 70%;*/
+    max-width: 1400px;
     margin: auto;
 }

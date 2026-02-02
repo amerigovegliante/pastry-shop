@@ -577,13 +577,13 @@ FUNZIONI PER SCRIVERE DATI
 
      public function  AggiornaStati($statiModificati) {
         // Verifico se la connessione è aperta, altrimenti provo ad aprirla
-        /*if (!$this->connection) {
+        if (!$this->connection) {
             if (!$this->openDBConnection()) {
                 return false;
             }
         }
         
-        $connessione = $this->connection; */
+        $connessione = $this->connection; 
 
         foreach($statiModificati as $idOrdine => $nuovoStato){
             $query = "UPDATE ordine SET stato=? WHERE id=?";

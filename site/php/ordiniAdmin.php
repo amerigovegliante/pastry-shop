@@ -69,17 +69,22 @@ if($connessione){
     $db->closeDBConnection();
     
     if ($Ordini != null){ 
-        $tabella .= "<p id=\"descr\" class=\"visually-hidden\">Tabella organizzata per colonne che mostra tutti gli ordini la cui data di ritiro risale al massimo a sette giorni fa.
+        $tabella .= "<p id=\"descr\" class=\"sr-only\">Tabella organizzata per colonne che mostra tutti gli ordini la cui data di ritiro risale al massimo a sette giorni fa.
                     Ogni riga descrive un'ordinazione con numero identificativo dell'ordine, data di ritiro, nominativo e telefono del cliente,
                      costo totale, eventuali annotazioni e stato di avanzamento dell'ordine. Lo stato dell'ordine può essere: in attesa, in preparazione, completato o ritirato</p>
         <form method=\"post\" action=\"ordini-amministratore\">
-        <button type=\"submit\">Aggiorna tabella</button>
+        
         <table class=\"contenuto\" aria-describedby=\"descr\">    
-            <caption>Ordini con data di ritiro negli ultimi 7 giorni</caption>
+            <caption>
+                <div class=\"caption-bar\">
+                <span class=\"caption-text\">Ordini dal ".date("d/m/Y", strtotime("-7 days"))."</span>
+                <button type=\"submit\" class=\"generic-button aggiorna-tabella\">Aggiorna tabella</button>
+                </div>
+            </caption>
             
             <thead>
                 <tr>
-                    <th scope=\"col\" abbr=\"Numero\">Numero Ordine</th>
+                    <th scope=\"col\">Numero</th>
                     <th scope=\"col\" abbr=\"Ritiro\">Data di ritiro</th>                
                     <th scope=\"col\">Nominativo</th>
                     <th scope=\"col\">Telefono</th>
