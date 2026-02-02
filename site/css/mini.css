@@ -74,6 +74,9 @@
     .hero-image {
         order: -1;
     }
+    .header-icons a .icon-text {
+        display: none;
+    }
 
     /* Famous Sweets */
     .famous-sweets {
@@ -220,7 +223,7 @@
     }
 
     tbody td::before {
-        content: attr(data-title) ": ";
+        content: attr(data-title) ":";
         font-weight: 700;
         color: var(--primary);
         display: inline-block;
