@@ -17,9 +17,11 @@ $connessione = $db->openDBConnection(); //tento la connessione
 //script per item
 $listaItem= "";
 $tipo="";
+$tipoTitolo="";
 $titolo="";
 $LinkPagina="";
 $NessunaDisponibilità="";
+$suffisso="";
 /*
 if (isset($_GET['tipo']) && $_GET['tipo']==='torte'){
 	$NessunaDisponibilità="nessuna torta disponibile";
@@ -38,11 +40,14 @@ if (isset($_GET['tipo']) && $_GET['tipo']==='torte'){
 }*/
 if ($page === 'torte'){
     $NessunaDisponibilità="nessuna torta disponibile";
-	$tipo="torte";
+	$tipo="torta";
+    $tipoTitolo="torte";
+    $suffisso="\porzione";
     $titolo="Torte";
 	$LinkPagina="<li id='currentLink'>Torte</li><li><a href=\"pasticcini\">Pasticcini</a></li>";
 }else if ($page === 'pasticcini'){
-	$tipo="pasticcini";
+	$tipo="pasticcino";
+    $tipoTitolo="pasticcini";
 	$NessunaDisponibilità="nessun pasticcino disponibile";
     $titolo="Pasticcini";
     $LinkPagina="<li><a href=\"torte\">Torte</a></li><li id='currentLink'>Pasticcini</li>";
@@ -63,7 +68,7 @@ if($connessione && empty($listaItem)){
                    . "\" alt=\"" . htmlspecialchars($altText) . "\">
                     <div class=\"infoTorta\"> 
                         <h2>".htmlspecialchars($Item['nome'])."</h2> 
-                        <span class=\"prezzoTorta\">€".number_format($Item['prezzo'], 2, ',', '.')."</span> 
+                        <span class=\"prezzoTorta\">€".number_format($Item['prezzo'], 2, ',', '.'). $suffisso."</span> 
                     </div>
                 </a>
              </article> </li>";
@@ -82,6 +87,6 @@ if($connessione && empty($listaItem)){
 $paginaHTML = str_replace("[grigliaItems]", $listaItem, $paginaHTML);
 $paginaHTML = str_replace("[LinkPagina]", $LinkPagina, $paginaHTML);
 $paginaHTML = str_replace("[titolo]", $titolo, $paginaHTML);
-$paginaHTML = str_replace("[tipo]", $tipo, $paginaHTML);
+$paginaHTML = str_replace("[tipo]", $tipoTitolo, $paginaHTML);
 echo $paginaHTML;
 ?>
