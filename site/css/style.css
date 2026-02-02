@@ -366,7 +366,7 @@ main {
 .hero-content {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
@@ -445,7 +445,7 @@ main {
     background: var(--box-bg);
     border-radius: 20px;
     border: 1px solid var(--primary);
-    width: 70%;
+    width: 100%;
     margin: auto;
 }
 
