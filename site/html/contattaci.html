@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="utf-8">
     <title>Contattaci - Pasticceria Padovana</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Contatta Pasticceria Padovana per informazioni, ordini personalizzati e richieste.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="site/css/style.css">
-    <link rel="stylesheet" href="site/css/mini.css" media="screen and (max-width:800px)">
+    <base href="[BASE_URL]">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="site/css/style.css" />
+    <link rel="stylesheet" href="site/css/mini.css" media="screen and (max-width:800px)" />
     <link rel="stylesheet" href="site/css/print.css" media="print" />
     <script src="site/js/script.js"></script>
 </head>
+
 <body>
-    <a href="#main" class="skip-link">Salta al contenuto principale</a>
-    
+    <a href="[URI_CORRENTE]#main" class="skip-link">Salta al contenuto principale</a>
+
     <header id="header">
         <div class="header-content">
             <div id="logo">
@@ -35,18 +38,18 @@
 
             <div class="header-icons">
                 <a href="login" class="icon-btn" aria-label="Accedi alla tua area personale">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
-                        <circle cx="12" cy="7" r="4"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
                     </svg>
-                </a>
+                    <span class="sr-only">Area personale</span> </a>
                 <a href="carrello" class="icon-btn" aria-label="Vai al carrello">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="9" cy="21" r="1"/>
-                        <circle cx="20" cy="21" r="1"/>
-                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="9" cy="21" r="1" />
+                        <circle cx="20" cy="21" r="1" />
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
                     </svg>
-                </a>
+                    <span class="sr-only">Carrello</span> </a>
             </div>
 
             <button class="menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
@@ -59,34 +62,43 @@
 
     <main id="main">
         <div class="contact-container">
-                <div class="form-container">
-                    <form id="formContattaci" action="login_process.php" method="post">
-                        <fieldset>
-                            <legend>Scrivici</legend>
-                            
-                            <div class="campoDati">
-                                <label for="identificativo">Email *</label>
-                                <input type="email" id="identificativo" name="identificativo" required aria-required="true" placeholder="tuaemail@esempio.it">
-                            </div>
+            <div class="form-container">
+                <form id="formContattaci" action="contattaci" method="post">
+                    <fieldset>
+                        <legend>Scrivici</legend>
+                        
+                        [messaggioConferma]
+                        [messaggioErroreDB]
 
-                            <div class="campoDati">
-                                <label for="domande">Il tuo messaggio *</label>
-                                <textarea name="domande" id="domande" rows="7" required aria-required="true" placeholder="Raccontaci come possiamo aiutarti..."></textarea>
-                            </div>
+                        <div class="campoDati">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required aria-required="true"
+                                placeholder="tuaemail@esempio.it" value="[valoreEmail]">
+                        </div>
+                        [messaggioErroreEmail]
 
-                            <button type="submit">Invia messaggio</button>
-                        </fieldset>
-                    </form>
-                </div>
+                        <div class="campoDati">
+                            <label for="domanda">Il tuo messaggio *</label>
+                            <textarea name="domanda" id="domanda" rows="7" required aria-required="true"
+                                placeholder="Raccontaci come possiamo aiutarti...">[valoreDomanda]</textarea>
+                        </div>
+                        [messaggioErroreDomanda]
+
+                        <button type="submit" name="submit">Invia messaggio</button>
+                    </fieldset>
+                </form>
+            </div>
+
             <div class="contact-info">
                 <h2>Parliamone insieme</h2>
-                <p>Siamo qui per rispondere a tutte le tue domande e aiutarti a rendere speciale ogni momento dolce. Che tu voglia ordinare una torta personalizzata o semplicemente saperne di più sui nostri prodotti, saremo felici di assisterti.</p>
+                <p>Siamo qui per rispondere a tutte le tue domande e aiutarti a rendere speciale ogni momento dolce.</p>
 
                 <div class="info-block">
                     <h3>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                            <circle cx="12" cy="10" r="3"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                            <circle cx="12" cy="10" r="3" />
                         </svg>
                         Il nostro negozio
                     </h3>
@@ -99,8 +111,10 @@
 
                 <div class="info-block">
                     <h3>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path
+                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                         </svg>
                         Contatti diretti
                     </h3>
@@ -110,15 +124,17 @@
 
                 <div class="info-block">
                     <h3>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"/>
-                            <polyline points="12 6 12 12 16 14"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10" />
+                            <polyline points="12 6 12 12 16 14" />
                         </svg>
                         Orari di apertura
                     </h3>
                     <p>Lun-Ven: 8:30-13:00 | 14:00-17:30</p>
                     <p>Assistenza online shop</p>
-                    <p><a href="mailto:gestioneclienti@pasticceriapadovana.it">gestioneclienti@pasticceriapadovana.it</a></p>
+                    <p><a href="mailto:gestioneclienti@pasticceriapadovana.it">gestioneclienti@pasticceriapadovana.it</a>
+                    </p>
                 </div>
             </div>
         </div>
@@ -129,11 +145,11 @@
             <div id="navigazione-footer">
                 <h2>Navigazione</h2>
                 <ul>
-                    <li><a href="../../index.html">Home</a></li>
-                    <li><a href="../html/story.html">Chi siamo</a></li>
-                    <li><a href="../php/torte-pasticcini.php?tipo=torte">Torte</a></li>
-                    <li><a href="../php/torte-pasticcini.php?tipo=pasticcini">Pasticcini</a></li>
-                    <li><a href="../html/contattaci.html">Contattaci</a></li>
+                    <li><a href="home">Home</a></li>
+                    <li><a href="chi-siamo">Chi siamo</a></li>
+                    <li><a href="torte">Torte</a></li>
+                    <li><a href="pasticcini">Pasticcini</a></li>
+                    <li>Contattaci</li>
                 </ul>
             </div>
 
@@ -150,13 +166,16 @@
             <div id="assistenzaClienti">
                 <h2>Assistenza clienti</h2>
                 <p>Lun-Ven 8:30-13:00 | 14:00-17:30</p>
-                <p>Email: <a href="mailto:gestioneclienti@pasticceriapadovana.it">gestioneclienti@pasticceriapadovana.it</a></p>
+                <p>Email: <a
+                        href="mailto:gestioneclienti@pasticceriapadovana.it">gestioneclienti@pasticceriapadovana.it</a>
+                </p>
             </div>
         </div>
-        <div style="text-align: center;">
-            <a href="#main" class="back-to-top">Torna su ↑</a>
+        <div class="torna-su">
+            <a href="[URI_CORRENTE]#main" class="back-to-top">Torna su ↑</a>
             <p id="copyright">&copy; 2025 Pasticceria Padovana - Tutti i diritti riservati</p>
         </div>
     </footer>
 </body>
+
 </html>

@@ -63,6 +63,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['ID']) && !isset($_POST
             if (!$trovato) {
                 $_SESSION['carrello'][] = $nuovoElemento;
             }
+            $paginaRitorno = $_POST['paginaRitorno'] ?? 'carrello';
+            header("Location: $paginaRitorno");
+            exit;
         }else{
             http_response_code(404);
             include __DIR__ . '/404.php';

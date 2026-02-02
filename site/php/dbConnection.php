@@ -44,13 +44,16 @@ class DBAccess{
         $queryResult = mysqli_stmt_get_result($stmt);
 
         $itemsArray = array();
-        if (mysqli_num_rows($queryResult) > 0){
+        
+        if ($queryResult && mysqli_num_rows($queryResult) > 0){
             while ($row = mysqli_fetch_assoc($queryResult)){ 
                 array_push($itemsArray, $row);
             }
-            return $itemsArray;     
         } 
-    }
+        
+        mysqli_stmt_close($stmt); // Chiudo sempre lo statement per liberare memoria
+        return $itemsArray; // Ritorno l'array (pieno o vuoto che sia)
+}
 
    //restituisce TRUE se l'item con l'id passatogli è attivo, FALSE altrimenti
     public function isActive($id_item){
@@ -84,10 +87,13 @@ class DBAccess{
         mysqli_stmt_execute($stmt);
         $queryResult = mysqli_stmt_get_result($stmt);
 
+        $itemDetails = null; // valore di default
+
         if (mysqli_num_rows($queryResult) > 0){
             $itemDetails = mysqli_fetch_assoc($queryResult);
+            mysqli_stmt_close($stmt); 
 
-            // query allergeni
+            // query allergeni (solo se l'item esiste)
             $queryAllergeni = "SELECT allergene FROM item_allergico WHERE item=?";
             $stmtAllergeni = mysqli_prepare($this->connection, $queryAllergeni);
             mysqli_stmt_bind_param($stmtAllergeni, "i", $ID);
@@ -99,15 +105,14 @@ class DBAccess{
                 while ($row = mysqli_fetch_assoc($resultAllergeni)){
                     array_push($listaAllergeni, $row['allergene']);
                 }
-            } else {
-                $listaAllergeni = null;
             }
-            
-            $itemDetails['allergeni'] = $listaAllergeni; 
-            return $itemDetails;
+            mysqli_stmt_close($stmtAllergeni); 
+            $itemDetails['allergeni'] = $listaAllergeni;
         } else {
-            return null;
+            mysqli_stmt_close($stmt);
         }
+
+        return $itemDetails;
     }
 
     // recupera gli ordini recenti per il pannello admin
