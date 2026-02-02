@@ -38,7 +38,10 @@
     --table-bg: #FFFFFF;      /* Colore di sfondo per tabelle */
     --table-bg-head: #5D2906;  /* Colore di sfondo per intestazioni di tabelle */
     --table-txt-head: #FFFFFF; /* Colore del testo per intestazioni di tabelle */
-    --table-link: #5D2906
+    --table-link: #5D2906;
+
+    --bg-title: #5D2906;
+    --text-title: #FFF8E7;
 }
 
 #conferma-ordine-titolo{
@@ -267,6 +270,17 @@ main {
     min-height: calc(100vh - 400px);
     padding: 4rem 2rem;
 }
+.titolo{
+    background-color: var(--bg-title);
+    color: var(--text-title);
+    text-align: center;
+    max-width: 1400px;
+    border-radius: 10px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    font-size: 1.8rem;
+
+}
 .generic-button{
     display: inline-block;
     padding: 1rem 2.5rem;
@@ -355,7 +369,7 @@ main {
     0%, 100% { transform: translateY(0px); }
     50% { transform: translateY(-20px); }
 }
-
+/*
 .cta-button {
     display: inline-block;
     margin-top: 2rem;
@@ -372,7 +386,7 @@ main {
 .cta-button:hover {
     transform: translateY(-3px);
     box-shadow: 0 15px 40px rgba(139, 69, 19, 0.4);
-}
+}*/
 
 .header-add-product
 {
@@ -517,7 +531,7 @@ main {
    CHI SIAMO - CONTENT
    ==================================== */
 .content-wrapper {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 4rem 2rem;
 }
@@ -1773,7 +1787,9 @@ footer a {
     /*text-decoration: none;*/
     transition: color 0.3s ease;
 }
-
+footer a:visited {
+    color: var(--accent);
+}
 footer a:hover {
     color: var(--accent);
 }
@@ -1850,6 +1866,7 @@ footer address {
     gap: 1em;
 }
 .admin-header h3 { margin: 0; color: var(--primary); text-transform: uppercase; }
+/*
 .bottone-admin {
     display: inline-block;
     padding: 0.7em 1.2em;

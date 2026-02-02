@@ -39,12 +39,12 @@ if (isset($_GET['tipo']) && $_GET['tipo']==='torte'){
 if ($page === 'torte'){
     $NessunaDisponibilità="nessuna torta disponibile";
 	$tipo="torta";
-    $titolo="Le nostre torte";
+    $titolo="Torte";
 	$LinkPagina="<li id='currentLink'>Torte</li><li><a href=\"pasticcini\">Pasticcini</a></li>";
 }else if ($page === 'pasticcini'){
 	$tipo="pasticcino";
 	$NessunaDisponibilità="nessun pasticcino disponibile";
-    $titolo="I nostri pasticcini";
+    $titolo="Psticcini";
     $LinkPagina="<li><a href=\"torte\">Torte</a></li><li id='currentLink'>Pasticcini</li>";
 }
 // leggo i dati delle torte

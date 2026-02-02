@@ -37,7 +37,7 @@ if (isset($_GET['id'])) {
 
     if (!$id_ordine) {
         http_response_code(400);
-        $messaggioErrore = "<p class='errore'>ID ordine non valido.</p>";
+        $messaggioErrore = "<p class='errore' role='alert'>ID ordine non valido.</p>";
         exit;
     }
 
@@ -100,7 +100,7 @@ if (isset($_GET['id'])) {
                                 </dl>
                             </div>';
 
-    $listaDettagliOrdine .= '<h3>Ordine creato da:</h3>
+    $listaDettagliOrdine .= '<h3 class="titolo-ordine">Ordine creato da:</h3>
                             <div class="dettagli-ordine">
                                 <dl>
                                     <dt><strong>Email:</strong></dt>
@@ -114,7 +114,7 @@ if (isset($_GET['id'])) {
                                 </dl>
                             </div>';
 
-    $listaDolciOrdinati =  '<h3>Dolci ordinati:</h3>';
+    $listaDolciOrdinati =  '<h3 class="titolo-ordine">Dolci ordinati:</h3>';
     if(empty($torteOrdinate) && empty($pasticciniOrdinati)){
         $listaDolciOrdinati .= '<p>Ordine vuoto</p>';
     } else {
