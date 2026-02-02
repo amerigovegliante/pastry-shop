@@ -262,6 +262,7 @@
     table td[data-label="Stato"]::before {
         content: none;
     }
+
 }
 
 /* MOBILE - max-width: 480px */
