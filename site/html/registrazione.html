@@ -70,7 +70,7 @@
 
     <main id="main">
         <section class="auth-page-container">
-            <div class="auth-card">
+            <div class="register-container">
                 <!--
                 <div class="auth-header">
                     <h2>Crea un nuovo account</h2>
@@ -78,9 +78,8 @@
                 </div>-->
 
                 [messaggioErroreDB]
-                [messaggioConferma]
 
-                <form id="formRegistrazione" action="registrazione" method="post" autocomplete="on" class="register-container">
+                <form id="formRegistrazione" action="registrazione" method="post" autocomplete="on" >
                     <fieldset>
                         <legend><h2>Registrati</h2></legend>
                         
@@ -195,10 +194,7 @@
                         </button>
                     </fieldset>
                 </form>
-
-                <div class="auth-footer">
-                    <p>Hai già un account? <a href="login" class="auth-link">Accedi qui</a></p>
-                </div>
+                <p class="register-link">Hai già un account? <a href="login" class="auth-link">Accedi qui</a></p>
             </div>
         </section>
     </main>

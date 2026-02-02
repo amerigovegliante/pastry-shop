@@ -964,6 +964,9 @@ aside a:hover::after {
     margin-top: 0.5rem;
     padding-left: 0.5rem;
 }
+div.password-requirements p{
+    margin-bottom: 0.3rem;
+}
 
 .error-message {
     background: #FFEBEE;
