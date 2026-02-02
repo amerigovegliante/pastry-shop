@@ -1002,7 +1002,7 @@ button[type="submit"]:active {
     font-size: 2.2rem;
     color: var(--primary-light);
     font-weight: 700;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 
 .prezzoItem small {
@@ -1026,9 +1026,14 @@ button[type="submit"]:active {
     padding: 1.5rem;
     border-radius: 10px;
     list-style: none;
-    margin-top: 2rem;
 }
-
+.listaAllergeni ul{
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+/*
 .listaAllergeni::before {
     content: "Allergeni:";
     display: block;
@@ -1036,7 +1041,7 @@ button[type="submit"]:active {
     color: var(--primary);
     margin-bottom: 0.8rem;
     font-size: 1.1rem;
-}
+}*/
 
 .listaAllergeni li {
     padding: 0.3rem 0;
@@ -1569,7 +1574,7 @@ tbody td a:hover {
 .cardTorta > a h2 {
     text-decoration: underline;
     text-decoration-style: solid;
-    border-bottom: 1px dotted var(--surface-light);
+    border: 1px dotted var(--surface-light);
 }
 
 /* stato visited */
