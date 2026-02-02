@@ -57,7 +57,7 @@ body {
 }
 
 h1, h2, h3 {
-    font-family: 'Playfair Display', serif;
+    font-family: Verdana, 'Playfair Display', sans-serif;
 }
 
 /* ====================================
@@ -365,7 +365,7 @@ main {
 .hero-content {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
@@ -444,7 +444,7 @@ main {
     background: var(--box-bg);
     border-radius: 20px;
     border: 1px solid var(--primary);
-    width: 70%;
+    width: 100%;
     margin: auto;
 }
 
@@ -517,7 +517,7 @@ main {
 }
 
 .sweet-card dt {
-    font-family: 'Playfair Display', serif;
+    font-family: Verdana, 'Playfair Display', sans-serif;
     font-size: 1.8rem;
     color: var(--primary);
     margin-bottom: 1rem;
@@ -865,7 +865,7 @@ aside a:hover::after {
 .form-container legend,
 .login-container legend,
 .register-container legend {
-    font-family: 'Playfair Display', serif;
+    font-family: Verdana, 'Playfair Display', sans-serif;
     font-size: 2.5rem;
     color: var(--primary);
     margin-bottom: 0.5rem;
@@ -1116,7 +1116,7 @@ button[type="submit"]:active {
 }
 
 .infoItem h2 {
-    font-family: 'Playfair Display', serif;
+    font-family: Verdana, 'Playfair Display', sans-serif;
     font-size: 2.5rem;
     color: var(--primary);
     margin-bottom: 1.5rem;
@@ -1219,7 +1219,7 @@ button[type="submit"]:active {
 }
 
 .acquistoItem legend {
-    font-family: 'Playfair Display', serif;
+    font-family: Verdana, 'Playfair Display', sans-serif;
     font-size: 1.4rem;
     color: var(--primary);
     font-weight: 600;
@@ -1493,7 +1493,7 @@ table {
 }
 
 caption {
-    font-family: 'Playfair Display', serif;
+    font-family: Verdana, 'Playfair Display', sans-serif;
     font-size: 1.8rem;
     color: var(--primary);
     padding: 2rem;
@@ -2050,7 +2050,7 @@ footer address {
 }
 
 .welcome-text h2 {
-    font-family: 'Playfair Display', serif;
+    font-family: Verdana, 'Playfair Display', sans-serif;
     font-size: 2rem;
     color: white;
     margin-bottom: 0.3rem;
@@ -2169,7 +2169,7 @@ footer address {
 }
 
 .card-header h3 {
-    font-family: 'Playfair Display', serif;
+    font-family: Verdana, 'Playfair Display', sans-serif;
     font-size: 1.8rem;
     color: var(--primary);
     margin: 0;
@@ -2350,7 +2350,7 @@ footer address {
 }
 
 .danger-header h3 {
-    font-family: 'Playfair Display', serif;
+    font-family: Verdana, 'Playfair Display', sans-serif;
     font-size: 1.6rem;
     color: var(--error);
     margin: 0;
@@ -2521,7 +2521,7 @@ footer address {
 }
 
 .error-code {
-    font-family: 'Playfair Display', serif;
+    font-family: Verdana, 'Playfair Display', sans-serif;
     font-size: 8rem;
     font-weight: 700;
     background: var(--primary);
@@ -2533,7 +2533,7 @@ footer address {
 }
 
 .error-text h1 {
-    font-family: 'Playfair Display', serif;
+    font-family: Verdana, 'Playfair Display', sans-serif;
     font-size: 2.5rem;
     color: var(--primary);
     line-height: 1.3;

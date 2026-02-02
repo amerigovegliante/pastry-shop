@@ -187,7 +187,10 @@ if (isset($_SESSION['carrello']) && count($_SESSION['carrello']) > 0) {
     $totaleGeneraleFormat = "€" . number_format($totaleCarrello, 2, ',', '.');
 
     // Controllo Login
-    $pulsanteProcedi = "";
+    $pulsanteProcedi = " <div class='box-checkout'>
+            <a href='conferma-ordine' class='generic-button'>Procedi con l'ordine &rarr;</a>
+        </div>";
+    /*    
     if (isset($_SESSION['ruolo'])) {
         $pulsanteProcedi = "
         <div class='box-checkout'>
@@ -199,10 +202,10 @@ if (isset($_SESSION['carrello']) && count($_SESSION['carrello']) > 0) {
             <p>Per concludere l'ordine è necessario accedere.</p>
             <a href='login' class='generic-button'>Accedi o Registrati</a>
         </div>";
-    }
+    }*/
 
     $contenutoGenerato = "
-    <p id=\"descrizioneCarrello\" class=\"visually-hidden\">Tabella organizzata per colonne che elenca i prodotti all'interno del carrello. 
+    <p id=\"descrizioneCarrello\" class=\"sr-only\">Tabella organizzata per colonne che elenca i prodotti all'interno del carrello. 
                     Ogni riga descrive un prodotto con nome, informazioni aggiuntive sull'ordine, quantità, prezzo unitario e totale parziale. 
                     Alla fine della tabella è mostrato il totale complessivo dell'ordine. </p>
     <div id='contenitoreTabella'>
@@ -231,7 +234,7 @@ if (isset($_SESSION['carrello']) && count($_SESSION['carrello']) > 0) {
         </table>
 
         <div class='azioniCarrello'>
-            <a href='torte' class='generic-button'>&larr; Continua acquisti</a>
+            <a href='torte' class='generic-button'>&larr; Continua gli acquisti</a>
             $pulsanteProcedi
         </div>
     </div>";

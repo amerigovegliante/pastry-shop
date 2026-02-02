@@ -522,6 +522,16 @@ FUNZIONI PER SCRIVERE DATI
         return $success;
     }
 
+    public function updatePassword($email, $nuovaPassword){
+        $hash = password_hash($nuovaPassword, PASSWORD_DEFAULT);
+        $query = "UPDATE persona SET password=? WHERE email=?";
+        $stmt = mysqli_prepare($this->connection, $query);
+        mysqli_stmt_bind_param($stmt, "ss", $hash, $email);
+        $success = mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+        return $success;
+    }
+
     // Elimina utente
     public function deletePersona($email) {
         if (!$this->connection) {
