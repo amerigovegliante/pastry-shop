@@ -156,7 +156,7 @@ if (isset($_SESSION['ruolo']) && $_SESSION['ruolo'] === 'admin') {
                 Gestione Ordini Clienti
             </a><br>
             <a href="aggiungi-prodotto" class="generic-button">
-                Aggiungi Nuovo Prodotto
+                Gestione Prodotti
             </a>
         </div>
     </section>';
