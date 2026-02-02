@@ -50,6 +50,10 @@ a{
     text-decoration: none;
     color: black;
 }
+a::after {
+    content: " (" attr(href) ")";
+    font-size: 90%;
+}
 
 /* ====================================
    HEADER

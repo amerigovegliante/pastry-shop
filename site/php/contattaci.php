@@ -6,7 +6,9 @@ require_once "dbConnection.php";
 
 $paginaHTML = file_get_contents( __DIR__ .'/../html/contattaci.html');
 if ($paginaHTML === false) {
-    die("Errore: impossibile leggere contattaci.html");
+    http_response_code(500);
+    include __DIR__ . '/500.php';
+    exit;
 }
 
 //DICHIARAZIONE VARIABILI

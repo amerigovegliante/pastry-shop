@@ -27,7 +27,9 @@ $token = $_SESSION['csrf_token'];
 
 $paginaHTML = file_get_contents( __DIR__ .'/../html/confermaOrdine.html');
 if ($paginaHTML === false) {
-    die("Errore: impossibile leggere il template confermaOrdine.html");
+    http_response_code(500);
+    include __DIR__ . '/500.php';
+    exit;
 }
 
 $db = new DBAccess();
@@ -55,6 +57,10 @@ if ($connessione) {
         mysqli_stmt_close($stmt);
     }
     $db->closeDBConnection();
+}else {
+    http_response_code(500);
+    include __DIR__ . '/500.php';
+    exit;
 }
 
 $totaleOrdine = 0;

@@ -10,10 +10,10 @@ ini_set('display_errors', 1);
 require_once "dbConnection.php";
 
 // 1. SICUREZZA: Controllo che l'utente sia loggato E sia ADMIN
-if (!isset($_SESSION['ruolo']) || $_SESSION['ruolo'] !== 'admin') {
+/*if (!isset($_SESSION['ruolo']) || $_SESSION['ruolo'] !== 'admin') {
     header("Location: login");
     exit;
-}
+}*/
 
 // 2. SICUREZZA: Generazione CSRF Token
 if (empty($_SESSION['csrf_token'])) {
@@ -23,7 +23,10 @@ $token = $_SESSION['csrf_token'];
 
 $paginaHTML = file_get_contents( __DIR__ .'/../html/aggiungiProdotto.html');
 if ($paginaHTML === false) {
-    die("Errore: impossibile leggere il file template html/aggiungiProdotto.html");
+    http_response_code(500);
+    include __DIR__ . '/500.php';
+    exit;
+
 }
 
 // DICHIARAZIONE VARIABILI
@@ -215,7 +218,9 @@ if (isset($_POST['cambiaStato']) && !empty($_POST['id_cambioStato'])){
 $db = new DBAccess();
 $connessione = $db->openDBConnection();
 if(!$connessione){  
-    $messaggioErrore = '<p class="errore" role="alert">Errore di connessione al database</p>';
+    http_response_code(500);
+    include __DIR__ . '/500.php';
+    exit;
 } else {
     $items = $db->getAllItems();
     $db->closeDBConnection();

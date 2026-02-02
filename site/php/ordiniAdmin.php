@@ -35,6 +35,10 @@ if (!empty($statiModificati)) {
         // Redirect per evitare ri-invio POST al refresh
         header("Location: ordini-amministratore");
         exit;
+    }else{
+        http_response_code(500);
+        include __DIR__ . '/500.php';
+        exit;
     }
     
 }
@@ -49,7 +53,9 @@ if (!isset($_SESSION['ruolo']) || $_SESSION['ruolo'] !== 'admin') {
 
 $paginaHTML = file_get_contents( __DIR__ .'/../html/ordiniAdmin.html');
 if ($paginaHTML === false) {
-    die("Errore: impossibile leggere ordiniAdmin.html");
+    http_response_code(500);
+    include __DIR__ . '/500.php';
+    exit;
 }
 
 $db = new DBAccess();
@@ -120,7 +126,9 @@ if($connessione){
         $tabella ="<p class='contenuto'> Nessun ordine in attesa </p>"; 
     }
 } else {
-    $tabella = "<p class='errore'>I sistemi sono momentaneamente fuori servizio, ci scusiamo per il disagio</p>";
+    http_response_code(500);
+    include __DIR__ . '/500.php';
+    exit;
 }
 
 $paginaHTML = str_replace("[TabellaOrdini]", $tabella, $paginaHTML);

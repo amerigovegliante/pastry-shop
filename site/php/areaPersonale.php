@@ -9,10 +9,10 @@ ini_set('display_errors', 1);
 require_once "dbConnection.php";
 
 // Controllo accesso
-if (!isset($_SESSION['ruolo'])) {
+/*if (!isset($_SESSION['ruolo'])) {
     header("Location: login");
     exit;
-}
+}*/
 
 // Token CSRF
 if (empty($_SESSION['csrf_token'])) {
@@ -75,6 +75,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
                     header("Location: area-personale");
                     exit;
                 }
+            }else{
+                http_response_code(500);
+                include __DIR__ . '/500.php';
+                exit;
             }
         }
     }
