@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Pagina dedicata alla visione degli ordini da parte dei responsabili, pasticceri e dipendenti della pasticceria Padovana">
 
-
+    <base href="[BASE_URL]">
     
     <link rel="stylesheet" href="site/css/style.css" media="screen">
     <link rel="stylesheet" href="site/css/mini.css" media="screen and (max-width:800px)">
@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <a href="#main" class="sr-only">Salta al contenuto principale</a>
+    <a href="[URI_CORRENTE]#main" class="sr-only">Salta al contenuto principale</a>
     <header>
         <div class="contenuto">
             <button type="button" class="bottoneMenu" aria-label="Apri il menu principale">Menu</button>
@@ -69,7 +69,18 @@
     </main>
 
     <footer>
-        <div class="contenuto">
+        <div class="footer-content">
+            <div id="navigazione-footer">
+                <h2>Navigazione</h2>
+                <ul>
+                    <li><a href="home">Home</a></li>
+                    <li><a href="chi-siamo">Chi siamo</a></li>
+                    <li><a href="torte">Torte</a></li>
+                    <li><a href="pasticcini">Pasticcini</a></li>
+                    <li><a href="contattaci">Contattaci</a></li>
+                </ul>
+            </div>
+
             <div id="contatti">
                 <h2>Contatti</h2>
                 <address>
@@ -81,14 +92,15 @@
             </div>
 
             <div id="assistenzaClienti">
-                <h2>Assistenza clienti shop online</h2>
-                <p>Lun-Ven 8:30-13:00 14:00-17:30</p>
+                <h2>Assistenza clienti</h2>
+                <p>Lun-Ven 8:30-13:00 | 14:00-17:30</p>
                 <p>Email: <a href="mailto:gestioneclienti@pasticceriapadovana.it">gestioneclienti@pasticceriapadovana.it</a></p>
-                <p id="copyright">&copy; 2025 Pasticceria Padovana - Tutti i diritti riservati</p>
             </div>
-            <a href="#main" class="">Torna su</a>
+        </div>
+        <div class="torna-su">
+            <a href="[URI_CORRENTE]#main" class="back-to-top">Torna su ↑</a>
+            <p id="copyright">&copy; 2025 Pasticceria Padovana - Tutti i diritti riservati</p>
         </div>
     </footer>
 </body>
-
 </html>

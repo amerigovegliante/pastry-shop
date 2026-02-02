@@ -2,7 +2,7 @@
 error_reporting(E_ALL); //attiva visualizzazione errori
 ini_set('display_errors', 1);
 
-require_once "dbConnection.php";
+require_once __DIR__ . "/dbConnection.php";
 
 $paginaHTML = file_get_contents( __DIR__ .'/../html/contattaci.html');
 if ($paginaHTML === false) {
@@ -19,7 +19,12 @@ $erroreDomanda ='';
 $erroreDB ='';          //errore in accesso o inserimento dati nel database
 $confermaInvio ='';     //inserimento dei dati avvenuto con successo
 $ip ='';                //ip utente 
-$limite = 3;            //numero di domande che si possono inviare nello stesso giorno dallo stesso ip
+$limite = 30;            //numero di domande che si possono inviare nello stesso giorno dallo stesso ip
+// Controllo se c'è un messaggio di successo in sessione (Pattern PRG)
+if (isset($_SESSION['success_msg'])) {
+    $confermaInvio = $_SESSION['success_msg'];
+    unset($_SESSION['success_msg']); // Lo rimuovo per non mostrarlo di nuovo al prossimo reload
+}
 
 //Se è stato fatto il login, recupera la mail dai dati della sessione
 if(session_status() === PHP_SESSION_NONE){
@@ -71,10 +76,15 @@ if(isset($_POST['submit'])){
             if(!$success){  
                 $erroreDB = '<p class="errore">Siamo spiacenti, si è verificato un problema di connessione. Riprova più tardi.</p>';
             } else {
-                $confermaInvio = '<p class="successo">Domanda inviata con successo!</p>';
+                $_SESSION['success_msg'] = '<p class="successo">Domanda inviata con successo!</p>';
+                $db->closeDBConnection();
+                
+                // reindirizzo alla pagina stessa (BASE_URL è definita in index.php)
+                header("Location: " . BASE_URL . "contattaci");
+                exit;
             }
         }
-        $db->closeDBConnection();   //chiudo la connessione
+        $db->closeDBConnection();   //chiudo la connessione nel caso di errore
     }
 }
 

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="keywords" content="pasticceria padovana, pasticceria, dolci, torta, pasticcini, padova, dolce" />
     <meta name="description" content="Pagina dedicata alla presentazione, promozione e vendita dolciaria di Pasticceria Padovana" />
+    <base href="[BASE_URL]">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -15,7 +16,7 @@
     <script src="site/js/script.js"></script>
 </head>
 <body>
-    <a href="#main" class="skip-link">Salta al contenuto principale</a>
+    <a href="[URI_CORRENTE]#main" class="skip-link">Salta al contenuto principale</a>
     
     <header id="header">
         <div class="header-content">
@@ -140,7 +141,7 @@
                 <ul>
                     <li><a href="home">Home</a></li>
                     <li><a href="chi-siamo">Chi siamo</a></li>
-                    <li><a href="tirte">Torte</a></li>
+                    <li><a href="torte">Torte</a></li>
                     <li><a href="pasticcini">Pasticcini</a></li>
                     <li><a href="contattaci">Contattaci</a></li>
                 </ul>
@@ -162,8 +163,8 @@
                 <p>Email: <a href="mailto:gestioneclienti@pasticceriapadovana.it">gestioneclienti@pasticceriapadovana.it</a></p>
             </div>
         </div>
-        <div style="text-align: center;">
-            <a href="#main" class="back-to-top">Torna su ↑</a>
+        <div class="torna-su">
+            <a href="[URI_CORRENTE]#main" class="back-to-top">Torna su ↑</a>
             <p id="copyright">&copy; 2025 Pasticceria Padovana - Tutti i diritti riservati</p>
         </div>
     </footer>

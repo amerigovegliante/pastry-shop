@@ -1754,6 +1754,9 @@ footer address {
     transform: translateY(-3px);
 }
 
+.torna-su{
+    text-align: center;
+}
 /* ====================================
    AREA PERSONALE
    ==================================== */
