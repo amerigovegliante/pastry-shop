@@ -365,6 +365,10 @@ main {
     overflow: hidden;
     border: 1px solid var(--primary);
 }
+.sweet-card > a {
+    text-decoration: none;
+    color: inherit;
+}
 
 .sweet-card::before {
     content: '';
@@ -386,15 +390,10 @@ main {
 .sweet-card:hover::before {
     transform: scaleX(1);
 }
-/* il link NON sottolinea nulla */
-.sweet-card a {
-    text-decoration: none;
-}
-
 
 /* stato visited */
 .sweet-card a:visited dt {
-    text-decoration-style: dotted;
+    border: 2px dotted var(--primary);
 }
 
 .sweet-card dt {

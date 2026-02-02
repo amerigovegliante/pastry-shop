@@ -84,8 +84,8 @@ if($connessione){
         // SEZIONE FORM DI ACQUISTO
         $formAcquisto .= "<section class=\"acquistoItem\">
                 <form method=\"post\" action=\"carrello\">
-                    <input type=\"hidden\" name=\"ID\" value=\"".htmlspecialchars($Item['id'])."\">";
-                    
+                    <input type=\"hidden\" name=\"ID\" value=\"".htmlspecialchars($Item['id'])."\">
+                    <input type=\"hidden\" name=\"paginaRitorno\" value=\"<?php echo ($tipoItem === 'torta') ? 'torte' : 'pasticcini'; ?>\">";
         // --- LOGICA TORTE ---
         if($tipoItem === 'torta'){
             $tipoBreadcrumb = "<a href=\"torte\">Torte</a>";
