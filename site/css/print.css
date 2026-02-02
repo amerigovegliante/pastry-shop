@@ -8,371 +8,248 @@ TUTTE LE PAGINE
         padding: 0;
         margin: 0;
     }
-}
+    @page{
+        margin: 2cm;
+    }
+    body {
+        display: block;
+        font-family: "Georgia", "Times New Roman", Times, serif;
+        color: black;
+        background: none;
+        font-size: 12pt;
+        line-height: 1.5;
+        overflow-x: hidden;
+    }
 
-
-body {
-    font-family: "Georgia", "Times New Roman", Times, serif;
-    color: black;
-    background: none;
-    font-size: 12pt;
-    line-height: 1.5;
-    overflow-x: hidden;
-}
-
-nav#menu, button, .back-to-top, .skip-link, .header-icons, #navigazione-footer
-{
-    display: none;
-}
 /* ====================================
-   INTESTAZIONI
+   ELEMENTI NASCOSTI
    ==================================== */
-h1, h2, h3, h4, h5, h6 {
-    color: black;
-}
-
-h1 {
-    font-size: 18pt; 
-}
-
-h2 {
-    font-size: 16pt;
-}
-
-h3, h4, h5, h6{
-    font-size: 14pt;
-}
+    nav#menu, 
+    button, 
+    .back-to-top, 
+    .skip-link, 
+    .header-icons, 
+    #navigazione-footer,
+    .cta-button,
+    .category-badge
+    {
+        display: none;
+    }
 
 /* ====================================
    LINK
    ==================================== */
-a{
-    text-decoration: none;
-    color: black;
-}
-a::after {
-    content: " (" attr(href) ")";
-    font-size: 90%;
-}
+    a{
+        text-decoration: none;
+        color: black;
+    }
 
 /* ====================================
-   HEADER
+   INTESTAZIONI
    ==================================== */
-header {
-    position: static;
-}
-
-body > header + * header {
-    display: none;
-}
-
-#logo h1 {
-    font-size: 20pt;
-    color: black;
-}
-
-#logo p {
-    color: black;
-}
-
-.header-content {
-    max-width: 100%;
-    padding: 1.2rem 2rem;
-    display: block;
-}
+    h1 {
+        font-size: 20pt; 
+    }
+    h2 {
+        font-size: 18pt;
+    }
+    h3 {
+        font-size: 16pt;
+    }
+    h4, h5, h6{
+        font-size: 14pt;
+    }
 
 /* ====================================
-   MAIN CONTENT
+   ALTRI TAG TESTUALI
    ==================================== */
-main {
-    margin-top: 0.5cm;
-    min-height: none;
-    padding: 0;
-}
+    p, dt, dd{
+        text-align: justify;
+    }
+    ul, ol, li{
+        list-style: circle;
+    }
+/* ====================================
+   IMMAGINI
+   ==================================== */
+    img{
+        border-radius: 12px;
+    }
+
+/*  ====================================
+    LOGO
+    ==================================== */
+     #logo{
+        margin-top: 0;     
+        padding-top: 0; 
+    }
+    #logo h1, #logo p{
+        display: block;
+        text-align: center;
+    }
+    #logo h1 + p{
+        margin-bottom: 0.5cm;
+    }
+
+/*  ====================================
+    FOOTER
+    ==================================== */
+    footer{
+        display: block;
+        border: 1px solid black;
+        border-radius: 12px;
+        padding: 0.2cm 0.5cm;
+        margin-top: 0.5cm;
+    }
+    footer h2{
+        font-size: 14pt;
+    }
+    #copyright{
+        text-align: center;
+        margin: 0.2cm 0;
+        font-size: 10pt;
+    }
+    #contatti{
+        page-break-inside: avoid;
+    }
+    #contatti p{
+        margin-right: 0.5cm;
+    }
+    #assistenzaClienti{
+        margin-top: 0.2cm;
+        page-break-inside: avoid;
+    }
+    #assistenzaClienti p{
+        margin-right: 0.5cm;
+    }
 
 /* ====================================
-   HOMEPAGE - HERO
+   home.html
    ==================================== */
-.hero {
-    display: block;
-    position: static;
-    overflow: visible;
-    margin: 0;                   
-    padding: 0;
-}
+    .hero-content{
+        margin-bottom: 0.5cm auto;
+    }
+    .hero-image img{
+        display: block;
+        margin: 1cm auto;   /*centrata con sopra e sotto 1cm*/
+        width: 8cm;
+        page-break-inside: avoid;
+    }
 
-.hero-content {
-    display: block;             
-    max-width: 100%;              
-}
+/* ------------------------------------
+   dolci famosi
+   ------------------------------------ */
+    .famous-sweets{
+        margin: 0;
+    }
+    .sweet-card{
+        display: block;
+        page-break-inside: avoid;
+    }
+    .sweet-card dt{
+        margin-top: 0.2cm;
+        font-weight: bolder;
+    }
+    .sweet-card dd{
+        margin-bottom: 0.2cm;
+        margin-left: 0.5cm;
+    }
 
-.hero-text {
-    border: none;
-    background: none;
-    padding: 0;
-    margin-bottom: 1cm;
-    color: black;
-    font-size: 12pt;
-}
+/*  ====================================
+    torte-pasticcini.html
+    ==================================== */
+    #grigliaTorte{
+        display: block;
+        margin: 1cm auto;
+        list-style: none;
+    }
+    #grigliaTorte li {
+        list-style: none;
+    }
+    .cardTorta > a{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        page-break-inside: avoid;
+    }
+    .cardTorta img{
+        display: block;
+        width: 4cm;
+        margin-top: 0.5cm;
+        margin-right: 0.5cm;
+    }
+    .infoTorta{
+        display: block;
+        flex: 1;
+    }
+    .infoTorta h2 {
+        font-size: 14pt;
+    }
 
-.hero-text strong {
-    color: black;
-}
+/*  ====================================
+    story.html
+    ==================================== */
+    .story-description{
+        margin-top: 0.5cm;
+    }
+    .values-list{
+        margin-left: 0.5cm;
+    }
+    .griglia-team{
+        display: block;
+        list-style: none;
+    }
+    .griglia-team li {
+        display: flex;
+        flex-direction: row;       
+        align-items: center;
+        list-style: none;
+        margin-bottom: 0.5cm;
+        page-break-inside: avoid;
+    }
+    .griglia-team figure {
+        display: flex;
+        flex-direction: row;
+    }
+    .griglia-team img{
+        width: 4cm;
+        margin-right: 0.5cm;
+    }
+    .griglia-team figcaption {
+        flex: 1;               
+        padding-top: 0.2cm;
+    }
+    #team + p{
+        margin-bottom: 0.5cm;
+    }
 
-.hero-text h2{
-    color: black;
-    font-size: 16pt;
-}
+/*  ====================================
+    dettagliOrdine.html
+    ==================================== */
+    .dettagli-ordine{
+        display: block;
+        margin-bottom: 0.5cm;
+    }
 
-.hero-image {
-    display: block;             
-    text-align: center;          
-    page-break-inside: avoid; 
-}
-
-.hero-image img {
-    max-width: 8cm;
-    height: auto;
-    border: none;
-}
-
-.cta-button{
-    display: none;
-}
-
-/* ====================================
-   HOMEPAGE - FAMOUS SWEETS
-   ==================================== */
-   
-.famous-sweets {
-    padding: 0.5cm;
-    background: none;
-    border: none;
-}
-.section-header {
-    text-align: left;
-    max-width: 100%;
-    margin: 0
-}
-.section-header h2 {
-    font-size: 16pt;
-    color: black;
-    margin-bottom: 0;
-}
-
-.sweets-grid {
-    max-width: 100%;
-    display: block;
-}
-
-.sweet-card {
-    display: block;
-    margin-bottom: 0.5cm;
-    background: none;
-    overflow: visible;
-    border: 1px solid black;
-    page-break-inside: avoid;
-    padding: 0.3cm;
-}
-
-.sweet-card dt {
-    font-size: 14pt;
-    color: black;
-    margin-bottom: 0.3cm;
-}
-
-.sweet-card dd {
-    color: black;
-    opacity: none;
-}
-
-.category-badge {
-    background: none;
-    color: black;
-    font-size: 10pt;
-    margin-bottom: 0;
-}
-
-
-/* ====================================
-   CHI SIAMO - PAGE HERO
-   ==================================== */
-.page-hero {
-    background: none;
-    color: black;
-    padding: 0;
-    text-align: left;
-    border: none;
-}
-
-.page-hero h2 {
-    font-size: 16pt;
-    margin-bottom: 0.5cm;
-}
-
-.page-hero p {
-    font-size: 12pt;
-    max-width: 100%;
-    opacity: none;
-}
-
-/* ====================================
-   CHI SIAMO - CONTENT
-   ==================================== */
-.content-wrapper {
-    max-width: 100%;
-    margin: 0;
-    padding:0;
-}
-
-section {
-    margin-bottom: 0;
-}
-
-section h2 {
-    font-size: 16pt;
-    color: black;
-    margin-bottom: 0.3cm;
-    position: static;
-    display: inline-block;
-}
-
-section p {
-    font-size: 12pt;
-    color: black;
-    opacity: none;
-}
-
-section strong {
-    color: black;
-}
-
-section em {
-    color: black;
-    font-style: italic;
-}
-
-.values-list {
-    list-style: disc;
-    display: block;
-    margin-top: 0.2cm;
-}
-
-.values-list li {
-    background: none;
-    padding: 0.2cm;
-    border: none;
-}
-
-.values-list li strong {
-    display: block;
-    font-size: 14pt;
-    color: black;
-    margin-bottom: 0;
-}
-
-.griglia-team {
-    list-style: circle;
-    display: inline-block;
-}
-
-.griglia-team li {
-    background: none;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 10px 40px var(--shadow);
-    border: 1px solid var(black);
-    margin-bottom: 0.5cm;
-}
-
-.griglia-team figure {
-    margin: 0;
-}
-
-.griglia-team img {
-    width: 4cm;
-    height: auto;
-    object-fit: contain;
-    display: inline-block;
-}
-
-.griglia-team figcaption {
-    display: inline-block;
-    padding: 0;
-    
-}
-
-.griglia-team figcaption p{
-    font-size: 12pt;
-    color: black;
-    margin-bottom: 0;
-}
-
-.griglia-team figcaption p strong {
-    color: black;
-}
-
-aside {
-    background: linear-gradient(135deg, var(--bg-cream) 0%, #FFF 100%);
-    padding: 3rem;
-    border-radius: 20px;
-    box-shadow: 0 10px 40px var(--shadow);
-    text-align: center;
-    margin-top: 4rem;
-}
-
-aside h2 {
-    font-size: 2rem;
-    color: var(--primary);
-    margin-bottom: 1.5rem;
-}
-
-aside p {
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
-}
-
-aside a {
-    color: var(--primary);
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.story-description {
-    border: none;
-    padding: 0;
-}
-
-/* ====================================
-   FOOTER
-   ==================================== */
-footer {
-    background: none;
-    color: black;
-}
-
-.footer-content {
-    max-width: 100%;
-    page-break-inside: avoid;
-}
-
-footer h2 {
-    color: black;
-    font-size: 16pt;
-}
-
-footer a {
-    color: black;
-}
-
-#navigazione-footer a {
-    display: block;
-    position: static;
-}
-
-#copyright {
-    border-top: 1px solid black;
-    opacity: 0.7;
+    .dettagli-ordine dt{
+        margin-left: 0.2cm;
+    }
+    .dettagli-ordine dd{
+        margin-left: 0.4cm;
+    }
+    .titolo-ordine::before{
+        content: "";
+        display: block;
+        border-top: 1px solid black;
+        padding-top: 0.5cm;
+        margin-top: 0.5cm;
+    }
+    .dolce-ordinato{
+        margin-left: 0.5cm;
+        margin-bottom: 0.2cm;
+        page-break-inside: avoid;
+    }
+    .dettagli-dolce dt, .dettagli-dolce dd{
+        margin-left: 0.2cm;
+    }
 }
