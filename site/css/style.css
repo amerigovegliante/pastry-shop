@@ -1753,6 +1753,53 @@ tbody td a:hover {
     color: #666;
     margin-bottom: 20px; /* Spazio sotto il messaggio */
 }
+.azioniCarrello {
+    margin-top: 1.5rem; /* Spazio sopra i bottoni */
+}
+.btn-qty-meno{
+    float: right;
+}
+.btn-qty-piu{
+    float: left;
+}
+.qty-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+}
+
+.form-qty {
+    margin: 0;
+}
+
+.qty-numero {
+    min-width: 2.5rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.btn-qty-meno,
+.btn-qty-piu {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--primary);
+    background: white;
+    color: var(--primary);
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-qty-meno:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
 
 .bottoni-vuoto {
     display: flex;

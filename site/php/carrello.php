@@ -147,7 +147,7 @@ if (isset($_SESSION['carrello']) && count($_SESSION['carrello']) > 0) {
         <form action='carrello' method='POST' class='form-qty'>
             <input type='hidden' name='action' value='meno'>
             <input type='hidden' name='index' value='$index'>
-            <button type='submit' class='btn-qty' $disabledMeno aria-label='Diminuisci quantità di $nomeProdotto' title='Diminuisci'>-</button>
+            <button type='submit' class='btn-qty-meno' $disabledMeno aria-label='Diminuisci quantità di $nomeProdotto' title='Diminuisci'>-</button>
         </form>";
 
         // Form per il tasto PIU
@@ -155,7 +155,7 @@ if (isset($_SESSION['carrello']) && count($_SESSION['carrello']) > 0) {
         <form action='carrello' method='POST' class='form-qty'>
             <input type='hidden' name='action' value='piu'>
             <input type='hidden' name='index' value='$index'>
-            <button type='submit' class='btn-qty' aria-label='Aumenta quantità di $nomeProdotto' title='Aumenta'>+</button>
+            <button type='submit' class='btn-qty-piu' aria-label='Aumenta quantità di $nomeProdotto' title='Aumenta'>+</button>
         </form>";
 
         // form per il tasto rimuovi
@@ -231,7 +231,7 @@ if (isset($_SESSION['carrello']) && count($_SESSION['carrello']) > 0) {
         </table>
 
         <div class='azioniCarrello'>
-            <a href='torte' class='link-indietro'>&larr; Continua acquisti</a>
+            <a href='torte' class='generic-button'>&larr; Continua acquisti</a>
             $pulsanteProcedi
         </div>
     </div>";
