@@ -163,7 +163,7 @@ if (isset($_SESSION['carrello']) && count($_SESSION['carrello']) > 0) {
         <form action='carrello' method='POST'>
             <input type='hidden' name='action' value='rimuovi'>
             <input type='hidden' name='index' value='$index'>
-            <button type='submit' class='link-rimuovi' aria-label='Rimuovi $nomeProdotto dal carrello'>Rimuovi</button>
+            <button type='submit' aria-label='Rimuovi $nomeProdotto dal carrello'>Rimuovi</button>
         </form>";
 
         $righeProdotti .= "<tr>
@@ -206,8 +206,8 @@ if (isset($_SESSION['carrello']) && count($_SESSION['carrello']) > 0) {
                     Ogni riga descrive un prodotto con nome, informazioni aggiuntive sull'ordine, quantità, prezzo unitario e totale parziale. 
                     Alla fine della tabella è mostrato il totale complessivo dell'ordine. </p>
     <div id='contenitoreTabella'>
-        <table class='tabella-carrello' aria-describedby='descrizioneCarrello'>
-            <caption>Riepilogo prodotti nel carrello</caption>
+        <table aria-describedby='descrizioneCarrello'>
+            <caption class=\"sr-only\">Riepilogo prodotti nel carrello</caption>
             <thead>
                 <tr>
                     <th scope='col'>Prodotto</th>
