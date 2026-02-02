@@ -79,7 +79,7 @@ if($connessione){
             
             <thead>
                 <tr>
-                    <th scope=\"col\" abbr=\"Numero\">Numero</th>
+                    <th scope=\"col\">Numero</th>
                     <th scope=\"col\" abbr=\"Ritiro\">Data di ritiro</th>                
                     <th scope=\"col\">Nominativo</th>
                     <th scope=\"col\">Telefono</th>

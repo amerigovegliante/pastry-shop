@@ -234,7 +234,7 @@ if(!$connessione){
                             <caption>Tabella dei prodotti disponibili</caption>
                             <thead>
                                 <tr>
-                                    <th scope="col">ID</th>
+                                    <th scope="col">Numero</th>
                                     <th scope="col">Tipo</th>
                                     <th scope="col">Nome</th>
                                     <th scope="col">Descrizione</th>
