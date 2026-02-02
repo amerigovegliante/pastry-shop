@@ -205,7 +205,7 @@ if (isset($_SESSION['carrello']) && count($_SESSION['carrello']) > 0) {
     }*/
 
     $contenutoGenerato = "
-    <p id=\"descrizioneCarrello\" class=\"visually-hidden\">Tabella organizzata per colonne che elenca i prodotti all'interno del carrello. 
+    <p id=\"descrizioneCarrello\" class=\"sr-only\">Tabella organizzata per colonne che elenca i prodotti all'interno del carrello. 
                     Ogni riga descrive un prodotto con nome, informazioni aggiuntive sull'ordine, quantità, prezzo unitario e totale parziale. 
                     Alla fine della tabella è mostrato il totale complessivo dell'ordine. </p>
     <div id='contenitoreTabella'>

@@ -179,7 +179,7 @@ if($connessione){
             
             $tabellaOrdiniHTML .= "
             <tr>
-                <th scope='row' data-label='Numero'>#$idSicuro</th> 
+                <th scope='row' data-label='Numero'>$idSicuro</th> 
                 <td data-label='Data'>$dataIta</td>
                 <td data-label='Stato'><span class='stato-tag s-$statoKey'>$statoTesto</span></td>
                 <td data-label='Totale'>€$totaleFmt</td>
