@@ -68,7 +68,7 @@ if($connessione && empty($listaItem)){
                    . "\" alt=\"" . htmlspecialchars($altText) . "\">
                     <div class=\"infoTorta\"> 
                         <h3>".htmlspecialchars($Item['nome'])."</h3> 
-                        <span class=\"prezzoTorta\">€".number_format($Item['prezzo'], 2, ',', '.'). $suffisso."</span> 
+                        <span class=\"prezzoItem\">€".number_format($Item['prezzo'], 2, ',', '.'). $suffisso."</span> 
                     </div>
                 </a>
              </article> </li>";
