@@ -32,7 +32,7 @@
     --success: #1B5E20;         /* Verde scuro (AAA su bianco) */
 }
 
-#confermaOrdine h2 {
+#conferma-ordine-titolo h2 {
     text-align: center;
 }
 
