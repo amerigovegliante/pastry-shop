@@ -1688,24 +1688,24 @@ tbody td a:hover {
     flex-direction: column;
 }
 
-.infoTorta h2 {
+.infoTorta h3 {
     font-size: 1.7rem;
     color: var(--primary);
     margin-bottom: 1rem;
     transition: color 0.3s ease;
 }
-.cardTorta > a h2 {
+.cardTorta > a h3 {
     text-decoration: underline;
     text-decoration-style: solid;
     border: 1px dotted var(--surface-light);
 }
 
 /* stato visited */
-.cardTorta > a:visited h2 {
+.cardTorta > a:visited h3 {
     border-color: var(--primary);
 }
 
-.cardTorta:hover .infoTorta h2 {
+.cardTorta:hover .infoTorta h3 {
     color: var(--primary-light);
 }
 
