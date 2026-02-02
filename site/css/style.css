@@ -2633,3 +2633,7 @@ footer address {
 }
 }
 
+.contenuto {
+    width: 70%;
+    margin: auto;
+}
