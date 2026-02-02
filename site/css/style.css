@@ -41,7 +41,9 @@
     --table-link: #5D2906
 }
 
-
+#conferma-ordine-titolo h2 {
+    text-align: center;
+}
 
 body {
     font-family: 'Inter', sans-serif;
@@ -81,6 +83,19 @@ h1, h2, h3 {
     width: 1px;
     height: 1px;
     overflow: hidden;
+}
+
+/* Utility per accessibilità */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 /* ====================================
@@ -205,6 +220,22 @@ nav#menu #currentlink::after, nav#menu #currentLink::after {
 .icon-btn:hover svg {
     stroke: var(--primary-light);
 }
+
+.icon-btn[aria-current="page"] {
+    cursor: default;
+    pointer-events: none;
+}
+
+
+.icon-btn[aria-current="page"]:hover {
+    background: none;
+    transform: none;
+}
+
+.icon-btn[aria-current="page"]:hover svg {
+    stroke: var(--primary);
+}
+
 .header-icons a .icon-text {
     display: block;
     text-align: center;
@@ -357,6 +388,8 @@ main {
     background: var(--box-bg);
     border-radius: 20px;
     border: 1px solid var(--primary);
+    width: 70%;
+    margin: auto;
 }
 
 .section-header {
@@ -838,7 +871,7 @@ aside a:hover::after {
 }
 
 .campoDati textarea {
-    resize: vertical;
+    resize: none;
     min-height: 150px;
 }
 
@@ -1183,7 +1216,7 @@ button[type="submit"]:active {
     font-family: 'Inter', sans-serif;
     font-size: 1rem;
     transition: all 0.3s ease;
-    resize: vertical;
+    resize: none;
 }
 
 #testoTarga:focus {
@@ -1266,13 +1299,22 @@ button[type="submit"]:active {
 .errore {
     background: #FFEBEE;
     color: var(--error);
-    padding: 2rem;
+    padding: 1em;
     border-radius: 15px;
     text-align: center;
     font-size: 1.1rem;
     border-left: 4px solid var(--error);
 }
 
+.successo {
+    background: #ecffea;
+    color: var(--success);
+    padding: 1em;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 1.1rem;
+    border-left: 4px solid var(--success);
+}
 /* Responsive */
 @media (max-width: 968px) {
     .product-detail-container {
@@ -1539,7 +1581,7 @@ tbody td a:hover {
 }
 
 .cardTorta {
-    background: var(--surface-light);
+    background: var(--bg-cream);
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 10px 40px var(--shadow);
@@ -2288,7 +2330,6 @@ footer address {
     align-items: center;
     justify-content: center;
     padding: 4rem 2rem;
-    background: var(--primary);
 }
 
 .error-content {
