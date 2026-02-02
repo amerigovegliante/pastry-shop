@@ -181,8 +181,8 @@ header.scrolled {
     font-size: 0.9rem;
     color: var(--primary-light);
     font-style: italic;
+    white-space: nowrap;
 }
-
 
 /* ====================================
    NAVIGATION
@@ -196,6 +196,8 @@ nav#menu ul {
     display: flex;
     gap: 2rem;
     list-style: none;
+    flex-wrap: nowrap; /*le voci del menu non vanno a capo*/
+    white-space: nowrap;
 }
 
 nav#menu a, nav#menu li, nav#menu span {
