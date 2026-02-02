@@ -32,7 +32,9 @@
     --success: #1B5E20;         /* Verde scuro (AAA su bianco) */
 }
 
-
+#confermaOrdine h2 {
+    text-align: center;
+}
 
 body {
     font-family: 'Inter', sans-serif;

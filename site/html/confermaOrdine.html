@@ -66,7 +66,7 @@
         <section class="contenuto" id="confermaOrdine">
             <h2>Dati per il ritiro</h2>
 
-            <form action="checkout" method="POST" class="form-conferma">
+            <form action="checkout" method="POST" class="form-container">
 
                 <fieldset>
                     <legend>Intestatario Ordine</legend>
@@ -80,17 +80,17 @@
                     </div>
 
                     <div class="riga-input">
-                        <div>
+                        <div class="campoDati">
                             <label for="nome">Nome <span aria-hidden="true">*</span></label>
                             <input type="text" id="nome" name="nome" required autocomplete="given-name">
                         </div>
-                        <div>
+                        <div class="campoDati">
                             <label for="cognome">Cognome <span aria-hidden="true">*</span></label>
                             <input type="text" id="cognome" name="cognome" required autocomplete="family-name">
                         </div>
                     </div>
 
-                    <div>
+                    <div class="campoDati">
                         <label for="telefono">Telefono <span aria-hidden="true">*</span></label>
                         <input type="tel" id="telefono" name="telefono" required pattern="[0-9]{10}" autocomplete="tel">
                     </div>
@@ -100,18 +100,18 @@
                     <legend>Dettagli Ritiro</legend>
 
                     <div class="riga-input"> 
-                        <div>
+                        <div class="campoDati">
                             <label for="dataRitiro">Data (minimo 48h preavviso) <span aria-hidden="true">*</span></label>
                             <input type="date" id="dataRitiro" name="dataRitiro" min="[minDate]" value="[minDate]" required>
-                        </div>
+                        </div class="campoDati">
                         
-                        <div>
+                        <div class="campoDati">
                             <label for="oraRitiro">Orario (08:00 - 19:30) <span aria-hidden="true">*</span></label>
                             <input type="time" id="oraRitiro" name="oraRitiro" min="08:00" max="19:30" value="10:00" required>
                         </div>
                     </div>
 
-                    <div>
+                    <div class="campoDati">
                         <label for="annotazioni">Note aggiuntive (facoltativo)</label>
                         <textarea id="annotazioni" name="annotazioni" rows="3"
                             placeholder="Es. intolleranze particolari, nome sul citofono..."></textarea>
