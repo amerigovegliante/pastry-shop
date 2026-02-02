@@ -221,6 +221,34 @@ main {
     min-height: calc(100vh - 400px);
     padding: 4rem 2rem;
 }
+/* il link NON sottolinea nulla */
+.card-link {
+    text-decoration: none;
+}
+
+/* sottolineo SOLO il titolo */
+.card-link dt {
+    text-decoration: underline;
+    text-decoration-style: solid;
+}
+
+/* stato visited */
+.card-link:visited dt {
+    text-decoration-style: dotted;
+}
+
+.card-link-prodotto {
+    text-decoration: none;
+}
+/* sottolineo SOLO il titolo */
+.card-link-prodotto h2 {
+    text-decoration: underline;
+    text-decoration-style: solid;
+}
+/* stato visited */
+.card-link-prodotto:visited h2 {
+    text-decoration-style: dotted;
+}
 
 /* ====================================
    HOMEPAGE - HERO

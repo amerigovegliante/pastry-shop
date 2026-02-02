@@ -58,7 +58,7 @@ if($connessione && empty($listaItem)){
             $imgSrc = !empty($Item['immagine']) ? "site/img/" . $Item['immagine'] : "site/img/placeholder.jpeg";
             $altText = !empty($Item['testo_alternativo']) ? $Item['testo_alternativo'] : "Immagine non disponibile";
             $listaItem .="<li> <article class=\"cardTorta\">     
-                <a href=\"dettagli?ID=".urlencode($Item['id'])."\" style=\"text-decoration:none; color:inherit;\"> 
+                <a href=\"dettagli?ID=".urlencode($Item['id'])."\" class=\"card-link-prodotto\"> 
                    <img src=\"" . htmlspecialchars($imgSrc)
                    . "\" alt=\"" . htmlspecialchars($altText) . "\">
                     <div class=\"infoTorta\"> 
