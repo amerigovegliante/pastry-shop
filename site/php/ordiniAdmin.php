@@ -91,7 +91,7 @@ if($connessione){
                     <th scope=\"col\">Totale</th>
                     <th scope=\"col\">Annotazioni</th>
                     <th scope=\"col\">Stato</th>
-                    <th scope=\"col\">Dettagli</th>
+                    <th scope=\"col\"><span class=\"sr-only\">Azioni</span></th>
                 </tr>
             </thead>
             <tbody>";
@@ -101,19 +101,19 @@ if($connessione){
             
             $tabella .="<tr id=\"$idRow\">
                 <th scope=\"row\">".htmlspecialchars($Ordine['id'])."</th>
-                <td data-title=\"Ritiro\">".date("d/m H:i", strtotime($Ordine['ritiro']))."</td>
+                <td data-label=\"Ritiro\">".date("d/m H:i", strtotime($Ordine['ritiro']))."</td>
                 
-                <td data-title=\"Nominativo\">".htmlspecialchars($Ordine['nome'] ?? '')." ".htmlspecialchars($Ordine['cognome'] ?? '')."</td>
+                <td data-label=\"Nominativo\">".htmlspecialchars($Ordine['nome'] ?? '')." ".htmlspecialchars($Ordine['cognome'] ?? '')."</td>
                 
-                <td data-title=\"Telefono\"><a href=\"tel:+".htmlspecialchars($Ordine['telefono'] ?? '')."\">".htmlspecialchars($Ordine['telefono'] ?? '')."</a></td>
+                <td data-label=\"Telefono\"><a href=\"tel:+".htmlspecialchars($Ordine['telefono'] ?? '')."\">".htmlspecialchars($Ordine['telefono'] ?? '')."</a></td>
                 
-                <td data-title=\"Totale\">€".number_format($Ordine['totale'], 2)."</td>
+                <td data-label=\"Totale\">€".number_format($Ordine['totale'], 2)."</td>
                 
-                <td data-title=\"Annotazioni\">".htmlspecialchars($Ordine['annotazioni'] ?? '')."</td>
+                <td data-label=\"Annotazioni\">".htmlspecialchars($Ordine['annotazioni'] ?? '')."</td>
                 
-                <td data-title=\"Stato\">
+                <td data-label=\"Stato\">
                     <div class=\"stato-ordine\">
-                        <label class=\"visually-hidden\" for=\"$idSelect\">Stato ordine</label>
+                        <label class=\"sr-only\" for=\"$idSelect\">Stato ordine</label>
                         
                         <select id=\"$idSelect\" name=\"stato[".$Ordine['id']."]\" data-id=\"".$Ordine['id']."\" class=\"select-stato\">
                             <option value=\"1\" " . ($Ordine['stato'] == 1 ? 'selected' : '') . ">In attesa</option>
@@ -123,7 +123,7 @@ if($connessione){
                         </select>
                     </div>
                 </td>
-                <td><a href=\"dettaglio-ordine?id=".urlencode($Ordine['id'])."\" class=\"pulsanteGenerico\">Dettagli</a></td>
+                <td data-label=\"Azioni\"><a href=\"dettaglio-ordine?id=".urlencode($Ordine['id'])."\" class=\"generic-button\" aria-label=\"Dettagli ordine numero ".htmlspecialchars($Ordine['id'])."\">Dettagli</a></td>
             </tr>";
         }
         $tabella .= "</tbody></table></form>";
