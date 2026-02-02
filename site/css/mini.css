@@ -250,6 +250,20 @@
         grid-template-columns: 1fr;
         gap: 2rem;
     }
+
+    table td::before {
+        content: attr(data-label) ":";
+    }
+
+    table td[data-label="Azioni"]::before {
+        content: none;
+    }
+
+    table td[data-label="Stato"]::before {
+        content: none;
+    }
+
+
 }
 
 /* MOBILE - max-width: 480px */
@@ -385,18 +399,4 @@
     .welcome-icon svg {
         width: 48px;
         height: 48px;
-    }
-
-    .tabella-ordini td::before {
-        content: attr(data-label) ":";
-    }
-
-    .tabella-ordini td[data-label="Azioni"]::before {
-        content: none;
-    }
-
-    .tabella-ordini .link-dettaglio {
-        text-align: center;
-        display: block;
-        width: 100%;
     }

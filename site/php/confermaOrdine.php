@@ -73,9 +73,9 @@ $totaleFormat = number_format($totaleOrdine, 2, ',', '.');
 $minDate = date('Y-m-d', strtotime('+2 day'));
 
 // Sostituzione Segnaposto
-$paginaHTML = str_replace("[valoreNome]", htmlspecialchars($nomePre), $paginaHTML);
-$paginaHTML = str_replace("[valoreCognome]", htmlspecialchars($cognomePre), $paginaHTML);
-$paginaHTML = str_replace("[valoreTelefono]", htmlspecialchars($telefonoPre), $paginaHTML);
+$paginaHTML = str_replace("[valoreNome]", htmlspecialchars($nomePre, ENT_QUOTES, 'UTF-8'), $paginaHTML);
+$paginaHTML = str_replace("[valoreCognome]", htmlspecialchars($cognomePre, ENT_QUOTES, 'UTF-8'), $paginaHTML);
+$paginaHTML = str_replace("[valoreTelefono]", htmlspecialchars($telefonoPre, ENT_QUOTES, 'UTF-8'), $paginaHTML);
 $paginaHTML = str_replace("[minDate]", $minDate, $paginaHTML);
 $paginaHTML = str_replace("[totale]", $totaleFormat, $paginaHTML);
 

@@ -12,7 +12,11 @@ if (!isset($_SESSION['ruolo']) || !isset($_SESSION['carrello']) || count($_SESSI
     exit;
 }
 if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-    die("Errore di sicurezza. Torna al carrello.");
+    unset($_SESSION['csrf_token']);
+    $messaggioErrore = "Sessione scaduta o errore di sicurezza. Per favore, torna al carrello e riprova.";
+    
+    include __DIR__ . '/403.php';
+    exit;
 }
 unset($_SESSION['csrf_token']); 
 

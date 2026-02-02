@@ -247,12 +247,12 @@ if(!$connessione){
             $statoTesto = $item['attivo'] ? '<span aria-hidden="true">✔</span> Disponibile' : '<span aria-hidden="true">✖</span> Non Disponibile';
 
             $tabellaItems .= '<tr>' .
-            '<th scope="row">' . htmlspecialchars($item['id']) . '</th>' .
-            '<td>' . htmlspecialchars($item['tipo']) . '</td>' .
-            '<td>' . htmlspecialchars($item['nome']) . '</td>' .
-            '<td>' . htmlspecialchars($item['descrizione']) . '</td>' .
-            '<td>' . number_format($item['prezzo'], 2, ',', '.') . '</td>' .
-            '<td>
+            '<th scope="row" data-label="ID">' . htmlspecialchars($item['id']) . '</th>' .
+            '<td data-label="Tipo">' . htmlspecialchars($item['tipo']) . '</td>' .
+            '<td data-label="Nome">' . htmlspecialchars($item['nome']) . '</td>' .
+            '<td data-label="Descrizione">' . htmlspecialchars($item['descrizione']) . '</td>' .
+            '<td data-label="Prezzo">' . number_format($item['prezzo'], 2, ',', '.') . '</td>' .
+            '<td data-label="Stato">
                 <form method="post" onsubmit="return confirm(\'Vuoi davvero cambiare lo stato di questo prodotto?\');">
                     <input type="hidden" name="csrf_token" value="' . htmlspecialchars($token) . '">
                     <input type="hidden" name="id_cambioStato" value="' . htmlspecialchars($item['id']) . '">
