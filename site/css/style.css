@@ -1916,6 +1916,12 @@ footer address {
     gap: 1em;
 }
 .admin-header h3 { margin: 0; color: var(--primary); text-transform: uppercase; }
+
+.admin-azioni {
+    display: flex;
+    gap: 1em;
+    flex-wrap: wrap;
+}
 /*
 .bottone-admin {
     display: inline-block;
