@@ -38,19 +38,13 @@ if(isset($_SESSION['email'])){
     $email = $_SESSION['email'];
 }
 
-function pulisciInput($value){
-    $value = trim($value);              
-    $value = strip_tags($value);    
-    return $value;
-}
-
 if(isset($_POST['submit'])){
 
     if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
         $erroreDB = '<p class="errore" role="alert">Errore di sicurezza. Ricarica la pagina.</p>';
     } else {
-        $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-        $domanda = pulisciInput($_POST['domanda']);
+        $email = trim($_POST['email'] ?? '');
+        $domanda = trim($_POST['domanda'] ?? '');
 
         if (empty($email)) {
             $erroreEmail = '<p class="errore" role="alert">Inserire una email</p>';
