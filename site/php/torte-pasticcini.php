@@ -42,7 +42,7 @@ if ($page === 'torte'){
     $NessunaDisponibilità="nessuna torta disponibile";
 	$tipo="torta";
     $tipoTitolo="torte";
-    $suffisso="\porzione";
+    $suffisso="<small>\ porzione</small>";
     $titolo="Torte";
 	$LinkPagina="<li id='currentLink'>Torte</li><li><a href=\"pasticcini\">Pasticcini</a></li>";
 }else if ($page === 'pasticcini'){
