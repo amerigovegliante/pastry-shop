@@ -122,7 +122,7 @@ $contenutoPagina = str_replace('[BASE_URL]', $baseUrl, $contenutoPagina);
 
 // per le ancore #main, #header, ecc. recupero l'indirizzo esatto della pagina corrente (es. /sito/chi-siamo)
 $uriCorrente = $_SERVER['REQUEST_URI'];
-$contenutoPagina = str_replace('[URI_CORRENTE]', $uriCorrente, $contenutoPagina);
+$contenutoPagina = str_replace('[URI_CORRENTE]', htmlspecialchars($uriCorrente, ENT_QUOTES, 'UTF-8'), $contenutoPagina);
 
 echo $contenutoPagina;
 ?>
