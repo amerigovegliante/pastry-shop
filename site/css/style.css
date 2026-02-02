@@ -1581,7 +1581,7 @@ tbody td a:hover {
 }
 
 .cardTorta {
-    background: var(--bg-cream);
+    background: white;
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 10px 40px var(--shadow);
@@ -1857,8 +1857,9 @@ footer address {
     color: white;
     text-decoration: none;
     font-weight: bold;
-    border-radius: 5px;
+    border-radius: 50%;
     transition: background 0.3s;
+    margin-bottom: 0.3em;
 }
 /*.bottone-admin:hover { background-color: var(--hoverbgcolor); color: var(--txtcolor); }*/
 
