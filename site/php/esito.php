@@ -26,7 +26,7 @@ $contenutoEsito = "";
 
 if ($dati['successo'] === true) {
     // --- CASO POSITIVO ---
-    $titoloPagina = "Ordine Confermato!";
+    $titoloPagina = "Ordine Inviato!";
     $classeEsito = "titolo-successo";
     
     $totaleFormat = "€" . number_format($dati['totale'], 2, ',', '.');
@@ -37,7 +37,7 @@ if ($dati['successo'] === true) {
             <img src='site/img/ordineInviato.gif' alt='Conferma ordine inviato' class='img-esito-gif'>
         </div>
         
-        <p class='messaggio-intro'>Grazie! Il tuo ordine è stato registrato correttamente.</p>
+        <p class='messaggio-intro'>Grazie! Il tuo ordine è stato inviato correttamente.</p>
         
         <dl class='dati-riepilogo'>
             <div class='riga-dati'>
