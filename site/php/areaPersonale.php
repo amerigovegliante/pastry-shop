@@ -107,7 +107,7 @@ if($connessione){
         $tabellaOrdiniHTML = "
         <p id=\"descr\" class=\"visually-hidden\">Tabella organizzata per colonne che mostra lo storico degli ordini effettuati dall'utente.
         Ogni riga descrive un'ordine con numero identificativo, data di ritiro, stato, prezzo totale, azioni.</p>
-        <div class='table-container' tabindex='0'> <table class='tabella-ordini' aria-describedby='descr'>
+        <table aria-describedby='descr'>
                 <caption>Storico degli ordini effettuati</caption>
                 <thead>
                     <tr>
@@ -129,16 +129,16 @@ if($connessione){
             
             $tabellaOrdiniHTML .= "
             <tr>
-                <th scope='row' data-label='Numero'>#{$o['id']}</th> 
+                <th scope='row' data-label='Numero'>{$o['id']}</th> 
                 <td data-label='Data'>$dataIta</td>
                 <td data-label='Stato'><span class='stato-tag s-{$o['stato']}'>$statoTesto</span></td>
                 <td data-label='Totale'>€$totaleFmt</td>
                 <td data-label='Azioni'>
-                     <a href=\"dettaglio-ordine?id=".urlencode($o['id'])."\" class='link-dettaglio' aria-label='Vedi dettagli ordine numero {$o['id']}'>Dettagli</a>
+                     <a href=\"dettaglio-ordine?id=".urlencode($o['id'])."\" class='generic-button' aria-label='Vedi dettagli ordine numero {$o['id']}'>Dettagli</a>
                 </td> 
             </tr>";
         }
-        $tabellaOrdiniHTML .= "</tbody></table></div>";
+        $tabellaOrdiniHTML .= "</tbody></table>";
     }
 }
 

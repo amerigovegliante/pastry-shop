@@ -64,10 +64,19 @@ if($connessione){
 
         // IMMAGINE
         $imgSrc = ""; 
+        $altText = "";
+
         if (!empty($Item['immagine'])) {
             $imgSrc = "site/img/" . $Item['immagine'];
+            
+            if (!empty($Item['testo_alternativo'])) {
+                $altText = $Item['testo_alternativo'];
+            } else {
+                $altText = "Foto del dolce " . $Item['nome'];
+            }
         } else {
             $imgSrc = "site/img/placeholder.jpeg";
+            $altText = "Immagine non disponibile per " . $Item['nome'];
         }
 
         // SEZIONE DETTAGLI VISIVI
@@ -79,15 +88,14 @@ if($connessione){
                           " . $listaAllergeni . "
                       </section>
                       <figure>
-                         <img src=\"" . htmlspecialchars($imgSrc) . "\" class=\"cornice\">
+                         <img src=\"" . htmlspecialchars($imgSrc) . "\" alt=\"" . htmlspecialchars($altText) . "\" class=\"cornice\">
                       </figure>
                       </div>";
 
         // SEZIONE FORM DI ACQUISTO
         $formAcquisto .= "<section class=\"acquistoItem\">
                 <form method=\"post\" action=\"carrello\">
-                    <input type=\"hidden\" name=\"ID\" value=\"".htmlspecialchars($Item['id'])."\">
-                    <input type=\"hidden\" name=\"paginaRitorno\" value=\"".($tipoItem === 'torta' ? 'torte' : 'pasticcini')."\">";
+                    <input type=\"hidden\" name=\"ID\" value=\"".htmlspecialchars($Item['id'])."\">";
         // --- LOGICA TORTE ---
         if($tipoItem === 'torta'){
             $tipoBreadcrumb = "<a href=\"torte\">Torte</a>";

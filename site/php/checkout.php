@@ -32,10 +32,10 @@ try {
 
     // Recupero Dati
     $emailUtente = $_SESSION['email'];
-    $nomeOrdine = htmlspecialchars($_POST['nome']);
-    $cognomeOrdine = htmlspecialchars($_POST['cognome']);
-    $telefonoOrdine = htmlspecialchars($_POST['telefono']);
-    $annotazioni = isset($_POST['annotazioni']) ? htmlspecialchars($_POST['annotazioni']) : null;
+    $nomeOrdine = trim(strip_tags($_POST['nome']));
+    $cognomeOrdine = trim(strip_tags($_POST['cognome']));
+    $telefonoOrdine = trim(strip_tags($_POST['telefono']));
+    $annotazioni = isset($_POST['annotazioni']) ? trim(strip_tags($_POST['annotazioni'])) : null;
     $dataOrdinazione = date('Y-m-d H:i:s');
     
     // Gestione Data/Ora Ritiro

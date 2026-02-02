@@ -244,10 +244,10 @@ if(!$connessione){
                             </thead>
                             <tbody>';
         foreach ($items as $item){
-            $statoTesto = $item['attivo'] ? '<span aria-hidden="true">✔</span> Disponibile' : '<span aria-hidden="true">🔴</span> Non Disponibile';
+            $statoTesto = $item['attivo'] ? '<span aria-hidden="true">✔</span> Disponibile' : '<span aria-hidden="true">✖</span> Non Disponibile';
 
             $tabellaItems .= '<tr>' .
-            '<td scope="row">' . htmlspecialchars($item['id']) . '</td>' .
+            '<th scope="row">' . htmlspecialchars($item['id']) . '</th>' .
             '<td>' . htmlspecialchars($item['tipo']) . '</td>' .
             '<td>' . htmlspecialchars($item['nome']) . '</td>' .
             '<td>' . htmlspecialchars($item['descrizione']) . '</td>' .

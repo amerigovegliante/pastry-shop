@@ -80,7 +80,7 @@ $paginaHTML = str_replace("[minDate]", $minDate, $paginaHTML);
 $paginaHTML = str_replace("[totale]", $totaleFormat, $paginaHTML);
 
 $inputToken = "<input type='hidden' name='csrf_token' value='$token'>";
-$paginaHTML = str_replace('<form action="checkout" method="POST" class="form-conferma">', '<form action="checkout" method="POST" class="form-conferma">' . $inputToken, $paginaHTML);
+$paginaHTML = str_replace('[csrfToken]', $inputToken, $paginaHTML);
 
 echo $paginaHTML;
 ?>
