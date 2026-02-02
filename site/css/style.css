@@ -299,6 +299,8 @@ main {
 }
 
 
+
+
 /* ====================================
    HOMEPAGE - HERO
    ==================================== */
@@ -963,6 +965,18 @@ button[type="submit"] {
     box-shadow: 0 10px 30px rgba(139, 69, 19, 0.3);
     margin-top: 1rem;
 }
+button[type="submit"].aggiorna-tabella {
+    width: auto;
+    margin-top: 0;
+    white-space: nowrap;
+}
+
+.aggiorna-tabella {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    white-space: nowrap;
+}
 
 button[type="submit"]:hover {
     transform: translateY(-3px);
@@ -1442,6 +1456,21 @@ caption {
     text-align: left;
     font-weight: 600;
 }
+
+.caption-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    caption-side: top;
+    padding: 0.5rem 0;
+    font-weight: 600;
+}
+
+.caption-text {
+    text-align: left;
+}
+
+
 /*
 thead {
     background: var(--table-bg-head);
