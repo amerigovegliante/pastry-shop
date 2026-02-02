@@ -1744,6 +1744,9 @@ tbody td a:hover {
     text-align: center; /* Centra il testo orizzontalmente */
     margin: 0 auto; /* Centra il contenitore stesso se ha una larghezza definita */
 }
+.box-checkout {
+    float: right;
+}
 
 .messaggio-vuoto {
     font-size: 1.2rem;

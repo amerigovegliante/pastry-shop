@@ -207,7 +207,7 @@ if (isset($_SESSION['carrello']) && count($_SESSION['carrello']) > 0) {
                     Alla fine della tabella è mostrato il totale complessivo dell'ordine. </p>
     <div id='contenitoreTabella'>
         <table aria-describedby='descrizioneCarrello'>
-            <caption class=\"sr-only\">Riepilogo prodotti nel carrello</caption>
+            <caption>Riepilogo prodotti nel carrello</caption>
             <thead>
                 <tr>
                     <th scope='col'>Prodotto</th>

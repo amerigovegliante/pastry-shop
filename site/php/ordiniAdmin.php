@@ -118,7 +118,7 @@ if($connessione){
                         </select>
                     </div>
                 </td>
-                <td><a href=\"dettaglio-ordine?id=".urlencode($Ordine['id'])."\" class=\"pulsanteGenerico\">Vedi Dettagli</a></td>
+                <td><a href=\"dettaglio-ordine?id=".urlencode($Ordine['id'])."\" class=\"pulsanteGenerico\">Dettagli</a></td>
             </tr>";
         }
         $tabella .= "</tbody></table></form>";

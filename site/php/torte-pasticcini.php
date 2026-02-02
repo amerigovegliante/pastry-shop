@@ -67,7 +67,7 @@ if($connessione && empty($listaItem)){
                    <img src=\"" . htmlspecialchars($imgSrc)
                    . "\" alt=\"" . htmlspecialchars($altText) . "\">
                     <div class=\"infoTorta\"> 
-                        <h2>".htmlspecialchars($Item['nome'])."</h2> 
+                        <h3>".htmlspecialchars($Item['nome'])."</h3> 
                         <span class=\"prezzoTorta\">€".number_format($Item['prezzo'], 2, ',', '.'). $suffisso."</span> 
                     </div>
                 </a>
