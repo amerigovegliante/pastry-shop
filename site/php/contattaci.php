@@ -19,7 +19,7 @@ $erroreDomanda ='';
 $erroreDB ='';          //errore in accesso o inserimento dati nel database
 $confermaInvio ='';     //inserimento dei dati avvenuto con successo
 $ip ='';                //ip utente 
-$limite = 30;            //numero di domande che si possono inviare nello stesso giorno dallo stesso ip
+$limite = 3;            //numero di domande che si possono inviare nello stesso giorno dallo stesso ip
 // Controllo se c'è un messaggio di successo in sessione (Pattern PRG)
 if (isset($_SESSION['success_msg'])) {
     $confermaInvio = $_SESSION['success_msg'];
