@@ -191,13 +191,13 @@ if (isset($_SESSION['carrello']) && count($_SESSION['carrello']) > 0) {
     if (isset($_SESSION['ruolo'])) {
         $pulsanteProcedi = "
         <div class='box-checkout'>
-            <a href='conferma-ordine' class='pulsanteGenerico'>Procedi con l'ordine &rarr;</a>
+            <a href='conferma-ordine' class='generic-button'>Procedi con l'ordine &rarr;</a>
         </div>";
     } else {
         $pulsanteProcedi = "
         <div class='login-alert'>
             <p>Per concludere l'ordine è necessario accedere.</p>
-            <a href='login' class='pulsanteGenerico'>Accedi o Registrati</a>
+            <a href='login' class='generic-button'>Accedi o Registrati</a>
         </div>";
     }
 
@@ -242,8 +242,8 @@ if (isset($_SESSION['carrello']) && count($_SESSION['carrello']) > 0) {
     <div class='carrello-vuoto'>
         <p class='messaggio-vuoto'>Il tuo carrello è vuoto.</p>
         <div class='bottoni-vuoto'>
-            <a href='torte' class='pulsanteGenerico'>Le nostre Torte</a>
-            <a href='pasticcini' class='pulsanteGenerico'>I nostri Pasticcini</a>
+            <a href='torte' class='generic-button'>Le nostre Torte</a>
+            <a href='pasticcini' class='generic-button'>I nostri Pasticcini</a>
         </div>
     </div>";
 }
