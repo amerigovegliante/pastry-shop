@@ -816,6 +816,10 @@ aside a:hover::after {
     font-size: 0.95rem;
 }
 
+textarea{
+    resize: none;
+}
+
 .campoDati input,
 .campoDati textarea {
     width: 100%;
