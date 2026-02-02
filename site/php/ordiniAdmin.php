@@ -69,12 +69,14 @@ if($connessione){
     $db->closeDBConnection();
     
     if ($Ordini != null){ 
-        $tabella .= "<p id=\"descr\" class=\"sr-only\">Tabella organizzata per colonne che mostra tutti gli ordini la cui data di ritiro risale al massimo a sette giorni fa.
-                    Ogni riga descrive un'ordinazione con numero identificativo dell'ordine, data di ritiro, nominativo e telefono del cliente,
-                     costo totale, eventuali annotazioni e stato di avanzamento dell'ordine. Lo stato dell'ordine può essere: in attesa, in preparazione, completato o ritirato</p>
+        $tabella .= "
+        <section class=\"contenuto orders-content\">
+        <p id=\"descr\" class=\"sr-only\">Tabella organizzata per colonne che mostra tutti gli ordini la cui data di ritiro risale al massimo a sette giorni fa.
+            Ogni riga descrive un'ordinazione con numero identificativo dell'ordine, data di ritiro, nominativo e telefono del cliente,
+            costo totale, eventuali annotazioni e stato di avanzamento dell'ordine. Lo stato dell'ordine può essere: in attesa, in preparazione, completato o ritirato</p>
         <form method=\"post\" action=\"ordini-amministratore\">
         
-        <table class=\"contenuto\" aria-describedby=\"descr\">    
+        <table aria-describedby=\"descr\">    
             <caption>
                 <div class=\"caption-bar\">
                 <span class=\"caption-text\">Ordini dal ".date("d/m/Y", strtotime("-7 days"))."</span>
@@ -126,7 +128,7 @@ if($connessione){
                 <td data-label=\"Azioni\"><a href=\"dettaglio-ordine?id=".urlencode($Ordine['id'])."\" class=\"generic-button\" aria-label=\"Dettagli ordine numero ".htmlspecialchars($Ordine['id'])."\">Dettagli</a></td>
             </tr>";
         }
-        $tabella .= "</tbody></table></form>";
+        $tabella .= "</tbody></table></form></section>";
     } else {
         $tabella ="<p class='contenuto'> Nessun ordine in attesa </p>"; 
     }

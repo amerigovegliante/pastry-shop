@@ -1484,6 +1484,7 @@ button[type="submit"]:active {
 }
 
 table {
+    max-width: 100%;
     width: 100%;
     border-collapse: collapse;
     background: var(--table-bg);
