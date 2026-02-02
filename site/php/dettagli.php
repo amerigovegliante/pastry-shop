@@ -152,13 +152,6 @@ if($connessione){
     exit;
 }
 
-// GESTIONE BASE URL E URI
-$baseUrl = defined('BASE_URL') ? BASE_URL : '/';
-$uriCorrente = $_SERVER['REQUEST_URI'];
-
-$paginaHTML = str_replace("[BASE_URL]", $baseUrl, $paginaHTML);
-$paginaHTML = str_replace("[URI_CORRENTE]", htmlspecialchars($uriCorrente, ENT_QUOTES, 'UTF-8'), $paginaHTML);
-
 $paginaHTML = str_replace("[DettagliItem]", $Itemdetails, $paginaHTML);
 $paginaHTML = str_replace("[tipoBreadcrumb]", $tipoBreadcrumb, $paginaHTML);
 $paginaHTML = str_replace("[Item]", $nome, $paginaHTML);

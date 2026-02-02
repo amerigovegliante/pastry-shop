@@ -198,3 +198,16 @@ const menuElement = document.getElementById('menu');
 if (menuElement) {
     observer.observe(menuElement, { attributes: true });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const deleteForm = document.querySelector('.form-eliminazione-account');
+    
+    if (deleteForm) {
+        deleteForm.addEventListener('submit', function(e) {
+            const conferma = confirm('Sei sicuro di voler eliminare il tuo account? Questa azione è irreversibile e cancellerà tutti i tuoi dati.');
+            if (!conferma) {
+                e.preventDefault();
+            }
+        });
+    }
+});
