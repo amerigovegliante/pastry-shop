@@ -741,7 +741,7 @@ aside a:hover::after {
    FORMS
    ==================================== */
 .form-container, .login-container, .register-container {
-    background: var(--surface-light);
+    background: var(--bg-cream);
     padding: 3rem;
     border-radius: 20px;
     box-shadow: 0 10px 40px var(--shadow);
@@ -1545,7 +1545,7 @@ tbody td a:hover {
 }
 
 .cardTorta {
-    background: var(--surface-light);
+    background: var(--bg-cream);
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 10px 40px var(--shadow);
