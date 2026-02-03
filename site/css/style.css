@@ -1570,6 +1570,26 @@ tbody td a:hover {
     text-decoration: underline;
 }
 
+.table-scroll {
+    max-height: 420px;     
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 12px;
+    scroll-behavior: smooth;
+}
+
+/* Per far rimanere visibile l'intestazione */
+.table-scroll thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+@media (max-width: 768px) {
+    .table-scroll {
+        max-height: 60vh; /* usa altezza viewport */
+    }
+}
+
 .stato-ordine {
     display: flex;
     align-items: center;
