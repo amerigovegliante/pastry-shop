@@ -211,3 +211,203 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+
+// FORM LATO CLIENT ------------------------------------
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    // regole di validazione
+    const Validators = {
+        email: (val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val),
+        nomeCognome: (val) => /^[a-zA-ZÀ-ÿ\s]+$/u.test(val),
+        telefono: (val) => /^\d{10}$/.test(val),
+        password: (val) => val.length >= 8 && /[A-Z]/.test(val) && /[a-z]/.test(val) && /\d/.test(val) && /[\W_]/.test(val),
+        prezzo: (val) => val !== '' && parseFloat(val) >= 0,
+        descrizione: (val) => val.trim().length > 0 && val.trim().length <= 255,
+        testoBreve: (val) => val.trim().length > 0 && val.trim().length <= 30,
+        file: (input) => {
+            if (input.files.length > 0) {
+                const f = input.files[0];
+                const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
+                return validTypes.includes(f.type) && f.size <= 1048576; // 1MB
+            }
+            return !input.hasAttribute('required');
+        }
+    };
+
+    // creazione e gestione dei meassaggi di errore
+    const UI = {
+        show: (input, msg) => {
+            const errorId = 'err-' + (input.id || input.name); 
+            let errorSpan = document.getElementById(errorId);
+
+            if (!errorSpan) {
+                errorSpan = document.createElement('span');
+                errorSpan.id = errorId;
+                errorSpan.className = 'error-message-js';
+                errorSpan.setAttribute('role', 'alert');
+
+                const parent = input.parentNode.classList.contains('input-with-icon') || 
+                               input.parentNode.classList.contains('file-upload-wrapper') || 
+                               input.parentNode.classList.contains('password-wrapper') 
+                               ? input.parentNode.parentNode 
+                               : input.parentNode;
+                
+                parent.appendChild(errorSpan);
+            }
+
+            errorSpan.textContent = msg;
+            input.setAttribute('aria-invalid', 'true');
+            
+            const currentDescribedBy = input.getAttribute('aria-describedby') || '';
+            if (!currentDescribedBy.includes(errorId)) {
+                input.setAttribute('aria-describedby', (currentDescribedBy + ' ' + errorId).trim());
+            }
+        },
+        
+        reset: (input) => {
+            const errorId = 'err-' + (input.id || input.name);
+            const errorSpan = document.getElementById(errorId);
+
+            if (errorSpan) {
+                errorSpan.remove();
+            }
+            
+            input.removeAttribute('aria-invalid');
+
+            const currentDescribedBy = input.getAttribute('aria-describedby') || '';
+            if (currentDescribedBy.includes(errorId)) {
+                const newDescribedBy = currentDescribedBy.replace(errorId, '').trim();
+                if (newDescribedBy) {
+                    input.setAttribute('aria-describedby', newDescribedBy);
+                } else {
+                    input.removeAttribute('aria-describedby');
+                }
+            }
+        }
+    };
+
+    // funzione di validazione per ogni campo
+    const validateField = (input) => {
+        const val = input.value.trim();
+        const name = input.name || input.id; 
+        
+        UI.reset(input); 
+
+        // required check
+        if (input.type !== 'file' && input.hasAttribute('required') && val === '') {
+            UI.show(input, 'Questo campo è obbligatorio.');
+            return false;
+        }
+
+        let isValid = true;
+        let errorMsg = '';
+
+        // controlli specifici per campo
+        switch (name) {
+            case 'email':
+                // see siamo nel LOGIN, saltiamo il controllo email strict per permettere l'uso di "admin" o "user"
+                if (document.getElementById('formLogin')) break;
+
+                if (val !== '' && !Validators.email(val)) { 
+                    isValid = false; 
+                    errorMsg = 'Formato email non valido (es. nome@esempio.it).'; 
+                }
+                break;
+                
+            case 'nome':
+            case 'cognome':
+                if (document.getElementById('formAggiungiProdotto') && name === 'nome') {
+                    if (!Validators.testoBreve(val)) { isValid = false; errorMsg = 'Massimo 30 caratteri.'; }
+                } else {
+                    if (val !== '' && !Validators.nomeCognome(val)) { isValid = false; errorMsg = 'Sono ammessi solo lettere e spazi.'; }
+                }
+                break;
+
+            case 'telefono':
+                if (val !== '' && !Validators.telefono(val)) { 
+                    isValid = false; 
+                    errorMsg = 'Il numero di telefono deve essere da 10 cifre numeriche, senza spazi, trattini o prefissi.'; 
+                }
+                break;
+
+            case 'password':
+                if (document.getElementById('formLogin')) break;
+                
+                if (!Validators.password(val)) { 
+                    isValid = false; 
+                    errorMsg = 'La password deve contenere almeno 8 caratteri di cui: una lettera maiuscola, una minuscola, un numero e un simbolo speciale (es. @, #, !).'; 
+                }
+                break;
+
+            case 'nuova_password':
+                if (val !== '' && !Validators.password(val)) { 
+                    isValid = false; 
+                    errorMsg = 'La password deve contenere almeno 8 caratteri, una lettera maiuscola, una minuscola, un numero e un simbolo speciale.'; 
+                }
+                break;
+
+            case 'prezzo':
+                if (!Validators.prezzo(val)) { isValid = false; errorMsg = 'Inserire un prezzo valido (es. 10.50).'; }
+                break;
+
+            case 'descrizione':
+            case 'testoAlternativo':
+            case 'messaggio': 
+                if (!Validators.descrizione(val)) { isValid = false; errorMsg = 'Il testo deve essere compreso tra 1 e 255 caratteri.'; }
+                break;
+
+            case 'immagine':
+                if (!Validators.file(input)) { 
+                    isValid = false; 
+                    errorMsg = input.files.length > 0 && input.files[0].size > 1048576 ? 'Il file è troppo grande (Massimo 1MB).' : 'Formato non valido (sono ammessi solo JPG, PNG, WEBP).';
+                }
+                break;
+        }
+
+        if (!isValid) {
+            UI.show(input, errorMsg);
+            return false;
+        }
+
+        return true;
+    };
+
+    // attivatore della validazione sui form
+    const setupFormValidation = (selector) => {
+        const form = selector.startsWith('.') || selector.startsWith('#') 
+                     ? document.querySelector(selector) 
+                     : document.getElementById(selector);
+        
+        if (!form) return;
+
+        const inputs = form.querySelectorAll('input:not([type="hidden"]), select, textarea');
+
+        inputs.forEach(input => {
+            input.addEventListener('blur', () => validateField(input));
+            input.addEventListener('input', () => UI.reset(input));
+        });
+
+        form.addEventListener('submit', (e) => {
+            let formValid = true;
+            inputs.forEach(input => {
+                if (!validateField(input)) formValid = false;
+            });
+
+            if (!formValid) {
+                e.preventDefault();
+                const firstError = form.querySelector('[aria-invalid="true"]');
+                if (firstError) firstError.focus();
+            }
+        });
+    };
+
+    // INIZIALIZZAZIONE
+    setupFormValidation('formRegistrazione');
+    setupFormValidation('formLogin');          
+    setupFormValidation('.profile-form');      
+    setupFormValidation('formAggiungiProdotto'); 
+    setupFormValidation('formContattaci'); 
+
+});
