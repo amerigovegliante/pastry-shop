@@ -1149,6 +1149,12 @@ a{
 a:visited{
     border-color: var(--primary);
 }
+footer a{
+    border: 1px dotted var(--text-dark);
+}
+footer a{
+    border: 1px dotted var(--box-bg);
+}
 
 .register-link a, .login-link a {
     color: var(--primary);
