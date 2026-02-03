@@ -2803,6 +2803,202 @@ footer address {
     display: inline-block;
     width: 49%;
 }
+
+/* ====================================
+   PAGINA ESITO ORDINE
+   ==================================== */
+
+#esitoOrdine {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+/* Titoli Esito */
+#esitoOrdine h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    line-height: 1.2;
+}
+
+.titolo-successo {
+    background: linear-gradient(135deg, #155724 0%, #28a745 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.titolo-errore {
+    background: linear-gradient(135deg, #721C24 0%, #dc3545 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Box Esito */
+.box-esito {
+    background: white;
+    border-radius: 30px;
+    padding: 3rem;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 20px 60px rgba(139, 69, 19, 0.15);
+    border: 3px solid var(--bg-cream);
+}
+
+.titolo-successo + .box-esito {
+    border-color: #D4EDDA;
+}
+
+.titolo-errore + .box-esito {
+    border-color: #F8D7DA;
+}
+
+/* Immagine GIF */
+.box-img-esito {
+    margin-bottom: 2rem;
+}
+
+.img-esito-gif {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+/* Messaggi */
+.messaggio-intro {
+    font-size: 1.3rem;
+    color: var(--text-dark);
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+}
+
+.messaggio-errore {
+    font-size: 1.2rem;
+    color: var(--error);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+/* Dati Riepilogo */
+.dati-riepilogo {
+    background: var(--bg-cream);
+    border-radius: 20px;
+    padding: 2rem;
+    margin: 2rem 0;
+    text-align: left;
+}
+
+.riga-dati {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 0;
+    border-bottom: 2px solid #E5E5E5;
+}
+
+.riga-dati:last-child {
+    border-bottom: none;
+}
+
+.dati-riepilogo dt {
+    font-weight: 600;
+    color: var(--primary);
+    font-size: 1rem;
+}
+
+.dati-riepilogo dd {
+    font-weight: 700;
+    color: var(--text-dark);
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.prezzo-evidenza {
+    font-size: 1.8rem !important;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Nota Finale */
+.nota-finale {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: #E8F5E9;
+    border-left: 4px solid #28a745;
+    border-radius: 10px;
+    color: #155724;
+    font-weight: 500;
+    text-align: left;
+}
+
+/* Azioni Errore Interne */
+.azioni-errore-interne {
+    margin-top: 2rem;
+}
+
+.azioni-errore-interne a {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background: var(--error);
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(220, 53, 69, 0.3);
+}
+
+.azioni-errore-interne a:hover {
+    background: #C62828;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(220, 53, 69, 0.4);
+}
+
+/* Azioni Esito (bottone principale) */
+.azioni-esito {
+    margin-top: 2rem;
+}
+
+.azioni-esito .pulsanteGenerico {
+    display: inline-block;
+    padding: 1.2rem 3rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(139, 69, 19, 0.3);
+}
+
+.azioni-esito .pulsanteGenerico:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(139, 69, 19, 0.4);
+}
+
+/* Animazione Entrata */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.box-esito {
+    animation: slideInUp 0.6s ease-out;
+}
+
 }
 
 .contenuto {
