@@ -102,22 +102,12 @@ h1, h2, h3 {
 }
 
 /* ====================================
-   WRAPPER HEADER E BREADCRUMB
-   ==================================== */
-.header-fixed-wrapper {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-/* ====================================
    BREADCRUMB
    ==================================== */
 #breadcrumb {
     width: 100%;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
-    z-index: 999;
     box-shadow: 0 2px 20px var(--shadow);
     border-bottom: 1px solid var(--primary);
     color: var(--text-dark);
@@ -144,13 +134,22 @@ h1, h2, h3 {
 }
 
 /* ====================================
+   WRAPPER HEADER E BREADCRUMB
+   ==================================== */
+.header-fixed-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* ====================================
    HEADER
    ==================================== */
 header {
     width: 100%;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
-    z-index: 1000;
     box-shadow: 0 2px 20px var(--shadow);
     transition: all 0.3s ease;
     border-bottom: 1px solid var(--primary);
@@ -281,6 +280,17 @@ nav#menu .currentlink::after, nav#menu .currentlink::after {
 .icon-btn[aria-current="page"]:hover svg {
     stroke: var(--primary);
 }
+.cart-count {
+    position: absolute;
+    top: -6px;
+    right: -10px;
+    background: red;
+    color: white;
+    font-size: 0.75rem;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-weight: bold;
+}
 
 .header-icons a .icon-text {
     display: block;
@@ -304,14 +314,13 @@ nav#menu .currentlink::after, nav#menu .currentlink::after {
     margin: 5px 0;
     transition: 0.3s;
 }
-
 /* ====================================
    MAIN CONTENT
    ==================================== */
 main {
     /* margin-top: 80px;*/
-    min-height: calc(100vh - 400px);
-    padding: 4rem 2rem;
+    min-height: calc(100vh - 100px);
+    padding: 2rem 2rem;
 }
 .titolo{
     background-color: var(--bg-title);
@@ -322,7 +331,6 @@ main {
     margin: 0 auto;
     padding: 4rem 2rem;
     font-size: 1.8rem;
-
 }
 .generic-button{
     display: inline-block;
@@ -334,6 +342,10 @@ main {
     font-weight: 600;
     transition: all 0.3s ease;
     box-shadow: 0 10px 30px rgba(139, 69, 19, 0.3);
+}
+.generic-button:focus{
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
 }
 
 .generic-button:hover{
@@ -348,7 +360,7 @@ main {
    HOMEPAGE - HERO
    ==================================== */
 .hero {
-    height: 90vh;
+    min-height: auto;    /*200px ≈ altezza header + breadcrumb */
     display: flex;
     align-items: center;
     position: relative;
@@ -828,6 +840,7 @@ aside a:hover::after {
    FORMS
    ==================================== */
 
+
 .form-container, .login-container, .register-container {
     background: var(--from-bg);
     padding: 3rem;
@@ -919,9 +932,11 @@ aside a:hover::after {
 
 .campoDati input:focus,
 .campoDati textarea:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;/*
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
+    box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);*/
 }
 
 .campoDati input::placeholder,
@@ -1011,7 +1026,7 @@ button[type="submit"] {
     box-shadow: 0 10px 30px rgba(139, 69, 19, 0.3);
     margin-top: 1rem;
 }
-button[type="submit"].aggiorna-tabella {
+button[type="submit"].aggiorna-tabella, button[type="submit"].azioni-carrello {
     width: auto;
     margin-top: 0;
     white-space: nowrap;
@@ -1571,7 +1586,7 @@ tbody td a:hover {
 }
 
 .table-scroll {
-    max-height: 420px;     
+    max-height: 100vh;     
     overflow-y: auto;
     overflow-x: hidden;
     border-radius: 12px;
@@ -1584,11 +1599,8 @@ tbody td a:hover {
     top: 0;
     z-index: 2;
 }
-@media (max-width: 768px) {
-    .table-scroll {
-        max-height: 60vh; /* usa altezza viewport */
-    }
-}
+
+
 
 .stato-ordine {
     display: flex;
@@ -1852,12 +1864,7 @@ tbody td a:hover {
 .azioniCarrello {
     margin-top: 1.5rem; /* Spazio sopra i bottoni */
 }
-.btn-qty-meno{
-    float: right;
-}
-.btn-qty-piu{
-    float: left;
-}
+
 .qty-container {
     display: flex;
     align-items: center;
@@ -1878,12 +1885,6 @@ tbody td a:hover {
 
 .btn-qty-meno,
 .btn-qty-piu {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    border: 1px solid var(--primary);
-    background: white;
-    color: var(--primary);
     font-size: 1.2rem;
     font-weight: bold;
     cursor: pointer;
@@ -1892,9 +1893,26 @@ tbody td a:hover {
     justify-content: center;
 }
 
+.btn-qty-meno{
+    float: right;
+}
+.btn-qty-piu{
+    float: left;
+}
+
 .btn-qty-meno:disabled {
     opacity: 0.4;
     cursor: not-allowed;
+}
+
+/* nasconde le frecce native */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] {
+    appearance: textfield;
 }
 
 .bottoni-vuoto {
@@ -2784,10 +2802,213 @@ footer address {
 #dettagliOrdine li{
     list-style: none;
 }
+
+.dettagli-ordine
+{
+    border-bottom: 1px solid var(--text-dark);
+    border-top: 1px solid var(--text-dark);
+    width: 95%;
+    margin: auto;
+}
+
+.dettagli-ordine dl dt, .dettagli-ordine dl dd{
+    display: inline-block;
+    width: 49%;
+}
+
+/* ====================================
+   PAGINA ESITO ORDINE
+   ==================================== */
+
+#esitoOrdine {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+/* Titoli Esito */
+#esitoOrdine h2 {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    line-height: 1.2;
+}
+
+.titolo-successo, .titolo-errore {
+    color: var(--primary);
+}
+
+/* Box Esito */
+.box-esito {
+    background: white;
+    border-radius: 30px;
+    padding: 3rem;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 20px 60px rgba(139, 69, 19, 0.15);
+    border: 3px solid var(--text-dark);
+}
+
+
+/* Immagine GIF */
+.box-img-esito {
+    margin-bottom: 2rem;
+}
+
+.img-esito-gif {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+/* Messaggi */
+.messaggio-intro {
+    font-size: 1.3rem;
+    color: var(--text-dark);
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+}
+
+.messaggio-errore {
+    font-size: 1.2rem;
+    color: var(--error);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+/* Dati Riepilogo */
+.dati-riepilogo {
+    background: var(--bg-cream);
+    border-radius: 20px;
+    padding: 2rem;
+    margin: 2rem 0;
+    text-align: left;
+}
+
+.riga-dati {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 0;
+    border-bottom: 2px solid #E5E5E5;
+}
+
+.riga-dati:last-child {
+    border-bottom: none;
+}
+
+.dati-riepilogo dt {
+    font-weight: 600;
+    color: var(--primary);
+    font-size: 1rem;
+}
+
+.dati-riepilogo dd {
+    font-weight: 700;
+    color: var(--text-dark);
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.prezzo-evidenza {
+    color: var(--primary);
+    font-size: 1.8rem;
+}
+
+/* Nota Finale */
+.nota-finale {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: var(--bg-cream);
+    border-left: 4px solid var(--primary);
+    border-radius: 10px;
+    color: var(--text-dark);
+    font-weight: 500;
+    text-align: left;
+}
+
+/* Azioni Errore Interne */
+.azioni-errore-interne {
+    margin-top: 2rem;
+}
+
+.azioni-errore-interne a {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background: var(--error);
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(220, 53, 69, 0.3);
+}
+
+.azioni-errore-interne a:hover {
+    background: #C62828;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(220, 53, 69, 0.4);
+}
+
+/* Azioni Esito (bottone principale) */
+.azioni-esito {
+    margin-top: 2rem;
+}
+
+.azioni-esito .pulsanteGenerico {
+    display: inline-block;
+    padding: 1.2rem 3rem;
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(139, 69, 19, 0.3);
+}
+
+.azioni-esito .pulsanteGenerico:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(139, 69, 19, 0.4);
+}
+
+/* Animazione Entrata */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.box-esito {
+    animation: slideInUp 0.6s ease-out;
+}
+
 }
 
 .contenuto {
     /*width: 70%;*/
     max-width: 1400px;
     margin: auto;
+}
+
+/* Stile per i messaggi di errore JS */
+.error-message-js {
+    color: #d32f2f; /* Rosso scuro leggibile */
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+    font-weight: 500;
+}
+
+/* Evidenzia il bordo dell'input con errore */
+input[aria-invalid="true"], 
+textarea[aria-invalid="true"] {
+    border-color: #d32f2f;
+    background-color: #fff8f8;
 }

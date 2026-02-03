@@ -55,7 +55,6 @@ $tabellaItems = '';
 function pulisciInput($value){
     $value = trim($value);              
     $value = strip_tags($value);        
-    $value = htmlentities($value);      
     return $value;
 }
 
@@ -266,13 +265,13 @@ if(!$connessione){
         $tabellaItems .= '</tbody> </table>';
     }
 }
-//fa si che una volta inviato il form, giusto o sbagliato, vengono ricompilati i campi gia' scritti  dall'utente, evitando frustrazione
+// SOSTITUZIONI NEL TEMPLATE HTML
 $paginaHTML = str_replace('[csrf_token]', $token, $paginaHTML);
 
-$paginaHTML = str_replace('[valoreNome]', $nome, $paginaHTML);
-$paginaHTML = str_replace('[valoreDescrizione]', $descrizione, $paginaHTML);
-$paginaHTML = str_replace('[valorePrezzo]', $prezzo, $paginaHTML);
-$paginaHTML = str_replace('[valoreTestoAlternativo]', $testoAlternativo, $paginaHTML);
+$paginaHTML = str_replace('[valoreNome]', htmlspecialchars($nome, ENT_QUOTES, 'UTF-8'), $paginaHTML);
+$paginaHTML = str_replace('[valoreDescrizione]', htmlspecialchars($descrizione, ENT_QUOTES, 'UTF-8'), $paginaHTML);
+$paginaHTML = str_replace('[valorePrezzo]', htmlspecialchars($prezzo, ENT_QUOTES, 'UTF-8'), $paginaHTML);
+$paginaHTML = str_replace('[valoreTestoAlternativo]', htmlspecialchars($testoAlternativo, ENT_QUOTES, 'UTF-8'), $paginaHTML);
 
 $paginaHTML = str_replace('[checkedGlutine]', in_array('Glutine', $allergeni) ? 'checked' : '', $paginaHTML);
 $paginaHTML = str_replace('[checkedUova]', in_array('Uova', $allergeni) ? 'checked' : '', $paginaHTML);
@@ -282,13 +281,12 @@ $paginaHTML = str_replace('[checkedArachidi]', in_array('Arachidi', $allergeni) 
 $paginaHTML = str_replace('[checkedSoia]', in_array('Soia', $allergeni) ? 'checked' : '', $paginaHTML);
 $paginaHTML = str_replace('[checkedSesamo]', in_array('Sesamo', $allergeni) ? 'checked' : '', $paginaHTML);
 
-// 3. Gestione Select "Tipo" (Per mantenerla selezionata in caso di errore)
 $selTorta = ($tipo === 'torta') ? 'selected' : '';
 $selPasticcino = ($tipo === 'pasticcino') ? 'selected' : '';
 $paginaHTML = str_replace('[selTorta]', $selTorta, $paginaHTML);
 $paginaHTML = str_replace('[selPasticcino]', $selPasticcino, $paginaHTML);
 
-// 4. Messaggi Errore
+// Sostituzioni Messaggi Errore
 $paginaHTML = str_replace('[messaggioErroreTipo]', $erroreTipo, $paginaHTML);
 $paginaHTML = str_replace('[messaggioErroreNome]', $erroreNome, $paginaHTML);
 $paginaHTML = str_replace('[messaggioErroreDescrizione]', $erroreDescrizione, $paginaHTML);

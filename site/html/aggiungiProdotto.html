@@ -91,7 +91,7 @@
                         <h3>Aggiungi un Prodotto</h3>
                     </div>
 
-                    <form id="formAggiungiProdotto" action="aggiungi-prodotto" method="post" enctype="multipart/form-data" enctype="multipart/form-data" class="form-container">
+                    <form id="formAggiungiProdotto" action="aggiungi-prodotto" method="post" enctype="multipart/form-data" class="form-container">
                         <fieldset>
                             <legend class="visually-hidden">Dettagli del prodotto</legend>
                             
@@ -129,7 +129,6 @@
                             <div class="campoDati">
                                 <label for="prezzo">Prezzo (€) <span class="required">*</span></label>
                                 <div class="input-with-icon">
-                                    <span class="input-icon">€</span>
                                     <input type="number" id="prezzo" name="prezzo" step="0.01" min="0" max="99999999.99" required aria-describedby="price-help" value="[valorePrezzo]" placeholder="0.00">
                                 </div>
                                 <small id="price-help" class="field-hint">Per le torte indicare il prezzo a porzione</small>
@@ -141,7 +140,6 @@
                                 <label for="immagine">Immagine del prodotto <span class="required">*</span></label>
                                 <div class="file-upload-wrapper">
                                     <input type="file" id="immagine" name="immagine" accept=".jpg,.jpeg,.png,.webp" required aria-describedby="img-help">
-                                    <span class="file-name">Nessun file selezionato</span>
                                 </div>
                                 <small id="img-help" class="field-hint">JPG, PNG o WEBP - massimo 1MB</small>
                                 [messaggioErroreImmagine]
@@ -228,14 +226,14 @@
                 <address>
                     <p>Pasticceria Padovana</p>
                     <p>Via Roma 42<br>35100 Padova (PD)</p>
-                    <p>Tel: <a href="tel:+390498765432">+39 049 8765432</a></p>
+                    <p>Telefono: <a href="tel:+390498765432">+39 049 8765432</a></p>
                     <p>Email: <a href="mailto:info@pasticceriapadovana.it">info@pasticceriapadovana.it</a></p>
                 </address>
             </div>
 
             <div id="assistenzaClienti">
-                <h2>Assistenza clienti</h2>
-                <p>Lun-Ven 8:30-13:00 | 14:00-17:30</p>
+                <h2>Orari e Assistenza</h2>
+                <p><abbr title="Lunedì">Lun</abbr>-<abbr title="Venerdì">Ven</abbr> 8:30-13:00 e 14:00-17:30</p>
                 <p>Email: <a href="mailto:gestioneclienti@pasticceriapadovana.it">gestioneclienti@pasticceriapadovana.it</a></p>
             </div>
         </div>
@@ -245,12 +243,5 @@
         </div>
     </footer>
 
-    <script>
-    // File upload name display
-    document.getElementById('immagine').addEventListener('change', function(e) {
-        const fileName = e.target.files[0]?.name || 'Nessun file selezionato';
-        document.querySelector('.file-name').textContent = fileName;
-    });
-    </script>
 </body>
 </html>

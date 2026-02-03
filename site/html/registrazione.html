@@ -85,7 +85,7 @@
                         [csrfToken]
                         <div class="form-grid">
                             <div class="campoDati">
-                                <label for="nome">Nome</label>
+                                <label for="nome">Nome*</label>
                                 <input 
                                     type="text" 
                                     name="nome" 
@@ -99,7 +99,7 @@
                             </div>
 
                             <div class="campoDati">
-                                <label for="cognome">Cognome</label>
+                                <label for="cognome">Cognome*</label>
                                 <input 
                                     type="text" 
                                     name="cognome" 
@@ -114,7 +114,7 @@
                         </div>
 
                         <div class="campoDati full-width">
-                            <label for="email">Email</label>
+                            <label for="email">Email*</label>
                             <input 
                                 type="email" 
                                 name="email" 
@@ -128,7 +128,7 @@
                         </div>
 
                         <div class="campoDati full-width">
-                            <label for="telefono">Telefono</label>
+                            <label for="telefono">Telefono*</label>
                             <input 
                                 type="tel" 
                                 name="telefono" 
@@ -144,7 +144,7 @@
                         </div>
 
                         <div class="campoDati full-width">
-                            <label for="password">Password</label>
+                            <label for="password">Password*</label>
                             <div class="password-wrapper">
                                 <input 
                                     type="password" 
@@ -183,7 +183,7 @@
                             [messaggioErrorePassword]
                         </div>
                         
-                        <button type="submit" name="submit" class="btn-primary">
+                        <button type="submit" name="submit" class="generic-button btn-primary">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
                                 <circle cx="8.5" cy="7" r="4"/>
@@ -217,16 +217,17 @@
                 <address>
                     <p>Pasticceria Padovana</p>
                     <p>Via Roma 42<br>35100 Padova (PD)</p>
-                    <p>Tel: <a href="tel:+390498765432">+39 049 8765432</a></p>
+                    <p>Telefono: <a href="tel:+390498765432">+39 049 8765432</a></p>
                     <p>Email: <a href="mailto:info@pasticceriapadovana.it">info@pasticceriapadovana.it</a></p>
                 </address>
             </div>
 
             <div id="assistenzaClienti">
-                <h2>Assistenza clienti</h2>
-                <p>Lun-Ven 8:30-13:00 | 14:00-17:30</p>
+                <h2>Orari e Assistenza</h2>
+                <p><abbr title="Lunedì">Lun</abbr>-<abbr title="Venerdì">Ven</abbr> 8:30-13:00 e 14:00-17:30</p>
                 <p>Email: <a href="mailto:gestioneclienti@pasticceriapadovana.it">gestioneclienti@pasticceriapadovana.it</a></p>
             </div>
+        </div>
         </div>
         <div class="torna-su">
             <a href="[URI_CORRENTE]#main" class="back-to-top">Torna su ↑</a>

@@ -189,7 +189,7 @@ if($connessione){
                 </td> 
             </tr>";
         }
-        $tabellaOrdiniHTML .= "</tbody></table>></div>";
+        $tabellaOrdiniHTML .= "</tbody></table></div>";
     }
 }
 
