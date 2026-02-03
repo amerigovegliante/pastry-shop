@@ -6,7 +6,32 @@
    TABLET - max-width: 968px
    ==================================== */
 @media (max-width: 968px) {
-    
+    .product-detail-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 2rem 1rem;
+    }
+
+    .product-image-section {
+        position: static;
+    }
+
+    .infoItem,
+    .product-form-section {
+        padding: 2rem;
+    }
+
+    .infoItem h2 {
+        font-size: 2rem;
+    }
+
+    .prezzoItem {
+        font-size: 1.8rem;
+    }
+
+    .porzioni {
+        grid-template-columns: 1fr;
+    }
     /* HEADER & NAVIGATION */
     .header-content {
         padding: 1rem;
@@ -387,7 +412,31 @@
    MOBILE - max-width: 480px
    ==================================== */
 @media (max-width: 480px) {
-    
+    .product-detail-container {
+        padding: 1rem;
+    }
+
+    .infoItem,
+    .product-form-section {
+        padding: 1.5rem;
+    }
+
+    .infoItem h2 {
+        font-size: 1.8rem;
+    }
+
+    .prezzoItem {
+        font-size: 1.6rem;
+    }
+
+    .acquistoItem legend {
+        font-size: 1.2rem;
+    }
+
+    .acquistoItem button[type="submit"] {
+        font-size: 1.1rem;
+        padding: 1.1rem 1.5rem;
+    }
     /* HEADER */
     #logo h1 {
         font-size: 1.2rem;
