@@ -1791,6 +1791,11 @@ tbody td a:hover {
     height: 100%;
 }
 
+.cardTorta > a:focus{
+    outline: 2px solid var(--primary);
+    outline-offset: 4px;
+}
+
 
 
 
