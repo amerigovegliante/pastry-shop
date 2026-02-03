@@ -40,9 +40,9 @@ foreach ($menu as $m) {
     $isActive = ($currentPage === $m['href']);
     $menuPrincipale .= '<li '.($isActive ? 'id="currentlink" aria-current="page"' : '').'>';
     if ($isActive) {
-        $menuPrincipale .= htmlspecialchars($m['label']);
+        $menuPrincipale .= $m['label'];
     } else {
-        $menuPrincipale .= '<a href="'.htmlspecialchars($m['href']).'">'.htmlspecialchars($m['label']).'</a>';
+        $menuPrincipale .= '<a href="'.htmlspecialchars($m['href']).'">'.$m['label'].'</a>';
     }
     $menuPrincipale .= '</li>';
 }
