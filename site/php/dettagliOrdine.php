@@ -86,7 +86,7 @@ if (isset($_GET['id'])) {
 
     $listaDettagliOrdine  = '<h2>Dettagli ordine <span aria-label="Numero">#</span>' . htmlspecialchars($ordine['id']) . '</h2>
                             <div class="dettagli-ordine">
-                                <dl>
+                                <dl class="riga-dettagli-ordine">
                                     <dt><strong>Stato:</strong></dt>
                                     <dd>'. htmlspecialchars($statoTesto) . '</dd>
                                     <dt><strong>Data di ordinazione:</strong></dt>
@@ -102,7 +102,7 @@ if (isset($_GET['id'])) {
 
     $listaDettagliOrdine .= '<h3 class="titolo-ordine">Ordine creato da:</h3>
                             <div class="dettagli-ordine">
-                                <dl>
+                                <dl class="riga-dettagli-ordine">
                                     <dt><strong>Email:</strong></dt>
                                     <dd>' . htmlspecialchars($ordine['persona']) . '</dd>
                                     <dt><strong>Nome:</strong></dt>
