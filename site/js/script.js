@@ -46,12 +46,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
     
+    const menuBtn = document.querySelector('.menu-toggle');
+    if (menuBtn) {
+        menuBtn.setAttribute('aria-expanded', 'false');
+        menuBtn.setAttribute('aria-controls', 'menu'); // Collega logicamente il bottone al menu
+    }
 
 });
-
-// ====================================
-// PASTICCERIA PADOVANA - MAIN SCRIPT
-// ====================================
 
 // Header scroll effect
 window.addEventListener('scroll', () => {
@@ -65,11 +66,29 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Mobile menu toggle
+// Mobile menu toggle 
 function toggleMenu() {
     const menu = document.getElementById('menu');
-    if (menu) {
-        menu.classList.toggle('active');
+    const btn = document.querySelector('.menu-toggle');
+    
+    if (menu && btn) {
+        const isNowActive = menu.classList.toggle('active');
+        btn.setAttribute('aria-expanded', isNowActive);
+        btn.setAttribute('aria-label', isNowActive ? 'Chiudi menu' : 'Apri menu');
+
+        if (isNowActive) {
+            setTimeout(() => {
+                const firstLink = menu.querySelector('a');
+                if (firstLink) {
+                    firstLink.focus();
+                }
+            }, 50);
+            document.body.style.overflow = 'hidden';
+
+        } else {
+            btn.focus();
+            document.body.style.overflow = '';
+        }
     }
 }
 
@@ -194,10 +213,49 @@ const observer = new MutationObserver((mutations) => {
     });
 });
 
+
+
 const menuElement = document.getElementById('menu');
 if (menuElement) {
     observer.observe(menuElement, { attributes: true });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const menu = document.getElementById('menu');
+    
+    // Se il menu esiste, attiviamo i listener
+    if (menu) {
+        // Selezioniamo tutti i link (comprese le icone per ili mobile)
+        const menuLinks = menu.querySelectorAll('a, button');
+
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (menu.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+
+        if (menuLinks.length > 0) {
+            const lastLink = menuLinks[menuLinks.length - 1];
+            
+            lastLink.addEventListener('keydown', function(e) {
+                if (e.key === 'Tab' && !e.shiftKey && menu.classList.contains('active')) {
+                    toggleMenu(); 
+                }
+            });
+        }
+    }
+
+    document.addEventListener('keydown', function(e) {
+        const menu = document.getElementById('menu');
+        if (e.key === 'Escape' && menu && menu.classList.contains('active')) {
+            toggleMenu();
+            const btn = document.querySelector('.menu-toggle');
+            if(btn) btn.focus();
+        }
+    });
+});
 
 document.addEventListener('DOMContentLoaded', () => {
     const deleteForm = document.querySelector('.form-eliminazione-account');

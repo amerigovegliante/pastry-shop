@@ -1,16 +1,14 @@
 <?php
-error_reporting(E_ALL); //attiva visualizzazione errori
+error_reporting(E_ALL); 
 ini_set('display_errors', 1);
 
-// AVVIO SESSIONE E CONTROLLO ACCESSO (IMPORTANTE!)
 if (session_status() === PHP_SESSION_NONE){
     session_start();
 }
 
-// $page viene passato dal front controller
 $currentPage = $page ?? 'home';
 
-// Calcola numero prodotti nel carrello
+// Calcolo numero prodotti carrello per il badge
 $numeroCarrello = 0;
 if (isset($_SESSION['carrello']) && is_array($_SESSION['carrello'])) {
     foreach ($_SESSION['carrello'] as $item) {
@@ -25,7 +23,6 @@ if ($headerHTML === false) {
     exit;
 };
 
-// Menu principale
 $menu = [
     ['href' => 'home', 'label' => '<span lang="en">Home</span>'],
     ['href' => 'chi-siamo', 'label' => 'Chi siamo'],
@@ -34,7 +31,6 @@ $menu = [
     ['href' => 'contattaci', 'label' => 'Contattaci'],
 ];
 
-// Genera HTML dei menu items
 $menuPrincipale = '';
 foreach ($menu as $m) {
     $isActive = ($currentPage === $m['href']);
@@ -46,8 +42,37 @@ foreach ($menu as $m) {
     }
     $menuPrincipale .= '</li>';
 }
+// Determiniamo label e link per Area Personale in base al login
+$isLogged = isset($_SESSION['ruolo']) && in_array($_SESSION['ruolo'], ['user','admin']);
+$hrefPersonal = $isLogged ? 'area-personale' : 'login';
+$labelPersonalSr = $isLogged ? 'Area personale' : 'Accedi all\'area personale';
 
-// Badge carrello
+$menuPrincipale .= '
+    <li class="menu-icons-mobile">
+        <div class="mobile-actions">
+            
+            <a href="'.$hrefPersonal.'" class="icon-btn" aria-label="'.$labelPersonalSr.'">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                </svg>
+                <span class="sr-only">'.$labelPersonalSr.'</span> 
+            </a>
+
+            <a href="carrello" class="icon-btn" aria-label="Vai al carrello">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="9" cy="21" r="1" />
+                    <circle cx="20" cy="21" r="1" />
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                </svg>
+                '. ($numeroCarrello > 0 ? '<span class="cart-badge" aria-hidden="true">'.$numeroCarrello.'</span>' : '') .'
+                <span class="sr-only">Carrello</span> 
+            </a>
+        </div>
+    </li>';
+// ---------------------------------------------------------------
+
+
 $badgeCarrello = '';
 if ($numeroCarrello > 0) {
     $badgeCarrello = '<span class="cart-badge" aria-label="Prodotti nel carrello">'.$numeroCarrello.'</span>';
@@ -55,44 +80,18 @@ if ($numeroCarrello > 0) {
 
 $icone = '';
 
-/* =====================
-   ICONA CARRELLO
-===================== */
-$iconaCarrelloSVG = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-    stroke-linejoin="round" aria-hidden="true">
-    <circle cx="9" cy="21" r="1" />
-    <circle cx="20" cy="21" r="1" />
-    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-</svg>';
+// Icona Carrello Desktop
+$iconaCarrelloSVG = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1" /><circle cx="20" cy="21" r="1" /><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" /></svg>';
 
 if ($currentPage === 'carrello') {
-    $icone .= '
-    <div class="icon-btn" aria-label="Carrello">
-        '.$iconaCarrelloSVG.'
-        '.$badgeCarrello.'
-        <span class="sr-only">Carrello</span>
-    </div>';
+    $icone .= '<div class="icon-btn" aria-label="Carrello">'.$iconaCarrelloSVG.$badgeCarrello.'<span class="sr-only">Carrello</span></div>';
 } else {
-    $icone .= '
-    <a href="carrello" class="icon-btn" aria-label="Carrello">
-        '.$iconaCarrelloSVG.'
-        '.$badgeCarrello.'
-        <span class="sr-only">Carrello</span>
-    </a>';
+    $icone .= '<a href="carrello" class="icon-btn" aria-label="Carrello">'.$iconaCarrelloSVG.$badgeCarrello.'<span class="sr-only">Carrello</span></a>';
 }
 
-/* =====================
-   ICONA UTENTE (UNA SOLA)
-===================== */
-$iconaUtenteSVG = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-    stroke-width="2" aria-hidden="true">
-    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-    <circle cx="12" cy="7" r="4" />
-</svg>';
+// Icona Utente Desktop
+$iconaUtenteSVG = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>';
 
-// Decido destinazione
 if (isset($_SESSION['ruolo']) && in_array($_SESSION['ruolo'], ['user','admin'])) {
     $hrefUtente  = 'area-personale';
     $labelUtente = 'Area personale';
@@ -101,25 +100,14 @@ if (isset($_SESSION['ruolo']) && in_array($_SESSION['ruolo'], ['user','admin']))
     $labelUtente = 'Accedi';
 }
 
-// Se sono già nella pagina → non link
 if ($currentPage === $hrefUtente) {
-    $icone .= '
-    <div class="icon-btn" aria-label="'.$labelUtente.'">
-        '.$iconaUtenteSVG.'
-        <span class="sr-only">'.$labelUtente.'</span>
-    </div>';
+    $icone .= '<div class="icon-btn" aria-label="'.$labelUtente.'">'.$iconaUtenteSVG.'<span class="sr-only">'.$labelUtente.'</span></div>';
 } else {
-    $icone .= '
-    <a href="'.$hrefUtente.'" class="icon-btn" aria-label="'.$labelUtente.'">
-        '.$iconaUtenteSVG.'
-        <span class="sr-only">'.$labelUtente.'</span>
-    </a>';
+    $icone .= '<a href="'.$hrefUtente.'" class="icon-btn" aria-label="'.$labelUtente.'">'.$iconaUtenteSVG.'<span class="sr-only">'.$labelUtente.'</span></a>';
 }
 
-
-// Sostituzione placeholder
 $headerHTML = str_replace('[menuPrincipale]', $menuPrincipale, $headerHTML);
 $headerHTML = str_replace('[icone]', $icone, $headerHTML);
-// Output finale
+
 echo $headerHTML;
 ?>

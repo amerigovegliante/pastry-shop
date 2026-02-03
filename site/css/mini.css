@@ -62,17 +62,48 @@
         max-width: 400px;
         height: 100vh;
         background: white;
-        transition: left 0.3s ease;
+        visibility: hidden;
+        transition: left 0.3s ease, visibility 0s linear 0.3s;
         padding: 6rem 2rem 2rem;
         box-shadow: 2px 0 20px var(--shadow);
         overflow-y: auto;
+        z-index: 3000;
     }
 
     nav#menu.active {
         left: 0;
         border-right: 1px solid var(--primary);
+        visibility: visible;
+        transition: left 0.3s ease, visibility 0s linear 0s;
     }
 
+        .header-content > .header-icons {
+        display: none !important;
+    }
+
+    .menu-icons-mobile {
+        display: block;
+        margin-top: 2rem;
+        padding-top: 1rem;
+        border-top: 1px solid #ddd;
+    }
+
+    .mobile-actions {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+    }
+
+    .mobile-actions .icon-btn svg {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .menu-toggle {
+        display: block;
+        margin-left: auto;
+    }
+    
     nav#menu ul {
         flex-direction: column;
         gap: 2rem;
@@ -108,6 +139,10 @@
 
     .hero-image {
         order: -1;
+    }
+
+    .header-icons a .icon-text {
+        display: none;
     }
 
     /* HOMEPAGE - FAMOUS SWEETS */
