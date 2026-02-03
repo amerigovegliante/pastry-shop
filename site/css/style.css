@@ -2823,16 +2823,8 @@ footer address {
     line-height: 1.2;
 }
 
-.titolo-successo {
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.titolo-errore {
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+.titolo-successo, .titolo-errore {
+    background-color: var(--bg-title);
 }
 
 /* Box Esito */
