@@ -1581,12 +1581,7 @@ tbody td a:hover {
     top: 0;
     z-index: 2;
 }
-/*
-@media (max-width: 768px) {
-    .table-scroll {
-        max-height: 60vh;  usa altezza viewport 
-    }
-}*/
+
 
 
 .stato-ordine {
@@ -1851,12 +1846,7 @@ tbody td a:hover {
 .azioniCarrello {
     margin-top: 1.5rem; /* Spazio sopra i bottoni */
 }
-.btn-qty-meno{
-    float: right;
-}
-.btn-qty-piu{
-    float: left;
-}
+
 .qty-container {
     display: flex;
     align-items: center;
@@ -1891,9 +1881,26 @@ tbody td a:hover {
     justify-content: center;
 }
 
+.btn-qty-meno{
+    float: right;
+}
+.btn-qty-piu{
+    float: left;
+}
+
 .btn-qty-meno:disabled {
     opacity: 0.4;
     cursor: not-allowed;
+}
+
+/* nasconde le frecce native */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] {
+    appearance: textfield;
 }
 
 .bottoni-vuoto {
