@@ -212,11 +212,6 @@ nav#menu a, nav#menu li, nav#menu span {
 
 nav#menu a:hover, nav#menu .currentlink, nav#menu .currentlink {
     color: var(--primary);
-
-}
-nav#menu .currentlink{
-    text-decoration: underline;
-    text-decoration-style: dashed
 }
 
 nav#menu a::after, nav#menu .currentlink::after, nav#menu .currentlink::after {
@@ -1146,15 +1141,20 @@ button[type="submit"]:active {
     border-top: 1px solid #E5E5E5;
     color: var(--text-dark);
 }
-/*
+
 a{
     border: 1px dotted var(--box-bg);
 }
 
 a:visited{
-    color: red;
     border-color: var(--primary);
-}*/
+}
+footer a{
+    border: 1px dotted var(--text-dark);
+}
+footer a{
+    border: 1px dotted var(--box-bg);
+}
 
 .register-link a, .login-link a {
     color: var(--primary);
@@ -2058,7 +2058,6 @@ footer a {
 }
 footer a:visited {
     color: var(--accent);
-    border-color: var(--accent);
 }
 footer a:hover {
     color: var(--accent);

@@ -95,7 +95,7 @@ if($connessione){
             
             // Box 1: Dimensione
             $formAcquisto .= "<fieldset class=\"opzioniTorta\">
-                    <legend>Dimensione Torta</legend>
+                    <legend><h3>Dimensione Torta</h3></legend>
                     <p>Prezzo calcolato a porzione (ca. 150g a persona)</p>
                     <div class=\"porzioni\">
                         <input type=\"radio\" id=\"p6\" name=\"porzione\" value=\"6\" checked>
@@ -114,7 +114,7 @@ if($connessione){
             
             // Box 2: Personalizzazione
             $formAcquisto .= "<fieldset class=\"personalizzazione\">
-                        <legend>Personalizzazione</legend>
+                        <legend><h3>Personalizzazione</h3></legend>
                         <div id=\"campoTarga\"> 
                             <label for=\"testoTarga\">Scritta sulla targa (opzionale, max 20 caratteri):</label>
                             <textarea id=\"testoTarga\" name=\"testoTarga\" maxlength=\"20\" rows=\"2\" placeholder=\"Es. Buon Compleanno\"></textarea>
@@ -134,7 +134,7 @@ if($connessione){
         }             
 
         $formAcquisto .= "<fieldset class=\"boxQuantita\">
-                            <legend>Quantità</legend>
+                            <legend><h3>Quantità</h3></legend>
                             <div class=\"campoQuantita\">
                                 <label for=\"quantita\">" . $labelQuantita . "</label>
                                 <div class=\"qty-container\">
