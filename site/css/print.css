@@ -31,7 +31,8 @@ TUTTE LE PAGINE
     .header-icons, 
     #navigazione-footer,
     .cta-button,
-    .category-badge
+    .category-badge,
+    #breadcrumb
     {
         display: none;
     }
@@ -89,6 +90,30 @@ TUTTE LE PAGINE
     }
     #logo h1 + p{
         margin-bottom: 0.5cm;
+    }
+
+/*  ====================================
+    TABELLE
+    ==================================== */
+    table {
+        width: 100%;
+        border-collapse: collapse; 
+        page-break-inside: avoid;
+    }
+    thead {
+        display: table-header-group; /* ripete l’intestazione su ogni pagina */
+    }
+    th {
+        background: #f0f0f0; 
+    }
+    th, td {
+        border: 1pt solid black;
+        padding: 0.2cm; 
+    }
+    td>ul>li{
+        list-style: none;
+        margin: 0;
+        padding: 0;
     }
 
 /*  ====================================
