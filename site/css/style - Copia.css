@@ -1152,7 +1152,7 @@ a:visited{
 footer a{
     border: 1px dotted var(--text-dark);
 }
-footer a:visited{
+footer a{
     border: 1px dotted var(--box-bg);
 }
 
@@ -2058,7 +2058,6 @@ footer a {
 }
 footer a:visited {
     color: var(--accent);
-    border-color: var(--accent);
 }
 footer a:hover {
     color: var(--accent);
