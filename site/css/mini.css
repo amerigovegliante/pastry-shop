@@ -6,6 +6,17 @@
    TABLET - max-width: 968px
    ==================================== */
 @media (max-width: 968px) {
+
+   .header-fixed-wrapper header {
+        position: relative;
+        z-index: 5000; 
+    }
+
+    .header-fixed-wrapper #breadcrumb {
+        position: relative;
+        z-index: 1;
+    }
+   
     .product-detail-container {
         grid-template-columns: 1fr;
         gap: 2rem;
