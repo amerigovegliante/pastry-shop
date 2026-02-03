@@ -113,7 +113,7 @@
         padding: 2rem 1rem;
     }
 
-    section h2 {
+    section h2, section h3 {
         font-size: 2rem;
     }
 
