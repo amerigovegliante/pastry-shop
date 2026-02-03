@@ -2790,6 +2790,15 @@ footer address {
 #dettagliOrdine li{
     list-style: none;
 }
+
+.dettagli-ordine
+{
+    border-bottom: 1px solid var(--text-dark);
+}
+
+.dettagli-ordine dl dt, .dettagli-ordine dl dd{
+    display: inline-block;
+}
 }
 
 .contenuto {
