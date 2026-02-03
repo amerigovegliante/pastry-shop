@@ -2791,26 +2791,14 @@ footer address {
     list-style: none;
 }
 
-.dettagli-ordine {
+.dettagli-ordine
+{
     border-bottom: 1px solid var(--text-dark);
-    padding-bottom: 10px;
-    margin-bottom: 10px;
 }
 
-.dettagli-ordine .riga-dettagli-ordine {
-    margin-bottom: 5px; /* Spazio tra le righe */
-}
-
-.dettagli-ordine .riga-dettagli-ordine dt,
-.dettagli-ordine .riga-dettagli-ordine dd {
+.dettagli-ordine dl dt, .dettagli-ordine dl dd{
     display: inline-block;
-    vertical-align: top;
-}
-
-.dettagli-ordine .riga-dettagli-ordine dt {
-    font-weight: bold;
-    width: 150px; /* Larghezza fissa per allineamento */
-    margin-right: 10px;
+    width: 100%;
 }
 }
 
