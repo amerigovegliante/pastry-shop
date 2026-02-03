@@ -226,9 +226,8 @@ if (isset($_SESSION['carrello']) && count($_SESSION['carrello']) > 0) {
             </tbody>
             <tfoot>
                 <tr>
-                    <th scope='row' colspan='4' class='totaleLabel'>Totale Complessivo:</th>
-                    <td class='totaleValore'>$totaleGeneraleFormat</td>
-                     <td></td>
+                    <th scope='row' class='totaleLabel'>Totale Complessivo:</th>
+                    <td  colspan='5' class='totaleValore'>$totaleGeneraleFormat</td>
                 </tr>
             </tfoot>
         </table>
