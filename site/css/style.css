@@ -2797,3 +2797,19 @@ footer address {
     max-width: 1400px;
     margin: auto;
 }
+
+/* Stile per i messaggi di errore JS */
+.error-message-js {
+    color: #d32f2f; /* Rosso scuro leggibile */
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+    font-weight: 500;
+}
+
+/* Evidenzia il bordo dell'input con errore */
+input[aria-invalid="true"], 
+textarea[aria-invalid="true"] {
+    border-color: #d32f2f;
+    background-color: #fff8f8;
+}
