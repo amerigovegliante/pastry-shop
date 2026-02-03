@@ -4,6 +4,17 @@
 
 /* TABLET - max-width: 968px */
 @media (max-width: 968px) {
+
+    .header-fixed-wrapper header {
+        position: relative;
+        z-index: 5000; 
+    }
+
+    .header-fixed-wrapper #breadcrumb {
+        position: relative;
+        z-index: 1; /* Il breadcrumb deve stare sotto */
+    }
+    
     .header-content {
         padding: 1rem;
     }
@@ -72,7 +83,7 @@
         display: block;
         margin-left: auto;
     }
-    
+
     nav#menu ul {
         flex-direction: column;
         gap: 2rem;
