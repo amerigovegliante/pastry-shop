@@ -135,9 +135,9 @@ if($connessione){
                             <div class=\"campoQuantita\">
                                 <label for=\"quantita\">" . $labelQuantita . "</label>
                                 <div class=\"qty-container\">
-                                <button type=\"button\" class=\"btn-qty-meno\" aria-label=\"Diminuisci quantità\">-</button>
+                                <button type=\"button\" class=\"generic-button btn-qty-meno\" aria-label=\"Diminuisci quantità\">-</button>
                                 <input type=\"number\" id=\"quantita\" min=\"1\" max=\"$maxQuantita\" value=\"1\" name=\"quantita\" required class=\"qty-number\">
-                                <button type=\"button\" class=\"btn-qty-piu\" aria-label=\"Aumenta quantità\">+</button>
+                                <button type=\"button\" class=\"generic-button btn-qty-piu\" aria-label=\"Aumenta quantità\">+</button>
                                 </div>
                                 <small>(max $maxQuantita)</small>
                             </div>

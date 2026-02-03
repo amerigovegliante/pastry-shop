@@ -332,6 +332,10 @@ main {
     transition: all 0.3s ease;
     box-shadow: 0 10px 30px rgba(139, 69, 19, 0.3);
 }
+.generic-button:focus{
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+}
 
 .generic-button:hover{
     transform: translateY(-3px);
@@ -1867,12 +1871,6 @@ tbody td a:hover {
 
 .btn-qty-meno,
 .btn-qty-piu {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    border: 1px solid var(--primary);
-    background: white;
-    color: var(--primary);
     font-size: 1.2rem;
     font-weight: bold;
     cursor: pointer;
