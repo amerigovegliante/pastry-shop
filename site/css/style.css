@@ -2823,10 +2823,7 @@ footer address {
 }
 
 .titolo-successo, .titolo-errore {
-    background-color: var(--bg-title);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--primary);
 }
 
 /* Box Esito */
@@ -2903,10 +2900,8 @@ footer address {
 }
 
 .prezzo-evidenza {
-    font-size: 1.8rem !important;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--primary);
+    font-size: 1.8rem;
 }
 
 /* Nota Finale */
