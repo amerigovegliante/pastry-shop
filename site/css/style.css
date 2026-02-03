@@ -212,6 +212,11 @@ nav#menu a, nav#menu li, nav#menu span {
 
 nav#menu a:hover, nav#menu .currentlink, nav#menu .currentlink {
     color: var(--primary);
+
+}
+nav#menu .currentlink{
+    text-decoration: underline;
+    text-decoration-style: dashed
 }
 
 nav#menu a::after, nav#menu .currentlink::after, nav#menu .currentlink::after {
