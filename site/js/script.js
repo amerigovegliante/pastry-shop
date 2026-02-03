@@ -248,9 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 errorSpan.className = 'error-message-js';
                 errorSpan.setAttribute('role', 'alert');
 
-                const parent = input.parentNode.classList.contains('input-with-icon') || 
-                               input.parentNode.classList.contains('file-upload-wrapper') || 
-                               input.parentNode.classList.contains('password-wrapper') 
+                const parent = input.parentNode.classList.contains('password-wrapper') 
                                ? input.parentNode.parentNode 
                                : input.parentNode;
                 
@@ -359,9 +357,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
 
             case 'immagine':
-                if (!Validators.file(input)) { 
+                if (input.files.length === 0) {
+                    if (input.hasAttribute('required')) {
+                        isValid = false;
+                        errorMsg = 'Questo campo è obbligatorio.';
+                    }
+                } 
+                else if (!Validators.file(input)) { 
                     isValid = false; 
-                    errorMsg = input.files.length > 0 && input.files[0].size > 1048576 ? 'Il file è troppo grande (Massimo 1MB).' : 'Formato non valido (sono ammessi solo JPG, PNG, WEBP).';
+                    const f = input.files[0];
+                    const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
+                    
+                    if (!validTypes.includes(f.type)) {
+                        errorMsg = 'Formato non valido (sono ammessi solo JPG, PNG, WEBP).';
+                    } else if (f.size > 1048576) {
+                        errorMsg = 'Il file è troppo grande (Massimo 1MB).';
+                    }
                 }
                 break;
         }
