@@ -1137,12 +1137,20 @@ button[type="submit"]:active {
     color: var(--text-dark);
 }
 
+a{
+    border: 1px dotted var(--box-bg);
+}
+
+a:visited{
+    border-color: var(--primary);
+}
+
 .register-link a, .login-link a {
     color: var(--primary);
-    text-decoration: none;
     font-weight: 600;
     transition: color 0.3s ease;
 }
+
 
 .register-link a:hover, .login-link a:hover {
     color: var(--primary-light);
