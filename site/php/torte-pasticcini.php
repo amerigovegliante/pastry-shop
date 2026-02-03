@@ -76,7 +76,7 @@ if($connessione && empty($listaItem)){
 // SOSTITUZIONE SEGNAPOSTI
 $paginaHTML = str_replace("[grigliaItems]", $listaItem, $paginaHTML);
 $paginaHTML = str_replace("[breadcrum]", $Breadcrum, $paginaHTML);
-$paginaHTML = str_replace("[LinkPAgina]", $linkPagina, $paginaHTML);
+$paginaHTML = str_replace("[LinkPagina]", $linkPagina, $paginaHTML);
 $paginaHTML = str_replace("[titolo]", $titolo, $paginaHTML);
 $paginaHTML = str_replace("[tipo]", $tipoTitolo, $paginaHTML);
 
