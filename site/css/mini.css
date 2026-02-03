@@ -18,7 +18,7 @@
 
     .menu-toggle {
         display: block;
-        z-index: 9998; /* sopra tutto */
+        z-index: 1000; /* sopra tutto */
     }
 
     nav#menu {
