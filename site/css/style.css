@@ -2817,7 +2817,6 @@ footer address {
 
 /* Titoli Esito */
 #esitoOrdine h2 {
-    font-family: 'Playfair Display', serif;
     font-size: 3rem;
     margin-bottom: 2rem;
     line-height: 1.2;
@@ -2825,6 +2824,9 @@ footer address {
 
 .titolo-successo, .titolo-errore {
     background-color: var(--bg-title);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 /* Box Esito */
@@ -2834,16 +2836,9 @@ footer address {
     padding: 3rem;
     margin-bottom: 2.5rem;
     box-shadow: 0 20px 60px rgba(139, 69, 19, 0.15);
-    border: 3px solid var(--bg-cream);
+    border: 3px solid var(--text-dark);
 }
 
-.titolo-successo + .box-esito {
-    border-color: #D4EDDA;
-}
-
-.titolo-errore + .box-esito {
-    border-color: #F8D7DA;
-}
 
 /* Immagine GIF */
 .box-img-esito {
@@ -2918,10 +2913,10 @@ footer address {
 .nota-finale {
     margin-top: 2rem;
     padding: 1.5rem;
-    background: #E8F5E9;
-    border-left: 4px solid #28a745;
+    background: var(--bg-cream);
+    border-left: 4px solid var(--primary);
     border-radius: 10px;
-    color: #155724;
+    color: var(--text-dark);
     font-weight: 500;
     text-align: left;
 }
