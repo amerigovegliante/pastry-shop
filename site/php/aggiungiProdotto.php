@@ -298,5 +298,13 @@ $paginaHTML = str_replace('[messaggioErroreDB]', $messaggioErrore, $paginaHTML);
 $paginaHTML = str_replace('[messaggioConferma]', $messaggioConferma, $paginaHTML); 
 
 $paginaHTML = str_replace('[tabellaProdotti]', $tabellaItems, $paginaHTML);
+
+//Header
+$headerHTML = '';
+ob_start();
+include __DIR__ . '/header.php';
+$headerHTML = ob_get_clean();
+$paginaHTML = str_replace('[header]', $headerHTML, $paginaHTML);
+
 echo $paginaHTML;
 ?>

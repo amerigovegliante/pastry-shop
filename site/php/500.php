@@ -15,5 +15,12 @@ $uriCorrente = $_SERVER['REQUEST_URI'];
 $paginaHTML = str_replace('[BASE_URL]', $baseUrl, $paginaHTML);
 $paginaHTML = str_replace('[URI_CORRENTE]', htmlspecialchars($uriCorrente, ENT_QUOTES, 'UTF-8'), $paginaHTML);
 
+//Header
+$headerHTML = '';
+ob_start();
+include __DIR__ . '/header.php';
+$headerHTML = ob_get_clean();
+$paginaHTML = str_replace('[header]', $headerHTML, $paginaHTML);
+
 echo $paginaHTML;
 ?>

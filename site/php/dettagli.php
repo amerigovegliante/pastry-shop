@@ -161,5 +161,12 @@ $paginaHTML = str_replace("[tipoBreadcrumb]", $tipoBreadcrumb, $paginaHTML);
 $paginaHTML = str_replace("[Item]", $nome, $paginaHTML);
 $paginaHTML = str_replace("[formAcquisto]", $formAcquisto, $paginaHTML);
 
+//Header
+$headerHTML = '';
+ob_start();
+include __DIR__ . '/header.php';
+$headerHTML = ob_get_clean();
+$paginaHTML = str_replace('[header]', $headerHTML, $paginaHTML);
+
 echo $paginaHTML;
 ?>

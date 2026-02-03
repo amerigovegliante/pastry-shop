@@ -21,5 +21,12 @@ $paginaHTML = str_replace('[URI_CORRENTE]', htmlspecialchars($uriCorrente), $pag
 
 $paginaHTML = str_replace('[messaggioErrore]', htmlspecialchars($messaggioErrore), $paginaHTML);
 
+//Header
+$headerHTML = '';
+ob_start();
+include __DIR__ . '/header.php';
+$headerHTML = ob_get_clean();
+$paginaHTML = str_replace('[header]', $headerHTML, $paginaHTML);
+
 echo $paginaHTML;
 ?>
