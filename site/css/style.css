@@ -962,29 +962,8 @@ aside a:hover::after {
     justify-content: center; /* centra orizzontalmente */
     width: 100%;
 }
-#formAggiungiProdotto {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.5rem; /* spazio tra i campi */
-    align-items: start;
-    max-width: 1400px;     /* più spazio per due colonne */
+#formAggiungiProdotto {   
     margin: 0 auto;        /* centra la form */
-}
-
-/* I pulsanti o sezioni più ampie possono occupare entrambe le colonne */
-#formAggiungiProdotto button[type="submit"],
-#formAggiungiProdotto fieldset legend {
-    grid-column: 1 / -1;
-}
-/* Forza un campo nella colonna sinistra */
-#formAggiungiProdotto #tipo,
-#formAggiungiProdotto #nome {
-    grid-column: 1;
-}
-
-/* Forza nella colonna destra */
-#formAggiungiProdotto #prezzo {
-    grid-column: 2;
 }
 /* ---------------------------------------------- */
 /* CHECKBOX SCELTA ALLERGENI aggiungiProdotto.html*/

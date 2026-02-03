@@ -408,8 +408,3 @@
         width: 48px;
         height: 48px;
     }
-
-    /* AGGIUNGI PRODOTTO aggiungiProdotto.html*/
-    #formAggiungiProdotto {
-        grid-template-columns: 1fr;
-    }

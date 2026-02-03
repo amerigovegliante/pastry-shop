@@ -247,7 +247,7 @@ if(!$connessione){
                                     <th scope="col">Tipo</th>
                                     <th scope="col">Nome</th>
                                     <th scope="col">Descrizione</th>
-                                    <th scope="col">Prezzo (€)</th>
+                                    <th scope="col">Prezzo</th>
                                     <th scope="col">Stato</th>
                                 </tr>
                             </thead>
