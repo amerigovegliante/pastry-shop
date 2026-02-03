@@ -58,7 +58,7 @@ if($connessione){
         $tipoItem = strtolower($Item['tipo']);
 
         $prezzoFormatted = number_format($Item['prezzo'], 2, ',', '.');
-        $etichettaUnit = ($tipoItem === 'torta') ? "/ porzione" : "cad.";
+        $etichettaUnit = ($tipoItem === 'torta') ? "/ porzione" : "";
         
         // Etichetta specifica per l'input dentro il box quantità
         $labelQuantita = ($tipoItem === 'torta') ? "Numero Torte" : "Numero Pezzi";
