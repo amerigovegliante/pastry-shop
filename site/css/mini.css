@@ -7,43 +7,16 @@
    ==================================== */
 @media (max-width: 968px) {
 
-   .header-fixed-wrapper header {
+    .header-fixed-wrapper header {
         position: relative;
         z-index: 5000; 
     }
 
     .header-fixed-wrapper #breadcrumb {
         position: relative;
-        z-index: 1;
+        z-index: 1; /* Il breadcrumb deve stare sotto */
     }
-   
-    .product-detail-container {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-        padding: 2rem 1rem;
-    }
-
-    .product-image-section {
-        position: static;
-    }
-
-    .infoItem,
-    .product-form-section {
-        padding: 2rem;
-    }
-
-    .infoItem h2 {
-        font-size: 2rem;
-    }
-
-    .prezzoItem {
-        font-size: 1.8rem;
-    }
-
-    .porzioni {
-        grid-template-columns: 1fr;
-    }
-    /* HEADER & NAVIGATION */
+    
     .header-content {
         padding: 1rem;
     }
@@ -114,7 +87,7 @@
         display: block;
         margin-left: auto;
     }
-    
+
     nav#menu ul {
         flex-direction: column;
         gap: 2rem;

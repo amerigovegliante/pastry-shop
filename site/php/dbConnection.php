@@ -195,7 +195,8 @@ class DBAccess{
             ot.numero_torte,
             i.nome,
             i.immagine,
-            i.testo_alternativo
+            i.testo_alternativo,
+            (i.prezzo * ot.porzioni * ot.numero_torte) AS totale
             FROM ordine_torta AS ot
             JOIN item AS i ON ot.torta = i.id
             WHERE ot.ordine = ? ";
@@ -220,7 +221,8 @@ class DBAccess{
             op.quantita,
             i.nome,
             i.immagine,
-            i.testo_alternativo
+            i.testo_alternativo,
+            (i.prezzo * op.quantita) AS totale
             FROM ordine_pasticcino AS op
             JOIN item AS i ON op.pasticcino = i.id
             WHERE op.ordine = ? ";

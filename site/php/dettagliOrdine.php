@@ -140,7 +140,7 @@ if (isset($_GET['id'])) {
                                                 </ul>
                                             </td>
                                             <td data-label="Quantità">' . htmlspecialchars($torta['numero_torte']) . '</td>
-                                            <td data-label="Prezzo">€' . number_format($torta['prezzo_unitario_calcolato'], 2, ',', '.') . '</td>
+                                            <td data-label="Prezzo">€' . number_format($torta['totale'], 2, ',', '.') . '</td>
                                         </tr>';
             }
         }
@@ -150,7 +150,7 @@ if (isset($_GET['id'])) {
                                             <th scope="row" data-label="Nome">' . htmlspecialchars($pasticcino['nome']) . '</th>
                                             <td data-label="Dettagli">-</td>
                                             <td data-label="Quantità">' . htmlspecialchars($pasticcino['quantita']) . '</td>
-                                            <td data-label="Prezzo">€' . number_format($pasticcino['prezzo_unitario_calcolato'], 2, ',', '.') . '</td>
+                                            <td data-label="Prezzo">€' . number_format($pasticcino['totale'], 2, ',', '.') . '</td>
                                         </tr>';
             }
         }
