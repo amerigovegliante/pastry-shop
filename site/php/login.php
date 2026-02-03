@@ -109,5 +109,12 @@ $paginaHTML = str_replace('[messaggioErroreDB]', $erroreDB, $paginaHTML);
 $csrfField = "<input type='hidden' name='csrf_token' value='$token'>";
 $paginaHTML = str_replace('[csrfToken]', $csrfField, $paginaHTML);
 
+//Header
+$headerHTML = '';
+ob_start();
+include __DIR__ . '/header.php';
+$headerHTML = ob_get_clean();
+$paginaHTML = str_replace('[header]', $headerHTML, $paginaHTML);
+
 echo $paginaHTML;
 ?>

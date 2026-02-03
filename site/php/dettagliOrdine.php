@@ -162,5 +162,13 @@ if (isset($_GET['id'])) {
 $paginaHTML = str_replace('[messaggioErroreDB]', $messaggioErrore, $paginaHTML);
 $paginaHTML = str_replace('[listaDettagliOrdine]', $listaDettagliOrdine, $paginaHTML); 
 $paginaHTML = str_replace('[listaDolciOrdinati]', $listaDolciOrdinati, $paginaHTML); 
+
+//Header
+$headerHTML = '';
+ob_start();
+include __DIR__ . '/header.php';
+$headerHTML = ob_get_clean();
+$paginaHTML = str_replace('[header]', $headerHTML, $paginaHTML);
+
 echo $paginaHTML;
 ?>

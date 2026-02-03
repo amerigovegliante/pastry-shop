@@ -237,5 +237,12 @@ if (isset($_SESSION['popup_errore'])) {
     unset($_SESSION['popup_errore']);
 }
 
+//Header
+$headerHTML = '';
+ob_start();
+include __DIR__ . '/header.php';
+$headerHTML = ob_get_clean();
+$paginaHTML = str_replace('[header]', $headerHTML, $paginaHTML);
+
 echo $paginaHTML;
 ?>

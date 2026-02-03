@@ -86,5 +86,12 @@ $paginaHTML = str_replace("[contenutoEsito]", $contenutoEsito, $paginaHTML);
 // Pulizia sessione
 unset($_SESSION['risultato_esito']);
 
+//Header
+$headerHTML = '';
+ob_start();
+include __DIR__ . '/header.php';
+$headerHTML = ob_get_clean();
+$paginaHTML = str_replace('[header]', $headerHTML, $paginaHTML);
+
 echo $paginaHTML;
 ?>

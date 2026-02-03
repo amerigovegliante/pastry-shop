@@ -22,46 +22,7 @@
     <a href="[URI_CORRENTE]#main" class="skip-link">Salta al contenuto principale</a>
     
     <div class="header-fixed-wrapper">
-        <header id="header">
-            <div class="header-content">
-                <div id="logo">
-                    <h1>Pasticceria Padovana</h1>
-                    <p>La tradizione su misura per te</p>
-                </div>
-
-                <nav id="menu" aria-label="Menu principale">
-                    <ul>
-                        <li><a href="home"><span lang="en">Home</span></a></li>
-                        <li><a href="chi-siamo">Chi siamo</a></li>
-                        <li><a href="torte">Torte</a></li>
-                        <li><a href="pasticcini">Pasticcini</a></li>
-                        <li><a href="contattaci">Contattaci</a></li>
-                    </ul>
-                </nav>
-
-                <div class="header-icons">
-                    <a href="login" class="icon-btn" aria-label="Accedi alla tua area personale">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
-                            <circle cx="12" cy="7" r="4" />
-                        </svg>
-                        <span class="sr-only">Area personale</span> </a>
-                    <a href="carrello" class="icon-btn" aria-label="Vai al carrello">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <circle cx="9" cy="21" r="1" />
-                            <circle cx="20" cy="21" r="1" />
-                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-                        </svg>
-                        <span class="sr-only">Carrello</span> </a>
-                </div>
-
-                <button class="menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </header>
+        [header]
         <nav id="breadcrumb">           
             <ul>
                 <li><a href="home"><span lang="en">Home</span></a></li>
@@ -77,10 +38,10 @@
 
             <form action="checkout" method="POST" class="form-container">
                 <fieldset>
-                    <legend>Conferma Ordine</legend>
+                    <legend><h2>Conferma Ordine</h2></legend>
                 [csrfToken]
                 <fieldset>
-                    <legend>Intestatario Ordine</legend>
+                    <legend><h3>Intestatario Ordine</h3></legend>
 
                     <div id="box-autocompilazione" 
                          class="opzione-autocompilazione"
@@ -108,7 +69,7 @@
                 </fieldset>
 
                 <fieldset>
-                    <legend>Dettagli Ritiro</legend>
+                    <legend><h3>Dettagli Ritiro</h3></legend>
 
                     <div class="riga-input"> 
                         <div class="campoDati">

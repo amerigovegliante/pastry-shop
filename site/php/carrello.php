@@ -252,5 +252,14 @@ if (isset($_SESSION['carrello']) && count($_SESSION['carrello']) > 0) {
 }
 
 $paginaHTML = str_replace("[ContenutoCarrello]", $contenutoGenerato, $paginaHTML);
+
+//Header
+$headerHTML = '';
+ob_start();
+include __DIR__ . '/header.php';
+$headerHTML = ob_get_clean();
+$paginaHTML = str_replace('[header]', $headerHTML, $paginaHTML);
+
+
 echo $paginaHTML;
 ?>
