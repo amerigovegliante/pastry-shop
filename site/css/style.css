@@ -109,6 +109,7 @@ h1, h2, h3 {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
     box-shadow: 0 2px 20px var(--shadow);
+    border-top: 1px solid var(--primary);
     border-bottom: 1px solid var(--primary);
     color: var(--text-dark);
     padding-left: 2rem;
@@ -125,6 +126,9 @@ h1, h2, h3 {
     margin-right: 10px;
     position: relative;
 }
+#breadcrumb li a{
+    color: var(--primary);
+}
 #breadcrumb li::after {
     content: '>>';      /*inserimento separatori*/
     margin-left: 10px;
@@ -139,7 +143,7 @@ h1, h2, h3 {
 .header-fixed-wrapper {
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 2000;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
@@ -152,7 +156,6 @@ header {
     backdrop-filter: blur(10px);
     box-shadow: 0 2px 20px var(--shadow);
     transition: all 0.3s ease;
-    border-bottom: 1px solid var(--primary);
 }
 
 header.scrolled {
@@ -885,7 +888,9 @@ aside a:hover::after {
     gap: 1.5rem;
 }
 
+/* CAMPI DATI FORM */
 .campoDati {
+    display: block;
     margin-bottom: 1.5rem;
 }
 
@@ -902,7 +907,8 @@ aside a:hover::after {
 }
 
 .campoDati input,
-.campoDati textarea {
+.campoDati textarea,
+.campoDati select {
     width: 100%;
     padding: 1rem;
     border: 2px solid #E5E5E5;
@@ -931,6 +937,67 @@ aside a:hover::after {
     min-height: 150px;
 }
 
+/* FORM AGGIUNGI PRODOTTO aggiungiProdotto.html*/
+.form-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* centra orizzontalmente */
+    width: 100%;
+}
+#formAggiungiProdotto {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem; /* spazio tra i campi */
+    align-items: start;
+    max-width: 1400px;     /* più spazio per due colonne */
+    margin: 0 auto;        /* centra la form */
+}
+
+/* I pulsanti o sezioni più ampie possono occupare entrambe le colonne */
+#formAggiungiProdotto button[type="submit"],
+#formAggiungiProdotto fieldset legend {
+    grid-column: 1 / -1;
+}
+/* Forza un campo nella colonna sinistra */
+#formAggiungiProdotto #tipo,
+#formAggiungiProdotto #nome {
+    grid-column: 1;
+}
+
+/* Forza nella colonna destra */
+#formAggiungiProdotto #prezzo {
+    grid-column: 2;
+}
+/* ---------------------------------------------- */
+/* CHECKBOX SCELTA ALLERGENI aggiungiProdotto.html*/
+.allergeni-grid {
+    display: flex;
+    flex-direction: column; 
+    gap: 0.8rem; 
+}
+
+.allergeni-grid label {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;                /* spazio tra checkbox e testo */
+    padding: 0.6rem 0.6rem;     /* clic leggermente più ampio intorno */
+    padding-left: 1.5rem;
+    cursor: pointer;
+}
+
+.allergeni-grid input[type="checkbox"] {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+/* ---------------------------------------------- */
+/* TABELLA PRODOTTI */
+.products-list-section{
+    margin: 0 auto;      
+    max-width: 1400px;
+}
+
+/* ---------------------------------------------- */
 .password-wrapper {
     position: relative;
 }
@@ -1487,7 +1554,7 @@ button[type="submit"]:active {
 
 table {
     max-width: 100%;
-    width: 100%;
+    /*width: 100%;*/
     border-collapse: collapse;
     background: var(--table-bg);
 }

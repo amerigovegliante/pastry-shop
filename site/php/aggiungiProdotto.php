@@ -180,6 +180,16 @@ if(isset($_POST['submit'])){
                 $successAllergeni = inserisciAllergeni($db, $lastItemId, $allergeni);
                 $db->closeDBConnection();
                 $messaggioConferma = '<div class="successo" role="status"><p>Prodotto inserito con successo!</p></div>';
+                // Dopo inserimento riuscito, svuota i campi del form
+                $tipo = '';
+                $nome = '';
+                $descrizione = '';
+                $prezzo = '';
+                $immagine = ''; 
+                $testoAlternativo = '';
+                $allergeni = [];
+                $selTorta = '';
+                $selPasticcino = '';
                 } else {
                     $messaggioErrore = '<p class="errore" role="alert">Errore durante la scrittura nel database</p>';
             }
@@ -251,7 +261,11 @@ if(!$connessione){
             '<td data-label="Tipo">' . htmlspecialchars($item['tipo']) . '</td>' .
             '<td data-label="Nome">' . htmlspecialchars($item['nome']) . '</td>' .
             '<td data-label="Descrizione">' . htmlspecialchars($item['descrizione']) . '</td>' .
-            '<td data-label="Prezzo">' . number_format($item['prezzo'], 2, ',', '.') . '</td>' .
+            '<td data-label="Prezzo">
+                <span aria-hidden="true">€</span>
+                <span class="sr-only">euro</span>' .
+                number_format($item['prezzo'], 2, ',', '.') . 
+            '</td>' .
             '<td data-label="Stato">
                 <form method="post" onsubmit="return confirm(\'Vuoi davvero cambiare lo stato di questo prodotto?\');">
                     <input type="hidden" name="csrf_token" value="' . htmlspecialchars($token) . '">

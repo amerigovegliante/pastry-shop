@@ -127,9 +127,8 @@
 
                             <!-- Prezzo -->
                             <div class="campoDati">
-                                <label for="prezzo">Prezzo (€) <span class="required">*</span></label>
+                                <label for="prezzo">Prezzo <span aria-label="euro">(€)</span> <span class="required">*</span></label>
                                 <div class="input-with-icon">
-                                    <span class="input-icon">€</span>
                                     <input type="number" id="prezzo" name="prezzo" step="0.01" min="0" max="99999999.99" required aria-describedby="price-help" value="[valorePrezzo]" placeholder="0.00">
                                 </div>
                                 <small id="price-help" class="field-hint">Per le torte indicare il prezzo a porzione</small>
@@ -156,31 +155,45 @@
                             </div>
 
                             <!-- Allergeni -->
-                            <div class="campoDati allergeni-section">
-                                <fieldset class="allergeni-fieldset">
+                            <div class="campoDati">
+                                <fieldset>
                                     <legend>Allergeni contenuti</legend>
                                     <div class="allergeni-grid">
                                         
-                                        <input type="checkbox" id="glutine" name="allergeni[]" value="Glutine" [checkedGlutine]>
-                                        <label for="glutine">Glutine</label>
+                                        <label> <!--in questo modo non ci sono spazi tra checkbox e label-->
+                                            <input type="checkbox" name="allergeni[]" value="Glutine" [checkedGlutine]>
+                                            Glutine
+                                        </label>
+                                        
+                                        <label>
+                                            <input type="checkbox" name="allergeni[]" value="Uova" [checkedUova]>
+                                            Uova
+                                        </label>
+                                        
+                                        <label>
+                                            <input type="checkbox" name="allergeni[]" value="Latte" [checkedLatte]>
+                                            Latte
+                                        </label>
+                                        
+                                        <label>
+                                            <input type="checkbox" name="allergeni[]" value="Frutta a guscio" [checkedFrutta]>
+                                            Frutta a guscio
+                                        </label>
+                                        
+                                        <label>
+                                            <input type="checkbox" name="allergeni[]" value="Arachidi" [checkedArachidi]>
+                                            Arachidi
+                                        </label>
+                                        
+                                        <label>
+                                            <input type="checkbox" name="allergeni[]" value="Soia" [checkedSoia]>
+                                            Soia
+                                        </label>
 
-                                        <input type="checkbox" id="uova" name="allergeni[]" value="Uova" [checkedUova]>
-                                        <label for="uova">Uova</label>
-                                        
-                                        <input type="checkbox" id="latte" name="allergeni[]" value="Latte" [checkedLatte]>
-                                        <label for="latte">Latte</label>
-                                        
-                                        <input type="checkbox" id="frutta" name="allergeni[]" value="Frutta a guscio" [checkedFrutta]>
-                                        <label for="frutta">Frutta a guscio</label>
-                                        
-                                        <input type="checkbox" id="arachidi" name="allergeni[]" value="Arachidi" [checkedArachidi]>
-                                        <label for="arachidi">Arachidi</label>
-                                        
-                                        <input type="checkbox" id="soia" name="allergeni[]" value="Soia" [checkedSoia]>
-                                        <label for="soia">Soia</label>
-
-                                        <input type="checkbox" id="sesamo" name="allergeni[]" value="Sesamo" [checkedSesamo]>
-                                        <label for="sesamo">Sesamo</label>
+                                        <label>
+                                            <input type="checkbox" name="allergeni[]" value="Sesamo" [checkedSesamo]>
+                                            Sesamo
+                                        </label>
                                     </div>
                                 </fieldset>
                             </div>
