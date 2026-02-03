@@ -18,7 +18,7 @@ $listaItem = "";
 $tipo = "";
 $tipoTitolo = "";
 $titolo = "";
-$LinkPagina = "";
+$Breadcrum= "";
 $NessunaDisponibilità = "";
 $suffisso = "";
 
@@ -28,13 +28,13 @@ if ($page === 'torte'){
     $tipoTitolo="torte";
     $suffisso="<small> / porzione</small>";
     $titolo="Torte";
-	$LinkPagina="<li id='currentLink' aria-current='page'>Torte</li><li><a href=\"pasticcini\">Pasticcini</a></li>";
+	$Breadcrum="<a href=\"torte\">Torte</a>";
 }else if ($page === 'pasticcini'){
 	$tipo="pasticcino";
     $tipoTitolo="pasticcini";
 	$NessunaDisponibilità="nessun pasticcino disponibile";
     $titolo="Pasticcini";
-    $LinkPagina="<li><a href=\"torte\">Torte</a></li><li id='currentLink' aria-current='page'>Pasticcini</li>";
+    $Breadcrum="<a href=\"pasticcini\">Pasticcini</a>";
 }
 // leggo i dati delle torte
 if($connessione && empty($listaItem)){
@@ -72,7 +72,7 @@ if($connessione && empty($listaItem)){
 
 // SOSTITUZIONE SEGNAPOSTI
 $paginaHTML = str_replace("[grigliaItems]", $listaItem, $paginaHTML);
-$paginaHTML = str_replace("[LinkPagina]", $LinkPagina, $paginaHTML);
+$paginaHTML = str_replace("[breadcrum]", $Breadcrum, $paginaHTML);
 $paginaHTML = str_replace("[titolo]", $titolo, $paginaHTML);
 $paginaHTML = str_replace("[tipo]", $tipoTitolo, $paginaHTML);
 
