@@ -319,7 +319,7 @@ nav#menu .currentlink::after, nav#menu .currentlink::after {
    ==================================== */
 main {
     /* margin-top: 80px;*/
-    min-height: calc(100vh - 400px);
+    min-height: calc(100vh - 100px);
     padding: 2rem 2rem;
 }
 .titolo{
@@ -1026,7 +1026,7 @@ button[type="submit"] {
     box-shadow: 0 10px 30px rgba(139, 69, 19, 0.3);
     margin-top: 1rem;
 }
-button[type="submit"].aggiorna-tabella {
+button[type="submit"].aggiorna-tabella, button[type="submit"].azioni-carrello {
     width: auto;
     margin-top: 0;
     white-space: nowrap;

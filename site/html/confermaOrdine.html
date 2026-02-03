@@ -76,6 +76,8 @@
             <h2 id="conferma-ordine-titolo">Dati per il ritiro</h2>
 
             <form action="checkout" method="POST" class="form-container">
+                <fieldset>
+                    <legend>Conferma Ordine</legend>
                 [csrfToken]
                 <fieldset>
                     <legend>Intestatario Ordine</legend>
@@ -131,10 +133,11 @@
                     <p>Totale da pagare al ritiro: <strong>€[totale]</strong></p>
                 </div>
 
-                <div class="azioni-conferma">
-                    <a href="carrello" class="pulsanteSecondario">Torna al Carrello</a>
-                    <button type="submit" class="pulsanteGenerico">Conferma e Invia Ordine</button>
+                <div class="azioni-carrello"> 
+                    <a href="carrello" class="generic-button">&larr; Torna al Carrello</a>
+                    <button type="submit" class="generic-button">Conferma e Invia Ordine &rarr;</button>
                 </div>
+                </fieldset>
             </form>
         </section>
     </main>
