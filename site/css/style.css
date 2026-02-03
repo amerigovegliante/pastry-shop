@@ -891,6 +891,32 @@ aside a:hover::after {
     width: 100%;
 }
 
+#confermaOrdine .form-container{
+    max-width: 100%;
+}
+/* fieldset principale */
+.form-container > fieldset {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+/* i due fieldset interni */
+.form-container > fieldset > fieldset {
+  flex: 1 1 45%;
+}
+.form-container > fieldset > .riepilogo-totale,
+  .form-container > fieldset > .azioni-carrello {
+    flex: 0 0 100%;
+}
+
+.azioni-carrello {
+  display: flex;
+  justify-content: space-between; /* pulsanti agli estremi */
+  flex-wrap: wrap;               /* si adattano su mobile */
+  gap: 1rem;                     /* piccolo spazio tra pulsanti se vanno a capo */
+  margin-top: 1.5rem;            /* distanza dal riepilogo */
+}
 .welcome-text {
     color: var(--text-dark);
     opacity: 0.8;
@@ -1072,7 +1098,7 @@ button[type="submit"] {
     box-shadow: 0 10px 30px rgba(139, 69, 19, 0.3);
     margin-top: 1rem;
 }
-button[type="submit"].aggiorna-tabella, button[type="submit"].azioni-carrello {
+button[type="submit"].aggiorna-tabella, .azioni-carrello button[type="submit"] {
     width: auto;
     margin-top: 0;
     white-space: nowrap;
