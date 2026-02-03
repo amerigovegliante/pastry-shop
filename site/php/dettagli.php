@@ -80,11 +80,16 @@ if($connessione){
                          <img src=\"" . htmlspecialchars($imgSrc, ENT_QUOTES, 'UTF-8') . "\" alt=\"" . htmlspecialchars($altText, ENT_QUOTES, 'UTF-8') . "\" class=\"cornice\">
                       </figure>
                       </div>";
-
+        
         // SEZIONE FORM DI ACQUISTO
-        $formAcquisto .= "<section class=\"acquistoItem\">
-                <form method=\"post\" action=\"carrello\">
-                    <input type=\"hidden\" name=\"ID\" value=\"".htmlspecialchars($Item['id'], ENT_QUOTES, 'UTF-8')."\">";
+        $formAcquisto .= "<section class=\"acquistoItem\">";
+
+        if($tipoItem === 'torta'){
+             $formAcquisto .= "<form method=\"post\" action=\"torte\">";
+        }else if($tipoItem === 'pasticcino'){
+             $formAcquisto .= "<form method=\"post\" action=\"pasticcini\">";
+        }
+        $formAcquisto .= "<input type=\"hidden\" name=\"ID\" value=\"".htmlspecialchars($Item['id'], ENT_QUOTES, 'UTF-8')."\">";
         
         // --- LOGICA TORTE ---
         if($tipoItem === 'torta'){
@@ -143,7 +148,7 @@ if($connessione){
                             </div>
                           </fieldset>";
 
-        $formAcquisto .= "<button type=\"submit\" aria-label=\"Aggiungi ".htmlspecialchars($Item['nome'], ENT_QUOTES, 'UTF-8')." al carrello\">Aggiungi al carrello</button>
+        $formAcquisto .= "<button type=\"submit\" aria-label=\"Aggiungi ".htmlspecialchars($Item['nome'], ENT_QUOTES, 'UTF-8')." al carrello\" class=\"generic-button\">Aggiungi al carrello</button>
                         </form>
                         </section>";
     } else {
