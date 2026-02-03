@@ -983,13 +983,22 @@ aside a:hover::after {
 
 /* FORM AGGIUNGI PRODOTTO aggiungiProdotto.html*/
 .form-section {
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* centra orizzontalmente */
-    width: 100%;
+    background-color: var(--box-bg);
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 15px rgba(0,0,0,0.05);
 }
+
+
 #formAggiungiProdotto {   
     margin: 0 auto;        /* centra la form */
+}
+
+.admin-content-grid {
+    display: grid;
+    grid-template-columns: 2fr 3fr; /* form più piccolo della tabella */
+    gap: 2rem;
+    padding: 2rem;
 }
 /* ---------------------------------------------- */
 /* CHECKBOX SCELTA ALLERGENI aggiungiProdotto.html*/

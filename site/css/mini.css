@@ -4,6 +4,9 @@
 
 /* TABLET - max-width: 968px */
 @media (max-width: 968px) {
+    body{
+        background: red !important;
+    }
     .header-content {
         padding: 1rem;
     }
@@ -179,6 +182,22 @@
         grid-template-columns: 1fr;
     }
 
+    /*Aggiungi Prodotto*/
+    .admin-content-grid {
+        display: block; /* colonna unica */
+        padding: 1rem;
+    }
+
+    .form-section, .products-list-section {
+        padding: 1rem;
+    }
+
+    .btn-submit {
+        width: 100%; /* pulsante full-width su mobile */
+    }
+    .admin-content-grid {
+        grid-template-columns: 1fr !important; /* tutto in colonna */
+    }
     /* Ordini Admin */
     main {
         padding: 2rem 1rem;
@@ -370,7 +389,7 @@
     }
 
 }
-
+@media (max-width: 800px) {
 .cornice {
     width: 100%;
 }
@@ -408,3 +427,4 @@
         width: 48px;
         height: 48px;
     }
+}

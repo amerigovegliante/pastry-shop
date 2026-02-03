@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="site/css/style.css" media="screen"/>
-    <link rel="stylesheet" href="site/css/mini.css" media="screen and (max-width:800px)"/>
+    <link rel="stylesheet" href="site/css/mini.css" media="screen"/>
     <link rel="stylesheet" href="site/css/print.css" media="print"/>
     <script src="site/js/script.js"></script>
 </head>
@@ -35,7 +35,7 @@
             <h2>Gestione prodotti</h2>
             <p><em>Aggiungi e controlla i prodotti disponibili nella pasticceria</em></p>
         </div>
-        <div class="admin-page-container">
+        <div class="contenuto">
             
             <!-- Messaggi Sistema -->
             <div class="system-messages">
@@ -47,14 +47,14 @@
             <div class="admin-content-grid">
                 
                 <!-- Sezione Form -->
-                <section class="form-section">
+                <section class="form-container">
                     <div class="section-header">
                         <h3>Aggiungi un Prodotto</h3>
                     </div>
 
-                    <form id="formAggiungiProdotto" action="aggiungi-prodotto" method="post" enctype="multipart/form-data" class="form-container">
+                    <form id="formAggiungiProdotto" action="aggiungi-prodotto" method="post" enctype="multipart/form-data" >
                         <fieldset>
-                            <legend class="visually-hidden">Dettagli del prodotto</legend>
+                            <legend class="sr-only">Dettagli del prodotto</legend>
                             
                             <input type="hidden" name="csrf_token" value="[csrf_token]">
                             
@@ -66,7 +66,7 @@
                                     <option value="torta" [selTorta]>Torta</option>
                                     <option value="pasticcino" [selPasticcino]>Pasticcino</option>
                                 </select>
-                                <small id="type-help" class="visually-hidden">Seleziona il tipo di prodotto da aggiungere</small>
+                                <small id="type-help" class="sr-only">Seleziona il tipo di prodotto da aggiungere</small>
                                 [messaggioErroreTipo]
                             </div>
 
