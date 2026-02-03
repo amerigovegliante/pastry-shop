@@ -2824,14 +2824,12 @@ footer address {
 }
 
 .titolo-successo {
-    background: linear-gradient(135deg, #155724 0%, #28a745 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
 .titolo-errore {
-    background: linear-gradient(135deg, #721C24 0%, #dc3545 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -2919,7 +2917,6 @@ footer address {
 
 .prezzo-evidenza {
     font-size: 1.8rem !important;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -2968,7 +2965,6 @@ footer address {
 .azioni-esito .pulsanteGenerico {
     display: inline-block;
     padding: 1.2rem 3rem;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
     color: white;
     text-decoration: none;
     border-radius: 50px;
