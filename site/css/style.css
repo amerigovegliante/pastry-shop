@@ -317,6 +317,11 @@ nav#menu .currentlink::after, nav#menu .currentlink::after {
     margin: 5px 0;
     transition: 0.3s;
 }
+
+.menu-icons-mobile {
+    display: none;
+}
+
 /* ====================================
    MAIN CONTENT
    ==================================== */

@@ -118,6 +118,12 @@ if (pathinfo($file, PATHINFO_EXTENSION) === 'php') {
 
 $contenutoPagina = ob_get_clean();
 
+ob_start();
+include __DIR__ . '/site/php/header.php'; 
+$headerContent = ob_get_clean();
+
+$contenutoPagina = str_replace('[header]', $headerContent, $contenutoPagina);
+
 $contenutoPagina = str_replace('[BASE_URL]', $baseUrl, $contenutoPagina);
 
 // per le ancore #main, #header, ecc. recupero l'indirizzo esatto della pagina corrente (es. /sito/chi-siamo)
