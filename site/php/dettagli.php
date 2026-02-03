@@ -83,7 +83,7 @@ if($connessione){
         
         $redirectTo = ($tipoItem === 'torta') ? 'torte' : 'pasticcini';
         // SEZIONE FORM DI ACQUISTO
-        $formAcquisto .= "
+        $formAcquisto .= "<section class=\"acquistoItem\">
         <form method=\"post\" action=\"carrello\">
             <input type=\"hidden\" name=\"ID\" value=\"".htmlspecialchars($Item['id'], ENT_QUOTES, 'UTF-8')."\">
             <input type=\"hidden\" name=\"redirect_to\" value=\"$redirectTo\">
