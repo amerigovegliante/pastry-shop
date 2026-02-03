@@ -29,14 +29,14 @@ if ($page === 'torte'){
     $tipoTitolo="torte";
     $suffisso="<small> / porzione</small>";
     $titolo="Torte";
-	$Breadcrum="<a href=\"torte\">Torte</a>";
+	$Breadcrum="Torte";
     $linkPagina="<li aria-current=\"page\">Torte</li><li><a href=\"pasticcini\">Pasticcini</a></li>";
 }else if ($page === 'pasticcini'){
 	$tipo="pasticcino";
     $tipoTitolo="pasticcini";
 	$NessunaDisponibilità="nessun pasticcino disponibile";
     $titolo="Pasticcini";
-    $Breadcrum="<a href=\"pasticcini\">Pasticcini</a>";
+    $Breadcrum="Pasticcini";
     $linkPagina="<li><a href=\"torte\">Torte</a></li><li aria-current=\"page\">Pasticcini</li>";
 }
 // leggo i dati delle torte
