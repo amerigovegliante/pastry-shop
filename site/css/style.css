@@ -1141,20 +1141,15 @@ button[type="submit"]:active {
     border-top: 1px solid #E5E5E5;
     color: var(--text-dark);
 }
-
+/*
 a{
     border: 1px dotted var(--box-bg);
 }
 
 a:visited{
+    color: red;
     border-color: var(--primary);
-}
-footer a{
-    border: 1px dotted var(--text-dark);
-}
-footer a:visited{
-    border: 1px dotted var(--box-bg);
-}
+}*/
 
 .register-link a, .login-link a {
     color: var(--primary);
