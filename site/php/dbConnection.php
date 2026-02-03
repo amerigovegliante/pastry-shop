@@ -14,7 +14,12 @@ class DBAccess{
             $db   = getenv('MYSQLDATABASE') ?: (defined('DB_NAME')     ? DB_NAME     : null);
             $port = getenv('MYSQLPORT')     ?: (defined('DB_PORT')     ? DB_PORT     : 3306); 
             
-            $this->connection = mysqli_connect($host, $user, $pass, $db, (int)$port);
+            //$this->connection = mysqli_connect($host, $user, $pass, $db, (int)$port);
+/////////////////////////
+            $this->connection = mysqli_init();
+            $this->connection->ssl_set(NULL, NULL, NULL, NULL, NULL);
+            $this->connection->real_connect($host, $user, $pass, $db, (int)$port);
+////////////////////////
             $this->connection->set_charset("utf8mb4");
 
             return true;

@@ -83,20 +83,20 @@ if (isset($_GET['id'])) {
         $listaDettagliOrdine = '<p class="errore" role="alert">L\'ordine non contiene prodotti</p>';
     } else {    
     $statoTesto = isset($stati[$ordine['stato']]) ? $stati[$ordine['stato']] : 'Sconosciuto';   //se non trova uno stato corrispondente gli da "Sconosciuto"
-
-    $listaDettagliOrdine  = '<h2>Dettagli ordine <span aria-label="Numero">#</span>' . htmlspecialchars($ordine['id']) . '</h2>
+    
+    $listaDettagliOrdine  = '<h2>Dettagli ordine <span aria-label="Numero">#</span>' . htmlspecialchars($ordine['id'], ENT_QUOTES, 'UTF-8') . '</h2>
                             <div class="dettagli-ordine">
                                 <dl>
                                     <dt><strong>Stato:</strong></dt>
-                                    <dd>'. htmlspecialchars($statoTesto) . '</dd>
+                                    <dd>'. htmlspecialchars($statoTesto, ENT_QUOTES, 'UTF-8') . '</dd>
                                     <dt><strong>Data di ordinazione:</strong></dt>
-                                    <dd>'. htmlspecialchars($ordine['ordinazione']) . '</dd>
+                                    <dd>'. htmlspecialchars($ordine['ordinazione'], ENT_QUOTES, 'UTF-8') . '</dd>
                                     <dt><strong>Data di ritiro:</strong></dt>
-                                    <dd>'. htmlspecialchars($ordine['ritiro']) . '</dd>
+                                    <dd>'. htmlspecialchars($ordine['ritiro'], ENT_QUOTES, 'UTF-8') . '</dd>
                                     <dt><strong>Annotazioni:</strong></dt>
-                                    <dd>'. htmlspecialchars($ordine['annotazioni'] ?? 'nessuna annotazione inserita') . '</dd>
-                                    <dt><strong>Totale (€):</strong></dt>
-                                    <dd>'. htmlspecialchars($ordine['totale']) . '</dd>
+                                    <dd>'. htmlspecialchars($ordine['annotazioni'] ?? 'nessuna annotazione inserita', ENT_QUOTES, 'UTF-8') . '</dd>
+                                    <dt><strong>Totale:</strong></dt>
+                                    <dd>€'. number_format($ordine['totale'], 2, ',', '.') . '</dd>
                                 </dl>
                             </div>';
 
@@ -162,5 +162,13 @@ if (isset($_GET['id'])) {
 $paginaHTML = str_replace('[messaggioErroreDB]', $messaggioErrore, $paginaHTML);
 $paginaHTML = str_replace('[listaDettagliOrdine]', $listaDettagliOrdine, $paginaHTML); 
 $paginaHTML = str_replace('[listaDolciOrdinati]', $listaDolciOrdinati, $paginaHTML); 
+
+//Header
+$headerHTML = '';
+ob_start();
+include __DIR__ . '/header.php';
+$headerHTML = ob_get_clean();
+$paginaHTML = str_replace('[header]', $headerHTML, $paginaHTML);
+
 echo $paginaHTML;
 ?>

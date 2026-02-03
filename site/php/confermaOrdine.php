@@ -82,5 +82,12 @@ $paginaHTML = str_replace("[totale]", $totaleFormat, $paginaHTML);
 $inputToken = "<input type='hidden' name='csrf_token' value='$token'>";
 $paginaHTML = str_replace('[csrfToken]', $inputToken, $paginaHTML);
 
+//Header
+$headerHTML = '';
+ob_start();
+include __DIR__ . '/header.php';
+$headerHTML = ob_get_clean();
+$paginaHTML = str_replace('[header]', $headerHTML, $paginaHTML);
+
 echo $paginaHTML;
 ?>

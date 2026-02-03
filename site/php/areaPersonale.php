@@ -151,7 +151,8 @@ if($connessione){
     
     if(!empty($ordini)){
         $tabellaOrdiniHTML = "
-        <p id=\"descr\" class=\"visually-hidden\">Tabella organizzata per colonne che mostra lo storico degli ordini effettuati dall'utente.
+        <div class='table-scroll'>
+        <p id=\"descr\" class=\"sr-only\">Tabella organizzata per colonne che mostra lo storico degli ordini effettuati dall'utente.
         Ogni riga descrive un'ordine con numero identificativo, data di ritiro, stato, prezzo totale, azioni.</p>
         <table aria-describedby='descr'>
                 <caption>Storico degli ordini effettuati</caption>
@@ -188,7 +189,7 @@ if($connessione){
                 </td> 
             </tr>";
         }
-        $tabellaOrdiniHTML .= "</tbody></table>";
+        $tabellaOrdiniHTML .= "</tbody></table></div>";
     }
 }
 
@@ -235,6 +236,13 @@ if (isset($_SESSION['popup_errore'])) {
     $paginaHTML = str_replace('</body>', $scriptPopup, $paginaHTML);
     unset($_SESSION['popup_errore']);
 }
+
+//Header
+$headerHTML = '';
+ob_start();
+include __DIR__ . '/header.php';
+$headerHTML = ob_get_clean();
+$paginaHTML = str_replace('[header]', $headerHTML, $paginaHTML);
 
 echo $paginaHTML;
 ?>

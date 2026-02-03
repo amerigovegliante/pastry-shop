@@ -134,7 +134,11 @@ if($connessione){
                             <legend>Quantità</legend>
                             <div class=\"campoQuantita\">
                                 <label for=\"quantita\">" . $labelQuantita . "</label>
-                                <input type=\"number\" id=\"quantita\" min=\"1\" max=\"$maxQuantita\" value=\"1\" name=\"quantita\" required>
+                                <div class=\"qty-container\">
+                                <button type=\"button\" class=\"generic-button btn-qty-meno\" aria-label=\"Diminuisci quantità\">-</button>
+                                <input type=\"number\" id=\"quantita\" min=\"1\" max=\"$maxQuantita\" value=\"1\" name=\"quantita\" required class=\"qty-number\">
+                                <button type=\"button\" class=\"generic-button btn-qty-piu\" aria-label=\"Aumenta quantità\">+</button>
+                                </div>
                                 <small>(max $maxQuantita)</small>
                             </div>
                           </fieldset>";
@@ -156,6 +160,13 @@ $paginaHTML = str_replace("[DettagliItem]", $Itemdetails, $paginaHTML);
 $paginaHTML = str_replace("[tipoBreadcrumb]", $tipoBreadcrumb, $paginaHTML);
 $paginaHTML = str_replace("[Item]", $nome, $paginaHTML);
 $paginaHTML = str_replace("[formAcquisto]", $formAcquisto, $paginaHTML);
+
+//Header
+$headerHTML = '';
+ob_start();
+include __DIR__ . '/header.php';
+$headerHTML = ob_get_clean();
+$paginaHTML = str_replace('[header]', $headerHTML, $paginaHTML);
 
 echo $paginaHTML;
 ?>
