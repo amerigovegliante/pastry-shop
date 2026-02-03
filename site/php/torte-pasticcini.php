@@ -76,5 +76,12 @@ $paginaHTML = str_replace("[LinkPagina]", $LinkPagina, $paginaHTML);
 $paginaHTML = str_replace("[titolo]", $titolo, $paginaHTML);
 $paginaHTML = str_replace("[tipo]", $tipoTitolo, $paginaHTML);
 
+//Header
+$headerHTML = '';
+ob_start();
+include __DIR__ . '/header.php';
+$headerHTML = ob_get_clean();
+$paginaHTML = str_replace('[header]', $headerHTML, $paginaHTML);
+
 echo $paginaHTML;
 ?>

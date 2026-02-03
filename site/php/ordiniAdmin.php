@@ -42,12 +42,12 @@ if (!empty($statiModificati)) {
     }
     
 }
-
+/*
 // Se non è loggato o non è admin, via da qui.
 if (!isset($_SESSION['ruolo']) || $_SESSION['ruolo'] !== 'admin') {
     header("Location: login");
     exit;
-}
+}*/
 
 //require_once "dbConnection.php";
 
