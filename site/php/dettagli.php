@@ -81,15 +81,13 @@ if($connessione){
                       </figure>
                       </div>";
         
+        $redirectTo = ($tipoItem === 'torta') ? 'torte' : 'pasticcini';
         // SEZIONE FORM DI ACQUISTO
-        $formAcquisto .= "<section class=\"acquistoItem\">";
-
-        if($tipoItem === 'torta'){
-             $formAcquisto .= "<form method=\"post\" action=\"torte\">";
-        }else if($tipoItem === 'pasticcino'){
-             $formAcquisto .= "<form method=\"post\" action=\"pasticcini\">";
-        }
-        $formAcquisto .= "<input type=\"hidden\" name=\"ID\" value=\"".htmlspecialchars($Item['id'], ENT_QUOTES, 'UTF-8')."\">";
+        $formAcquisto .= "
+        <form method=\"post\" action=\"carrello\">
+            <input type=\"hidden\" name=\"ID\" value=\"".htmlspecialchars($Item['id'], ENT_QUOTES, 'UTF-8')."\">
+            <input type=\"hidden\" name=\"redirect_to\" value=\"$redirectTo\">
+        ";
         
         // --- LOGICA TORTE ---
         if($tipoItem === 'torta'){
