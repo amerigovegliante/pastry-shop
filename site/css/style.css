@@ -2794,11 +2794,14 @@ footer address {
 .dettagli-ordine
 {
     border-bottom: 1px solid var(--text-dark);
+    border-top: 1px solid var(--text-dark);
+    width: 95%;
+    margin: auto;
 }
 
 .dettagli-ordine dl dt, .dettagli-ordine dl dd{
     display: inline-block;
-    width: 100%;
+    width: 49%;
 }
 }
 
