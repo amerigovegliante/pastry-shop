@@ -2,8 +2,12 @@
    PASTICCERIA PADOVANA - RESPONSIVE STYLES (mini.css)
    ==================================== */
 
-/* TABLET - max-width: 968px */
+/* ====================================
+   TABLET - max-width: 968px
+   ==================================== */
 @media (max-width: 968px) {
+    
+    /* HEADER & NAVIGATION */
     .header-content {
         padding: 1rem;
     }
@@ -16,9 +20,13 @@
         font-size: 0.75rem;
     }
 
+    .header-icons a .icon-text {
+        display: none;
+    }
+
     .menu-toggle {
         display: block;
-        z-index: 1000; /* sopra tutto */
+        z-index: 1000;
     }
 
     nav#menu {
@@ -45,11 +53,13 @@
         gap: 2rem;
     }
 
-    nav#menu a, nav#menu li, nav#menu span {
+    nav#menu a,
+    nav#menu li,
+    nav#menu span {
         font-size: 1.2rem;
     }
 
-    /* Homepage Hero */
+    /* HOMEPAGE - HERO */
     .hero {
         margin-top: 0;
         height: auto;
@@ -74,11 +84,8 @@
     .hero-image {
         order: -1;
     }
-    .header-icons a .icon-text {
-        display: none;
-    }
 
-    /* Famous Sweets */
+    /* HOMEPAGE - FAMOUS SWEETS */
     .famous-sweets {
         padding: 3rem 1rem;
     }
@@ -100,7 +107,7 @@
         padding: 1.5rem;
     }
 
-    /* Chi Siamo */
+    /* CHI SIAMO */
     .page-hero h2 {
         font-size: 2.5rem;
     }
@@ -125,7 +132,7 @@
         grid-template-columns: 1fr;
     }
 
-    /* Contattaci */
+    /* CONTATTACI */
     .contact-container {
         grid-template-columns: 1fr;
         gap: 2rem;
@@ -142,7 +149,7 @@
         font-size: 2rem;
     }
 
-    /* Login/Register */
+    /* LOGIN / REGISTER */
     .login-container,
     .register-container {
         padding: 2rem;
@@ -157,10 +164,11 @@
         grid-template-columns: 1fr;
     }
 
-    /* Product Details */
+    /* PRODUCT DETAILS */
     .product-container {
         grid-template-columns: 1fr;
         gap: 2rem;
+        width: 100%;
     }
 
     .product-image {
@@ -179,7 +187,18 @@
         grid-template-columns: 1fr;
     }
 
-    /* Ordini Admin */
+    /* CATALOG */
+    .page-title h1 {
+        font-size: 2.5rem;
+    }
+
+    #grigliaTorte {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 2rem;
+        padding: 0 1rem;
+    }
+
+    /* ORDINI ADMIN */
     main {
         padding: 2rem 1rem;
     }
@@ -191,6 +210,16 @@
     caption {
         font-size: 1.4rem;
         padding: 1.5rem;
+    }
+
+    .caption-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .aggiorna-tabella {
+        align-self: flex-end;
     }
 
     thead {
@@ -234,160 +263,17 @@
         border-bottom: 1px solid #E5E5E5;
     }
 
-    /* Catalog */
-    .page-title h1 {
-        font-size: 2.5rem;
-    }
-
-    #grigliaTorte {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 2rem;
-        padding: 0 1rem;
-    }
-
-    /* Footer */
-    .footer-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
     table td::before {
         content: attr(data-label) ":";
     }
 
-    table td[data-label="Azioni"]::before {
-        content: none;
-    }
-
+    table td[data-label="Azioni"]::before,
     table td[data-label="Stato"]::before {
         content: none;
     }
 
-}
-
-/* MOBILE - max-width: 480px */
-@media (max-width: 480px) {
-    #logo h1 {
-        font-size: 1.2rem;
-    }
-
-    #logo p {
-        display: none;
-    }
-
-    .icon-btn svg {
-        width: 24px;
-        height: 24px;
-    }
-
-    /* Homepage Hero */
-    .hero-text h2 {
-        font-size: 2rem;
-    }
-
-    .hero-text p {
-        font-size: 1rem;
-    }
-
-    /* Chi Siamo */
-    .page-hero {
-        padding: 3rem 1rem;
-    }
-
-    .page-hero h2 {
-        font-size: 2rem;
-    }
-
-    section h2 {
-        font-size: 1.8rem;
-    }
-
-    aside {
-        padding: 2rem;
-    }
-
-    /* Contattaci */
-    main {
-        padding: 2rem 1rem;
-    }
-
-    .contact-info,
-    .form-container {
-        padding: 1.5rem;
-    }
-
-    .contact-info h2,
-    .form-container legend {
-        font-size: 1.8rem;
-    }
-
-    /* Login/Register */
-    .login-container,
-    .register-container {
-        padding: 1.5rem;
-    }
-
-    .login-container legend,
-    .register-container legend {
-        font-size: 1.8rem;
-    }
-
-    /* Product Details */
-    .product-details {
-        padding: 1.5rem;
-    }
-
-    .product-details h1 {
-        font-size: 1.8rem;
-    }
-
-    .product-price {
-        font-size: 1.5rem;
-    }
-
-    /* Ordini Admin */
-    .page-header h1 {
-        font-size: 2rem;
-    }
-
-    .stato-ordine {
-        flex-direction: column;
-        gap: 0.8rem;
-    }
-
-    .stato-ordine select {
-        width: 100%;
-    }
-
-    /* Catalog */
-    .page-title h1 {
-        font-size: 2rem;
-    }
-
-    #grigliaTorte {
-        grid-template-columns: 1fr;
-        padding: 0 1rem;
-    }
-
-}
-
-.cornice {
-    width: 100%;
-}
-
-.product-container {
-    width: 100%;
-}
-    .caption-bar {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
-    }
-
-    .aggiorna-tabella {
-        align-self: flex-end;
-    }
-.user-area-content {
+    /* USER AREA */
+    .user-area-content {
         padding: 2rem 1rem;
     }
 
@@ -408,3 +294,291 @@
         width: 48px;
         height: 48px;
     }
+
+    /* PERSONAL AREA */
+    .personal-area-container {
+        padding: 2rem 1rem;
+    }
+
+    .personal-area-header {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 2rem;
+    }
+
+    .welcome-section {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .welcome-text h2 {
+        font-size: 1.8rem;
+    }
+
+    .btn-logout {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .personal-area-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .profile-card,
+    .orders-card {
+        padding: 1.5rem;
+    }
+
+    .card-header h3 {
+        font-size: 1.5rem;
+    }
+
+    /* ERROR PAGE */
+    .error-page-container {
+        padding: 3rem 1.5rem;
+    }
+
+    .error-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 2.5rem 2rem;
+        text-align: center;
+    }
+
+    .error-image img {
+        max-width: 300px;
+    }
+
+    .error-code {
+        font-size: 6rem;
+    }
+
+    .error-text h1 {
+        font-size: 2rem;
+    }
+
+    .error-message {
+        font-size: 1.1rem;
+    }
+
+    .error-suggestion {
+        font-size: 1rem;
+    }
+
+    .error-actions {
+        flex-direction: column;
+    }
+
+    .error-contact {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
+
+    /* FOOTER */
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+/* ====================================
+   MOBILE - max-width: 480px
+   ==================================== */
+@media (max-width: 480px) {
+    
+    /* HEADER */
+    #logo h1 {
+        font-size: 1.2rem;
+    }
+
+    #logo p {
+        display: none;
+    }
+
+    .icon-btn svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    /* HOMEPAGE - HERO */
+    .hero-text h2 {
+        font-size: 2rem;
+    }
+
+    .hero-text p {
+        font-size: 1rem;
+    }
+
+    /* CHI SIAMO */
+    .page-hero {
+        padding: 3rem 1rem;
+    }
+
+    .page-hero h2 {
+        font-size: 2rem;
+    }
+
+    section h2 {
+        font-size: 1.8rem;
+    }
+
+    aside {
+        padding: 2rem;
+    }
+
+    /* CONTATTACI */
+    main {
+        padding: 2rem 1rem;
+    }
+
+    .contact-info,
+    .form-container {
+        padding: 1.5rem;
+    }
+
+    .contact-info h2,
+    .form-container legend {
+        font-size: 1.8rem;
+    }
+
+    /* LOGIN / REGISTER */
+    .login-container,
+    .register-container {
+        padding: 1.5rem;
+    }
+
+    .login-container legend,
+    .register-container legend {
+        font-size: 1.8rem;
+    }
+
+    /* PRODUCT DETAILS */
+    .product-details {
+        padding: 1.5rem;
+    }
+
+    .product-details h1 {
+        font-size: 1.8rem;
+    }
+
+    .product-price {
+        font-size: 1.5rem;
+    }
+
+    /* CATALOG */
+    .page-title h1 {
+        font-size: 2rem;
+    }
+
+    #grigliaTorte {
+        grid-template-columns: 1fr;
+        padding: 0 1rem;
+    }
+
+    /* ORDINI ADMIN */
+    .page-header h1 {
+        font-size: 2rem;
+    }
+
+    .stato-ordine {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .stato-ordine select {
+        width: 100%;
+    }
+
+    /* PERSONAL AREA */
+    .personal-area-header {
+        padding: 1.5rem;
+    }
+
+    .welcome-avatar {
+        width: 64px;
+        height: 64px;
+    }
+
+    .welcome-avatar svg {
+        width: 36px;
+        height: 36px;
+    }
+
+    .welcome-text h2 {
+        font-size: 1.6rem;
+    }
+
+    .profile-card,
+    .orders-card {
+        padding: 1.2rem;
+    }
+
+    .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .card-header h3 {
+        font-size: 1.4rem;
+    }
+
+    .danger-zone {
+        padding: 1.5rem;
+    }
+
+    .danger-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    /* ERROR PAGE */
+    .error-page-container {
+        padding: 2rem 1rem;
+    }
+
+    .error-content {
+        padding: 2rem 1.5rem;
+        border-radius: 20px;
+    }
+
+    .error-image img {
+        max-width: 250px;
+    }
+
+    .error-code {
+        font-size: 4.5rem;
+        margin-bottom: 0;
+    }
+
+    .error-text h1 {
+        font-size: 1.6rem;
+    }
+
+    .error-message,
+    .error-suggestion {
+        font-size: 1rem;
+    }
+
+    .btn-primary-error,
+    .btn-secondary-error {
+        padding: 1rem 1.5rem;
+        font-size: 0.95rem;
+    }
+
+    .error-contact {
+        padding: 1.2rem;
+    }
+}
+
+/* ====================================
+   UTILITY CLASSES
+   ==================================== */
+.cornice {
+    width: 100%;
+}
+
+.product-container {
+    width: 100%;
+}
